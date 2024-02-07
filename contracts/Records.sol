@@ -4,10 +4,6 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Records {
 
     enum Gender { Male, Female,Other }
-    // Enum for Allergy Types
-    enum AllergyType { Drug, Food, Environmental, InsectSting }
-    // Enum for Allergy Severity
-    enum Severity { Mild, Moderate, Severe }
     
     struct Patient {
         string username;
@@ -19,16 +15,23 @@ contract Records {
         string height;
         string weight;
         string houseAddress;
-        address addr; 
+        address addr;
+    }
+
+    struct Hospital {
+        string username;
+        string password;
+        string hospitalName;
+        string contactNum;
+        string hospitalAddress;
+        address addr;
     }
 
     struct MedicalHistory {
         string hospital;
         string physician;
         uint dateOfDiagnosis;
-
-        // Additional Diagnostic Information
-        string diagnosis;
+        string diagnosis;  // Additional Diagnostic Information
  
         // Symptoms
         bool fever;
@@ -36,22 +39,13 @@ contract Records {
         bool shortnessOfBreath;
         bool fatigue;
         bool others;
-        
-        // Duration and Severity
-        string durationOfSymptoms;
+     
+        string durationOfSymptoms; // Duration and Severity
         string severityOfSymptoms;
-        
-        // Signs
-        string signs;
-        
-        // Diagnostic Tests
-        string diagnosticTests;
-        
-        // Relevant Medical History
-        string relevantMedicalHistory;
-        
-        // Genetic History
-        string geneticHistory;
+        string signs; // Signs
+        string diagnosticTests; // Diagnostic Tests
+        string relevantMedicalHistory; // Relevant Medical History
+        string geneticHistory; // Genetic History
     }
 
     struct MedicalProcedure {
@@ -112,19 +106,8 @@ contract Records {
     }
 
     // Test Type (Enum for drop-down menu options)
-    enum TestCategory {
-    BloodTests,
-    Urinalysis,
-    ImagingStudies,
-    MicrobiologyTests,
-    SerologyTests,
-    HematologyTests,
-    CoagulationStudies,
-    EndocrineTests,
-    GeneticTests,
-    ToxicologyTests,
-    PathologyTests
-    }
+    enum TestCategory { BloodTests, Urinalysis, ImagingStudies, MicrobiologyTests, SerologyTests, HematologyTests,
+                        CoagulationStudies, EndocrineTests, GeneticTests, ToxicologyTests, PathologyTests}
 
     struct LaboratoryHistory {
         // General Information
@@ -251,6 +234,11 @@ contract Records {
         string roomNumber;
         string bedNumber;
     }
+     // Enum for Allergy Types
+    enum AllergyType { Drug, Food, Environmental, InsectSting }
+    
+    // Enum for Allergy Severity
+    enum Severity { Mild, Moderate, Severe }
 
     // Struct for Allergy
     struct AllergyRecord {
@@ -273,22 +261,91 @@ contract Records {
         string additionalNotes;
     }  
 
+    address public owner; // Address of the owner of the contract
+    address[] public patientList; // Dynamic array to store the addresses of registered patients
+    address[] public hospitalList;
+
+    // Mapping to associate patient addresses with Patient/Hospital structs
+    mapping(address => Patient) public patients; 
+    mapping(address => Hospital) public hospitals;
+
+    //tracks of whether a specific Ethereum address is registered
+    mapping(address => bool) public isPatient;
+    mapping(address => bool) public isHospital;
+    
+    // Total count of registered patients
+    uint256 public patientCount = 0;
+    uint256 public hospitalCount = 0;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function registerPatient(
+        string memory _username,
+        string memory _password,
+        string memory _name,
+        string memory _phone,
+        string memory _gender,
+        string memory _dateOfBirth,
+        string memory _height,
+        string memory _weight,
+        string memory _houseAddress,
+        address _addr
+    ) public {
+        require(!isPatient[_addr]);
+        Patient storage p = patients[_addr];
+        
+        p.username = _username;
+        p.password = _password;
+        p.name = _name;
+        p.phone = _phone;
+        p.gender = _gender;
+        p.dateOfBirth = _dateOfBirth;
+        p.height = _height;
+        p.weight = _weight;
+        p.houseAddress = _houseAddress;
+        p.addr = msg.sender;
+
+        patientList.push(msg.sender);
+        isPatient[msg.sender] = true;
+        patientCount++;
+    }
+
+    function registerHospital(
+        string memory _username,
+        string memory _password,
+        string memory _hospitalName,
+        string memory _contactNum,
+        string memory _hospitalAddress,
+        address _addr
+    ) public {
+        require(!isHospital[_addr]);
+        Hospital storage h = hospitals[_addr];
+        
+       h.username = _username;
+       h.password = _password;
+       h.hospitalName = _hospitalName;
+       h.contactNum = _contactNum;
+       h.hospitalAddress = _hospitalAddress;
+
+        hospitalList.push(msg.sender);
+        isHospital[msg.sender] = true;
+        hospitalCount++;
+    }
+
     /**
-        Code para madeploy ang smart contract
-        Current Address: '0xB193794bdfF11Ea39340e9ab69c4E1Ee4B9A04d4'    
-     */
-    address public owner = msg.sender;
-    uint public last_completed_migration;
-
-    modifier restricted() {
-        require(
-        msg.sender == owner,
-        "This function is restricted to the contract's owner"
-        );
-        _;
-    }
-
-    function setCompleted(uint completed) public restricted {
-        last_completed_migration = completed;
-    }
+    getPatientInfo (reretrieve account niya sa blockchain)
+    createNewMedicalRecord
+    getPatientList
+    getMedicalRecordsList
+    getMedicalProcedureList
+    getMedicalTreatmentList
+    getMedicalPrescriptionList
+    getLaboratoryHistoryList
+    getHospitalizationRecordList
+    getAllergyList
+    getHospitalList
+    */
+    
 }
