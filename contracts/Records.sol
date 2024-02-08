@@ -15,6 +15,13 @@ contract Records {
         string houseAddress;
         address addr;
         uint date;
+
+        //Arrays na mags-store ng records
+        MedicalHistory[] medicalHistories;
+        MedicalProcedure[] medicalProcedures;
+        MedicationPrescription[] medicationPrescriptions;
+        LaboratoryHistory[] laboratoryHistories;
+        HospitalizationRecord[] hospitalizationRecords;
     }
 
     struct Hospital {
@@ -59,23 +66,6 @@ contract Records {
         string postOperativeCare;
     }
 
-    struct MedicalTreatment {
-        // General Information
-        string treatmentType;
-        string hospital;
-        uint date;
-        // Treatment Details
-        string treatmentProvider;
-        string specificTreatmentType;
-        string treatmentDescription;
-        string treatmentFrequency;
-        string treatmentDuration;
-        string startDateOfTreatment;
-        string endDateOfTreatment;
-        string responseToTreatment;
-        string followUpRecommendations;
-    }
-
     struct MedicationPrescription {
         // General Information
         string medication;
@@ -103,8 +93,7 @@ contract Records {
         string orderingPhysician;
         string dateOfTestCalendar;
         string testCategory; //kung ano category niya (ex. CBC, CTS, etc)
-        // Results (Upload file/IPFS hash)
-        string resultsIpfsHash;
+        string resultsIpfsHash;  // Results (Upload file/IPFS hash)
         // Additional Details
         string reviewingPhysician;
         string interpretation;
@@ -114,13 +103,6 @@ contract Records {
 
     // Struct for Hospitalization History
     struct HospitalizationRecord {
-        // Patient Information
-        string patientName;
-        string patientID;
-        string dateOfBirth;
-        string gender;
-        address addr;
-        string phoneNumber;
         // Hospitalization Details
         string admissionDate;
         string dischargeDate;
@@ -131,32 +113,8 @@ contract Records {
         // Hospital Information
         string hospitalName;
         string physicians;
-        string hospitalUnit;
-        string roomNumber;
-        string bedNumber;
     }
 
-    // Struct for Allergy
-    struct AllergyRecord {
-        // Allergy Details
-        string allergen;
-        string allegyType;
-        string severity;
-        string reaction;
-        string dateStarted;
-        string lastReactionDate;
-
-        // Allergy Testing
-        string allergyTestType;
-        string testResults;
-
-        // Treatment and Management
-        string medications;
-        string avoidanceStrategies;
-        string followUpPlan;
-        string additionalNotes;
-    }  
-    
     address public owner; // Address of the owner of the contract
     address[] public patientList; // Dynamic array to store the addresses of registered patients
     address[] public hospitalList;
@@ -173,21 +131,12 @@ contract Records {
     uint256 public patientCount = 0;
     uint256 public hospitalCount = 0;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
-    function registerPatient(
-        string memory _username,
-        string memory _password,
-        string memory _name,
-        string memory _phone,
-        string memory _gender,
-        string memory _dateOfBirth,
-        string memory _height,
-        string memory _weight,
-        string memory _houseAddress
-    ) public {
+    function registerPatient(string memory _username, string memory _password, string memory _name, string memory _phone, string memory _gender, 
+    string memory _dateOfBirth, string memory _height, string memory _weight,string memory _houseAddress) public {
         require(!isPatient[msg.sender]);
         Patient memory p = patients[msg.sender];
         
@@ -204,19 +153,13 @@ contract Records {
         p.date = block.timestamp;
 
         // Initialize the medicalRecords array 
-        //p.medicalRecords = new MedicalHistory[](0);
+        p.medicalHistories = new MedicalHistory[](0);
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
         patientCount++;
     }
 
-    function registerHospital(
-        string memory _username,
-        string memory _password,
-        string memory _hospitalName,
-        string memory _contactNum,
-        string memory _hospitalAddress
-    ) public {
+    function registerHospital(string memory _username, string memory _password, string memory _hospitalName, string memory _contactNum, string memory _hospitalAddress) public {
         require(!isHospital[msg.sender]);
         Hospital memory h = hospitals[msg.sender];
         
@@ -262,11 +205,7 @@ contract Records {
         p.houseAddress = _houseAddress;
     }
 
-    function editHospitalProfile(
-        string memory _hospitalName,
-        string memory _contactNum,
-        string memory _hospitalAddress
-    ) public {
+    function editHospitalProfile(string memory _hospitalName, string memory _contactNum, string memory _hospitalAddress) public {
         require(isHospital[msg.sender]);
         Hospital storage h = hospitals[msg.sender];
         
@@ -275,20 +214,23 @@ contract Records {
         h.hospitalAddress = _hospitalAddress;
     }
 
-
+    
     /**
+    Note: Size of the contract code exceeds the limit of 24,576 bytes
     -----HOSPITAL-----
-    addNewPatientMedicalRecord
+    addNewPatientMedicalHistory
+    addNewPatientMedicalProcedure
+    addNewPatientMedicalPrescription
+    addNewPatientLaboratoryRecord
+    addNewPatientHospitalizationRecord
     editPatientRecord
 
     -----PATIENT-----
     getMedicalRecordsList
     getMedicalProcedureList
-    getMedicalTreatmentList
     getMedicalPrescriptionList
     getLaboratoryHistoryList
     getHospitalizationRecordList
-    getAllergyList
-    getHospitalList
+    revokeAccess
     */
 }
