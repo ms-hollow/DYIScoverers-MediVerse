@@ -16,6 +16,7 @@ contract Records {
         string weight;
         string houseAddress;
         address addr;
+        uint date;
     }
 
     struct Hospital {
@@ -25,6 +26,7 @@ contract Records {
         string contactNum;
         string hospitalAddress;
         address addr;
+        uint date;
     }
 
     struct MedicalHistory {
@@ -290,11 +292,10 @@ contract Records {
         string memory _dateOfBirth,
         string memory _height,
         string memory _weight,
-        string memory _houseAddress,
-        address _addr
+        string memory _houseAddress
     ) public {
-        require(!isPatient[_addr]);
-        Patient storage p = patients[_addr];
+        require(!isPatient[msg.sender]);
+        Patient memory p = patients[msg.sender];
         
         p.username = _username;
         p.password = _password;
@@ -306,6 +307,7 @@ contract Records {
         p.weight = _weight;
         p.houseAddress = _houseAddress;
         p.addr = msg.sender;
+        p.date = block.timestamp;
 
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
@@ -317,27 +319,43 @@ contract Records {
         string memory _password,
         string memory _hospitalName,
         string memory _contactNum,
-        string memory _hospitalAddress,
-        address _addr
+        string memory _hospitalAddress
     ) public {
-        require(!isHospital[_addr]);
-        Hospital storage h = hospitals[_addr];
+        require(!isHospital[msg.sender]);
+        Hospital memory h = hospitals[msg.sender];
         
-       h.username = _username;
-       h.password = _password;
-       h.hospitalName = _hospitalName;
-       h.contactNum = _contactNum;
-       h.hospitalAddress = _hospitalAddress;
+        h.username = _username;
+        h.password = _password;
+        h.hospitalName = _hospitalName;
+        h.contactNum = _contactNum;
+        h.hospitalAddress = _hospitalAddress;
+        h.addr = msg.sender;
+        h.date = block.timestamp;
 
         hospitalList.push(msg.sender);
         isHospital[msg.sender] = true;
         hospitalCount++;
     }
 
+    //Retrieve a list of all patients address
+    function getPatients() public view returns(address[] memory) {
+        return patientList;
+    }
+
+    //Retrieve a list of all doctors address
+    function getHospitals() public view returns(address[] memory) {
+        return hospitalList;
+    }
+
     /**
-    getPatientInfo (reretrieve account niya sa blockchain)
-    createNewMedicalRecord
-    getPatientList
+    editPatientProfile
+    editHospitalProfile
+
+    -----HOSPITAL-----
+    addNewPatientMedicalRecord
+    editPatientRecord
+
+    -----PATIENT-----
     getMedicalRecordsList
     getMedicalProcedureList
     getMedicalTreatmentList
@@ -346,6 +364,6 @@ contract Records {
     getHospitalizationRecordList
     getAllergyList
     getHospitalList
+
     */
-    
 }
