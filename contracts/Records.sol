@@ -3,8 +3,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Records {
 
-    enum Gender { Male, Female,Other }
-    
     struct Patient {
         string username;
         string password;
@@ -34,14 +32,7 @@ contract Records {
         string physician;
         uint dateOfDiagnosis;
         string diagnosis;  // Additional Diagnostic Information
- 
-        // Symptoms
-        bool fever;
-        bool cough;
-        bool shortnessOfBreath;
-        bool fatigue;
-        bool others;
-     
+        string symptoms;    
         string durationOfSymptoms; // Duration and Severity
         string severityOfSymptoms;
         string signs; // Signs
@@ -55,7 +46,6 @@ contract Records {
         string procedureType;
         string hospital;
         uint date;
-
         // Procedure Details
         string medicalTeam;
         string procedureDescription;
@@ -64,8 +54,7 @@ contract Records {
         string durationOfProcedure;
         string anesthesiaUsed;
         string anesthesiaDosage;
-        string preOperativeInstructions;
-        
+        string preOperativeInstructions;     
         // Post-operative Care
         string postOperativeCare;
     }
@@ -75,7 +64,6 @@ contract Records {
         string treatmentType;
         string hospital;
         uint date;
-
         // Treatment Details
         string treatmentProvider;
         string specificTreatmentType;
@@ -93,7 +81,6 @@ contract Records {
         string medication;
         string hospital;
         uint dateOfPrescription;
-
         // Prescription Details
         string prescribingPhysician;
         string dateOfPrescriptionCalendar;
@@ -107,103 +94,17 @@ contract Records {
         string adverseReactionsSideEffects;
     }
 
-    // Test Type (Enum for drop-down menu options)
-    enum TestCategory { BloodTests, Urinalysis, ImagingStudies, MicrobiologyTests, SerologyTests, HematologyTests,
-                        CoagulationStudies, EndocrineTests, GeneticTests, ToxicologyTests, PathologyTests}
-
     struct LaboratoryHistory {
         // General Information
-        string testType;
+        string testType; //kung ano type ng test (blood test, urinalysis, etc)
         string hospital;
         uint dateOfTest;
-
         // Test Details
         string orderingPhysician;
         string dateOfTestCalendar;
-
-        TestCategory testCategory;
-        
-        // Specific Tests (uint8 for boolean values)
-        // Blood Tests
-        uint8 completeBloodCount;
-        uint8 basicMetabolicPanel;
-        uint8 comprehensiveMetabolicPanel;
-        uint8 bloodGlucoseTest;
-        uint8 lipidPanel;
-        uint8 liverFunctionTests;
-        uint8 coagulationPanel;
-        uint8 bloodTypingAndCrossmatching;
-
-        // Urinalysis
-        uint8 routineUrinalysis;
-        uint8 urineCultureAndSensitivity;
-        uint8 urineMicroscopicExamination;
-
-        // Imaging Studies
-        uint8 xRays;
-        uint8 computedTomography;
-        uint8 magneticResonanceImaging;
-        uint8 ultrasound;
-        uint8 positronEmissionTomography;
-        uint8 boneScans;
-
-        // Microbiology Tests
-        uint8 cultureAndSensitivity;
-        uint8 gramStain;
-        uint8 acidFastBacilliCulture;
-        uint8 fungalCulture;
-        uint8 viralCulture;
-        uint8 antigenAndAntibodyTests;
-
-        // Serology Tests
-        uint8 enzymeLinkedImmunosorbentAssay;
-        uint8 rapidPlasmaReaginTest;
-        uint8 treponemalAntibodyTests;
-        uint8 rheumatoidFactor;
-        uint8 cReactiveProtein;
-
-        // Hematology Tests
-        uint8 hemoglobinA1c;
-        uint8 hemoglobinElectrophoresis;
-        uint8 bloodSmearExamination;
-        uint8 erythrocyteSedimentationRate;
-        uint8 peripheralBloodFilm;
-
-        // Coagulation Studies
-        uint8 prothrombinTime;
-        uint8 internationalNormalizedRatio;
-        uint8 partialThromboplastinTime;
-        uint8 dDimerTest;
-        uint8 plateletCount;
-
-        // Endocrine Tests
-        uint8 thyroidFunctionTests;
-        uint8 adrenalFunctionTests;
-        uint8 insulinLevels;
-        uint8 testosteroneLevels;
-        uint8 follicleStimulatingHormoneLevels;
-
-        // Genetic Tests
-        uint8 polymeraseChainReaction;
-        uint8 fluorescenceInSituHybridization;
-        uint8 chromosomalAnalysis;
-        uint8 geneticScreeningAndCounseling;
-
-        // Toxicology Tests
-        uint8 drugScreening;
-        uint8 alcoholLevels;
-        uint8 heavyMetalTesting;
-
-        // Pathology Tests
-        uint8 tissueBiopsy;
-        uint8 fineNeedleAspiration;
-        uint8 papSmear;
-        uint8 histopathology;
-        uint8 immunohistochemistry;
-
+        string testCategory; //kung ano category niya (ex. CBC, CTS, etc)
         // Results (Upload file/IPFS hash)
         string resultsIpfsHash;
-
         // Additional Details
         string reviewingPhysician;
         string interpretation;
@@ -220,7 +121,6 @@ contract Records {
         string gender;
         address addr;
         string phoneNumber;
-
         // Hospitalization Details
         string admissionDate;
         string dischargeDate;
@@ -228,7 +128,6 @@ contract Records {
         string admittingDiagnosis;
         string dischargeDiagnosis;
         string lengthOfStay;
-
         // Hospital Information
         string hospitalName;
         string physicians;
@@ -236,18 +135,13 @@ contract Records {
         string roomNumber;
         string bedNumber;
     }
-     // Enum for Allergy Types
-    enum AllergyType { Drug, Food, Environmental, InsectSting }
-    
-    // Enum for Allergy Severity
-    enum Severity { Mild, Moderate, Severe }
 
     // Struct for Allergy
     struct AllergyRecord {
         // Allergy Details
         string allergen;
-        AllergyType allergyType;
-        Severity severity;
+        string allegyType;
+        string severity;
         string reaction;
         string dateStarted;
         string lastReactionDate;
@@ -262,7 +156,7 @@ contract Records {
         string followUpPlan;
         string additionalNotes;
     }  
-
+    
     address public owner; // Address of the owner of the contract
     address[] public patientList; // Dynamic array to store the addresses of registered patients
     address[] public hospitalList;
@@ -279,7 +173,7 @@ contract Records {
     uint256 public patientCount = 0;
     uint256 public hospitalCount = 0;
 
-    constructor() {
+    constructor() public {
         owner = msg.sender;
     }
 
@@ -309,6 +203,8 @@ contract Records {
         p.addr = msg.sender;
         p.date = block.timestamp;
 
+        // Initialize the medicalRecords array 
+        //p.medicalRecords = new MedicalHistory[](0);
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
         patientCount++;
@@ -347,10 +243,40 @@ contract Records {
         return hospitalList;
     }
 
-    /**
-    editPatientProfile
-    editHospitalProfile
+    function editPatientProfile(
+        string memory _name,
+        string memory _phone,
+        string memory _dateOfBirth,
+        string memory _height,
+        string memory _weight,
+        string memory _houseAddress
+    ) public {
+        require(isPatient[msg.sender]);
+        Patient storage p = patients[msg.sender];
+        
+        p.name = _name;
+        p.phone = _phone;
+        p.dateOfBirth = _dateOfBirth;
+        p.height = _height;
+        p.weight = _weight;
+        p.houseAddress = _houseAddress;
+    }
 
+    function editHospitalProfile(
+        string memory _hospitalName,
+        string memory _contactNum,
+        string memory _hospitalAddress
+    ) public {
+        require(isHospital[msg.sender]);
+        Hospital storage h = hospitals[msg.sender];
+        
+        h.hospitalName = _hospitalName;
+        h.contactNum = _contactNum;
+        h.hospitalAddress = _hospitalAddress;
+    }
+
+
+    /**
     -----HOSPITAL-----
     addNewPatientMedicalRecord
     editPatientRecord
@@ -364,6 +290,5 @@ contract Records {
     getHospitalizationRecordList
     getAllergyList
     getHospitalList
-
     */
 }
