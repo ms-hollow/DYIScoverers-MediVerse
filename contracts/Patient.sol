@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
+import "./MedicalHistory.sol";
+
 contract PatientRecords {
 
     struct Patient {
+        string patientID;
         string name;
         string phone;
         string gender;
@@ -17,23 +20,26 @@ contract PatientRecords {
     }
 
     address[] public patientList; // Dynamic array to store the addresses of registered patients
-
-    // Mapping to associate addresses with structs
-    mapping(address => Patient) public patients; 
-    //tracks of whether a specific Ethereum address is registered
-    mapping(address => bool) public isPatient;
-    // Total count of registered patients
+    mapping(address => Patient) public patients; // Mapping to associate addresses with structs
+    mapping(address => bool) public isPatient; // Tracks whether a specific Ethereum address is registered
     uint256 public patientCount = 0;
 
-    constructor() {
-        // owner is already defined in the Records contract
-    }
+    function registerPatient(
+        string memory _patientID,
+        string memory _name,
+        string memory _phone,
+        string memory _gender,
+        string memory _age,
+        string memory _dateOfBirth,
+        string memory _height,
+        string memory _weight,
+        string memory _houseAddress
+    ) public {
+        require(!isPatient[msg.sender], "Patient already registered");
 
-    function registerPatient(string memory _name, string memory _phone, string memory _gender, string memory _age,
-    string memory _dateOfBirth, string memory _height, string memory _weight,string memory _houseAddress) public {
-        require(!isPatient[msg.sender]);
-        Patient memory p = patients[msg.sender];
+        Patient storage p = patients[msg.sender];  
         
+        p.patientID = _patientID;
         p.name = _name;
         p.phone = _phone;
         p.age = _age;
@@ -68,14 +74,4 @@ contract PatientRecords {
         p.weight = _weight;
         p.houseAddress = _houseAddress;
     }
-    
-    /**
-    -----PATIENT-----
-    getMedicalRecordsList
-    getMedicalProcedureList
-    getMedicalPrescriptionList
-    getLaboratoryHistoryList
-    getHospitalizationRecordList
-    revokeAccess
-    */
 }

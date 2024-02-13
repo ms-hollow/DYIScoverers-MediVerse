@@ -1,0 +1,15 @@
+{
+  "name": "mediverse-web3-dapp",
+  "version": "1.0.0",
+  "description": "MediVerse is a blockchain-based medical records system designed to securely store and manage patient information.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
