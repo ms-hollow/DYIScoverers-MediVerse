@@ -21,6 +21,7 @@ contract PatientRecords {
 
     address[] public patientList; // Dynamic array to store the addresses of registered patients
     mapping(address => Patient) public patients; // Mapping to associate addresses with structs
+    mapping(string => address) public patientIDToAddress; //ico-connect ang patientID sa eth address
     mapping(address => bool) public isPatient; // Tracks whether a specific Ethereum address is registered
     uint256 public patientCount = 0;
 
@@ -53,6 +54,8 @@ contract PatientRecords {
 
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
+        // Store the mapping
+        patientIDToAddress[_patientID] = msg.sender;
         patientCount++;
     }
 

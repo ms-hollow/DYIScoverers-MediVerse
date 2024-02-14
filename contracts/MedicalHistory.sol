@@ -2,7 +2,6 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 import "./Patient.sol";
-import "./Hospital.sol";
 
 contract MedicalHistoryRecords {
     
@@ -23,6 +22,8 @@ contract MedicalHistoryRecords {
     mapping(string => string[]) public patientHistoryRecords;
     mapping(string => address) public hospitalToPatient; 
     mapping(address => bool) public isPatient;
+    // Mapping to store patient permissions
+    mapping(string => mapping(address => bool)) public patientPermissions;
 
     event MedicalHistoryRecordAdded(string recordID, string patientID);
     event MedicalHistoryRecordEdited(string recordID, string patientID);
@@ -82,8 +83,88 @@ contract MedicalHistoryRecords {
         emit MedicalHistoryRecordEdited(_recordID, record.patientID);
     }
 
-    // Retrieve and medical record
+    // Retrieve medical for specific patient
+    // pwede gamitin ng hospital & patient when searching for specific patient record
     function getMedicalHistoryRecords(string memory _patientID) public view returns (string[] memory) {
         return patientHistoryRecords[_patientID];
+    }
+    
+    /**
+    > patient can revoke access to the medical records (revokeAccess)
+    > patient can give permission to view the contract (givePermission)
+
+    >hospital can retrieve all medical history of the patients if they have a permission, so in general they can retrieve all the medical records of the patient
+    >hospital can search medical records based on the medical records
+    */
+    /**
+    Sa backend&frontend dapat automatic malagay sa _patientID kung sino ang patient na currently
+    naka logged in para lalagay niya nalang yung address ng hospital
+    */
+    function revokeAccess(string memory _patientID, address _hospitalAddr) public {
+        // Check if the patient has given permission to the specified hospital
+        require(patientPermissions[_patientID][_hospitalAddr], "Permission not granted");
+
+        // Revoke access by setting the permission to false
+        patientPermissions[_patientID][_hospitalAddr] = false;
+    }
+
+    function givePermission(string memory _patientID, address _hospitalAddr) public {
+        // Grant access by setting the permission to true
+        patientPermissions[_patientID][_hospitalAddr] = true;
+        }
+
+        function getAllMedicalHistoryRecordsForHospital(string memory _patientID) public view returns (HistoryRecord[] memory) {
+        // Check if the hospital has permission to access the patient's records
+        require(patientPermissions[_patientID][msg.sender], "Permission not granted");
+
+        string[] memory recordIDs = patientHistoryRecords[_patientID];
+        HistoryRecord[] memory records = new HistoryRecord[](recordIDs.length);
+
+        // Retrieve each medical record for the patient
+        for (uint i = 0; i < recordIDs.length; i++) {
+            records[i] = historyRecords[recordIDs[i]];
+        }
+
+        return records;
+    }
+    
+    function searchMedicalRecords(string memory _patientID, string memory _diagnosisKeyword, string memory _symptomsKeyword
+        ) public view returns (HistoryRecord[] memory) {
+        //check if the user has permission to access this record
+        require(patientPermissions[_patientID][msg.sender], "Permission not granted");
+
+        string[] memory recordIDs = patientHistoryRecords[_patientID];
+        HistoryRecord[] memory matchingRecords;
+        uint matchingCount = 0;
+
+        // Iterate through each record and check for matching criteria
+        for (uint i = 0; i < recordIDs.length; i++) {
+            HistoryRecord storage record = historyRecords[recordIDs[i]];
+
+            // Check if the record matches the specified criteria
+            if (
+                containsIgnoreCase(record.diagnosis, _diagnosisKeyword) &&
+                containsIgnoreCase(record.symptoms, _symptomsKeyword)
+            ) {
+                // Add the matching record to the result array
+                if (matchingRecords.length == matchingCount) {
+                    // Extend the array if needed
+                    matchingRecords = new HistoryRecord[](matchingRecords.length + 1);
+                }
+                matchingRecords[matchingCount++] = record;
+            }
+        }
+
+        // Resize the array to remove unused slots
+        assembly {
+            mstore(matchingRecords, matchingCount)
+        }
+
+        return matchingRecords;
+    }
+
+    function containsIgnoreCase(string memory _haystack, string memory _needle) internal pure returns (bool) {
+        return (bytes(_haystack).length >= bytes(_needle).length) &&
+            (keccak256(abi.encodePacked(_haystack)) == keccak256(abi.encodePacked(_needle)));
     }
 }
