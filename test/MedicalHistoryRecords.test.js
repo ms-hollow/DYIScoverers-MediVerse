@@ -114,5 +114,5 @@ contract("MedicalHistoryRecords", (accounts) => {
         assert.equal(updatedRecord.signs, 'Updated Signs');
         assert.equal(updatedRecord.relevantMedicalHistory, 'Updated Relevant Medical History');
     });
-
+    
 });

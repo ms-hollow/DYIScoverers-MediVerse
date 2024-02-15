@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.8.0;
 
 import "./Patient.sol";
+import "./AccessControl.sol";
 
 contract MedicalHistoryRecords {
     
@@ -9,6 +10,7 @@ contract MedicalHistoryRecords {
         address hospitalAddr;
         string patientID;
         string recordID;
+        string hospital;
         string physician;
         uint dateOfDiagnosis;
         string diagnosis;
@@ -28,10 +30,12 @@ contract MedicalHistoryRecords {
     event MedicalHistoryRecordAdded(string recordID, string patientID);
     event MedicalHistoryRecordEdited(string recordID, string patientID);
 
+    //Only hospital can add/edit records
     function addMedicalHistory(
         string memory _patientID,
         string memory _recordID,
         string memory _physician,
+        string memory _hospital,
         uint _dateOfDiagnosis,
         string memory _diagnosis,
         string memory _symptoms,
@@ -44,9 +48,11 @@ contract MedicalHistoryRecords {
         emit MedicalHistoryRecordAdded(_recordID, _patientID);
 
         HistoryRecord storage record = historyRecords[_recordID];
+        
         record.hospitalAddr = msg.sender;
         record.patientID = _patientID;
         record.recordID = _recordID;
+        record.hospital = _hospital;
         record.physician = _physician;
         record.dateOfDiagnosis = _dateOfDiagnosis;
         record.diagnosis = _diagnosis;
@@ -61,7 +67,7 @@ contract MedicalHistoryRecords {
         emit MedicalHistoryRecordAdded(_recordID, _patientID);
     }
 
-    function editMedicalHistory(string memory _recordID, string memory _physician, uint _dateOfDiagnosis, string memory _diagnosis, 
+    function editMedicalHistory(string memory _recordID, string memory _physician, string memory _hospital, uint _dateOfDiagnosis, string memory _diagnosis, 
     string memory _symptoms, string memory _durationSeverity, string memory _signs, string memory _relevantMedicalHistory) public {
     
         // Retrieve the record from storage
@@ -72,6 +78,7 @@ contract MedicalHistoryRecords {
 
         // Update the record with the new information
         record.physician = _physician;
+        record.hospital = _hospital;
         record.dateOfDiagnosis = _dateOfDiagnosis;
         record.diagnosis = _diagnosis;
         record.symptoms = _symptoms;
@@ -85,10 +92,11 @@ contract MedicalHistoryRecords {
 
     // Retrieve medical for specific patient
     // pwede gamitin ng hospital & patient when searching for specific patient record
+    /*
     function getMedicalHistoryRecords(string memory _patientID) public view returns (string[] memory) {
         return patientHistoryRecords[_patientID];
     }
-    
+    */
     /**
     > patient can revoke access to the medical records (revokeAccess)
     > patient can give permission to view the contract (givePermission)
@@ -96,24 +104,12 @@ contract MedicalHistoryRecords {
     >hospital can retrieve all medical history of the patients if they have a permission, so in general they can retrieve all the medical records of the patient
     >hospital can search medical records based on the medical records
     */
-    /**
+    
+    /*
     Sa backend&frontend dapat automatic malagay sa _patientID kung sino ang patient na currently
     naka logged in para lalagay niya nalang yung address ng hospital
     */
-    function revokeAccess(string memory _patientID, address _hospitalAddr) public {
-        // Check if the patient has given permission to the specified hospital
-        require(patientPermissions[_patientID][_hospitalAddr], "Permission not granted");
-
-        // Revoke access by setting the permission to false
-        patientPermissions[_patientID][_hospitalAddr] = false;
-    }
-
-    function givePermission(string memory _patientID, address _hospitalAddr) public {
-        // Grant access by setting the permission to true
-        patientPermissions[_patientID][_hospitalAddr] = true;
-        }
-
-        function getAllMedicalHistoryRecordsForHospital(string memory _patientID) public view returns (HistoryRecord[] memory) {
+    function getAllMedicalHistoryRecords(string memory _patientID) public view returns (HistoryRecord[] memory) {
         // Check if the hospital has permission to access the patient's records
         require(patientPermissions[_patientID][msg.sender], "Permission not granted");
 
@@ -130,7 +126,7 @@ contract MedicalHistoryRecords {
     
     function searchMedicalRecords(string memory _patientID, string memory _diagnosisKeyword, string memory _symptomsKeyword
         ) public view returns (HistoryRecord[] memory) {
-        //check if the user has permission to access this record
+        // Check if the user has permission to access this record
         require(patientPermissions[_patientID][msg.sender], "Permission not granted");
 
         string[] memory recordIDs = patientHistoryRecords[_patientID];
@@ -142,10 +138,9 @@ contract MedicalHistoryRecords {
             HistoryRecord storage record = historyRecords[recordIDs[i]];
 
             // Check if the record matches the specified criteria
-            if (
-                containsIgnoreCase(record.diagnosis, _diagnosisKeyword) &&
-                containsIgnoreCase(record.symptoms, _symptomsKeyword)
-            ) {
+            //`keccak256()` compares the hashes of both strings and returns `true` if they are equal
+            if (keccak256(bytes(record.diagnosis)) == keccak256(bytes(_diagnosisKeyword)) &&
+                (keccak256(bytes(record.symptoms)) == keccak256(bytes(_symptomsKeyword)))) {
                 // Add the matching record to the result array
                 if (matchingRecords.length == matchingCount) {
                     // Extend the array if needed
@@ -154,17 +149,10 @@ contract MedicalHistoryRecords {
                 matchingRecords[matchingCount++] = record;
             }
         }
-
         // Resize the array to remove unused slots
         assembly {
             mstore(matchingRecords, matchingCount)
         }
-
         return matchingRecords;
-    }
-
-    function containsIgnoreCase(string memory _haystack, string memory _needle) internal pure returns (bool) {
-        return (bytes(_haystack).length >= bytes(_needle).length) &&
-            (keccak256(abi.encodePacked(_haystack)) == keccak256(abi.encodePacked(_needle)));
     }
 }
