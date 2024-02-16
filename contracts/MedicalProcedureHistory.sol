@@ -14,7 +14,7 @@ contract MedicalProcedureHistory {
         string procedureType; 
         string procedureDescription;   // Procedure Details
         string procedureComplications;
-        uint dateOfProcedure; 
+        string dateOfProcedure; 
         string preOperativeInstructions; 
         string postOperativeCare;   // Post-operative Care
     }
@@ -22,7 +22,6 @@ contract MedicalProcedureHistory {
     mapping(string => ProcedureRecord) public procedureRecords;
     mapping(string => string[]) public patientProcedureRecords;
     mapping(string => address) public hospitalToPatient;
-    mapping(address => bool) public isPatient;
     // Mapping to store patient permissions
     mapping(string => mapping(address => bool)) public patientPermissions;
 
@@ -33,7 +32,7 @@ contract MedicalProcedureHistory {
         string memory _procedureType,
         string memory _procedureDescription,
         string memory _procedureComplications,
-        uint _dateOfProcedure,
+        string memory _dateOfProcedure,
         string memory _preOperativeInstructions,
         string memory _postOperativeCare
     ) public {
@@ -57,7 +56,7 @@ contract MedicalProcedureHistory {
         string memory _procedureType, 
         string memory _procedureDescription,
         string memory _procedureComplications,
-        uint _dateOfProcedure,
+        string memory _dateOfProcedure,
         string memory _preOperativeInstructions,
         string memory _postOperativeCare
     ) public {

@@ -47,4 +47,8 @@ contract HospitalRecords {
         h.contactNum = _contactNum;
         h.hospitalAddress = _hospitalAddress;
     }
+
+    function getHospitalList() public view returns (address[] memory) {
+        return hospitalList;
+    }
 }

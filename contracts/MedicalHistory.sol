@@ -12,7 +12,7 @@ contract MedicalHistoryRecords {
         string recordID;
         string hospital;
         string physician;
-        uint dateOfDiagnosis;
+        string dateOfDiagnosis;
         string diagnosis;
         string symptoms;
         string durationSeverity;
@@ -23,7 +23,6 @@ contract MedicalHistoryRecords {
     mapping(string => HistoryRecord) public historyRecords;
     mapping(string => string[]) public patientHistoryRecords;
     mapping(string => address) public hospitalToPatient; 
-    mapping(address => bool) public isPatient;
     // Mapping to store patient permissions
     mapping(string => mapping(address => bool)) public patientPermissions;
 
@@ -36,7 +35,7 @@ contract MedicalHistoryRecords {
         string memory _recordID,
         string memory _physician,
         string memory _hospital,
-        uint _dateOfDiagnosis,
+        string memory _dateOfDiagnosis,
         string memory _diagnosis,
         string memory _symptoms,
         string memory _durationSeverity,
@@ -67,7 +66,7 @@ contract MedicalHistoryRecords {
         emit MedicalHistoryRecordAdded(_recordID, _patientID);
     }
 
-    function editMedicalHistory(string memory _recordID, string memory _physician, string memory _hospital, uint _dateOfDiagnosis, string memory _diagnosis, 
+    function editMedicalHistory(string memory _recordID, string memory _physician, string memory _hospital, string memory _dateOfDiagnosis, string memory _diagnosis, 
     string memory _symptoms, string memory _durationSeverity, string memory _signs, string memory _relevantMedicalHistory) public {
     
         // Retrieve the record from storage
