@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Patient.sol";
-import "./AccessControl.sol";
+import "./Hospital.sol";
 
-contract MedicalHistoryRecords {
-    
+contract MedicalHistoryRecords is HospitalRecords{
+
+    // Structure to store medical history record details
     struct HistoryRecord {
+        address owner; //Patient's address
         address hospitalAddr;
-        string patientID;
-        string recordID;
         string hospital;
         string physician;
         string dateOfDiagnosis;
@@ -18,21 +17,21 @@ contract MedicalHistoryRecords {
         string durationSeverity;
         string signs;
         string relevantMedicalHistory;
-    }
+    }   
+    
+    address[] public medicalHistoryList;
+    mapping(address => HistoryRecord) public historyRecords;
+    mapping(address => address[]) public patientHistoryRecords;
+    uint256 public medicalHistoryCount = 0;
+    
+    // Event emitted when a medical history record is added
+    event MedicalHistoryRecordAdded(address patientAddr);
 
-    mapping(string => HistoryRecord) public historyRecords;
-    mapping(string => string[]) public patientHistoryRecords;
-    mapping(string => address) public hospitalToPatient; 
-    // Mapping to store patient permissions
-    mapping(string => mapping(address => bool)) public patientPermissions;
+    // Event emitted when a medical history record is edited
+    event MedicalHistoryRecordEdited(address patientAddr);
 
-    event MedicalHistoryRecordAdded(string recordID, string patientID);
-    event MedicalHistoryRecordEdited(string recordID, string patientID);
-
-    //Only hospital can add/edit records
     function addMedicalHistory(
-        string memory _patientID,
-        string memory _recordID,
+        address _patientAddr,
         string memory _physician,
         string memory _hospital,
         string memory _dateOfDiagnosis,
@@ -42,15 +41,11 @@ contract MedicalHistoryRecords {
         string memory _signs,
         string memory _relevantMedicalHistory
     ) public {
-        
-        // Debugging log
-        emit MedicalHistoryRecordAdded(_recordID, _patientID);
-
-        HistoryRecord storage record = historyRecords[_recordID];
-        
+        require(isHospital[msg.sender]);
+        // Set the details of the new medical history record
+        HistoryRecord storage record = historyRecords[_patientAddr];
         record.hospitalAddr = msg.sender;
-        record.patientID = _patientID;
-        record.recordID = _recordID;
+        record.owner = _patientAddr;
         record.hospital = _hospital;
         record.physician = _physician;
         record.dateOfDiagnosis = _dateOfDiagnosis;
@@ -60,17 +55,28 @@ contract MedicalHistoryRecords {
         record.signs = _signs;
         record.relevantMedicalHistory = _relevantMedicalHistory;
 
-        patientHistoryRecords[_patientID].push(_recordID);
+        // Update patient's history records and increment the total count
+        patientHistoryRecords[_patientAddr].push(msg.sender);
+        medicalHistoryCount++;
 
-        // Debugging log
-        emit MedicalHistoryRecordAdded(_recordID, _patientID);
+        // Emit the event after modifying the historyRecords mapping
+        emit MedicalHistoryRecordAdded(_patientAddr);
     }
 
-    function editMedicalHistory(string memory _recordID, string memory _physician, string memory _hospital, string memory _dateOfDiagnosis, string memory _diagnosis, 
-    string memory _symptoms, string memory _durationSeverity, string memory _signs, string memory _relevantMedicalHistory) public {
-    
+    function editMedicalHistory(
+        address _patientAddr,
+        string memory _physician,
+        string memory _hospital,
+        string memory _dateOfDiagnosis,
+        string memory _diagnosis,
+        string memory _symptoms,
+        string memory _durationSeverity,
+        string memory _signs,
+        string memory _relevantMedicalHistory
+    ) public {
+        require(isHospital[msg.sender]);
         // Retrieve the record from storage
-        HistoryRecord storage record = historyRecords[_recordID];
+        HistoryRecord storage record = historyRecords[_patientAddr];
 
         // Check if the record exists and belongs to the specified patient
         require(record.hospitalAddr != address(0), "Record does not exist");
@@ -85,73 +91,7 @@ contract MedicalHistoryRecords {
         record.signs = _signs;
         record.relevantMedicalHistory = _relevantMedicalHistory;
 
-        // Debugging log
-        emit MedicalHistoryRecordEdited(_recordID, record.patientID);
-    }
-
-    // Retrieve medical for specific patient
-    // pwede gamitin ng hospital & patient when searching for specific patient record
-    /*
-    function getMedicalHistoryRecords(string memory _patientID) public view returns (string[] memory) {
-        return patientHistoryRecords[_patientID];
-    }
-    */
-    /**
-    > patient can revoke access to the medical records (revokeAccess)
-    > patient can give permission to view the contract (givePermission)
-
-    >hospital can retrieve all medical history of the patients if they have a permission, so in general they can retrieve all the medical records of the patient
-    >hospital can search medical records based on the medical records
-    */
-    
-    /*
-    Sa backend&frontend dapat automatic malagay sa _patientID kung sino ang patient na currently
-    naka logged in para lalagay niya nalang yung address ng hospital
-    */
-    function getAllMedicalHistoryRecords(string memory _patientID) public view returns (HistoryRecord[] memory) {
-        // Check if the hospital has permission to access the patient's records
-        require(patientPermissions[_patientID][msg.sender], "Permission not granted");
-
-        string[] memory recordIDs = patientHistoryRecords[_patientID];
-        HistoryRecord[] memory records = new HistoryRecord[](recordIDs.length);
-
-        // Retrieve each medical record for the patient
-        for (uint i = 0; i < recordIDs.length; i++) {
-            records[i] = historyRecords[recordIDs[i]];
-        }
-
-        return records;
-    }
-    
-    function searchMedicalRecords(string memory _patientID, string memory _diagnosisKeyword, string memory _symptomsKeyword
-        ) public view returns (HistoryRecord[] memory) {
-        // Check if the user has permission to access this record
-        require(patientPermissions[_patientID][msg.sender], "Permission not granted");
-
-        string[] memory recordIDs = patientHistoryRecords[_patientID];
-        HistoryRecord[] memory matchingRecords;
-        uint matchingCount = 0;
-
-        // Iterate through each record and check for matching criteria
-        for (uint i = 0; i < recordIDs.length; i++) {
-            HistoryRecord storage record = historyRecords[recordIDs[i]];
-
-            // Check if the record matches the specified criteria
-            //`keccak256()` compares the hashes of both strings and returns `true` if they are equal
-            if (keccak256(bytes(record.diagnosis)) == keccak256(bytes(_diagnosisKeyword)) &&
-                (keccak256(bytes(record.symptoms)) == keccak256(bytes(_symptomsKeyword)))) {
-                // Add the matching record to the result array
-                if (matchingRecords.length == matchingCount) {
-                    // Extend the array if needed
-                    matchingRecords = new HistoryRecord[](matchingRecords.length + 1);
-                }
-                matchingRecords[matchingCount++] = record;
-            }
-        }
-        // Resize the array to remove unused slots
-        assembly {
-            mstore(matchingRecords, matchingCount)
-        }
-        return matchingRecords;
+        // Emit the event after modifying the record
+        emit MedicalHistoryRecordEdited(_patientAddr);
     }
 }
