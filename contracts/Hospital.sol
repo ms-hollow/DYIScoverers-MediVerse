@@ -19,7 +19,9 @@ contract HospitalRecords {
 
     function registerHospital(string memory _hospitalName, string memory _contactNum, string memory _hospitalAddress) public {
         require(!isHospital[msg.sender]);
-        Hospital memory h = hospitals[msg.sender];
+        
+        Hospital storage h = hospitals[msg.sender];
+        
         h.hospitalName = _hospitalName;
         h.contactNum = _contactNum;
         h.hospitalAddress = _hospitalAddress;
@@ -33,6 +35,7 @@ contract HospitalRecords {
 
     function editHospitalProfile(string memory _hospitalName, string memory _contactNum, string memory _hospitalAddress) public {
         require(isHospital[msg.sender]);
+       
         Hospital storage h = hospitals[msg.sender];
         
         h.hospitalName = _hospitalName;

@@ -14,7 +14,6 @@ contract("PatientRecords", (accounts) => {
 
     it('can register a patient', async () => {
         await patientRecords.registerPatient(
-            'P123',
             'John Doe',
             '1234567890',
             'Male',
@@ -28,7 +27,6 @@ contract("PatientRecords", (accounts) => {
 
         const patient = await patientRecords.patients(accounts[1]);
 
-        assert.equal(patient.patientID, 'P123');
         assert.equal(patient.name, 'John Doe');
         assert.equal(patient.phone, '1234567890');
         assert.equal(patient.gender, 'Male');
@@ -41,7 +39,6 @@ contract("PatientRecords", (accounts) => {
 
     it('can edit patient profile', async () => {
         await patientRecords.registerPatient(
-            'P123',
             'John Doe',
             '1234567890',
             'Male',

@@ -2,8 +2,12 @@
 pragma solidity ^0.8.0;
 
 import "./Hospital.sol";
+import "./PermissionLibrary.sol";
 
-contract MedicalHistoryRecords is HospitalRecords{
+contract MedicalHistoryRecords is HospitalRecords {
+
+    using PermissionLibrary for mapping(address => mapping(address => bool));
+    mapping(address => mapping(address => bool)) isApprovedToViewMedicalHistory;
 
     // Structure to store medical history record details
     struct HistoryRecord {
@@ -41,9 +45,11 @@ contract MedicalHistoryRecords is HospitalRecords{
         string memory _signs,
         string memory _relevantMedicalHistory
     ) public {
+
         require(isHospital[msg.sender]);
         // Set the details of the new medical history record
         HistoryRecord storage record = historyRecords[_patientAddr];
+        
         record.hospitalAddr = msg.sender;
         record.owner = _patientAddr;
         record.hospital = _hospital;
@@ -93,5 +99,11 @@ contract MedicalHistoryRecords is HospitalRecords{
 
         // Emit the event after modifying the record
         emit MedicalHistoryRecordEdited(_patientAddr);
+    }
+
+    // Function to retrieve medical history for a specific patient if meron permission
+    function getMedicalHistory(address patientAddr) public view returns (MedicalHistoryRecords.HistoryRecord memory) {
+        require(isApprovedToViewMedicalHistory[patientAddr][msg.sender], "Access Denied."); //checker kung may permission
+        return MedicalHistoryRecords.historyRecords[patientAddr];
     }
 }

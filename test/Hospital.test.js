@@ -11,51 +11,38 @@ contract("HospitalRecords", (accounts) => {
         assert.ok(hospitalRecords.address);
     });
 
-    const truffleAssert = require('truffle-assertions');
-
     it('can register a hospital', async () => {
-        const tx = await hospitalRecords.registerHospital(
-            'XYZ Hospital',
-            '1234567890',
-            '123 Hospital St',
-            { from: accounts[0], gas: 2000000 }
+        await hospitalRecords.registerHospital(
+            'East Avenue Medical Center',
+            '29280611',
+            'East Ave, Diliman, Quezon City, 1100 Metro Manila',
+            { from: accounts[0] }
         );
-    
-        const event = await truffleAssert.createTransactionResult(hospitalRecords, tx.tx);
-    
-        // Retrieve hospital details from the emitted event
-        const hospitalName = event.logs[0].args.hospitalName;
-        const contactNum = event.logs[0].args.contactNum;
-        const hospitalAddress = event.logs[0].args.hospitalAddress;
-    
-        console.log('Hospital Name:', hospitalName);
-        console.log('Contact Number:', contactNum);
-        console.log('Hospital Address:', hospitalAddress);
-    
-        assert.equal(hospitalName, 'XYZ Hospital');
-        assert.equal(contactNum, '1234567890');
-        assert.equal(hospitalAddress, '123 Hospital St');
+
+        const hospital = await hospitalRecords.hospitals(accounts[0]); 
+
+        assert.equal(hospital.hospitalName, 'East Avenue Medical Center');
+        assert.equal(hospital.contactNum, '29280611');
+        assert.equal(hospital.hospitalAddress, 'East Ave, Diliman, Quezon City, 1100 Metro Manila');
     });
 
     it('can edit hospital profile', async () => {
         await hospitalRecords.registerHospital(
-            'ABC Hospital',
-            '9876543210',
-            '789 Side St',
+            'East Avenue Medical Center',
+            '29280611',
+            'East Ave, Diliman, Quezon City, 1100 Metro Manila',
             { from: accounts[0] }
         );
 
         await hospitalRecords.editHospitalProfile(
-            'Updated ABC Hospital',
-            '5555555555',
-            '123 New St',
+            'Updated East Avenue Medical Center',
+            '29280611',
+            'East Ave, Diliman, Quezon City, 1100 Metro Manila',
             { from: accounts[0] }
         );
 
         const updatedHospital = await hospitalRecords.hospitals(accounts[0]);
 
-        assert.equal(updatedHospital.hospitalName, 'Updated ABC Hospital');
-        assert.equal(updatedHospital.contactNum, '5555555555');
-        assert.equal(updatedHospital.hospitalAddress, '123 New St');
+        assert.equal(updatedHospital.hospitalName, 'Updated East Avenue Medical Center'); 
     });
 });

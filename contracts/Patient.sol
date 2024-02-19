@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 contract PatientRecords {
 
     struct Patient {
-        string patientID;
         string name;
         string phone;
         string gender;
@@ -19,12 +18,10 @@ contract PatientRecords {
 
     address[] public patientList; // Dynamic array to store the addresses of registered patients
     mapping(address => Patient) public patients; // Mapping to associate addresses with structs
-    mapping(string => address) public patientIDToAddress; //ico-connect ang patientID sa eth address
     mapping(address => bool) public isPatient; // Tracks whether a specific Ethereum address is registered
     uint256 public patientCount = 0;
 
     function registerPatient(
-        string memory _patientID,
         string memory _name,
         string memory _phone,
         string memory _gender,
@@ -34,11 +31,11 @@ contract PatientRecords {
         string memory _weight,
         string memory _houseAddress
     ) public {
+        
         require(!isPatient[msg.sender], "Patient already registered");
 
         Patient storage p = patients[msg.sender];  
         
-        p.patientID = _patientID;
         p.name = _name;
         p.phone = _phone;
         p.age = _age;
@@ -52,8 +49,6 @@ contract PatientRecords {
 
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
-        // Store the mapping
-        patientIDToAddress[_patientID] = msg.sender;
         patientCount++;
     }
 
