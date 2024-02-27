@@ -22,10 +22,10 @@ contract("PatientRecords", (accounts) => {
             '180',
             '70',
             '123 Main St',
-            { from: accounts[1] }
+            { from: accounts[0] }
         );
 
-        const patient = await patientRecords.patients(accounts[1]);
+        const patient = await patientRecords.patients(accounts[0]);
 
         assert.equal(patient.name, 'John Doe');
         assert.equal(patient.phone, '1234567890');
@@ -47,7 +47,7 @@ contract("PatientRecords", (accounts) => {
             '180',
             '70',
             '123 Main St',
-            { from: accounts[1] }
+            { from: accounts[0] }
         );
 
         await patientRecords.editPatientProfile(
@@ -57,10 +57,10 @@ contract("PatientRecords", (accounts) => {
             '175',
             '75',
             '456 Side St',
-            { from: accounts[1] }
+            { from: accounts[0] }
         );
 
-        const updatedPatient = await patientRecords.patients(accounts[1]);
+        const updatedPatient = await patientRecords.patients(accounts[0]);
 
         assert.equal(updatedPatient.name, 'Updated John Doe');
         assert.equal(updatedPatient.phone, '9876543210');
