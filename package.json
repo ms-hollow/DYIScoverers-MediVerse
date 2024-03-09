@@ -11,5 +11,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ganache-cli": "^6.12.2"
+  },
+  "dependencies": {
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^4.5.0"
+  }
 }

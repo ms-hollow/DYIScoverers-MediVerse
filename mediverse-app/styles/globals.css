@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --bg-color: white;
+  --navy-blue: #0A0045;
+  --blue: #0054F5;
+  --pale-blue: #2264DC;
+  --gray: #4A5568;
+  --cyan: #22D3D8;
+  --light-gray: #E8EBF3;
+}
+
 html,
 body {
   padding: 0;
