@@ -1,8 +1,7 @@
 .container {
   max-width: 65%; /* Adjust max-width for responsiveness */
-  margin: 15vh auto; /* Adjust margin for vertical positioning */
+  margin: 18% auto; /* Adjust margin for vertical positioning */
   padding: 1%; /* Adjust padding for responsiveness */
-  border: 1px solid var(--gray);
   border-radius: 3px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow to the container */
 }
@@ -15,6 +14,7 @@
 
 .formTitle {
   text-align: center;
+  white-space: nowrap;
 }
 
 .formRow {
@@ -60,17 +60,18 @@
   
   .formField {
     flex: 1 1 100%; /* Make form fields full width on smaller screens */
-    margin-right: 0; /* Remove right margin for form fields */
+    margin-left: 9%; /* Remove right margin for form fields */
     margin-bottom: 10px; /* Add bottom margin for form fields */
   }
   
   .backButton,
   .submitButton {
     width: 48%; /* Make buttons full width on smaller screens */
-    margin-right: 10%; /* Add margin between buttons */
+    margin-right: 25%; /* Add margin between buttons */
   }
   
   .formTitle {
     margin-bottom: 10px; /* Adjust margin for responsiveness */
+    font-size: 1.2rem; /* Adjust font size for responsiveness */
   }
 }

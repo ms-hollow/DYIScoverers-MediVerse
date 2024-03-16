@@ -69,7 +69,7 @@ html.index {
 }
 
 .button:hover {
-    background: linear-gradient(to right, var(--blue), var(--cyan));
+    background: var(--cyan);
 }
 
 #menuIcon{
