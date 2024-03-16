@@ -1,0 +1,76 @@
+.container {
+  max-width: 65%; /* Adjust max-width for responsiveness */
+  margin: 15vh auto; /* Adjust margin for vertical positioning */
+  padding: 1%; /* Adjust padding for responsiveness */
+  border: 1px solid var(--gray);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow to the container */
+}
+
+.registrationForm {
+  margin: 0 auto; /* Center the registration form horizontally */
+  width: 100%; /* Ensure the form takes up the full width of the container */
+  padding: 0% 0% 0% 2%; /* Add padding to the left side */
+}
+
+.formTitle {
+  text-align: center;
+}
+
+.formRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Align buttons at opposite ends */
+  margin-bottom: 15px;
+}
+
+.formField {
+  flex: 1;
+  margin-right: 1px;  
+}
+
+.formField input,
+.formField select {
+  width: calc(100% - 20px); /* Make input fields slightly wider */
+  padding: 10px; /* Adjust padding for responsiveness */
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+.submitButton {
+  display: block; /* Change display to block */
+  margin: 10px auto; /* Center horizontally with auto margins */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+}
+
+.backButton:hover,
+.submitButton:hover {
+  background-color: var(--cyan);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 8vw; /* Adjust padding for smaller screens */
+  }
+  
+  .formField {
+    flex: 1 1 100%; /* Make form fields full width on smaller screens */
+    margin-right: 0; /* Remove right margin for form fields */
+    margin-bottom: 10px; /* Add bottom margin for form fields */
+  }
+  
+  .backButton,
+  .submitButton {
+    width: 48%; /* Make buttons full width on smaller screens */
+    margin-right: 10%; /* Add margin between buttons */
+  }
+  
+  .formTitle {
+    margin-bottom: 10px; /* Adjust margin for responsiveness */
+  }
+}
