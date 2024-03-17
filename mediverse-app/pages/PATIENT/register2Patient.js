@@ -1,10 +1,11 @@
 import LandingPageHeader from "@/components/LandingPageHeader";
+import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
-import LandingPageLayout from "@/components/LandingPageLayout";
+
 
 const Register2Patient = () => {
     const [formData, setFormData] = useState({ 
@@ -26,32 +27,23 @@ const Register2Patient = () => {
         console.log('Form submitted:', formData);
     };
 
+    const goBack = () => {
+        window.history.back(); // Go back to the previous page
+    };
+
     return (
         <>
             <LandingPageHeader />
+            <RegistrationProcess />
 
-            <div className={styles.stepsContainer}>
-                <div className={styles.visualization}>
-                    <div className={styles.step}>
-                        <div className={styles.shapeBlue}>1</div>
-                        <div className={styles.stepText}>Account Setup</div>
-                    </div>
-                    <div className={styles.line}></div>
-                    <div className={styles.step}>
-                        <div className={styles.shapeCyan}>2</div>
-                        <div className={styles.stepText}>Personal Details</div>
-                    </div>
-                    <div className={styles.line}></div>
-                    <div className={styles.step}>
-                        <div className={styles.shapeBlue}>3</div>
-                        <div className={styles.stepText}>Confirmation</div>
-                    </div>
-                </div>
-            </div>
+            <div className={styles.formContainer}>
 
-            <div className={styles.container}>
+                <div className={styles.formTitle}>Personal Details</div>
 
-                <h2 className={styles.formTitle}>Personal Details</h2>
+                <button className={styles.backButton} onClick={goBack}>
+                    ←
+                </button>
+
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -115,6 +107,7 @@ const Register2Patient = () => {
                     <div className={styles.formRow}>
                         <button type="submit" className={styles.submitButton}>Submit</button>
                     </div>
+
                 </form>
             </div>
         </>
