@@ -1,6 +1,6 @@
 .container {
   max-width: 65%; /* Adjust max-width for responsiveness */
-  margin: 18% auto; /* Adjust margin for vertical positioning */
+  margin: 6% auto; /* Adjust margin for vertical positioning */
   padding: 1%; /* Adjust padding for responsiveness */
   border-radius: 3px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow to the container */
@@ -53,9 +53,88 @@
   background-color: var(--cyan);
 }
 
+/*-----------------------FOR THE STEPS VISUALIZATION----------------------------*/
+
+.stepsContainer {
+  display: flex;
+  justify-content: space-between; /* Distribute items evenly along the container */
+  align-items: center;
+  height: 10vh; /* Make the container take up the full height of the viewport */
+  margin: 3% 20% 10% 20%; /* Adjust margins for positioning */
+}
+
+.visualization {
+  width: 100%; /* Ensure the visualization takes up the full width of the container */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20%;
+}
+
+.step {
+  text-align: center;
+}
+
+.shapeBlue {
+  width: 85px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  background-color: var(--blue);
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  padding: 0 20px; /* Adjust padding as needed */
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px; /* Adjust border-radius to control the roundness */
+  margin-left: 15%;
+}
+
+.shapeCyan {
+  width: 85px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  background-color: var(--cyan);
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  padding: 0 20px; /* Adjust padding as needed */
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px; /* Adjust border-radius to control the roundness */
+  margin-left: 15%;
+}
+
+.stepText {
+  margin-top: 10px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  font-size: 16px; /* Set font size to 16px */
+  font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font */
+  font-weight: 400; /* Set font weight to regular */
+  margin-left: 10%;
+}
+
+
+.line {
+  width: calc(90% - 25px); /* Adjust width of the line */
+  height: 2px;
+  background-color: var(--blue);
+  margin-bottom: 3%;
+}
+
+.imageWrapper {
+  text-align: center; /* Center align the image */
+  margin-top: 10%; /* Add some space below the image */
+}
+
+.image {
+  max-width: 100%; /* Ensure the image fits within its container */
+}
+
+
 @media (max-width: 768px) {
   .container {
-    padding: 8vw; /* Adjust padding for smaller screens */
+    padding: 7vw; /* Adjust padding for smaller screens */
   }
   
   .formField {
@@ -74,4 +153,34 @@
     margin-bottom: 10px; /* Adjust margin for responsiveness */
     font-size: 1.2rem; /* Adjust font size for responsiveness */
   }
+  
+  .stepsContainer {
+    flex-direction: column; /* Arrange steps vertically on smaller screens */
+    align-items: center; /* Align steps to the center */
+    margin: 5% auto; /* Center steps vertically */
+    margin-bottom: 20%;
+    width: 90%; /* Adjust width for smaller screens */
+  }
+  
+  .stepShape {
+    width: 50%; /* Adjust width for smaller screens */
+    height: 25px; /* Keep height constant for all screens */
+    font-size: 16px; /* Adjust font size for smaller screens */
+    padding: 0 5px; /* Adjust padding for smaller screens */
+    margin-left:50%; /* Remove left margin for smaller screens */
+    margin-bottom: 5px; /* Add bottom margin for smaller screens */
+    border-radius: 90%; /* Adjust border radius for smaller screens */
+  }
+  
+  .stepText {
+    font-size: 12px; /* Adjust font size for smaller screens */
+    margin-left: 25%; /* Remove left margin for smaller screens */
+  }
+  
+  .line {
+    width: 90%; /* Adjust width of the line for smaller screens */
+    margin-left: 3%;
+  }
 }
+
+

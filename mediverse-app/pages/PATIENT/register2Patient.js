@@ -28,7 +28,28 @@ const Register2Patient = () => {
     return (
         <>
             <LandingPageHeader />
+
+            <div className={styles.stepsContainer}>
+                <div className={styles.visualization}>
+                    <div className={styles.step}>
+                        <div className={styles.shapeBlue}>1</div>
+                        <div className={styles.stepText}>Account Setup</div>
+                    </div>
+                    <div className={styles.line}></div>
+                    <div className={styles.step}>
+                        <div className={styles.shapeCyan}>2</div>
+                        <div className={styles.stepText}>Personal Details</div>
+                    </div>
+                    <div className={styles.line}></div>
+                    <div className={styles.step}>
+                        <div className={styles.shapeBlue}>3</div>
+                        <div className={styles.stepText}>Confirmation</div>
+                    </div>
+                </div>
+            </div>
+
             <div className={styles.container}>
+
                 <h2 className={styles.formTitle}>Personal Details</h2>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
