@@ -1,15 +1,15 @@
-import LandingPageHeader from "@/components/landingPageHeader";
-import styles from '../../styles/register.module.css';
+import LandingPageHeader from "@/components/LandingPageHeader";
+import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
-import LandingPageLayout from "@/components/landingPageLayout";
+import LandingPageLayout from "@/components/LandingPageLayout";
 
 const Register2Patient = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
+    const [formData, setFormData] = useState({ 
+        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
+        firstName: '', middleName: '', lastName: '',
     });
 
     const handleChange = (e) => {
@@ -22,6 +22,7 @@ const Register2Patient = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         // Add form submission logic here
+        
         console.log('Form submitted:', formData);
     };
 
@@ -77,7 +78,7 @@ const Register2Patient = () => {
                             </select>
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="dob" name="dob" placeholder="Date of Birth" required onChange={handleChange} />
+                            <input type="date" id="birth-date" name="dob" placeholder="Date of Birth" required onChange={handleChange} />
                         </div>
                     </div>
 
@@ -117,6 +118,7 @@ const Register2Patient = () => {
                 </form>
             </div>
         </>
+        
     );
 };
 

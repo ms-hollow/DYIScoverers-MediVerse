@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import LandingPageLayout from "@/components/landingPageLayout";
+import LandingPageLayout from "@/components/LandingPageLayout";
 import styles from '/styles/landingPage.module.css';
 import styles2 from '/styles/landingPageHeader.module.css';
-import LandingPageHeader from "@/components/landingPageHeader";
+import LandingPageHeader from "@/components/LandingPageHeader";
 
 export default function LandingPage() {
   return (
@@ -18,7 +18,7 @@ export default function LandingPage() {
           </div>
 
           <div className={styles2.button}>
-            <Link href="/PATIENT/register2Patient/">Get Started</Link>
+            <Link href="/PATIENT/Register2Patient/">Get Started</Link>
           </div>
 
         </div>
