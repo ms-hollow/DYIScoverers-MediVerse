@@ -10,7 +10,10 @@ export default function LandingPage() {
   return (
     <>
 
-      <LandingPageLayout /> 
+        <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
+            <LandingPageHeader buttonText="Connect Wallet" />
+        </div>
+
         <div className={styles.container}>
           <h1>Landing Page</h1>
           <div className={styles.paragraph}>
@@ -18,7 +21,7 @@ export default function LandingPage() {
           </div>
 
           <div className={styles2.button}>
-            <Link href="/PATIENT/Register2Patient/">Get Started</Link>
+            <Link href="/PATIENT/Register1Patient/">Get Started</Link>
           </div>
 
         </div>

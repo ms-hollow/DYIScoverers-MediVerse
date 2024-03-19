@@ -12,5 +12,3 @@ const LandingPageLayout = ({ children }) => {  {/* name of layout or component m
 }
  
 export default LandingPageLayout
-
-
