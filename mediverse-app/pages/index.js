@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1>Landing Page or Home</h1>
+        <h1 class="text">Landing Page or Home</h1>
         <Link href="/register-patient">Register</Link>
       </div>
     </>
