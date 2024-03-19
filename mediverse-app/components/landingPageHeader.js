@@ -18,7 +18,7 @@ const LandingPageHeader = () => {
         </ul>
 
         <div className={styles.button}>
-          <Link href="/logInPatient/">Connect Wallet</Link>
+          <Link href="/PATIENT/Register1Patient/">Connect Wallet</Link>
         </div>
 
       </header>

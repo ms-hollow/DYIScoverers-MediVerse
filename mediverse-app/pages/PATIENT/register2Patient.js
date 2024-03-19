@@ -34,7 +34,11 @@ const Register2Patient = () => {
     return (
         <>
             <LandingPageHeader />
-            <RegistrationProcess />
+            <RegistrationProcess 
+                firstShapeColor="shapeBlue"
+                secondShapeColor="shapeCyan"
+                thirdShapeColor="shapeBlue"
+            />
 
             <div className={styles.formContainer}>
 
@@ -104,9 +108,10 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    <div className={styles.formRow}>
-                        <button type="submit" className={styles.submitButton}>Submit</button>
-                    </div>
+                    <Link href="PATIENT/Register2Patient">
+                        <button className={styles.submitButton}>PROCEED</button>
+                    </Link>
+
 
                 </form>
             </div>

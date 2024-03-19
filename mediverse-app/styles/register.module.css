@@ -1,3 +1,89 @@
+/*------------------------USER: REGISTER PAGE 1 ---------------------*/
+
+.connectWalletContainer {
+  max-width: 40%; 
+  margin: 6% auto; /* Adjust margin for vertical positioning */
+  padding: 1%; /* Adjust padding for responsiveness */
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow to the container */
+}
+
+.connectMetamaskButton {
+  display: flex;
+  align-items: center;
+  padding: 1% 12% 1% 5%;
+  margin: 10% auto;
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  color: #000000;
+  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+ 
+}
+
+.connectMetamaskText{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  color: #a9a8a8;
+  font-size: 12px;
+  padding-right: 20px;
+}
+
+.connectMetamaskButton:hover {
+  background-color: #EFEFEF;
+}
+
+.metaMaskLogo {
+  margin-right: 15%;
+}
+
+.termsText {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333; 
+  margin-top: 8%; 
+  margin-bottom: 4%;
+  text-align: center;
+}
+
+.termsText a {
+  color: blue; 
+  text-decoration: underline; 
+}
+
+.termsText a:hover {
+  color: darkblue; 
+}
+
+@media (max-width: 768px) {
+  .connectWalletContainer {
+    max-width: 90%; 
+    margin: 10% auto; 
+    padding: 4%; 
+  }
+
+  .connectMetamaskButton {
+    padding: 2% 8% 2% 5%; 
+    margin: 10% auto; 
+  }
+
+  .metaMaskLogo {
+    margin-right: 10%; 
+  }
+
+  .termsText {
+    margin-top: 12%; 
+  }
+}
+
+
+/*------------------------USER: REGISTER PAGE 2 ---------------------*/
+
 .formContainer {
   max-width: 65%; /* Adjust max-width for responsiveness */
   margin: 6% auto; /* Adjust margin for vertical positioning */
@@ -150,6 +236,7 @@
   height: 2px;
   background-color: var(--blue);
   margin-bottom: 3%;
+  margin-left: 2%;
 }
 
 /* ------------------RESPONSIVENESS------------------*/
