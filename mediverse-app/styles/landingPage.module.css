@@ -1,0 +1,24 @@
+
+/* -------------- FOR LANDING PAGE CONTENT  -------------- */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+}
+
+.paragraph {
+    flex: 1;
+    padding: 30px;
+    text-align: left;
+    margin: 200px 0 0 20px;  
+}
+
+.paragraph p {
+    font-family: Roboto Condensed;
+    font-size: 16px; 
+    font-weight: 10px;
+    line-height: 20px; 
+    margin: 10px 30% 10px 10px;
+}
+
