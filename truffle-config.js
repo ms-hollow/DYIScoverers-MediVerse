@@ -31,10 +31,6 @@ const HDWalletProvider = require("@truffle/hdwallet-provider")
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
-const private_keys = [
-  process.env.PRIVATE_KEY_0,
-  process.env.PRIVATE_KEY_1,
-]
 
 module.exports = {
   /**
@@ -74,9 +70,9 @@ module.exports = {
     // NB: It's important to wrap the provider as a function.
     sepolia: {
       provider: () => new HDWalletProvider({
-        privateKeys: private_keys,
+        privateKeys: [process.env.PRIVATE_KEY_0],
         providerOrUrl: 'https://sepolia.infura.io/v3/ba7390d6d72340dda62d7e63700bded8',
-        numberOfAddresses: 2
+        numberOfAddresses: 1
       }),
       network_id: 11155111,       // Ropsten's id
       gas: 5500000,        // Ropsten has a lower block limit than mainnet
