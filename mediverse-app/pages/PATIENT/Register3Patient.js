@@ -38,7 +38,39 @@ const Register3Patient = () => {
     const handleSubmit = async () => {
         e.preventDefault(); // Prevent default form submission
         const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
-        console.log('Form submitted:', formData);
+        try {
+            // Get the accounts from MetaMask
+            const accounts = await web3.eth.getAccounts();
+            const account = accounts[0]; // Assuming the user selects the first account
+    
+            // Show a toast notification that the transaction is in progress
+            toast.info('Transaction in progress...', { autoClose: false });
+    
+            // Call the registerPatient function of your contract and send the transaction
+            const transaction = await contractABI.methods.registerPatient(
+                formData.firstName,
+                formData.middleName,
+                formData.lastName,
+                formData.age,
+                formData.dob,
+                formData.phoneNumber,
+                formData.height,
+                formData.weight,
+                address
+            ).send({ from: account });
+    
+            // Transaction successful, show a success toast
+            toast.success('Transaction successful!', { autoClose: 5000 });
+    
+            console.log('Transaction hash:', transaction.transactionHash);
+            console.log('Form submitted:', formData);
+            console.log('address',address)
+        } catch (error) {
+            // Handle errors
+            console.error('Error sending transaction:', error);
+            // Show an error toast
+            toast.error('Error sending transaction. Please try again later.');
+        }
     }
    
     const goBack = () => {
@@ -123,8 +155,8 @@ const Register3Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>
+                    <button className={styles.submitButton} onClick={handleSubmit}>
+                       {/*<Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>*/}
                     </button>
                 </form>
             </div>
