@@ -9,10 +9,12 @@ import LandingPageHeader from "@/components/LandingPageHeader";
 export default function LandingPage() {
   return (
     <>
+<<<<<<< HEAD
       <div>
         <h1 class="text">Landing Page or Home</h1>
         <Link href="/register-patient">Register</Link>
       </div>
+=======
 
         <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
             <LandingPageHeader buttonText="Connect Wallet" />
@@ -30,6 +32,7 @@ export default function LandingPage() {
 
         </div>
 
+>>>>>>> front-end
     </>
   );
 }
