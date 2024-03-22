@@ -10,7 +10,19 @@ import React, { useState } from 'react';
 const Register2Patient = () => {
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
+        firstName: '', 
+        middleName: '', 
+        lastName: '',
+        age: '',
+        dob: '',
+        phoneNumber: '',
+        height: '',
+        weight: '',
+        houseNo: '',
+        streetNo: '',
+        barangay: '',
+        cityMunicipality: '',
+        region: ''
     });
 
     const handleChange = (e) => {
