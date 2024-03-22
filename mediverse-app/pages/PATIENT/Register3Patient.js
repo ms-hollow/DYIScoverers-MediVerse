@@ -4,13 +4,28 @@ import styles from '../../styles/register.module.css'; /** "../" means, lalabas 
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse";
 
 
 const Register3Patient = () => {
+    
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
+        firstName: '', 
+        middleName: '', 
+        lastName: '',
+        age: '',
+        dob: '',
+        phoneNumber: '',
+        height: '',
+        weight: '',
+        houseNo: '',
+        streetNo: '',
+        barangay: '',
+        cityMunicipality: '',
+        region: ''
     });
 
     const handleChange = (e) => {
@@ -20,20 +35,18 @@ const Register3Patient = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async () => {
         e.preventDefault(); // Prevent default form submission
-        // Add form submission logic here
-        
+        const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
         console.log('Form submitted:', formData);
-    };
-
+    }
+   
     const goBack = () => {
         window.history.back(); // Go back to the previous page
     };
 
     return (
         <>
-
             {/*KUHANIN DATA, ILAGAY SA FIELD, THEN READ ONLY.*/}
             <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
                 <LandingPageHeader buttonText="LOG IN" />
@@ -113,13 +126,10 @@ const Register3Patient = () => {
                     <button className={styles.submitButton}>
                         <Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>
                     </button>
-
-
                 </form>
             </div>
         </>
         
     );
 };
-
 export default Register3Patient;

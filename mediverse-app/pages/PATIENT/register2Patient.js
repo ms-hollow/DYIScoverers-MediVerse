@@ -23,7 +23,6 @@ const Register2Patient = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         // Add form submission logic here
-        
         console.log('Form submitted:', formData);
     };
 

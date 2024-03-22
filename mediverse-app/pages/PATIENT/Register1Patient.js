@@ -6,14 +6,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
 
 
 const Register1Patient = () => {
     const router = useRouter();
-    const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
-    });
+    
+    //connect wallet prompt
+    const connectMetaMask = async () => {
+        try {
+            // Check if MetaMask is installed and prompt user to connect
+            await web3.eth.requestAccounts();
+            console.log("MetaMask connected successfully!");
+            // Perform additional actions after successful connection
+        } catch (error) {
+            console.error('Error connecting MetaMask:', error);
+            // Handle error connecting MetaMask
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -24,7 +34,6 @@ const Register1Patient = () => {
             alert('Please agree to the terms before proceeding.');
             return; // Stop further execution if checkbox is not checked
         }
-
         // Redirect to the next page only if the checkbox is checked
         router.push('/PATIENT/Register2Patient/');
     };
@@ -53,7 +62,7 @@ const Register1Patient = () => {
                     ←
                 </button>
 
-                <button className={styles.connectMetamaskButton}>
+                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.png" width={35} height={35} />
                     </div>
