@@ -25,17 +25,24 @@ const Register2Patient = () => {
         region: ''
     });
 
+    const [fullAddress, setFullAddress] = useState('');
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
+
+        // Concatenate the address fields
+        const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
+        setFullAddress(address);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         // Add form submission logic here
         console.log('Form submitted:', formData);
+
     };
 
     const goBack = () => {
@@ -122,8 +129,8 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
+                    <button className={styles.submitButton} onClick={handleSubmit}>
+                        
                     </button>
 
 
