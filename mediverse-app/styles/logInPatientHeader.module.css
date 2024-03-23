@@ -1,0 +1,371 @@
+/* --------------FOR HEADER/NAVBAR-------------- */
+html.index {
+    scroll-behavior: smooth; /* Enable smooth scrolling for the entire page */
+}
+
+.header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1004;
+    display: flex;
+    justify-content: space-between; /* To create space between logo and navbar */
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color);
+    padding: 1% 2%;
+    transition: all .50s ease;
+}
+.vector1577 {
+    position: absolute;
+    left: 498px; 
+    top: -41px; 
+    width: 1094px; 
+    height: 822px; 
+    z-index: -1; 
+  }
+  .cryptoWallet {
+    position: absolute;
+    left: 74px; 
+    top: 121px; 
+    width: 646px; 
+    height: 609px; 
+    z-index: 1004;
+}
+
+.connectMetamaskContainer {
+    position: absolute;
+    top: 400px;
+    left: 903px;
+    width: 403px;
+    height: 265px;
+    z-index: 1006;
+  }
+  
+  
+.connectMetamaskButton {
+    display: flex;
+    align-items: center;
+    padding: 1% 12% 1% 5%;
+    margin: 10% auto;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    color: #000000;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    
+   
+  }
+  
+  .connectMetamaskText{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    color: #a9a8a8;
+    font-size: 12px;
+    padding-right: 20px;
+  }
+  
+  .connectMetamaskButton:hover {
+    background-color: #EFEFEF;
+  }
+  
+  .metaMaskLogo {
+    margin-right: 15%;
+  }
+  .signInWithWalletText {
+    position: absolute;
+    top: 375px; 
+    left: 950px; 
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #0A0045;
+    z-index: 1007;
+    letter-spacing: 1px;
+}
+
+.signInWithProviderText {
+    position: absolute;
+    top: 410px; 
+    left: 950px; 
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 17px;
+    color: #0A0045;
+    z-index: 1007; 
+}
+
+.dontHaveMetamaskText {
+    position: absolute;
+    top: 505px;
+    left: 1010px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    color: #0A0045;
+    z-index: 1007;
+    
+}
+
+.createOneLink {
+    color: #2264DC;
+    cursor: pointer;
+}
+
+.createOneLink:hover {
+    text-decoration: underline;
+}
+.logoContainer {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 80%; 
+    height: auto;
+}
+
+.navbar {
+    display: flex;
+    list-style: none;
+    white-space: nowrap; /*para di ma-cut ang two words */
+    margin-left: auto; /* Pushes the navbar to the right */
+}
+
+.navbar a {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0px 0px;
+    margin: 0px 60px;
+    transition: all .50s ease;
+}
+
+.navbar a:hover {
+    color: var(--navy-blue);
+    font-weight: bold;
+}
+
+.navbar a.active {
+    color: var(--navy-blue);
+    font-weight: bold;
+}
+
+.button {
+    position: relative;
+    display: flex;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(225deg, var(--blue) 0%, var(--pale-blue) 100%);
+    color: white;
+    white-space: nowrap; /* Prevent text from wrapping */
+    margin-left: 3%;
+}
+
+.button:hover {
+    background: var(--cyan);
+}
+
+#menuIcon{
+    font-size: 35px;
+    color: var(--text-color);
+    cursor: pointer;
+    z-index: 10001;
+    display: none;
+}
+  @media (max-width: 768px) {
+    .connectMetamaskContainer {
+      top: 30%; /* Adjust as needed */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .connectMetamaskContainer {
+      top: 40%; /* Adjust as needed */
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .connectMetamaskContainer {
+      top: 50%; /* Adjust as needed */
+    }
+  }
+@media(max-width: 1200px){
+    .header{
+        padding: 1% 2%;
+    }
+
+    .navbar a{
+        padding: 10px 15px;
+        margin: 0px 10px;
+    }
+}
+
+@media(max-width: 768px) {
+    .header {
+        padding: 1% 2%; 
+    }
+
+    .navbar a {
+        font-size: 1rem; 
+        margin: 0px 10px;
+    }
+
+    .button {
+        padding: 8px 16px; 
+        font-size: 0.8rem; 
+    }
+
+    .navbar{
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 270px;
+        height: 40vh;
+        background-color: var(--cyan);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-radius: 10px;
+        transition: all .50s ease;
+    }
+    .navbar a{
+        display: block;
+        margin: 12px 0;
+        padding: 0px 25px;
+        transition: all .50s ease;
+        color: #EBEBEB;
+    }
+
+    .navbar a:hover{
+        color: var(--black-color);
+        transform: translateY(5px);
+    }
+    .navbar a.active{
+        color: var(--black-color);
+    }
+    
+    .navbar.open{
+        right: 2%;
+    }
+}
+
+@media(max-width: 576px) {
+    .header {
+        padding: 1% 2%; 
+    }
+
+    .button {
+        padding: 6px 12px; 
+        font-size: 0.7rem; 
+    }
+}
+
+@media(max-width: 400px){
+    .header{
+        padding: 1% 1%;
+    }
+
+    .navbar a{
+        padding: 8px 12px;
+        margin: 0px 5px;
+    }
+    .button {
+        padding: 6px 10px;
+    }
+}
+
+@media(max-width: 320px){
+    .header{
+        padding: 1% 0.5%;
+    }
+
+    .navbar a{
+        padding: 6px 10px;
+        margin: 0px 3px;
+        font-size: 0.8rem;
+    }
+    .button {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+}
+@media (max-width: 1200px) {
+    .signInWithWalletText,
+    .signInWithProviderText,
+    .dontHaveMetamaskText {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .signInWithWalletText {
+        font-size: 18px;
+    }
+    
+    .signInWithProviderText {
+        font-size: 15px;
+    }
+    
+    .dontHaveMetamaskText {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .signInWithWalletText {
+        top: 25%;
+        font-size: 16px;
+    }
+
+    .signInWithProviderText {
+        top: 30%;
+        font-size: 14px;
+    }
+
+    .dontHaveMetamaskText {
+        top: 35%;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .signInWithWalletText {
+        font-size: 14px;
+    }
+
+    .signInWithProviderText {
+        font-size: 12px;
+    }
+
+    .dontHaveMetamaskText {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 375px) { /* iPhone SE width */
+    .signInWithWalletText {
+        top: 20%;
+        font-size: 12px;
+    }
+
+    .signInWithProviderText {
+        top: 25%;
+        font-size: 10px;
+    }
+
+    .dontHaveMetamaskText {
+        top: 30%;
+        font-size: 8px;
+    }
+}
