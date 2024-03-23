@@ -1,33 +1,11 @@
 import LandingPageHeader from "@/components/LandingPageHeader";
 import Head from "next/head";
 import Image from "next/image";
-<<<<<<< HEAD
 import Link from "next/link"; 
 import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
-=======
-import Link from "next/link";
-<<<<<<< HEAD
-import web3 from "../../blockchain/web3";
-
-export default function Home() {
-  //connect wallet prompt
-  const connectMetaMask = async () => {
-      try {
-          // Check if MetaMask is installed and prompt user to connect
-          await web3.eth.requestAccounts();
-          console.log("MetaMask connected successfully!");
-          // Perform additional actions after successful connection
-      } catch (error) {
-          console.error('Error connecting MetaMask:', error);
-          // Handle error connecting MetaMask
-      }
-  };
-  
-=======
->>>>>>> ab3699cbdc3c3b88f2a56828605bf83b637be237
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
@@ -36,10 +14,8 @@ export default function Home() {
     router.push("/PATIENT/Register1Patient"); // Navigate to the Register2Patient page
   };
 
->>>>>>> front-end
   return (
     <>
-<<<<<<< HEAD
       <LandingPageLayout> 
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
@@ -64,18 +40,6 @@ export default function Home() {
           <span className={styles.createOneLink} onClick={handleCreateWallet}>Create one.</span> {/* Use span instead of a */}
         </div>
       </LandingPageLayout>
-=======
-      <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
-          <LandingPageHeader buttonText="REGISTER" />
-      </div>
-
-      <button onClick={connectMetaMask}>Button</button>
-
-        
-
-
-
->>>>>>> ab3699cbdc3c3b88f2a56828605bf83b637be237
     </>
   );
 }

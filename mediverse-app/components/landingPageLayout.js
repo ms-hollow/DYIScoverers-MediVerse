@@ -17,10 +17,5 @@ const LandingPageLayout = ({ children }) => {
     </div>
   );
 }
-<<<<<<< HEAD
 
 export default LandingPageLayout;
-=======
- 
-export default LandingPageLayout
->>>>>>> ab3699cbdc3c3b88f2a56828605bf83b637be237
