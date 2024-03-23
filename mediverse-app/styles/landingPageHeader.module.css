@@ -58,7 +58,7 @@ html.index {
 .button {
     position: relative;
     display: flex;
-    padding: 14px 25px;
+    padding: 10px 25px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

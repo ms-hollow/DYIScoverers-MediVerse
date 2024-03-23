@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/landingPageHeader.module.css';
 
-const LandingPageHeader = () => {
+const LandingPageHeader = ({ buttonText }) => {
   return (
     <>
       <header className={styles.header}>
@@ -18,7 +18,7 @@ const LandingPageHeader = () => {
         </ul>
 
         <div className={styles.button}>
-          <Link href="/PATIENT/Register1Patient/">Connect Wallet</Link>
+          <Link href="/PATIENT/Register1Patient/">{buttonText}</Link>
         </div>
 
       </header>

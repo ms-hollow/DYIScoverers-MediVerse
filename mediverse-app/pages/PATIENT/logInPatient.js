@@ -1,10 +1,15 @@
+import LandingPageHeader from "@/components/LandingPageHeader";
 import Head from "next/head";
 import Image from "next/image";
+<<<<<<< HEAD
 import Link from "next/link"; 
 import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
+=======
+import Link from "next/link";
+>>>>>>> ab3699cbdc3c3b88f2a56828605bf83b637be237
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
@@ -15,6 +20,7 @@ export default function Home() {
 
   return (
     <>
+<<<<<<< HEAD
       <LandingPageLayout> 
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
@@ -39,6 +45,18 @@ export default function Home() {
           <span className={styles.createOneLink} onClick={handleCreateWallet}>Create one.</span> {/* Use span instead of a */}
         </div>
       </LandingPageLayout>
+=======
+      <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
+          <LandingPageHeader buttonText="REGISTER" />
+      </div>
+
+
+
+        
+
+
+
+>>>>>>> ab3699cbdc3c3b88f2a56828605bf83b637be237
     </>
   );
 }
