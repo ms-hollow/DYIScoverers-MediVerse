@@ -30,7 +30,9 @@ const HDWalletProvider = require("@truffle/hdwallet-provider")
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-
+const private_keys = [
+  process.env.PRIVATE_KEY_O
+]
 
 module.exports = {
   /**
@@ -70,7 +72,7 @@ module.exports = {
     // NB: It's important to wrap the provider as a function.
     sepolia: {
       provider: () => new HDWalletProvider({
-        privateKeys: [process.env.PRIVATE_KEY_0],
+        privateKeys: private_keys,
         providerOrUrl: 'https://sepolia.infura.io/v3/ba7390d6d72340dda62d7e63700bded8',
         numberOfAddresses: 1
       }),
@@ -100,10 +102,10 @@ module.exports = {
       version: "0.8.0",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
-    //optimizer: {
-    //  enabled: false,
-    //  runs: 200
-   // },
+      //optimizer: {
+       // enabled: true,
+        //runs: 200   // Adjust the number of optimization runs as needed
+      //},
       //  evmVersion: "byzantium"
       // }
     }
