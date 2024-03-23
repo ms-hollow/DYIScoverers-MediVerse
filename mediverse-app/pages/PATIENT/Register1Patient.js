@@ -26,7 +26,7 @@ const Register1Patient = () => {
         }
 
         // Redirect to the next page only if the checkbox is checked
-        router.push('/PATIENT/Register2Patient/');
+        router.push('/PATIENT/register2Patient/');
     };
 
     const goBack = () => {
@@ -73,7 +73,7 @@ const Register1Patient = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="/PATIENT/Register2Patient/">PROCEED</Link>
+                    <Link href="/PATIENT/register2Patient/">PROCEED</Link>
                 </button>
                 
                 

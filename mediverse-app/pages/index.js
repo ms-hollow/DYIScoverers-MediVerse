@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import LandingPageLayout from "@/components/LandingPageLayout";
+import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/landingPage.module.css';
 import styles2 from '/styles/landingPageHeader.module.css';
-import LandingPageHeader from "@/components/LandingPageHeader";
+import LandingPageHeader from "@/components/landingPageHeader";
 
 export default function LandingPage() {
   return (

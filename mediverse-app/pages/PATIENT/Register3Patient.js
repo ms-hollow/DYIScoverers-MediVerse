@@ -1,4 +1,4 @@
-import LandingPageHeader from "@/components/LandingPageHeader";
+import LandingPageHeader from "@/components/landingPageHeader";
 import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Head from "next/head";
@@ -111,7 +111,7 @@ const Register3Patient = () => {
                     </div>
                     
                     <button className={styles.submitButton}>
-                        <Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>
+                        <Link href="/PATIENT/logInPatient/">REGISTER</Link>
                     </button>
 
 
