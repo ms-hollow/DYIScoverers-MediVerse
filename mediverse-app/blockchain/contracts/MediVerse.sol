@@ -34,29 +34,17 @@ contract MediVerse {
         string treatmentProcedure;
         string tests;
         string medications;
-        string admission;
-        uint creationDate;
-    }
-
-    struct GeneralHealthProfile {
-        address patientAddr;
-        address hospitalAddr;
-        string physicalExamination;
-        string medicalHistorySummary;
-        string maintenanceMedication;
         string allergies;
-        string medicalProcedureSummary;
+        string maintenanceMed;
+        string admission;
         uint creationDate;
     }
 
     address[] public patientList; // Dynamic array to store the addresses of registered patients
     address[] public hospitalList;
-    address[] public medicalHistoryList;
-    address[] public generalHealthProfileList;
     mapping(address => Patient) public patients;
     mapping(address => Hospital) public hospitals;
     mapping(address => MedicalHistory[]) public medicalHistories;
-    mapping(address => GeneralHealthProfile[]) public generalHealthProfiles;
     mapping(address => address[]) public pendingRequests;
 
     event PatientRegistered(address patientAddr);
@@ -143,7 +131,6 @@ contract MediVerse {
         string memory _address
     ) public {
         require(bytes(hospitals[msg.sender].name).length == 0, "Hospital already registered");
-
         Hospital storage hospital = hospitals[msg.sender];
         hospital.name = _name;
         hospital.contactNum = _contactNum;
@@ -173,6 +160,8 @@ contract MediVerse {
         string memory _treatmentProcedure,
         string memory _tests,
         string memory _medications,
+        string memory _allergies,
+        string memory _maintenanceMed,
         string memory _admission
     ) public onlyHospital {
         // Check if the patient is registered
@@ -185,7 +174,6 @@ contract MediVerse {
                 emit PermissionGranted(_patientAddr, msg.sender);
             }
         }
-
         MedicalHistory memory history;
         history.patientAddr = _patientAddr;
         history.hospitalAddr = msg.sender;
@@ -195,13 +183,12 @@ contract MediVerse {
         history.treatmentProcedure = _treatmentProcedure;
         history.tests = _tests;
         history.medications = _medications;
+        history.allergies = _allergies;
+        history.maintenanceMed = _maintenanceMed;
         history.admission = _admission;
         history.creationDate = block.timestamp;
 
         medicalHistories[_patientAddr].push(history);
-        
-        //givePermission(msg.sender);
-
         emit MedicalHistoryAdded(_patientAddr, msg.sender);
     }
 
@@ -213,13 +200,13 @@ contract MediVerse {
         string memory _treatmentProcedure,
         string memory _tests,
         string memory _medications,
+        string memory _allergies,
+        string memory _maintenanceMed,
         string memory _admission
     ) public {
         MedicalHistory[] storage history = medicalHistories[_patientAddr];
-
         // Check if there are any records for the specified patient
         require(history.length > 0, "No medical history records found for the patient");
-
         // Iterate through the records to find the one matching your criteria
         for (uint i = 0; i < history.length; i++) {
             if (history[i].hospitalAddr == msg.sender) {
@@ -230,67 +217,29 @@ contract MediVerse {
                 history[i].treatmentProcedure = _treatmentProcedure;
                 history[i].tests = _tests;
                 history[i].medications = _medications;
+                history[i].allergies = _allergies;
+                history[i].maintenanceMed = _maintenanceMed;
                 history[i].admission = _admission;
-
                 return; // Exit the function after updating the record
             }
         }
-
         // If no matching record is found, revert the transaction
         revert("Medical history record not found for the specified hospital");
     }
 
-    function editGeneralHealthProfile(
-        address _patientAddr,
-        string memory _medicalHistorySummary,
-        string memory _maintenanceMedication,
-        string memory _allergies,
-        string memory _medicalProcedureSummary
-    ) public {
-        // Check if the patient is registered
-        if (bytes(patients[_patientAddr].name).length == 0) {
-            revert("Patient is not registered");
-        } else {
-            // Check if the hospital is authorized, if not, grant access
-            if (!isHospitalAuthorized(_patientAddr, msg.sender)) {
-                patients[_patientAddr].authorizedHospitals.push(msg.sender);
-                emit PermissionGranted(_patientAddr, msg.sender);
-            }
-        }
-        GeneralHealthProfile[] storage profile = generalHealthProfiles[_patientAddr];
-
-        // Check if there are any records for the specified patient
-        require(profile.length > 0, "No general health profiles found for the patient");
-
-        // Iterate through the records to find the one matching your criteria
-        for (uint i = 0; i < profile.length; i++) {
-            if (profile[i].hospitalAddr == msg.sender) {
-                // Update the record with the new information
-                profile[i].medicalHistorySummary = _medicalHistorySummary;
-                profile[i].maintenanceMedication = _maintenanceMedication;
-                profile[i].allergies = _allergies;
-                profile[i].medicalProcedureSummary = _medicalProcedureSummary;
-
-                return; // Exit the function after updating the record
-            }
-        }
-
-        // If no matching record is found, revert the transaction
-        revert("General health profile not found for the specified hospital");
+     // Function to retrieve patient information
+    function getPatientInfo(address patientAddress) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory, address[] memory, uint) {
+        Patient storage patient = patients[patientAddress];
+        return (patient.name, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.registrationDate);
     }
-
+    
     /** FUNCTION THAT WILL RETRIEVE PATIENTS MEDICAL RECORD AND PROFILE **/
     function getMedicalHistory(address _patientAddr) public view isAuthorized(_patientAddr) returns (MedicalHistory[] memory) {
         return medicalHistories[_patientAddr];
     }
 
-    function getGeneralProfile(address _patientAddr) public view isAuthorized(_patientAddr) returns (GeneralHealthProfile[] memory) {
-        return generalHealthProfiles[_patientAddr];
-    }
-
     function givePermission(address _hospitalAddr) public onlyPatient {
         require(!isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital already authorized");
-
         // Check if the hospital is already in the pending requests
         bool isPending = false;
         for (uint i = 0; i < pendingRequests[msg.sender].length; i++) {
@@ -299,19 +248,16 @@ contract MediVerse {
                 break;
             }
         }
-
         // If not in pending, add to both authorized and pending requests
         if (!isPending) {
             patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
             pendingRequests[msg.sender].push(_hospitalAddr);
         }
-
         emit PermissionGranted(msg.sender, _hospitalAddr);
     }
 
     function revokeAccess(address _hospitalAddr) public onlyPatient {
         require(isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital not authorized");
-
         address[] storage authorizedHospitals = patients[msg.sender].authorizedHospitals;
         for (uint i = 0; i < authorizedHospitals.length; i++) {
             if (authorizedHospitals[i] == _hospitalAddr) {
@@ -321,6 +267,34 @@ contract MediVerse {
                 return;
             }
         }
+    }
+
+    // function that will retrieve the medical records of the patient
+    function retrieveMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {
+        return medicalHistories[_patientAddr];
+    }
+
+    function getAllMedicalHistory() public view returns (MedicalHistory[] memory) {
+        uint totalPatients = patientList.length;
+        uint totalRecords = 0;
+        for (uint i = 0; i < totalPatients; i++) {
+            totalRecords += medicalHistories[patientList[i]].length;
+        }
+        
+        MedicalHistory[] memory allMedicalHistory = new MedicalHistory[](totalRecords);
+        uint recordIndex = 0;
+
+        for (uint j = 0; j < totalPatients; j++) {
+            address patientAddr = patientList[j];
+            uint patientRecordCount = medicalHistories[patientAddr].length;
+
+            for (uint k = 0; k < patientRecordCount; k++) {
+                allMedicalHistory[recordIndex] = medicalHistories[patientAddr][k];
+                recordIndex++;
+            }
+        }
+
+        return allMedicalHistory;
     }
 
     /** FUNCTION THAT WILL GET THE LIST OF AUTHORIZED HOSPITALS TO VIEW PATIENTS MEDICAL RECORDS **/
@@ -334,10 +308,6 @@ contract MediVerse {
     }
 
     function getMedicalHistoryCount(address _patientAddr) public view returns (uint256) {
-        return medicalHistories[_patientAddr].length;
-    }
-
-    function getGeneralProfileCount(address _patientAddr) public view returns (uint256) {
         return medicalHistories[_patientAddr].length;
     }
 
@@ -362,7 +332,6 @@ contract MediVerse {
                 resultIndex++;
             }
         }
-
         // Search among hospitals by name
         for (uint j = 0; j < hospitalList.length; j++) {
             if (compareStringsIgnoreCase(hospitals[hospitalList[j]].name, query)) {
@@ -370,15 +339,12 @@ contract MediVerse {
                 resultIndex++;
             }
         }
-
         // Resize the array to remove any unused slots
         assembly {
             mstore(searchResults, resultIndex)
         }
-
         return searchResults;
     }
-
     function compareStringsIgnoreCase(string memory a, string memory b) internal pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }

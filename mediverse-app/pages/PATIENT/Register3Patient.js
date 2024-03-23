@@ -28,6 +28,7 @@ const Register3Patient = () => {
         region: ''
     });
 
+    {/** Function that handles changes in the form fields. It is triggered by the 'onChange' event. */}
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -35,42 +36,50 @@ const Register3Patient = () => {
         });
     };
 
+    // Function to retrieve and set patient data from the blockchain
+    const fetchPatientData = async () => {
+        try {
+        const accounts = await web3.eth.getAccounts();
+        console.log("Account:", accounts[0]);
+
+        // Fetch patient data from the blockchain
+        const patientData = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
+        // Extract relevant data from patientData
+        const { name, age, dob, phoneNumber, height, weight, address } = patientData;
+        // Split address string into individual fields
+        const [firstName, middleName, lastName] = name.split(' ');
+        const [houseNo, streetNo, barangay, cityMunicipality, region] = address.split(' ');
+        // Update form fields with retrieved data
+        setFormData({
+            firstName,
+            middleName,
+            lastName,
+            age,
+            dob,
+            phoneNumber,
+            height,
+            weight,
+            houseNo,
+            streetNo,
+            barangay,
+            cityMunicipality,
+            region
+        });
+
+        console.log('Patient data retrieved from blockchain:', patientData);
+        const displayAddress = `${houseNo} ${streetNo}, ${barangay}, ${cityMunicipality}, ${region}`;
+        console.log("Display Address:", displayAddress);
+        } catch (error) {
+        console.error('Error retrieving patient data:', error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchPatientData(); // Fetch patient data when the component mounts
+    }, []);
+
     const handleSubmit = async () => {
         e.preventDefault(); // Prevent default form submission
-        const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
-        try {
-            // Get the accounts from MetaMask
-            const accounts = await web3.eth.getAccounts();
-            const account = accounts[0]; // Assuming the user selects the first account
-    
-            // Show a toast notification that the transaction is in progress
-            toast.info('Transaction in progress...', { autoClose: false });
-    
-            // Call the registerPatient function of your contract and send the transaction
-            const transaction = await contractABI.methods.registerPatient(
-                formData.firstName,
-                formData.middleName,
-                formData.lastName,
-                formData.age,
-                formData.dob,
-                formData.phoneNumber,
-                formData.height,
-                formData.weight,
-                address
-            ).send({ from: account });
-    
-            // Transaction successful, show a success toast
-            toast.success('Transaction successful!', { autoClose: 5000 });
-    
-            console.log('Transaction hash:', transaction.transactionHash);
-            console.log('Form submitted:', formData);
-            console.log('address',address)
-        } catch (error) {
-            // Handle errors
-            console.error('Error sending transaction:', error);
-            // Show an error toast
-            toast.error('Error sending transaction. Please try again later.');
-        }
     }
    
     const goBack = () => {

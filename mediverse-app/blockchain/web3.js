@@ -17,8 +17,8 @@ if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
     web3 = new Web3(window.web3.currentProvider);
 } else {
     // Non-dapp browsers
-    const provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/ba7390d6d72340dda62d7e63700bded8');
+    //const provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/ba7390d6d72340dda62d7e63700bded8');
+    const provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545');
     web3 = new Web3(provider);
 }
-
 export default web3;

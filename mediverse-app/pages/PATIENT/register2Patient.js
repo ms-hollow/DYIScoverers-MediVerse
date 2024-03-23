@@ -5,7 +5,8 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
-
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse";
 
 const Register2Patient = () => {
     const [formData, setFormData] = useState({ 
@@ -25,24 +26,41 @@ const Register2Patient = () => {
         region: ''
     });
 
-    const [fullAddress, setFullAddress] = useState('');
-
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
-
-        // Concatenate the address fields
-        const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
-        setFullAddress(address);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         // Add form submission logic here
         console.log('Form submitted:', formData);
+        // Concatenate the address fields
+        const address = `${formData.houseNo} ${formData.streetNo}, ${formData.barangay}, ${formData.cityMunicipality}, ${formData.region}`;
+        const name = `${formData.firstName} ${formData.middleName} ${formData.lastName}`;
+        console.log("name: ", name)
+        console.log("address:", address)
 
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            const receipt = await mvContract.methods.registerPatient(
+                name,
+                formData.age,
+                formData.dob,
+                formData.phoneNumber,
+                formData.height,
+                formData.weight,
+                address
+            ).send({ from: accounts[0] });
+
+            console.log("Transaction Hash:", receipt.transactionHash);
+            // Transaction successful, you can do further processing here if needed
+        } catch (error) {
+            console.error('Error sending transaction:', error.message);
+        }
     };
 
     const goBack = () => {
@@ -130,7 +148,7 @@ const Register2Patient = () => {
                     </div>
                     
                     <button className={styles.submitButton} onClick={handleSubmit}>
-                        
+                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
                     </button>
 
 

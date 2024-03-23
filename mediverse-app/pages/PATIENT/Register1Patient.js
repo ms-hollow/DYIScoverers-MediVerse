@@ -6,28 +6,31 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+
 
 
 const Register1Patient = () => {
     const router = useRouter();
-    
+    const [walletAddress, setWalletAddress] = useState("")
     //connect wallet prompt
     const connectMetaMask = async () => {
-        try {
-            // Check if MetaMask is installed and prompt user to connect
-            await web3.eth.requestAccounts();
-            console.log("MetaMask connected successfully!");
-            // Perform additional actions after successful connection
-        } catch (error) {
-            console.error('Error connecting MetaMask:', error);
-            // Handle error connecting MetaMask
+        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+            try{
+                /* If metamask is installed */
+                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+                setWalletAddress(accounts[0]); 
+                console.log(accounts[0]);
+            } catch(err) {
+                console.error(err.message);
+            }
+        } else {
+            /* if metamask is not installed */
+            console.log("Please install MetaMask");
         }
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-    
         // Check if the checkbox is checked
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
