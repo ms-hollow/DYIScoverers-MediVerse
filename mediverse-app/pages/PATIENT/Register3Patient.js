@@ -36,48 +36,6 @@ const Register3Patient = () => {
         });
     };
 
-    // Function to retrieve and set patient data from the blockchain
-    const fetchPatientData = async () => {
-        try {
-        const accounts = await web3.eth.getAccounts();
-        console.log("Account:", accounts[0]);
-
-        // Fetch patient data from the blockchain
-        const patientData = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
-        // Extract relevant data from patientData
-        const { name, age, dob, phoneNumber, height, weight, address } = patientData;
-        // Split address string into individual fields
-        const [firstName, middleName, lastName] = name.split(' ');
-        const [houseNo, streetNo, barangay, cityMunicipality, region] = address.split(' ');
-        // Update form fields with retrieved data
-        setFormData({
-            firstName,
-            middleName,
-            lastName,
-            age,
-            dob,
-            phoneNumber,
-            height,
-            weight,
-            houseNo,
-            streetNo,
-            barangay,
-            cityMunicipality,
-            region
-        });
-
-        console.log('Patient data retrieved from blockchain:', patientData);
-        const displayAddress = `${houseNo} ${streetNo}, ${barangay}, ${cityMunicipality}, ${region}`;
-        console.log("Display Address:", displayAddress);
-        } catch (error) {
-        console.error('Error retrieving patient data:', error.message);
-        }
-    };
-
-    useEffect(() => {
-        fetchPatientData(); // Fetch patient data when the component mounts
-    }, []);
-
     const handleSubmit = async () => {
         e.preventDefault(); // Prevent default form submission
     }
