@@ -13,21 +13,25 @@ const HomeSidebarHeader = () => {
     return (
         <>
 
+            <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+
             <header className={styles.header}>
-            
+                
                 <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
                     Home
                 </div>
 
                 <div className={styles.headerButtons}>
-                    <img src="/Search icon.png" alt="Search" width={23} height={23} className={styles.logo} />
-                    <img src="/Notifications.png" alt="Notification" width={23} height={23} className={styles.logo} />
-                    <img src="/Account Logo.png" alt="Account" width={23} height={23} className={styles.logo} />
+                    <div className={`${styles.searchBar}`}> 
+                        <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                        <input type="text" placeholder="Search" className={styles.searchInput} />
+                    </div>
+                    <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
+                    <a href="/destination-url"> <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} /></a>
                 </div>
                 
             </header>
-
-            <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+                
             
                 <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>
                     <div className={styles.triangle}></div> {/* Add the triangle directly inside the .sidebarMenuBtn */}
@@ -43,9 +47,9 @@ const HomeSidebarHeader = () => {
                     <div className={styles.menuItems}>
                         <ul>
                             <li><a href="view-appointments.html">Home</a></li>
-                            <li><a href="./book-appointment/book-appointment.html">Book Appointment</a></li>
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="change-password.html">Setting</a></li>
+                            <li><a href="./book-appointment/book-appointment.html">Medical History</a></li>
+                            <li><a href="profile.html">General Health Profile</a></li>
+                            <li><a href="change-password.html">Account</a></li>
                         </ul>
                     </div>
                 </div>
