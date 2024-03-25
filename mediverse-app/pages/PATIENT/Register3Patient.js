@@ -123,7 +123,7 @@ const Register3Patient = () => {
                     </div>
                     
                     <button className={styles.submitButton} onClick={handleSubmit}>
-                       {/*<Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>*/}
+                       <Link href="/PATIENT/LogInPatient.js/">REGISTER</Link>
                     </button>
                 </form>
             </div>

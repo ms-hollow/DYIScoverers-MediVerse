@@ -5,10 +5,13 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
 
 const Register2Patient = () => {
+    const router = useRouter();
+    
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         firstName: '', 
@@ -57,10 +60,12 @@ const Register2Patient = () => {
             ).send({ from: accounts[0] });
 
             console.log("Transaction Hash:", receipt.transactionHash);
+            router.push('/PATIENT/Register3Patient/');
             // Transaction successful, you can do further processing here if needed
         } catch (error) {
             console.error('Error sending transaction:', error.message);
         }
+
     };
 
     const goBack = () => {
@@ -147,11 +152,7 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
-                    </button>
-
-
+                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                 </form>
             </div>
         </>

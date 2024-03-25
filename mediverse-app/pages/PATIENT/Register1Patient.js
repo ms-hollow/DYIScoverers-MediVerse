@@ -38,7 +38,7 @@ const Register1Patient = () => {
             return; // Stop further execution if checkbox is not checked
         }
         // Redirect to the next page only if the checkbox is checked
-        router.push('/PATIENT/Register2Patient/');
+        router.push('/PATIENT/register2Patient/');
     };
 
     const goBack = () => {
