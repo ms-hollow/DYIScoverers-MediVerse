@@ -18,7 +18,7 @@ const LandingPageHeader = ({ buttonText }) => {
         </ul>
 
         <div className={styles.button}>
-          <Link href="/PATIENT/Register1Patient/">{buttonText}</Link>
+          <Link href="/HOSPITAL/HomeHospital/">{buttonText}</Link>
         </div>
 
       </header>
