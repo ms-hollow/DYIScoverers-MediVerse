@@ -16,9 +16,10 @@
     "ganache-cli": "^6.12.2"
   },
   "dependencies": {
+    "@truffle/hdwallet-provider": "^2.1.15",
     "dotenv": "^16.4.5",
     "solc": "^0.8.25",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "^4.5.0"
+    "web3": "^4.6.0"
   }
 }

@@ -41,8 +41,8 @@ const Register2Patient = () => {
         // Add form submission logic here
         console.log('Form submitted:', formData);
         // Concatenate the address fields
-        const address = `${formData.houseNo} ${formData.streetNo} ${formData.barangay} ${formData.cityMunicipality} ${formData.region}`;
-        const name = `${formData.firstName} ${formData.middleName} ${formData.lastName}`;
+        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
+        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
         console.log("name: ", name)
         console.log("address:", address)
 
