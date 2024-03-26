@@ -68,26 +68,6 @@ const Register3Patient = () => {
                     region: patientFullAddress[4]
                     // Set other form fields accordingly
                 });
-                console.log()
-                // Log the patient information to the console
-                /** 
-                console.log('Patient First Name:', patientFullName[0]);
-                console.log('Patient Middle Name:', patientFullName[1]);
-                console.log('Patient Last Name:', patientFullName[2]);
-                console.log('Gender:', patientInfo[1]);
-                console.log('Date of Birth:', patientInfo[2]);
-                console.log('Height:', patientInfo[3]);
-                console.log('Weight:', patientInfo[4]);
-                console.log('Contact Number:', patientInfo[5]);
-                
-                console.log('House No:', patientFullAddress[0]);
-                console.log('Street No:', patientFullAddress[1]);
-                console.log('Barangay:', patientFullAddress[2]);
-                console.log('Municipality:', patientFullAddress[3]);
-                console.log('Region:', patientFullAddress[4]);
-    
-                console.log('Authorized Hospitals:', patientInfo[7]);
-                console.log('Registration Date:', patientInfo[8]);*/
 
                 
             } catch (error) {
