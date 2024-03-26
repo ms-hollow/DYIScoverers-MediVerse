@@ -1,0 +1,279 @@
+.header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1004;
+    display: flex;
+    justify-content: space-between; /* To create space between logo and navbar */
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color);
+    padding: 3% 2%;
+    transition: all .50s ease;
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    overflow-y: auto;
+    background-color: var(--sidebar);
+    transition: all 0.50s ease;
+    z-index: 1100;
+    transform: translateX(-250px);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.10);
+}
+
+.sidebar:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -20px; /* Adjust as necessary */
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid white; /* Adjust the size and color of the triangle */
+    transform: translateY(-50%);
+}
+
+.sidebarOpen .sidebar {
+    transform: translateX(0);
+}
+
+.sidebarMenuBtn {
+    display: flex;
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    padding: 5px 5px;
+    width: 50px;
+    height: 100px;
+    position: fixed;
+    top: 50%; /* Position the button vertically at 50% from the top */
+    cursor: pointer;
+    z-index: 1100;
+    transition: transform 0.50s ease; /* Update transition to match sidebar */
+}
+
+.sidebarMenuBtn.menuOpen {
+    transform: translateX(250px);
+}
+
+.triangle {
+    position: absolute;
+    left: 15px; /* Adjust to align with the left side of the sidebar */
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent; /* Adjust the size */
+    border-bottom: 15px solid transparent; /* Adjust the size */
+    border-left: 15px solid var(--cyan); /* Adjust the size and color of the triangle */
+    transform: translateY(-50%);
+    filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.2)); /* Add shadow to the triangle */
+    transition: transform 0.50s ease;
+}
+
+/* Increase size of triangle when hovered or menu is open */
+.sidebarMenuBtn:hover .triangle,
+.sidebarMenuBtn.menuOpen .triangle {
+    transform: translateY(50%) scale(1.5); /* Increase size by 50% when hovered or when menu is open */
+}
+
+.sidebarMenuBtn.menuOpen .triangle {
+    transform: translateY(-50%) rotate(180deg); /* Rotate the triangle 180 degrees when menu is open */
+}
+
+.categoryName {
+    font-family: Raleway, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    white-space: nowrap; /*para di ma-cut ang two words */
+    z-index: 1100; 
+    transition: all 0.50s ease;
+}
+
+.contentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    flex: 1; /* Fill remaining space */
+    max-width: 100%; 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    transition: all 0.50s ease;
+}
+
+.contentShifted {
+    transform: translateX(250px); /* Adjust as necessary based on the width of the sidebar */
+}
+
+/* Additional Styles for Sidebar */
+.top {
+    display: flex;
+    position: relative; 
+    transition: all 0.50s ease;
+    padding: 25px;
+    background: var(--bg-color);
+}
+
+.sidebarLogo {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin-top: 3%;
+    margin-left: -12px;
+    position: relative;
+}
+
+.headerButtons {
+    display: flex;
+    align-items: center; /* Align vertically */
+    margin-right: 20px; /* Add margin to the right */
+    margin-left: auto; /* Move buttons to the right */
+    transition: all 0.50s ease;
+}
+
+.headerButtons > *:not(:last-child) {
+    margin-right: 40px; /* Add margin between header buttons */
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 41px;
+    background-color: #F4F7FE;
+    border-radius: 20px;
+    padding: 0 10px;
+}
+
+.searchIcon {
+    margin-right: 10px;
+}
+
+.searchInput {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    color: var(--navy-blue);
+}
+
+.menuItems {
+    position: relative;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.menuItems ul {
+    list-style-type: none; /* Remove bullets from the unordered list */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.menuItems a {
+    color: var(--navy-blue);
+    font-family: Raleway, sans-serif; /* Use Raleway font */
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 5px 30px;
+    line-height: 50px;
+    transition: all 0.3s ease; /* Add transition for color change */
+}
+
+.menuItems a:hover {
+    background-color: var(--bg-color);
+    font-weight: bold;
+    color: var(--cyan);
+    opacity: 0.8;
+    transition: color 0.3s ease;
+}
+
+.menuItems a.active {
+    color: var(--black-color);
+}
+
+.contentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    flex: 1; /* Fill remaining space */
+    max-width: 100%; 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    transition: all 0.50s ease;
+}
+
+.contentShifted {
+    transform: translateX(250px); /* Adjust as necessary based on the width of the sidebar */
+}
+
+/* Responsive styles */
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 2% 1%;
+    }
+
+    .categoryName{
+        margin-right: 20%;
+        white-space: nowrap;
+    }
+    
+    .sidebar {
+        width: 150px; /* Adjusted width for smaller screens */
+    }
+    
+    .searchBar {
+        width: 150px; /* Adjusted width for smaller screens */
+    }
+    
+    .headerButtons {
+        margin-left: auto; /* Shift header buttons to the right for smaller screens */
+    }
+
+    .menuItems a {
+        font-size: 14px;
+    }
+
+    .sidebarMenuBtn {
+        width: 30px; /* Adjusted width for smaller screens */
+    }
+
+    .triangle {
+        border-top: 8px solid transparent; /* Adjusted size for smaller screens */
+        border-bottom: 8px solid transparent; /* Adjusted size for smaller screens */
+        border-left: 8px solid var(--cyan); /* Adjusted size and color for smaller screens */
+    }
+
+    .contentContainer {
+        padding: 0.5rem; /* Adjusted padding for smaller screens */
+    }
+
+    /* Adjust header buttons when sidebar is open */
+    .sidebarOpen .headerButtons {
+        transform: translateX(200px); /* Translate header buttons if sidebar is open on small screens */
+    }
+
+    .sidebarOpen .categoryName{
+        margin-right: 20%;
+        margin-left: -20%;
+    }
+}
