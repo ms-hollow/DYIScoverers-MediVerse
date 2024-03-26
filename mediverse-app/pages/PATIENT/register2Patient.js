@@ -18,6 +18,7 @@ const Register2Patient = () => {
         middleName: '', 
         lastName: '',
         age: '',
+        gender: '',
         dob: '',
         phoneNumber: '',
         height: '',
@@ -30,10 +31,22 @@ const Register2Patient = () => {
     });
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.name === 'gender') {
+            setFormData({
+                ...formData,
+                gender: e.target.value,
+            });
+        } else if (e.target.name === 'dob') {
+            setFormData({
+                ...formData,
+                dob: e.target.value,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -52,6 +65,7 @@ const Register2Patient = () => {
             const receipt = await mvContract.methods.registerPatient(
                 name,
                 formData.age,
+                formData.gender,
                 formData.dob,
                 formData.phoneNumber,
                 formData.height,
@@ -112,9 +126,9 @@ const Register2Patient = () => {
                         <div className={styles.formField}>
                             <select id="gender" name="gender" required onChange={handleChange}>
                                 <option value="" disabled selected>Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div className={styles.formField}>

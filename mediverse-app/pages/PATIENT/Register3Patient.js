@@ -18,6 +18,7 @@ const Register3Patient = () => {
         middleName: '', 
         lastName: '',
         age: '',
+        gender: '',
         dob: '',
         phoneNumber: '',
         height: '',
@@ -39,10 +40,11 @@ const Register3Patient = () => {
     
                 // Call the getPatientInfo function on the smart contract
                 const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
-            
+                
+                console.log(patientInfo)
                 // Splitting the patient full name and full address to subcategories
                 const patientFullName = patientInfo[0].split('+');
-                const patientFullAddress = patientInfo[6].split('+');
+                const patientFullAddress = patientInfo[7].split('+');
 
                 // Set patient full name state
                 setPatientFullName(patientFullName);
@@ -54,12 +56,11 @@ const Register3Patient = () => {
                     middleName: patientFullName[1], // Set middle name
                     lastName: patientFullName[2], // Set last name
                     age: patientInfo[1], // Set age
-                    // TODO: ayusin ung formatting sa solidity
-                    // TODO: sa gender convert to string
-                    dob: patientInfo[2],
-                    phoneNumber: patientInfo[3],
-                    height: patientInfo[4],
-                    weight: patientInfo[5],
+                    gender: patientInfo[2],
+                    dob: patientInfo[3],
+                    phoneNumber: patientInfo[4],
+                    height: patientInfo[5],
+                    weight: patientInfo[6],
                     houseNo: patientFullAddress[0],
                     streetNo: patientFullAddress[1],
                     barangay: patientFullAddress[2],

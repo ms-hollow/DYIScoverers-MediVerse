@@ -8,6 +8,7 @@ contract MediVerse {
     
     struct Patient {
         string name;
+        string age;
         string gender;
         string dateOfBirth;
         string height;
@@ -78,22 +79,24 @@ contract MediVerse {
 
     function registerPatient(
         string memory _name,
-        string memory _contactNum,
+        string memory _age,
         string memory _gender,
         string memory _dateOfBirth,
         string memory _height,
         string memory _weight,
+        string memory _contactNum,
         string memory _address
     ) public {
         require(!isRegistered[msg.sender], "Patient already registered");
 
         Patient storage patient = patients[msg.sender];
         patient.name = _name;
-        patient.contactNum = _contactNum;
+        patient.age = _age;
         patient.gender = _gender;
         patient.dateOfBirth = _dateOfBirth;
         patient.height = _height;
         patient.weight = _weight;
+        patient.contactNum = _contactNum;
         patient.addr = _address;
 
         patient.registrationDate = block.timestamp;
@@ -104,20 +107,22 @@ contract MediVerse {
 
     function editPatientDetails(
         string memory _name,
-        string memory _contactNum,
+        string memory _age,
         string memory _gender,
         string memory _dateOfBirth,
         string memory _height,
         string memory _weight,
+        string memory _contactNum,
         string memory _address
     ) public {
         Patient storage patient = patients[msg.sender];
         patient.name = _name;
-        patient.contactNum = _contactNum;
+        patient.age = _age;
         patient.gender = _gender;
         patient.dateOfBirth = _dateOfBirth;
         patient.height = _height;
         patient.weight = _weight;
+        patient.contactNum = _contactNum;
         patient.addr = _address;
     }
 
@@ -238,9 +243,9 @@ contract MediVerse {
     }
 
     // Function to retrieve patient information
-    function getPatientInfo(address patientAddress) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory, address[] memory, uint) {
+    function getPatientInfo(address patientAddress) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory, string memory, address[] memory, uint) {
         Patient storage patient = patients[patientAddress];
-        return (patient.name, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.registrationDate);
+        return (patient.name, patient.age, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.registrationDate);
     }
 
     // Function to retrieve hospital information
