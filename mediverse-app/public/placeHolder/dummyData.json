@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 2,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    }
+  ]
