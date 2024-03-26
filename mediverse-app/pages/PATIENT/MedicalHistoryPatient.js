@@ -20,20 +20,20 @@ const MedicalHistoryPatient = ({ data }) => {
         <div className={styles.container}>
 
             <div className={styles.tableHeading}>
-                <p className={styles.diagnosis_position}>Diagnosis</p>
-                <p className={styles.hosp_position}>Hospital</p>
-                <p className={styles.phys_position}>Physician</p>
-                <p className={styles.adm_position}>Admission Date</p>
-                <p className={styles.dis_position}>Discharge Date</p>
+                <p>Diagnosis</p>
+                <p>Hospital</p>
+                <p>Physician</p>
+                <p>Admission Date</p>
+                <p>Discharge Date</p>
             </div>
 
             {data.map(data => (
                 <Link href="/" key={data.id} className={styles.data}>
-                    <p className={styles.diagnosis_position}>{data.diagnosis}</p>
-                    <p className={styles.hosp_position}>{data.hospital}</p>
-                    <p className={styles.phys_position}>{data.physician}</p>
-                    <p className={styles.adm_position}>{data.admissionDate}</p>
-                    <p className={styles.dis_position}>{data.dischargeDate}</p>
+                    <p className={styles.diaAttrb}>{data.diagnosis}</p>
+                    <p>{data.hospital}</p>
+                    <p>{data.physician}</p>
+                    <p>{data.admissionDate}</p>
+                    <p>{data.dischargeDate}</p>
                 </Link>
             ))}
             
