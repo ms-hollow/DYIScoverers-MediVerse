@@ -219,6 +219,7 @@
     padding: 1%; /* Adjust padding for responsiveness */
     border-radius: 3px;
     transition: all 0.50s ease;
+    z-index: 1004;
 }
 
 .contentShifted {

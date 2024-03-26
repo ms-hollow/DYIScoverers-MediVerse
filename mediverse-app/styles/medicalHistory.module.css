@@ -4,6 +4,7 @@
     align-items: center;
     width: 1122px;
     margin: 0 auto;
+    z-index: 1005;
 }
 
 .tableHeading{

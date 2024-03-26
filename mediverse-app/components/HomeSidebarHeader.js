@@ -8,7 +8,7 @@ const HomeSidebarHeader = () => {
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    };
+};
 
     return (
         <>
@@ -53,10 +53,7 @@ const HomeSidebarHeader = () => {
                         </ul>
                     </div>
                 </div>
-
-                <div className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentShifted : ''}`}>
-                    <h1>DITO LALAGAY CONTENTS</h1>
-                </div>
+                
             </div>
                 
         </>
