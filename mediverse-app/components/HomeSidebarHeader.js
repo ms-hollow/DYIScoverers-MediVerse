@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 
-const HomeSidebarHeader = ({children}) => {
+const HomeSidebarHeader = ({children, pageName}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -14,11 +14,10 @@ const HomeSidebarHeader = ({children}) => {
         <>
 
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-
             <header className={styles.header}>
                 
                 <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
-                    Home
+                    {pageName}
                 </div>
 
                 <div className={styles.headerButtons}>

@@ -35,8 +35,8 @@ const Register1Patient = () => {
 
     return (
         <>
-            <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
-                <LandingPageHeader buttonText="LOG IN" />
+            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
+                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
             <RegistrationProcess 
@@ -46,13 +46,8 @@ const Register1Patient = () => {
             />
 
             <div className={styles.connectWalletContainer}>
-
                 <div className={styles.formTitle}>Connect Wallet</div>
-
-                <button className={styles.backButton} onClick={goBack}>
-                    ←
-                </button>
-
+                <button className={styles.backButton} onClick={goBack}>←</button>
                 <button className={styles.connectMetamaskButton}>
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.png" width={35} height={35} />
@@ -75,7 +70,6 @@ const Register1Patient = () => {
                 <button className={styles.submitButton} onClick={handleSubmit}>
                     <Link href="/PATIENT/register2Patient/">PROCEED</Link>
                 </button>
-                
                 
             </div>
         </>

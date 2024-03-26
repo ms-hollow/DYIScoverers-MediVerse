@@ -19,7 +19,7 @@ export async function getStaticProps() {
 
 const MedicalHistoryPatient = ({ data }) => {
     return (  
-        <Layout>
+        <Layout pageName = "Medical History">
         <>
         
             <div className={styles.container}>

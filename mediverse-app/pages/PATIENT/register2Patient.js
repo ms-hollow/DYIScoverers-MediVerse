@@ -33,8 +33,8 @@ const Register2Patient = () => {
 
     return (
         <>
-            <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
-                <LandingPageHeader buttonText="LOG IN" />
+            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
+                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
             <RegistrationProcess 

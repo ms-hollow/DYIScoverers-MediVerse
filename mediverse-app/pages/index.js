@@ -11,7 +11,7 @@ export default function LandingPage() {
     <>
 
         <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
-            <LandingPageHeader buttonText="Connect Wallet" />
+          <LandingPageHeader buttonText="Connect Wallet" buttonLink= "/PATIENT/logInPatient/" />
         </div>
 
         <div className={styles.container}>
