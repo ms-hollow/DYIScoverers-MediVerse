@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 
-const HomeSidebarHeader = () => {
+const HomeSidebarHeader = ({children}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -52,6 +52,10 @@ const HomeSidebarHeader = () => {
                             <li><a href="change-password.html">Account</a></li>
                         </ul>
                     </div>
+                </div>
+
+                <div className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
+                    {children}
                 </div>
                 
             </div>

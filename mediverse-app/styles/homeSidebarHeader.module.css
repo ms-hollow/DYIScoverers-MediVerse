@@ -102,22 +102,6 @@
     transition: all 0.50s ease;
 }
 
-.contentContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-    flex: 1; /* Fill remaining space */
-    max-width: 100%; 
-    padding: 1%; /* Adjust padding for responsiveness */
-    border-radius: 3px;
-    transition: all 0.50s ease;
-}
-
-.contentShifted {
-    transform: translateX(250px); /* Adjust as necessary based on the width of the sidebar */
-}
-
 /* Additional Styles for Sidebar */
 .top {
     display: flex;
@@ -209,21 +193,36 @@
     color: var(--black-color);
 }
 
-.contentContainer {
+/*.contentContainer {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Center vertically */
+    /*
     align-items: center; /* Center horizontally */
+    /*
     flex: 1; /* Fill remaining space */
+    /*
     max-width: 100%; 
     padding: 1%; /* Adjust padding for responsiveness */
+    /*
     border-radius: 3px;
     transition: all 0.50s ease;
-    z-index: 1004;
+}*/
+
+.contentContainer {
+    display: flex;
+    margin-top: 0px;
+    width: auto;
+    margin: 0 auto;
+    transition: all 0.50s ease
 }
 
 .contentShifted {
     transform: translateX(250px); /* Adjust as necessary based on the width of the sidebar */
+}
+
+.contentAdjusted {
+    transform: translateX(120px); /* Adjust as necessary based on the width of the sidebar */
 }
 
 /* Responsive styles */
