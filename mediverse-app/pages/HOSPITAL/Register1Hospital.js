@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 
-const Register1Patient = () => {
+const Register1Hospital = () => {
     const router = useRouter();
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
@@ -25,7 +25,7 @@ const Register1Patient = () => {
         }
 
         // Redirect to the next page only if the checkbox is checked
-        router.push('/PATIENT/register2Patient/');
+        router.push('/HOSPITAL/register2Hospital/');
     };
 
     const goBack = () => {
@@ -67,7 +67,7 @@ const Register1Patient = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="/PATIENT/Register2Hospital/">PROCEED</Link>
+                    <Link href="/HOSPITAL/Register2Hospital/">PROCEED</Link>
                 </button>
                 
             </div>
@@ -76,4 +76,4 @@ const Register1Patient = () => {
     );
 };
 
-export default Register1Patient;
+export default Register1Hospital;

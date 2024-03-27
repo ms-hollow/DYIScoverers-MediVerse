@@ -110,7 +110,6 @@ const Register2Patient = () => {
                         <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
                     </button>
 
-
                 </form>
             </div>
         </>

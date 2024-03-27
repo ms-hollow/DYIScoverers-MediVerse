@@ -130,9 +130,11 @@
 .formField input,
 .formField select {
   width: calc(100% - 20px); /* Make input fields slightly wider */
+  height: 46px;
   padding: 10px; /* Adjust padding for responsiveness */
-  border: 1px solid var(--gray);
+  border: 1px solid rgb(199, 199, 199);
   border-radius: 5px;
+  font-family: Roboto Condensed;
 }
 
 .submitButton {
