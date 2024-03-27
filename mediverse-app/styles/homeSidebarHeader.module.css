@@ -217,9 +217,8 @@
     width: auto;
     margin: 0 auto;
     transition: all 0.50s ease;
-    width: 100vw; /* Cover the entire width of the viewport */
-    height: 100vh; /* Cover the entire height of the viewport */
-    overflow-y: auto; /* Enable vertical scrolling when needed */
+    width: 100vw;
+    overflow-y: auto;
 }
 
 
