@@ -1,0 +1,97 @@
+/*----------------------ADD PATIENT PERSONAL INFO------------------*/
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 10% auto; /* Adjust margin for vertical positioning */
+    padding: 1%; 
+    border-radius: 3px;
+    width: 1122px;
+}
+
+.descriptionField {
+    flex: 10; /* Adjust the flex value if needed */
+    margin-right: 20px;
+    border-radius: 3px;
+    height: 100px; /* Adjust the height as needed */
+}
+  
+.registrationForm {
+    margin: 0 auto; /* Center the registration form horizontally */
+    width: 100%; /* Ensure the form takes up the full width of the container */
+    padding: 0% 0% 0% 2%; /* Add padding to the left side */
+}
+
+.formTitle {
+    white-space: nowrap;
+    font-family: 'Raleway';
+    font-size: 16px;
+    font-weight: bold;
+    margin: 2%;
+}
+
+.formRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Align buttons at opposite ends */
+    margin-bottom: 15px;
+}
+
+.formField {
+    flex: 10;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+
+.formField input::placeholder,
+.formField select::placeholder,
+.formField select option[disabled]:nth-child(),
+.formField input[type="date"]::placeholder{
+    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+}
+
+.formField input,
+.formField select {
+    width: calc(100% - 20px); /* Make input fields slightly wider */
+    padding: 10px; /* Adjust padding for responsiveness */
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+}
+
+.submitButton {
+    display: block; 
+    margin: 10px auto; /* Center horizontally with auto margins */
+    padding: 10px 20px;
+    margin-top: 30px;
+    margin-left: auto; /* Move the button to the right */
+    border: none;
+    border-radius: 5px;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background-color: var(--cyan);
+}
+
+.backButton {
+    display: block; 
+    float: left; /* Add float property to move it to the left */
+    margin: -50px 18px; /* Adjust margin-top to move it higher */
+    padding: 4px 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--gray);
+    cursor: pointer;
+    font-weight: bold; 
+    font-size: 1.5rem; 
+}
+
+.backButton:hover {
+    color: var(--cyan);
+}
+
+.backButton:hover {
+    color: var(--cyan);
+}

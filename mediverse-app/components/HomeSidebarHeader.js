@@ -12,7 +12,6 @@ const HomeSidebarHeader = ({children, pageName}) => {
 
     return (
         <>
-
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
             <header className={styles.header}>
                 
@@ -57,8 +56,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                     {children}
                 </div>
                 
-            </div>
-                
+            </div>       
         </>
     );
 };

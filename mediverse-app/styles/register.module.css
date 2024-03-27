@@ -120,11 +120,6 @@
   margin-right: 1px;  
 }
 
-.formField {
-  flex: 1;
-  margin-right: 1px;  
-}
-
 .formField input::placeholder,
 .formField select::placeholder,
 .formField select option[disabled]:nth-child(),

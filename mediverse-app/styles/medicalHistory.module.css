@@ -4,6 +4,13 @@
     align-items: center;
     width: 1122px;
     margin: 0 auto;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    max-height: 400px; /* Set a maximum height for vertical scrolling */
+}
+
+.tableContainer {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Make the table container fill the available height */
 }
 
 .tableHeading{

@@ -1,13 +1,11 @@
-import LandingPageHeader from "@/components/landingPageHeader";
-import RegistrationProcess from "@/components/RegistrationProcess";
-import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
-import Head from "next/head";
-import Image from "next/image";
+import styles from '../../styles/addPatient.module.css';
+import Layout from '../../components/HomeSidebarHeader.js'
+import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
 
 
-const Register2Patient = () => {
+const AddPatient = () => {
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         firstName: '', middleName: '', lastName: '',
@@ -21,31 +19,22 @@ const Register2Patient = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault(); 
         // Add form submission logic here
         
         console.log('Form submitted:', formData);
     };
 
     const goBack = () => {
-        window.history.back(); // Go back to the previous page
+        window.history.back(); 
     };
-
-    return (
+    
+    return (  
+        <Layout pageName = "Add Patient">
         <>
-            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-            </div>
-
-            <RegistrationProcess 
-                firstShapeColor="shapeBlue"
-                secondShapeColor="shapeCyan"
-                thirdShapeColor="shapeBlue"
-            />
-
+        
             <div className={styles.formContainer}>
-                <div className={styles.formTitle}>Personal Details</div>
-                <button className={styles.backButton} onClick={goBack}>←</button>
+                <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -105,17 +94,39 @@ const Register2Patient = () => {
                             <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} />
                         </div>
                     </div>
-                    
+
+                    <div className={styles.formTitle}>Patient Diagnosis</div>
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="physician" name="physician" placeholder="Physician" required onChange={handleChange} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required onChange={handleChange} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" required onChange={handleChange} />
+                        </div>
+                    </div>
+                
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="description" name="description" placeholder="Description" required onChange={handleChange} />
+                        </div>
+                    </div>
+
                     <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
+                        <Link href="/PATIENT/Register3Patient/">Add Patient</Link>
                     </button>
 
 
                 </form>
             </div>
-        </>
-        
-    );
-};
 
-export default Register2Patient;
+                
+      
+        </>
+        </Layout>
+    );
+}
+ 
+export default AddPatient;
