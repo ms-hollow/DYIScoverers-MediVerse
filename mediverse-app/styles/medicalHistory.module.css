@@ -4,13 +4,15 @@
     align-items: center;
     width: 1122px;
     margin: 0 auto;
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    max-height: 400px; /* Set a maximum height for vertical scrolling */
+    margin-top: 130px;
 }
 
-.tableContainer {
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 100%; /* Make the table container fill the available height */
+.dataContainer {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 15px;
 }
 
 .tableHeading{
@@ -20,7 +22,6 @@
     font-family: Roboto Condensed;
     font-weight: 500;
     color: var(--pale-blue);
-    margin-top: 145px;
     width: 1122px;
     justify-content: center;
 }
