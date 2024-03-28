@@ -1,0 +1,87 @@
+[
+    {
+        "id": 1,
+        "basicInfo": {
+            "doctor": "Dr. Marlo Cruz",
+            "doctorType": "Pediatrician",
+            "dateDiagnosis": "February 15, 2024",
+            "diagnosis": "Acute Bronchitis",
+            "description": "Patient presented with cough, fever, and wheezing."
+        },
+        "signsAndSymptoms": [
+            {
+                "sANDs_ID": 1,
+                "symptoms": "Colds",
+                "duration": "3 days",
+                "severity": "Moderate",
+                "location": "Chest"
+            },
+            {
+                "sANDs_ID": 2,
+                "symptoms": "Fever",
+                "duration": "2 days",
+                "severity": "Mild",
+                "location": "General"
+            },
+            {
+                "sANDs_ID": 3,
+                "symptoms": "Wheezing",
+                "duration": "2 days",
+                "severity": "Severe",
+                "location": "Chest"
+            }
+        ],
+        "treatment": [
+            {
+                "treatment_ID": 1,
+                "treatment": "Nebulization Therapy",
+                "medicalTeam": "Respiratory Therapy Team",
+                "dateStarted": "February 15, 2024",
+                "dateEnd": "February 17, 2024",
+                "duration": "3 days"
+            },
+            {
+                "treatment_ID": 2,
+                "treatment": "Antibiotic Therapy",
+                "medicalTeam": "Dr. Maria Rodriguez",
+                "dateStarted": "February 15, 2024",
+                "dateEnd": "February 20, 2024",
+                "duration": "5 days"
+            }
+        ],
+        "test": [
+            {
+                "test_ID": 1,
+                "testType": "Chest X-ray",
+                "orderingPhysician": "Dr. Marlo Cruz",
+                "date": "February 15, 2024",
+                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "result": "Patchy infiltrates consistent with  bronchitis."
+            },
+            {
+                "test_ID": 2,
+                "testType": "Complete Blood Count (CBC)",
+                "orderingPhysician": "Dr. Marlo Cruz",
+                "date": "February 15, 2024",
+                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "result": "Elevated white blood cell count indicating infection."
+            },
+            {
+                "test_ID": 3,
+                "testType": "Chest X-ray",
+                "orderingPhysician": "Dr. Marlo Cruz",
+                "date": "February 15, 2024",
+                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "result": "Patchy infiltrates consistent with  bronchitis."
+            },
+            {
+                "test_ID": 4,
+                "testType": "Complete Blood Count (CBC)",
+                "orderingPhysician": "Dr. Marlo Cruz",
+                "date": "February 15, 2024",
+                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "result": "Elevated white blood cell count indicating infection."
+            }
+        ]
+    }
+]

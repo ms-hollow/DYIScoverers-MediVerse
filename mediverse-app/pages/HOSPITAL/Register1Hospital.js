@@ -7,37 +7,25 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 
-
-const Register1Patient = () => {
+const Register1Hospital = () => {
     const router = useRouter();
-    const [walletAddress, setWalletAddress] = useState("")
-    //connect wallet prompt
-    const connectMetaMask = async () => {
-        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-            try{
-                /* If metamask is installed */
-                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-                setWalletAddress(accounts[0]); 
-                console.log(accounts[0]);
-            } catch(err) {
-                console.error(err.message);
-            }
-        } else {
-            /* if metamask is not installed */
-            console.log("Please install MetaMask");
-        }
-    };
-    
+    const [formData, setFormData] = useState({ 
+        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
+        firstName: '', middleName: '', lastName: '',
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
+    
         // Check if the checkbox is checked
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
             alert('Please agree to the terms before proceeding.');
             return; 
         }
+
         // Redirect to the next page only if the checkbox is checked
-        router.push('/PATIENT/register2Patient/');
+        router.push('/HOSPITAL/register2Hospital/');
     };
 
     const goBack = () => {
@@ -58,17 +46,8 @@ const Register1Patient = () => {
 
             <div className={styles.connectWalletContainer}>
                 <div className={styles.formTitle}>Connect Wallet</div>
-<<<<<<< HEAD
-
-                <button className={styles.backButton} onClick={goBack}>
-                    ←
-                </button>
-
-                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
-=======
                 <button className={styles.backButton} onClick={goBack}>←</button>
                 <button className={styles.connectMetamaskButton}>
->>>>>>> front-end
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.png" width={35} height={35} />
                     </div>
@@ -88,18 +67,13 @@ const Register1Patient = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-<<<<<<< HEAD
-                    <Link href="/PATIENT/register2Patient/">PROCEED</Link>
-                </button>
-=======
-                    <Link href="/PATIENT/Register2Hospital/">PROCEED</Link>
+                    <Link href="/HOSPITAL/Register2Hospital/">PROCEED</Link>
                 </button>
                 
->>>>>>> front-end
             </div>
         </>
         
     );
 };
 
-export default Register1Patient;
+export default Register1Hospital;

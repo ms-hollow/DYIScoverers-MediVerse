@@ -1,106 +1,40 @@
-import LandingPageHeader from "@/components/landingPageHeader";
-import RegistrationProcess from "@/components/RegistrationProcess";
-import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
-import Head from "next/head";
-import Image from "next/image";
+import styles from '../../styles/addPatient.module.css';
+import Layout from '../../components/HomeSidebarHeader.js'
+import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
-import mvContract from "../../blockchain/mediverse";
 
-const Register2Patient = () => {
-    const router = useRouter();
-    
+
+const AddPatient = () => {
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', 
-        middleName: '', 
-        lastName: '',
-        age: '',
-        gender: '',
-        dob: '',
-        phoneNumber: '',
-        height: '',
-        weight: '',
-        houseNo: '',
-        streetNo: '',
-        barangay: '',
-        cityMunicipality: '',
-        region: ''
+        firstName: '', middleName: '', lastName: '',
     });
 
     const handleChange = (e) => {
-        if (e.target.name === 'gender') {
-            setFormData({
-                ...formData,
-                gender: e.target.value,
-            });
-        } else if (e.target.name === 'dob') {
-            setFormData({
-                ...formData,
-                dob: e.target.value,
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [e.target.name]: e.target.value,
-            });
-        }
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+    const handleSubmit = (e) => {
+        e.preventDefault(); 
         // Add form submission logic here
+        
         console.log('Form submitted:', formData);
-        // Concatenate the address fields
-        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
-        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        console.log("name: ", name)
-        console.log("address:", address)
-
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
-            const receipt = await mvContract.methods.registerPatient(
-                name,
-                formData.age,
-                formData.gender,
-                formData.dob,
-                formData.phoneNumber,
-                formData.height,
-                formData.weight,
-                address
-            ).send({ from: accounts[0] });
-
-            console.log("Transaction Hash:", receipt.transactionHash);
-            router.push('/PATIENT/Register3Patient/');
-            // Transaction successful, you can do further processing here if needed
-        } catch (error) {
-            console.error('Error sending transaction:', error.message);
-        }
-
     };
 
     const goBack = () => {
-        window.history.back(); // Go back to the previous page
+        window.history.back(); 
     };
-
-    return (
+    
+    return (  
+        <Layout pageName = "Add Patient">
         <>
-            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-            </div>
-
-            <RegistrationProcess 
-                firstShapeColor="shapeBlue"
-                secondShapeColor="shapeCyan"
-                thirdShapeColor="shapeBlue"
-            />
-
+        
             <div className={styles.formContainer}>
-                <div className={styles.formTitle}>Personal Details</div>
-                <button className={styles.backButton} onClick={goBack}>←</button>
+                <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -121,9 +55,9 @@ const Register2Patient = () => {
                         <div className={styles.formField}>
                             <select id="gender" name="gender" required onChange={handleChange}>
                                 <option value="" disabled selected>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                         <div className={styles.formField}>
@@ -160,20 +94,39 @@ const Register2Patient = () => {
                             <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} />
                         </div>
                     </div>
-                    
-<<<<<<< HEAD
-                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
-=======
+
+                    <div className={styles.formTitle}>Patient Diagnosis</div>
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="physician" name="physician" placeholder="Physician" required onChange={handleChange} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required onChange={handleChange} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" required onChange={handleChange} />
+                        </div>
+                    </div>
+                
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="description" name="description" placeholder="Description" required onChange={handleChange} />
+                        </div>
+                    </div>
+
                     <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
+                        <Link href="/PATIENT/Register3Patient/">Add Patient</Link>
                     </button>
 
->>>>>>> front-end
+
                 </form>
             </div>
-        </>
-        
-    );
-};
 
-export default Register2Patient;
+                
+      
+        </>
+        </Layout>
+    );
+}
+ 
+export default AddPatient;

@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import LandingPageLayout from "@/components/LandingPageLayout";
+import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/landingPage.module.css';
 import styles2 from '/styles/landingPageHeader.module.css';
-import LandingPageHeader from "@/components/LandingPageHeader";
+import LandingPageHeader from "@/components/landingPageHeader";
 
 export default function LandingPage() {
   return (
@@ -17,7 +17,7 @@ export default function LandingPage() {
 
 
         <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
-            <LandingPageHeader buttonText="Connect Wallet" />
+          <LandingPageHeader buttonText="Connect Wallet" buttonLink= "/PATIENT/logInPatient/" />
         </div>
 
         <div className={styles.container}>

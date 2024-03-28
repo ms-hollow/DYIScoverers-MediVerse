@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1122px;
+    margin: 0 auto;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    max-height: 400px; /* Set a maximum height for vertical scrolling */
+}
+
+.tableContainer {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Make the table container fill the available height */
+}
+
+.tableHeading{
+    display: grid;
+    grid-template-columns: 220px 300px 200px 160px 160px;
+    font-size: 14px;
+    font-family: Roboto Condensed;
+    font-weight: 500;
+    color: var(--pale-blue);
+    margin-top: 145px;
+    width: 1122px;
+    justify-content: center;
+}
+
+.data{
+    display: grid;
+    grid-template-columns: 220px 300px 200px 160px 160px;
+    font-size: 12px;
+    font-family: Roboto Condensed;
+    border-radius: 8px;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+    width: 1122px;
+    justify-content: center;
+}
+
+.data:hover {
+    border-left: 6px solid var(--gray);
+}
+
+.diaAttrb {
+    color: var(--cyan);
+}
