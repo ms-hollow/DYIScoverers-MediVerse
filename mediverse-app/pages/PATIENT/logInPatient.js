@@ -6,10 +6,7 @@ import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
-<<<<<<< HEAD
 import React, { useState } from 'react';
-=======
->>>>>>> front-end
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook

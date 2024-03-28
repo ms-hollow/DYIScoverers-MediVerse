@@ -161,14 +161,7 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-<<<<<<< HEAD
                     <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
-=======
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
-                    </button>
-
->>>>>>> front-end
                 </form>
             </div>
         </>

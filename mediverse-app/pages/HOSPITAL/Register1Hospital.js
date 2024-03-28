@@ -25,7 +25,7 @@ const Register1Hospital = () => {
         }
 
         // Redirect to the next page only if the checkbox is checked
-        router.push('/HOSPITAL/register2Hospital/');
+        router.push('/HOSPITAL/Register2Hospital/');
     };
 
     const goBack = () => {

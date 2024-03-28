@@ -10,12 +10,8 @@
     "compile": "solcjs --abi --include-path node_modules/ --base-path . blockchain/contracts/MediVerse.sol --output-dir blockchain/build"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@truffle/hdwallet-provider": "^2.1.15",
     "next": "^14.1.1",
-=======
-    "next": "^14.1.4",
->>>>>>> front-end
     "react": "^18",
     "react-dom": "^18"
   }
