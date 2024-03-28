@@ -22,9 +22,10 @@ const MedicalHistoryHospital = () => {
     }
 
     return ( 
-        <Layout pageName = "Medical History">
+        <Layout pageName="Medical History">
         <>
-            <div className={styles.container}>
+            <div className={styles.container}>      
+                <div className={styles.reserveSpace}></div>
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Doctor Consulted</p>   
@@ -44,7 +45,7 @@ const MedicalHistoryHospital = () => {
                         <p className={styles.dataFormat_des}>{data.basicInfo.description}</p> 
                     </div>
                 </div>
-
+        
                 <div className={styles.table_container}>
                     <p className={styles.table_title}>Signs and Symptoms</p>
                     <div className={styles.sANDs_heading}>
@@ -107,6 +108,52 @@ const MedicalHistoryHospital = () => {
                                 <p>{data.date}</p>
                                 <p>{data.reviewingPhysician}</p>
                                 <p>{data.result}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                <div className={styles.table_container}>
+                    <p className={styles.table_title}>Medication</p>
+                    <div className={styles.medication_heading}>
+                        <p>Medication</p>
+                        <p>Date of Prescription</p>
+                        <p>Prescribing Physician</p>
+                        <p>Frequency</p>
+                        <p>Duration</p>
+                        <p>End Date</p>
+                    </div>
+
+                    <div className={styles.scrollableTable_container}>
+                        {data.medication.map(data => (
+                            <div key={data.medication_ID} className={styles.medication_data}>
+                                <p>{data.medicationType}</p>
+                                <p>{data.prescriptionDate}</p>
+                                <p>{data.prescribingPhysician}</p>
+                                <p>{data.frequency}</p>
+                                <p>{data.duration}</p>
+                                <p>{data.endDate}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className={styles.table_container}>
+                    <p className={styles.table_title}>Admission</p>
+                    <div className={styles.sANDs_heading}>
+                        <p>Hospital</p>
+                        <p>Admission Date</p>
+                        <p>Discharge Date</p>
+                        <p>Length of Stay</p>
+                    </div>
+
+                    <div className={styles.scrollableTable_container}>
+                        {data.admission.map(data => (
+                            <div key={data.admission_ID} className={styles.sANDs_data}>
+                                <p>{data.hospital}</p>
+                                <p>{data.admissionDate}</p>
+                                <p>{data.dischargeDate}</p>
+                                <p>{data.lengthOfStay}</p>
                             </div>
                         ))}
                     </div>
