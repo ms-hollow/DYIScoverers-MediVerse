@@ -3,26 +3,77 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 
 const AddPatient = () => {
     const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
+        firstName: '', 
+        middleName: '', 
+        lastName: '',
+        age: '',
+        gender: '',
+        dob: '',
+        phoneNumber: '',
+        height: '',
+        weight: '',
+        houseNo: '',
+        streetNo: '',
+        barangay: '',
+        cityMunicipality: '',
+        region: ''
     });
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.name === 'gender') {
+            setFormData({
+                ...formData,
+                gender: e.target.value,
+            });
+        } else if (e.target.name === 'dob') {
+            setFormData({
+                ...formData,
+                dob: e.target.value,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
-        // Add form submission logic here
-        
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+        console.log("Account:", accounts[0]);
         console.log('Form submitted:', formData);
+        // Concatenate the address fields
+        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
+        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
+        console.log("name: ", name)
+        console.log("address:", address)
+        
+        try {
+            const receipt = await mvContract.methods.registerPatient(
+                name,
+                formData.age,
+                formData.gender,
+                formData.dob,
+                formData.phoneNumber,
+                formData.height,
+                formData.weight,
+                address
+            ).send({ from: accounts[0] });
+
+            console.log("Transaction Hash:", receipt.transactionHash);
+            // router.push('/PATIENT/Register3Patient/');
+            // Transaction successful, you can do further processing here if needed
+        } catch (error) {
+            console.error('Error sending transaction:', error.message);
+        }
+        
     };
 
     const goBack = () => {
@@ -95,35 +146,11 @@ const AddPatient = () => {
                         </div>
                     </div>
 
-                    <div className={styles.formTitle}>Patient Diagnosis</div>
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="physician" name="physician" placeholder="Physician" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" required onChange={handleChange} />
-                        </div>
-                    </div>
-                
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="description" name="description" placeholder="Description" required onChange={handleChange} />
-                        </div>
-                    </div>
-
                     <button className={styles.submitButton}>
                         <Link href="/PATIENT/Register3Patient/">Add Patient</Link>
                     </button>
-
-
                 </form>
             </div>
-
-                
-      
         </>
         </Layout>
     );
