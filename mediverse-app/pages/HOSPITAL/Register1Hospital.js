@@ -9,10 +9,23 @@ import { useRouter } from 'next/router';
 
 const Register1Hospital = () => {
     const router = useRouter();
-    const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
-    });
+    const [walletAddress, setWalletAddress] = useState("")
+
+    const connectMetaMask = async () => {
+        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+            try{
+                /* If metamask is installed */
+                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+                setWalletAddress(accounts[0]); 
+                console.log(accounts[0]);
+            } catch(err) {
+                console.error(err.message);
+            }
+        } else {
+            /* if metamask is not installed */
+            console.log("Please install MetaMask");
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -22,10 +35,10 @@ const Register1Hospital = () => {
         if (!agreeCheckbox.checked) {
             alert('Please agree to the terms before proceeding.');
             return; 
+        } else {
+            // Redirect to the next page only if the checkbox is checked
+            router.push('/HOSPITAL/Register2Hospital/');
         }
-
-        // Redirect to the next page only if the checkbox is checked
-        router.push('/HOSPITAL/Register2Hospital/');
     };
 
     const goBack = () => {
@@ -47,7 +60,7 @@ const Register1Hospital = () => {
             <div className={styles.connectWalletContainer}>
                 <div className={styles.formTitle}>Connect Wallet</div>
                 <button className={styles.backButton} onClick={goBack}>←</button>
-                <button className={styles.connectMetamaskButton}>
+                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.png" width={35} height={35} />
                     </div>
@@ -67,7 +80,7 @@ const Register1Hospital = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="/HOSPITAL/Register2Hospital/">PROCEED</Link>
+                    <Link href="">PROCEED</Link>
                 </button>
                 
             </div>

@@ -3,12 +3,17 @@ import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/registerHospital.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse";
 
 
 const Register2Hospital = () => {
+    const router = useRouter();
+
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
+        hospitalName: '', contactNumber: '', hospitalAddress: ''
     });
 
     const handleChange = (e) => {
@@ -18,10 +23,22 @@ const Register2Hospital = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         // Add form submission logic here
         console.log('Form submitted:', formData);
+
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
+
+            console.log("Transaction Hash:", receipt.transactionHash);
+            router.push('/HOSPITAL/Register3Hospital/');
+            // Transaction successful, you can do further processing here if needed
+        } catch (error) {
+            console.error('Error sending transaction:', error.message);
+        }
     };
 
     const goBack = () => {

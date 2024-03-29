@@ -58,17 +58,8 @@ const Register1Patient = () => {
 
             <div className={styles.connectWalletContainer}>
                 <div className={styles.formTitle}>Connect Wallet</div>
-<<<<<<< HEAD
-
-                <button className={styles.backButton} onClick={goBack}>
-                    ←
-                </button>
-
-                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
-=======
                 <button className={styles.backButton} onClick={goBack}>←</button>
-                <button className={styles.connectMetamaskButton}>
->>>>>>> front-end
+                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.png" width={35} height={35} />
                     </div>
@@ -88,14 +79,8 @@ const Register1Patient = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-<<<<<<< HEAD
-                    <Link href="/PATIENT/register2Patient/">PROCEED</Link>
+                    <Link href="">PROCEED</Link>
                 </button>
-=======
-                    <Link href="/PATIENT/Register2Hospital/">PROCEED</Link>
-                </button>
-                
->>>>>>> front-end
             </div>
         </>
         
