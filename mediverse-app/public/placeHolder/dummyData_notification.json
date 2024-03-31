@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFfSURBVHgB7ZfRTcMwFEWvQ/lAwAcbeBNgBlqJP8wIbNBNaH+BSjABGYENgA0QUCEV4odNJShVHexnY6riI8VSYls6yotvbKCw4ghnT/dpD1QdIYuFHuJiu17U1XFPImlahRyQqF1dFZacjvdIwgApEX7V8RccbR4jJd2x8hm29CUugrH4f4Oz2IycxpA/JO5cWdcGT1CYAKfAjJymQI1AeIJkkr9yh+tCNN2DAU+QUSouZRXHsqIx03tW0GLXPaCqMdoYIgE8QRi5tp89adv+oeD5x8Yh7ebBQVkksRTBWJir+Ad6jwq0dooElBLH8jslnqci9e1eC2naPjzII3i29fVXOXyRIOqby2tq3hJbuYaujZyceXqD5vXKNSWfoEvubbKPy50H17Q8gkw5i/83eDD2zzUS0p6SPmHKIUhQhJzi5hYAU86SOweD5Cwtb3D91mw8B0hJMzkJkSv8C94BMl15X5EOa5QAAAAASUVORK5CYII=",
+        "notificationType": "Medical Records Updated",
+        "description": "You updated your patient’s medical records. Please review the changes.",
+        "timeStamp": "5 days ago"
+    },
+    {
+        "id": 2,
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAdCAYAAAC5UQwxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAG0SURBVHgBvZZbTsJAFIb/M+CFCAnuAHbAEmQFkoiJb+gKwBVQVqAugWcg4grAFdAdWFdgEy9EoD3OgEaLdjpthe+hmbSn83WmnflLMKX+fARkjkFcA6P0edaWbRue6GCYc0y6IZMi1F8teWzri/wO+gULqYVGsi/4Ev38NRILz6YlLPwHmONiMStjeOiGFQjt7QtuIh5F7Ow1dAV6IVBBXHyuJBcSlxAXSiPcAJsQukghHCM2wtZehRayEReiIRIL5+9dRExRAIaDXu4eiYXLBSy0O8ea0YqqiN7aak9yMe9OfmzYIS45usFBGRFEf6VqlOxf6IvYhTerwgCzZdEvjGWpFXqd0ZIP5uDfhAqaP4b3knFgiJmwxkWwDN8w2KvBEIoUZd9asqVSo6itZXJkdxa8/TsMyY0vXAVvtOgvMfk3YUH8W7gMXb6Vd8aPpnWxR9X1f53gOzx9qciEn6SWKVS0ZWVfJ9NAIFNAxjRC3Ck0gcU5Brnut1BNo8cjcILANcOVI66il7dXU+r57Q3KFHJZ4Uo1aPWDK0bYCn5VgEQDW0M0hRxq+i/SFOlS73B7QkLpAzgoj6ttJX5jAAAAAElFTkSuQmCC",
+        "notificationType": "Account Access Request Granted",
+        "description": "Your request for account access has been approved. You now have access to the requested account.",
+        "timeStamp": "5 days ago"
+    },
+    {
+        "id": 3,
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAKtSURBVHgB7Zi/b9NAFMe/d+eElBYU+AsuLWJtGGDOztBOzEZKEVvDX9B2ZQkMSEArNZ0ZgIGZ9C9omBjakmMtErIUSn/EvsfZpUilTuUfF6jafCRHiu3n+/q9d+98DxhxwWHIya36Zk1zPsM0VYkgo4cyKOKsIyhY21y+3UEOMguUj7tS+MEqATVztBmow4hFYogxSaCaeXh4tANHPFQvKwoZyCRQzm25nFjTiOiQ4A31avJT7H3uZ8lFYcGMMqu5aKjXlTUMmzCkk/UtkvXthaQ24b1HNps1pCSVB8Ow8kB/1ISWWplaSmM7Wd9umuC72u9VVOuOl9SOIwVG3AIZdWnFhXxZmXpiclVx5/p8GrtUAnE0IRaREYJYNL8N6W6Uk9okFhjmHogkgt57ZMXHepRVzkQ1qUligZo50+GsTZM/f6NaFWNLijM+ndQmeYhJm7CwzOKOMf7zTKzth/h/cWaZkXPdKoeeN94zOcOlcWPZvL1CrhFZ+WhgU+QZU1rwpbNWmYEC5aOtWa7xds8v4me/BE12nc2ZRsk5wHjhAGaVcQetMrECjwvy970J6e1PYJiUSz9ws9TzBhXwWLeIflDtB3zo4kLCMTSxshDXZuKuxwo0uTHta4F/xWFQiL6A4q6d+1l8eQQ27jvovhjDxtMSFh8UYAsHFnBrDppu8fc/hmqFo7ujsdYOkBcrHpy5d3pCzd61M8msCFQ7dOqctwsrWBH4/EP/hEhvl7D0pg8b2PHgt5OCGq1+dM4GozqYl3Mv0EodDGm1/eiwzSjEeYkPsQ6+XhG5G1/JRfAAGjq2CxbrQa0L7zgj70aph2ETjuGwwIPvxzagBu9Jog4WVnuHY9j3ixgG44V9XM2yJ/kj0rTPmFNsMqLEnYA0mK9os7Pjz9RyZR0jLiu/AFf+D7v+EJxTAAAAAElFTkSuQmCC",
+        "notificationType": "Password Changed",
+        "description": "Your password has been successfully changed. If you did not initiate this change, please contact support immediately.",
+        "timeStamp": "5 days ago"
+    }
+]
