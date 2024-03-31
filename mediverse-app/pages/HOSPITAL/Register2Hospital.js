@@ -25,19 +25,25 @@ const Register2Hospital = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        // Add form submission logic here
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+        const isEmpty = requiredFields.some(field => !formData[field]);
+
+        if (isEmpty) {
+            alert('Please fill in all required fields.');
+            return; // Exit early if any required field is empty
+        }
+        
         console.log('Form submitted:', formData);
 
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
             console.log("Account:", accounts[0]);
             const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
-
             console.log("Transaction Hash:", receipt.transactionHash);
             router.push('/HOSPITAL/Register3Hospital/');
-            // Transaction successful, you can do further processing here if needed
         } catch (error) {
             console.error('Error sending transaction:', error.message);
+            alert('Error Registering.');
         }
     };
 

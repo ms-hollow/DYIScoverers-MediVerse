@@ -23,13 +23,14 @@ export default function Home() {
             const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
             setWalletAddress(accounts[0]); 
             console.log(accounts[0]);
-            router.push("/PATIENT/Register1Patient"); // Navigate to the Register2Patient page
+            router.push("/PATIENT/Register1Patient"); // Navigate to the User dashboard
         } catch(err) {
             console.error(err.message);
         }
     } else {
         /* if metamask is not installed */
         console.log("Please install MetaMask");
+        alert('Please install MetaMask');
     }
   };
 

@@ -51,7 +51,14 @@ const Register2Patient = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        // Add form submission logic here
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+        const isEmpty = requiredFields.some(field => !formData[field]);
+
+        if (isEmpty) {
+            alert('Please fill in all required fields.');
+            return; // Exit early if any required field is empty
+        }
+        
         console.log('Form submitted:', formData);
         // Concatenate the address fields
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
@@ -78,6 +85,7 @@ const Register2Patient = () => {
             // Transaction successful, you can do further processing here if needed
         } catch (error) {
             console.error('Error sending transaction:', error.message);
+            alert('Error Registering.');
         }
 
     };
