@@ -6,11 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "compile": "solcjs --abi --include-path node_modules/ --base-path . blockchain/contracts/MediVerse.sol --output-dir blockchain/build"
   },
   "dependencies": {
-    "next": "^14.1.4",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "next": "^14.1.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5",
+    "sonner": "^1.4.41"
   }
 }

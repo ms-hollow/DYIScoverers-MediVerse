@@ -6,12 +6,32 @@ import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
+import React, { useState } from 'react';
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
+  const [walletAddress, setWalletAddress] = useState("")
 
   const handleCreateWallet = () => {
     router.push("/PATIENT/Register1Patient"); // Navigate to the Register2Patient page
+  };
+
+  const connectMetaMask = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+        try{
+            /* If metamask is installed */
+            const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+            setWalletAddress(accounts[0]); 
+            console.log(accounts[0]);
+            router.push("/PATIENT/Register1Patient"); // Navigate to the User dashboard
+        } catch(err) {
+            console.error(err.message);
+        }
+    } else {
+        /* if metamask is not installed */
+        console.log("Please install MetaMask");
+        alert('Please install MetaMask');
+    }
   };
 
   return (
@@ -19,7 +39,7 @@ export default function Home() {
       <LandingPageLayout> 
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
-          <button className={styles.connectMetamaskButton}>
+          <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
             <div className={styles.metaMaskLogo}>
               <Image src="/MetamaskLogo.png" width={35} height={35} />
             </div>

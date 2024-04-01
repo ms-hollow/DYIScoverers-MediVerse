@@ -10,6 +10,12 @@ export default function LandingPage() {
   return (
     <>
 
+      <div>
+        <h1 class="text">Landing Page or Home</h1>
+        <Link href="/register-patient">Register</Link>
+      </div>
+
+
         <div> {/* Pass here yung Text na want ilagay sa call-t-action button ng landingPage header */}
           <LandingPageHeader buttonText="Connect Wallet" buttonLink= "/PATIENT/logInPatient/" />
         </div>

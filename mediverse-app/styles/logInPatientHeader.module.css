@@ -28,7 +28,7 @@ html.index {
   .cryptoWallet {
     position: absolute;
     left: 74px; 
-    top: 121px; 
+    top: 45px; 
     width: 646px; 
     height: 609px; 
     z-index: 1004;
@@ -36,13 +36,12 @@ html.index {
 
 .connectMetamaskContainer {
     position: absolute;
-    top: 400px;
-    left: 903px;
+    top: 300px;
+    left: 803px;
     width: 403px;
     height: 265px;
     z-index: 1006;
   }
-  
   
 .connectMetamaskButton {
     display: flex;
@@ -80,8 +79,8 @@ html.index {
   }
   .signInWithWalletText {
     position: absolute;
-    top: 375px; 
-    left: 950px; 
+    top: 280px; 
+    left: 875px; 
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: bold;
     font-size: 20px;
@@ -92,18 +91,18 @@ html.index {
 
 .signInWithProviderText {
     position: absolute;
-    top: 410px; 
-    left: 950px; 
+    top: 310px; 
+    left: 875px; 
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     color: #0A0045;
     z-index: 1007; 
 }
 
 .dontHaveMetamaskText {
     position: absolute;
-    top: 505px;
-    left: 1010px;
+    top: 400px;
+    left: 890px;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 14px;
     color: #0A0045;

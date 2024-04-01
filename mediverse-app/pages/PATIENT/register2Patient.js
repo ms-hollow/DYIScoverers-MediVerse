@@ -5,26 +5,89 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
-
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse";
 
 const Register2Patient = () => {
+    const router = useRouter();
+    
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        firstName: '', middleName: '', lastName: '',
+        firstName: '', 
+        middleName: '', 
+        lastName: '',
+        age: '',
+        gender: '',
+        dob: '',
+        phoneNumber: '',
+        height: '',
+        weight: '',
+        houseNo: '',
+        streetNo: '',
+        barangay: '',
+        cityMunicipality: '',
+        region: ''
     });
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.name === 'gender') {
+            setFormData({
+                ...formData,
+                gender: e.target.value,
+            });
+        } else if (e.target.name === 'dob') {
+            setFormData({
+                ...formData,
+                dob: e.target.value,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        // Add form submission logic here
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+        const isEmpty = requiredFields.some(field => !formData[field]);
+
+        if (isEmpty) {
+            alert('Please fill in all required fields.');
+            return; // Exit early if any required field is empty
+        }
         
         console.log('Form submitted:', formData);
+        // Concatenate the address fields
+        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
+        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
+        console.log("name: ", name)
+        console.log("address:", address)
+
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            const receipt = await mvContract.methods.registerPatient(
+                name,
+                formData.age,
+                formData.gender,
+                formData.dob,
+                formData.phoneNumber,
+                formData.height,
+                formData.weight,
+                address
+            ).send({ from: accounts[0] });
+
+            console.log("Transaction Hash:", receipt.transactionHash);
+            router.push('/PATIENT/Register3Patient/');
+            // Transaction successful, you can do further processing here if needed
+        } catch (error) {
+            console.error('Error sending transaction:', error.message);
+            alert('Error Registering.');
+        }
+
     };
 
     const goBack = () => {
@@ -66,9 +129,9 @@ const Register2Patient = () => {
                         <div className={styles.formField}>
                             <select id="gender" name="gender" required onChange={handleChange}>
                                 <option value="" disabled selected>Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div className={styles.formField}>
@@ -106,10 +169,7 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">PROCEED</Link>
-                    </button>
-
+                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                 </form>
             </div>
         </>

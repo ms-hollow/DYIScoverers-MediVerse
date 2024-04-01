@@ -27,7 +27,6 @@
     left: 0;
     height: 100%;
     width: 250px;
-    overflow-y: auto;
     background-color: var(--sidebar);
     transition: all 0.50s ease;
     z-index: 1100;
