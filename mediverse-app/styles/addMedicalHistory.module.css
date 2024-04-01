@@ -45,7 +45,7 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 20% 0 1%;
+  margin: 0 20% 2% 1%;
 }
 
 .formRow {
@@ -103,7 +103,7 @@
 }
 
 .formFieldNum {
-  flex: 1;
+  flex: 2;
   margin: 0; 
   border-radius: 3px;
   width: 10px;
@@ -124,6 +124,8 @@
     border: 1px solid rgb(199, 199, 199);
     border-radius: 5px;
     font-family: Roboto Condensed;
+    color: var(--blue);
+    font-weight: bold;
 }
 
 .submitButton {
