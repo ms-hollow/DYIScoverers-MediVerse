@@ -3,6 +3,7 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
@@ -128,15 +129,13 @@ const addMedicalHistory = () => {
         const concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('/');
         const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('/');
         const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('/');
-
         
-
-        console.log('Patient Consultation:', patientDiagnosis);
-        console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        console.log('Concatenated Test:', concatenatedTest);
-        console.log('Concatenated Medication:', concatenatedMedication);
-        console.log('Concatenated Admission:', concatenatedAdmission);
+        // console.log('Patient Consultation:', patientDiagnosis);
+        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        // console.log('Concatenated Test:', concatenatedTest);
+        // console.log('Concatenated Medication:', concatenatedMedication);
+        // console.log('Concatenated Admission:', concatenatedAdmission);
 
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
@@ -154,8 +153,8 @@ const addMedicalHistory = () => {
             console.log("Transaction Hash:", receipt.transactionHash);
             router.push('/HOSPITAL/Register1Hospital/');
         } catch (error) {
-            console.error('Error sending transaction:', error.message);
-            alert('Error Registering.');
+            //console.error('Error sending transaction:', error.message);
+            alert('Patient is not registered.');
         }
     };
 

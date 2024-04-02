@@ -5,11 +5,13 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
 
 const Register3Patient = () => {
+    const router = useRouter();
     const [patientFullName, setPatientFullName] = useState('');
     
     const [formData, setFormData] = useState({ 
