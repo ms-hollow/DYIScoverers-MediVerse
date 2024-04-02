@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
+import AccountDropdown from '/components/accountIconDropdown.js';
 
 const HomeSidebarHeader = ({children, pageName}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-};
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
 
     return (
         <>
@@ -25,7 +32,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
                         <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
-                        <a href="/destination-url"> <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} /></a>
+                        <AccountDropdown />
                     </div>
                     
                 </header>
