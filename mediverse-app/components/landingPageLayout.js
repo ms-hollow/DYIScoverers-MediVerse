@@ -11,7 +11,7 @@ const LandingPageLayout = ({ children }) => {
     <div className="content">
       {/* Depending on the page, use the appropriate header */}
       <LandingPageHeader />
-      <LogInPatientHeader />  
+      <LogInPatientHeader />
       {children}
       <Footer />
     </div>

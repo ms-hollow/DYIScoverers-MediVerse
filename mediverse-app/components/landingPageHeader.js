@@ -13,9 +13,9 @@ const LandingPageHeader = ({buttonText, buttonLink }) => {
         </div>
 
         <ul className={styles.navbar}>
-          <li><a href="/">FEATURES</a></li>
-          <li><a href="/contactUs">CONTACT US</a></li>
-          <li><a href="/FAQS/">FAQS</a></li>
+          <li><a href="/GENERAL/Features/">FEATURES</a></li>
+          <li><a href="/GENERAL/ContactUs">CONTACT US</a></li>
+          <li><a href="/GENERAL/FAQs/">FAQS</a></li>
         </ul>
 
         <div className={styles.button}>
