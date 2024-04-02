@@ -6,10 +6,17 @@ import React, { useState } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+/**
+ * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
+ * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
+ * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
+ * ! tests, medication, and admission
+ */
 
 const addMedicalHistory = () => {
 
     const [formData, setFormData] = useState({ 
+        patientAddress: '',
         physician: '',
         diagnosis: '',
         dateOfDiagnosis: '',
@@ -121,6 +128,12 @@ const addMedicalHistory = () => {
         <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
+                    <div className={styles.formTitle}>Patient Address</div>
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
+                            </div>
+                        </div>
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -403,7 +416,7 @@ const addMedicalHistory = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton}>Add Patient
+                    <button className={styles.submitButton}>Add Medical History
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     
