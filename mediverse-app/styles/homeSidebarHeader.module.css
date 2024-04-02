@@ -192,33 +192,40 @@
     color: var(--black-color);
 }
 
-/**
-.contentContainer {
+
+/*.contentContainer {
     position: fixed;
-    top: 0;
+    top: 0px;
     left: 0;
     width: 100vw; 
-    height: 100vh; 
+    height: 100vh;
     overflow-y: auto; 
     padding: 1rem; 
     display: flex;
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
-    transition: all 0.50s ease
+    transition: all 0.50s ease;
+}*/
+
+.contentContainer{
+    transition: all 0.50s ease;
+    margin: 0 auto;
+    width: 100vw; 
+    overflow-y: auto; 
 }
-*/
 
-
-.contentContainer {
+/*.contentContainer {
     display: flex;
-    margin-top: 0px;
+    margin-top: 0;
     width: auto;
     margin: 0 auto;
     transition: all 0.50s ease;
     width: 100vw;
     overflow-y: auto;
-}
+    border: 2px solid black;
+    z-index: 1000;
+}*/
 
 
 .contentShifted {
@@ -226,7 +233,7 @@
 }
 
 .contentAdjusted {
-    transform: translateX(120px); /* Adjust as necessary based on the width of the sidebar */
+    transform: translateX(120px); /* Adjust as necessary based on the width of the sidebar */   
 }
 
 /* Responsive styles */

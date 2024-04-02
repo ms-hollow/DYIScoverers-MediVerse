@@ -53,8 +53,8 @@ const Register2Hospital = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-        // Add form submission logic here
         console.log('Form submitted:', formData);
+        alert('User Register Successfully!');
     };
 
     const goBack = () => {

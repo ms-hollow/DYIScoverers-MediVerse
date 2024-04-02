@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 145px;
+    margin-bottom: 60px;
+}
+
+.notifContainer {
+    display: grid;
+    grid-template-columns: 50px 950px 80px;
+    font-family: Roboto Condensed;
+    font-size: 12px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    width: 1130px;
+    height: 58px;
+    padding-left: 30px;
+    align-items: center;
+    margin: 2px;
+}
+
+.notifContainer p {
+    line-height: 0.5;
+}
+
+.notifTypeFormat {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--pale-blue);
+}
+
+.timeStampFormat {
+    color: #d9d9d9;
+}

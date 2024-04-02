@@ -30,5 +30,101 @@
         "physician": "Dr. Marlo Cruz",
         "admissionDate": "January 26, 2024",
         "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 5,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 6,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 7,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 8,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 9,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 10,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 11,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 12,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 13,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 14,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 15,
+        "diagnosis": "Acute Bronchitis",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "February 15, 2024",
+        "dischargeDate": "February 22, 2024"
+    },
+    {
+        "id": 16,
+        "diagnosis": "Unspecified",
+        "hospital": "Philippine General Hospital",
+        "physician": "Dr. Marlo Cruz",
+        "admissionDate": "January 26, 2024",
+        "dischargeDate": "February 22, 2024"
     }
-  ]
+]

@@ -69,7 +69,6 @@ const Register3Patient = () => {
                     // Set other form fields accordingly
                 });
 
-                
             } catch (error) {
                 console.error('Error retrieving patient information:', error);
             }
@@ -89,8 +88,8 @@ const Register3Patient = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-
-        
+        alert('User Register Successfully!');
+        router.push('/PATIENT/logInPatient');
     };
 
    
