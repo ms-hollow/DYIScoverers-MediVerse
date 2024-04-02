@@ -8,6 +8,7 @@ import Link from 'next/link';
  * TODO: Retrieve data from the blockchain then display/populate the table
  * ! Note: Bali i-reretrieve ang record then display lang yung diagnosis, hospital name, physician , admission and discharge data
  * * nakatuple ang data na i-reretrieve, need gumawa ng function na naghihiwalay ng data at siya na bahala magpopulate ng table
+ * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
 export async function getStaticProps() {

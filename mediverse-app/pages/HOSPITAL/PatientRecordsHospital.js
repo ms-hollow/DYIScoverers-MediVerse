@@ -8,6 +8,7 @@ import Link from 'next/link';
  * TODO: Retrieve lahat ng patients record from the blockchain then display/populate the table
  * ! Note: Bali i-reretrieve ang record then display lang yung patient name, hospital name, admission and discharge data, and Lenght of stay
  * * nakatuple and array ang data na i-reretrieve, need gumawa ng function na naghihiwalay ng data at siya na bahala magpopulate ng table
+ * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
 

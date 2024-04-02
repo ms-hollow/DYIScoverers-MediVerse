@@ -3,14 +3,15 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-//import web3 from "../../blockchain/web3";
-//import mvContract from '../../blockchain/mediverse';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 /**
  * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
  * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
  * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
  * ! tests, medication, and admission
+ * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
 const addMedicalHistory = () => {

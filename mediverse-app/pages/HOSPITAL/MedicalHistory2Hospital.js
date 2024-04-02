@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
  * TODO: Retrieve data from the blockchain then display/populate the table
  * ! Note: Bali i-reretrieve ang record then display. All data ang idi-dipslay dito
  * * nakatuple ang data na i-reretrieve, need gumawa ng function na naghihiwalay ng data at siya na bahala magpopulate ng table
+ * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
 const MedicalHistoryHospital = () => {
