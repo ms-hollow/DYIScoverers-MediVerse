@@ -5,6 +5,7 @@
             "doctor": "Dr. Marlo Cruz",
             "doctorType": "Pediatrician",
             "dateDiagnosis": "February 15, 2024",
+            "dateOfDiagnosis": "2024-02-15",
             "diagnosis": "Acute Bronchitis",
             "description": "Patient presented with cough, fever, and wheezing."
         },
@@ -81,6 +82,26 @@
                 "date": "February 15, 2024",
                 "reviewingPhysician": "Dr. Maria Rodriguez",
                 "result": "Elevated white blood cell count indicating infection."
+            }
+        ],
+        "medication": [
+            {
+                "medication_ID": 1,
+                "medicationType": "Amoxicillin",
+                "prescriptionDate": "February 15, 2024",
+                "prescribingPhysician": "Dr. Maria Rodriguez",
+                "frequency": "3 times daily",
+                "duration": "7 days",
+                "endDate": "February 17, 2024"
+            }
+        ],
+        "admission": [
+            {
+                "admission_ID": 1,
+                "hospital": "Philippine General Hospital",
+                "admissionDate": "February 15, 2024",
+                "dischargeDate": "February 22, 2024",
+                "lengthOfStay": "7 days"
             }
         ]
     }

@@ -13,22 +13,22 @@ const HomeSidebarHeader = ({children, pageName}) => {
     return (
         <>
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-            <header className={styles.header}>
-                
-                <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
-                    {pageName}
-                </div>
-
-                <div className={styles.headerButtons}>
-                    <div className={`${styles.searchBar}`}> 
-                        <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
-                        <input type="text" placeholder="Search" className={styles.searchInput} />
+                <header className={styles.header}>
+                    
+                    <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
+                        {pageName}
                     </div>
-                    <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
-                    <a href="/destination-url"> <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} /></a>
-                </div>
-                
-            </header>
+
+                    <div className={styles.headerButtons}>
+                        <div className={`${styles.searchBar}`}> 
+                            <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                            <input type="text" placeholder="Search" className={styles.searchInput} />
+                        </div>
+                        <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
+                        <a href="/destination-url"> <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} /></a>
+                    </div>
+                    
+                </header>
                 
             
                 <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>

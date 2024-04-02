@@ -1,28 +1,17 @@
-import styles from '../../styles/UpdateMedicalHistory.module.css';
+import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeader.js'
-import path from 'path';
-import Link from "next/link";
-import React, { useState } from 'react';
-//import web3 from "../../blockchain/web3";
-//import mvContract from '../../blockchain/mediverse';
+import React, { useState, useEffect } from 'react';
 
-/**
- * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
- * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
- * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
- * ! tests, medication, and admission
- */
 
-const addMedicalHistory = () => {
+const UpdateMedicalHistoryHospital = () => {
 
     const [formData, setFormData] = useState({ 
-        patientAddress: '',
         physician: '',
         diagnosis: '',
         dateOfDiagnosis: '',
         description: '',
         symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '' , tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
         test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
         medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
         admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
@@ -123,38 +112,89 @@ const addMedicalHistory = () => {
         window.history.back(); 
     };
 
+    //This is only for fetching the dummy data
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch('/placeHolder/dummyData_MedicalHistory_Hospital.json');
+            const json = await res.json();
+            const item = json.find(item => item.id === 1); // Filter data for ID 1
+            setData(item);
+        };
+
+        fetchData();
+    }, []);
+
+    //Makes the field editable
+    const updateChange = (e) => {
+        let newData = { ...data };
+        if (e.target.name === 'physician') {
+            newData.basicInfo.doctor = e.target.value;
+        }
+        else if (e.target.name === 'diagnosis') {
+            newData.basicInfo.diagnosis = e.target.value;
+        }
+        else if (e.target.name === 'dateOfDiagnosis') {
+            newData.basicInfo.dateOfDiagnosis = e.target.value;
+        }
+        else if (e.target.name === 'description') {
+            newData.basicInfo.description = e.target.value;
+        }
+        setData(newData);
+    }
+
+    if (!data) {
+        return <div>Loading...</div>;
+    }
+    
     return (  
-        <Layout pageName = "Add Medical History">
+        <Layout pageName = "Update Medical History">
         <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
-                    <div className={styles.formTitle}>Patient Address</div>
-                        <div className={styles.formRow}>
-                            <div className={styles.formField}>
-                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
-                            </div>
-                        </div>
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="physician" name="physician" placeholder="Physician" required onChange={handleChange} />
+                            <input type="text" id="physician" name="physician" value={data.basicInfo.doctor} placeholder="Physician"  required onChange={updateChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required onChange={handleChange} />
+                            <input type="text" id="diagnosis" name="diagnosis" value={data.basicInfo.diagnosis} placeholder="Diagnosis" required onChange={updateChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" required onChange={handleChange} />
+                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis"  value={data.basicInfo.dateOfDiagnosis} placeholder="Date of Diagnosis" required onChange={updateChange} />
                         </div>
                     </div>
             
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="description" name="description" placeholder="Description" required onChange={handleChange} />
+                            <input type="text" id="description" name="description" value={data.basicInfo.description} placeholder="Description" required onChange={updateChange} />
                         </div>
                     </div>
 
                     {/** ----------------------------------- Signs and Symptoms  ----------------------------------- */}
                     <div className={styles.formTitle}>Signs and Symptoms</div>
+
+                    <div className={styles.table_container}>
+                        <div className={styles.sANDs_heading}>
+                            <p>Symptoms</p>
+                            <p>Duration</p>
+                            <p>Severity</p>
+                            <p>Location</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {data.signsAndSymptoms.map(data => (
+                                <div key={data.sANDs_ID} className={styles.sANDs_data}>
+                                    <p>{data.symptoms}</p>
+                                    <p>{data.duration}</p>
+                                    <p>{data.severity}</p>
+                                    <p>{data.location}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className={styles.formRowTitle_sANDs}>
                         <div className={styles.formHeader}>No.</div>
                         <div className={styles.formHeader}>Symptoms</div>
@@ -192,9 +232,32 @@ const addMedicalHistory = () => {
                     ))}
                     
                     {formData.symptoms.length < 3 && (<button className={styles.addButton} onClick={handleAddRowSymptoms}>ADD MORE SIGNS AND SYMPTOMS</button>)}
-                        
+
                     {/** ----------------------------------- TREATMENT/PROCEDURE  ----------------------------------- */}
                     <div className={styles.formTitle}>Treatment/Procedure</div>
+
+                    <div className={styles.table_container}>
+                        <div className={styles.tp_heading}>
+                            <p>Treatment/Procedure</p>
+                            <p>Medical Team/Provider</p>
+                            <p>Date Started</p>
+                            <p>Date End</p>
+                            <p>Duration</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {data.treatment.map(data => (
+                                <div key={data.treatment_ID} className={styles.tp_data}>
+                                    <p>{data.treatment}</p>
+                                    <p>{data.medicalTeam}</p>
+                                    <p>{data.dateStarted}</p>
+                                    <p>{data.dateEnd}</p>
+                                    <p>{data.duration}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className={styles.formRowTitle_TP}>
                         <div className={styles.formHeader}>No.</div>
                         <div className={styles.formHeader}>Treatment/Procedure</div>
@@ -228,10 +291,33 @@ const addMedicalHistory = () => {
                     ))}
 
                     {formData.treatmentProcedure.length < 3 && (<button className={styles.addButton} onClick={handleAddRowTreatmentProcedure}>ADD MORE TREATMENT/PROCEDURE</button>)}
-                    
+
                     {/** ----------------------------------- TEST ----------------------------------- */}
                     
                     <div className={styles.formTitle}>Test</div>
+
+                    <div className={styles.table_container}>
+                        <div className={styles.test_heading}>
+                            <p>Type of Test</p>
+                            <p>Ordering Physician</p>
+                            <p>Date</p>
+                            <p>Reviewing Physician</p>
+                            <p>Result</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {data.test.map(data => (
+                                <div key={data.test_ID} className={styles.test_data}>
+                                    <p>{data.testType}</p>
+                                    <p>{data.orderingPhysician}</p>
+                                    <p>{data.date}</p>
+                                    <p>{data.reviewingPhysician}</p>
+                                    <p>{data.result}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className={styles.formRowTitle_test}>
                         <div className={styles.formHeader}>No.</div>
                         <div className={styles.formHeader}>Test</div>
@@ -342,11 +428,36 @@ const addMedicalHistory = () => {
                         </div>
                     ))}
 
-                    {formData.test.length < 3 && (<button className={styles.addButton} onClick={handleAddRowTest}>ADD MORE TEST</button>)}        
+                    {formData.test.length < 3 && (<button className={styles.addButton} onClick={handleAddRowTest}>ADD MORE TEST</button>)} 
                     
                     {/** ----------------------------------- MEDICATION ----------------------------------- */}
                     
                     <div className={styles.formTitle}>Medication</div>
+
+                    <div className={styles.table_container}>
+                        <div className={styles.medication_heading}>
+                            <p>Medication</p>
+                            <p>Date of Prescription</p>
+                            <p>Prescribing Physician</p>
+                            <p>Frequency</p>
+                            <p>Duration</p>
+                            <p>End Date</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {data.medication.map(data => (
+                                <div key={data.medication_ID} className={styles.medication_data}>
+                                    <p>{data.medicationType}</p>
+                                    <p>{data.prescriptionDate}</p>
+                                    <p>{data.prescribingPhysician}</p>
+                                    <p>{data.frequency}</p>
+                                    <p>{data.duration}</p>
+                                    <p>{data.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className={styles.formRowTitle_medication}>
                         <div className={styles.formHeader}>No.</div>
                         <div className={styles.formHeader}>Medication</div>
@@ -360,7 +471,7 @@ const addMedicalHistory = () => {
                     
                     {formData.medication.map((medication, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noMedication"  name="noMedication" value={medication.noMedication} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -387,11 +498,32 @@ const addMedicalHistory = () => {
                         </div>
                     ))}
 
-                    {formData.medication.length < 3 && (<button className={styles.addButton} onClick={handleAddRowMedication}>ADD MORE MEDICATION</button>)}        
+                    {formData.medication.length < 3 && (<button className={styles.addButton} onClick={handleAddRowMedication}>ADD MORE MEDICATION</button>)}
                     
                     {/** ----------------------------------- ADMISSION ----------------------------------- */}
                     
                     <div className={styles.formTitle}>Admission</div>
+
+                    <div className={styles.table_container}>
+                        <div className={styles.sANDs_heading}>
+                            <p>Hospital</p>
+                            <p>Admission Date</p>
+                            <p>Discharge Date</p>
+                            <p>Length of Stay</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {data.admission.map(data => (
+                                <div key={data.admission_ID} className={styles.sANDs_data}>
+                                    <p>{data.hospital}</p>
+                                    <p>{data.admissionDate}</p>
+                                    <p>{data.dischargeDate}</p>
+                                    <p>{data.lengthOfStay}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className={styles.formRowTitle_admission}>
                         <div className={styles.formHeader}>No.</div>
                         <div className={styles.formHeader}>Hospital</div>
@@ -422,7 +554,7 @@ const addMedicalHistory = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton}>Add Medical History
+                    <button className={styles.submitButton}>Update
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     
@@ -434,4 +566,4 @@ const addMedicalHistory = () => {
     );
 }
 
-export default addMedicalHistory;
+export default UpdateMedicalHistoryHospital;

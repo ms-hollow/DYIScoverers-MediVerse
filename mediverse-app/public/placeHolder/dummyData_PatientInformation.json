@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "firstName": "Laica",
+        "middleName": "D.",
+        "lastName": "Ygot",
+        "age": 21,
+        "gender": "female",
+        "dob": "2002-09-18",
+        "phoneNumber": "0987654321",
+        "height": "156 cm",
+        "weight": "50 kg",
+        "houseNo": "Blk 30, Lot 39",
+        "streetNo": "Kaemehan St.,Batong Malalim",
+        "barangay": "Brng. 178",
+        "cityMunicipality": "Valenzuela City",
+        "region": "National Capital Region" 
+    }
+]
