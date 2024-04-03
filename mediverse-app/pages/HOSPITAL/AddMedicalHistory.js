@@ -3,13 +3,23 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-//import web3 from "../../blockchain/web3";
-//import mvContract from '../../blockchain/mediverse';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
+/**
+ * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
+ * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
+ * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
+ * ! tests, medication, and admission
+ * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
+ */
 
 const addMedicalHistory = () => {
+    const router = useRouter();
 
     const [formData, setFormData] = useState({ 
+        patientAddress: '',
         physician: '',
         diagnosis: '',
         dateOfDiagnosis: '',
@@ -81,7 +91,7 @@ const addMedicalHistory = () => {
 
     const handleAddRowTreatmentProcedure = () => {
         if (formData.treatmentProcedure.length < 3) {
-            const newTreatmentProcedure = { noTP: formData.treatmentProcedure.length + 1, tp: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' };
+            const newTreatmentProcedure = { noTP: formData.treatmentProcedure.length + 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' };
             setFormData({ ...formData, treatmentProcedure: [...formData.treatmentProcedure, newTreatmentProcedure] });
         }
     };
@@ -110,6 +120,42 @@ const addMedicalHistory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
         console.log('Form submitted:', formData);
+        // Concatenate physician, diagnosis, and dateOfDiagnosis
+        const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+
+        // Concatenate arrays using symbols
+        const concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('/');
+        const concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('/');
+        const concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('/');
+        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('/');
+        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('/');
+        
+        // console.log('Patient Consultation:', patientDiagnosis);
+        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        // console.log('Concatenated Test:', concatenatedTest);
+        // console.log('Concatenated Medication:', concatenatedMedication);
+        // console.log('Concatenated Admission:', concatenatedAdmission);
+
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            const receipt = await mvContract.methods.addMedicalHistory(
+                formData.patientAddress,
+                formData.physician,
+                patientDiagnosis,
+                concatenatedSymptoms,
+                concatenatedTreatmentProcedure,
+                concatenatedTest,
+                concatenatedMedication,
+                concatenatedAdmission
+            ).send({ from: accounts[0] });
+            console.log("Transaction Hash:", receipt.transactionHash);
+            router.push('/HOSPITAL/Register1Hospital/');
+        } catch (error) {
+            //console.error('Error sending transaction:', error.message);
+            alert('Patient is not registered.');
+        }
     };
 
     const goBack = () => {
@@ -121,6 +167,12 @@ const addMedicalHistory = () => {
         <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
+                    <div className={styles.formTitle}>Patient Address</div>
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
+                            </div>
+                        </div>
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -409,7 +461,7 @@ const addMedicalHistory = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton}>Add Patient
+                    <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     
