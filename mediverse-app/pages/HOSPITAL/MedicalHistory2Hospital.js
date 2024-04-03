@@ -12,7 +12,8 @@ import mvContract from '../../blockchain/mediverse';
  * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
-//* Specific Patient. Use the patient address to track kung anong record 'to
+//* Specific Patient. Use the patient address to track kung anong record 'to. Use creationDate para ma-search ang specific record
+//* Galing MedicalHistory1Hospital, pinasa ko yung address and creationDate
 
 const MedicalHistoryHospital = () => {
 
@@ -60,12 +61,13 @@ const MedicalHistoryHospital = () => {
                 console.log(patientRecords);
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
-                //* using creation data as key 
+                //* using creation date as key para masearch
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
                 console.log(getPatientMedicalHistory);
 
+                //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
                     return {
@@ -84,8 +86,9 @@ const MedicalHistoryHospital = () => {
                 });
                 console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
+                //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
+                //* '+' means paghihiwalayin ang concatenated data sa isang array
                 const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
-                    
                     if (item.diagnosis.includes('/')) {
                         item.diagnosis = item.diagnosis.split('/').map(diagnosis => diagnosis.split('+'));
                         //console.log(item.diagnosis); 
@@ -147,6 +150,8 @@ const MedicalHistoryHospital = () => {
                 });
                 console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
+                //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
+                //! Important para sa pagpopulate ng table. 
                 const diagnosisNames = [];
                 const dateOfDiagnoses = [];
                 const diagnosisDescriptions = [];
@@ -180,7 +185,9 @@ const MedicalHistoryHospital = () => {
                 const adischargeDate = []; 
                 const lengthOfStay = [];
 
-
+                //* Ang ginagawa nito ay hinihiwalay hiwalay niya ang laman ng array then s-store niya sa kanya kanyang variable
+                //? Purose nito? Diba sa isang variable for example, signAndSymptoms, kapag nag add ka ng maraming data mahirap i-populate
+                //? 'yon sa table and hindi rin siya directly kasi meron silang kanya kanyang lugar na pagdidisplayan
                 modifiedPatientMedicalHistory.forEach(item => {
                     
                     if (Array.isArray(item.diagnosis)) {
