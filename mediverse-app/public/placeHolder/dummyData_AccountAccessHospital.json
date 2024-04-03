@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "accountAccess": [
+            {
+                "accountAccess_ID": 1,
+                "patientName": "Laica D. Ygot",
+                "dateConsultation": "February 15, 2024"
+            },
+            {
+                "accountAccess_ID": 2,
+                "patientName": "Abby Miles Leonen",
+                "dateConsultation": "February 24, 2024"
+            }
+        ],
+        "requestAccess": [
+            {
+                "request_ID": 1,
+                "patientName": "John Paulo Alcantara",
+                "status": "Accepted"
+            },
+            {
+                "request_ID": 2,
+                "patientName": "Alexis Glenn Aspiras",
+                "status": "Pending"
+            }
+        ]
+    }
+]
