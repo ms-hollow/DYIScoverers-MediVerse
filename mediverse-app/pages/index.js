@@ -11,7 +11,7 @@ export default function LandingPage() {
   return (
     <>
       <div>
-        <LandingPageHeader buttonText="Connect Wallet" />
+        <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" /> 
       </div>
 
       <div className={styles.container}>

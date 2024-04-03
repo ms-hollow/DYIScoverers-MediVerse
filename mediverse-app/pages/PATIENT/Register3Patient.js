@@ -173,9 +173,10 @@ const Register3Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/logInPatient/">REGISTER</Link>
+                    <button className={styles.submitButton} onClick={handleSubmit}>
+                        <Link href="/PATIENT/LogInPatient/">PROCEED</Link>
                     </button>
+                    
                 </form>
             </div>
         </>

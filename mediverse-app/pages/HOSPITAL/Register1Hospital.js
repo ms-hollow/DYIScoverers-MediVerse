@@ -80,7 +80,7 @@ const Register1Hospital = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="">PROCEED</Link>
+                    <Link href="/HOSPITAL/Register2Hospital/">PROCEED</Link>
                 </button>
                 
             </div>
