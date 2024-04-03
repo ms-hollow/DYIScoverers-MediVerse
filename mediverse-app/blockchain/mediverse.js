@@ -6,7 +6,7 @@ const ContractABI = [{"anonymous":false,"inputs":[{"indexed":false,"internalType
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
 //const mvContract = new web3.eth.Contract(ContractABI, "0x83Fc7DF031178dcD27Ee8C3fd4f8C729D6Cdf8f9"); // for network
-const mvContract = new web3.eth.Contract(ContractABI, "0xF6662926E7062940c45BE5d660939487971c79cE"); //for development
+const mvContract = new web3.eth.Contract(ContractABI, "0x4835E8Eb0cD733EFcc5D612c2A847C6C8546492f"); //for development
 
 /**
  * * Note: if gagamiting ang development, follow the steps below:

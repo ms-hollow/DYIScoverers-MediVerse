@@ -4,6 +4,7 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
@@ -22,6 +23,7 @@ import mvContract from '../../blockchain/mediverse';
  */
 
 const MedicalHistoryPatient = () => {
+    const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
 
@@ -84,6 +86,7 @@ const MedicalHistoryPatient = () => {
                     // console.log("Treatment Procedure:", splitTests);
                     // const splitMedications = item.medications.split('+');
                     // console.log("Medications:", splitMedications);
+                    console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
                     console.log("Admission Date:", splitAdmission[2]);
                     console.log("Discharge Date:", splitAdmission[3]);
@@ -92,7 +95,9 @@ const MedicalHistoryPatient = () => {
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
                         admissionDate: splitAdmission[2],
-                        dischargeDate: splitAdmission[3]
+                        dischargeDate: splitAdmission[3],
+                        patientAddr: item.patientAddr,
+                        creationDate: item.creationDate
                     };
                 });
                 
@@ -106,6 +111,13 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
+    const clickRow = (patientAddr, creationDate) => {
+        router.push({
+            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+            query: { patientAddr, creationDate }
+        });
+    };
+
     return (
         <Layout pageName="Medical History">
             <div className={styles.container}>
@@ -118,7 +130,7 @@ const MedicalHistoryPatient = () => {
                 </div>
                 <div className={styles.dataContainer}>
                     {medicalHistory.map((record, index) => (
-                        <div className={styles.data} key={index}>
+                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
                             <p className={styles.diaAttrb}>{record.diagnosis}</p>
                             <p>{record.hospitalName}</p>
                             <p>{record.physician}</p>
@@ -128,6 +140,8 @@ const MedicalHistoryPatient = () => {
                     ))}
                 </div>
             </div>
+
+            
         </Layout>
     );
 };
