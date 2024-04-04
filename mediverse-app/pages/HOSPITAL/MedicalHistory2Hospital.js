@@ -5,27 +5,63 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-/**
- * TODO: Retrieve data from the blockchain then display/populate the table
- * ! Note: Bali i-reretrieve ang record then display. All data ang idi-dipslay dito
- * * nakatuple ang data na i-reretrieve, need gumawa ng function na naghihiwalay ng data at siya na bahala magpopulate ng table
- * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
- */
+//TODO: Lagay ng comment for notifcation message
 
-//* Specific Patient. Use the patient address to track kung anong record 'to. Use creationDate para ma-search ang specific record
-//* Galing MedicalHistory1Hospital, pinasa ko yung address and creationDate
+//! Specific Patient. Use the patient address to track kung anong record 'to. Use creationDate para ma-search ang specific record
+//! Galing MedicalHistory1Hospital, pinasa ko yung address and creationDate
 
 const MedicalHistoryHospital = () => {
 
-    const [data, setData] = useState(null);
-    const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const router = useRouter();
-    //console.log('Router Query:', router.query);
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
     // console.log('Patient Address:', patientAddr); 
     // console.log('Creation Date:', creationDate);
+    //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
+    const [medicalHistory, setMedicalHistory] = useState({
+        hospitalName: '',
+        physicianName: '',
+        diagnosis: {
+            names: [],
+            dates: [],
+            descriptions: []
+        },
+        symptoms: {
+            names: [],
+            duration: [],
+            severity: [],
+            location: []
+        },
+        treatmentProcedure: {
+            names: [],
+            medicalProviders: [],
+            dateStarted: [],
+            dateEnd: [],
+            duration: []
+        },
+        tests: {
+            types: [],
+            orderingPhysicians: [],
+            dates: [],
+            reviewingPhysicians: [],
+            results: []
+        },
+        medications: {
+            names: [],
+            prescriptionDates: [],
+            prescribingPhysicians: [],
+            frequencies: [],
+            durations: [],
+            endDates: []
+        },
+        admissions: {
+            hospitalNames: [],
+            admissionDates: [],
+            dischargeDates: [],
+            lengthsOfStay: []
+        }
+    });
 
      // Function to set the hospital address
     const setAddress = async () => {
@@ -48,7 +84,6 @@ const MedicalHistoryHospital = () => {
                     return;
                 }
 
-                
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
                 console.log(hospitalInfo[0]);
@@ -67,9 +102,11 @@ const MedicalHistoryHospital = () => {
                 });
                 console.log(getPatientMedicalHistory);
 
+                let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    physicianName = physician;
                     return {
                         patientAddr: patientAddr,
                         hospitalAddr,
@@ -254,39 +291,51 @@ const MedicalHistoryHospital = () => {
                     }
                 });
 
-                console.log(diagnosisNames);
-                console.log(dateOfDiagnoses);
-                console.log(diagnosisDescriptions);
-
-                console.log(symptomNames);
-                console.log(symptomDuration);
-                console.log(symptomSeverity);
-                console.log(symptomLocation);
-
-                console.log(tpName);
-                console.log(tpMedicalProvider);
-                console.log(tpDateStarted);
-                console.log(tpDateEnd);
-                console.log(tpDuration);
-
-                console.log(testType);
-                console.log(testOrderingPhysician);
-                console.log(testDate);
-                console.log(testReviewingPhysician);
-                console.log(testResult);
-                
-                console.log(medicationName);
-                console.log(prescriptionDate);
-                console.log(prescribingPhysician);
-                console.log(medicationFrequency);
-                console.log(medicationDuration);
-                console.log(medicationEndDate);
-
-                console.log(admissionHospitalName);
-                console.log(aadmissionDate);
-                console.log(adischargeDate);
-                console.log(lengthOfStay);
-                
+                const medicalHistory = {
+                    hospitalName,
+                    physicianName,
+                    diagnosis: {
+                        names: diagnosisNames,
+                        dates: dateOfDiagnoses,
+                        descriptions: diagnosisDescriptions
+                    },
+                    symptoms: {
+                        names: symptomNames,
+                        duration: symptomDuration,
+                        severity: symptomSeverity,
+                        location: symptomLocation
+                    },
+                    treatmentProcedure: {
+                        names: tpName,
+                        medicalProviders: tpMedicalProvider,
+                        dateStarted: tpDateStarted,
+                        dateEnd: tpDateEnd,
+                        duration: tpDuration
+                    },
+                    tests: {
+                        types: testType,
+                        orderingPhysicians: testOrderingPhysician,
+                        dates: testDate,
+                        reviewingPhysicians: testReviewingPhysician,
+                        results: testResult
+                    },
+                    medications: {
+                        names: medicationName,
+                        prescriptionDates: prescriptionDate,
+                        prescribingPhysicians: prescribingPhysician,
+                        frequencies: medicationFrequency,
+                        durations: medicationDuration,
+                        endDates: medicationEndDate
+                    },
+                    admissions: {
+                        hospitalNames: admissionHospitalName,
+                        admissionDates: aadmissionDate,
+                        dischargeDates: adischargeDate,
+                        lengthsOfStay: lengthOfStay
+                    }
+                };
+                setMedicalHistory(medicalHistory);
+                console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -295,43 +344,30 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('/placeHolder/dummyData_MedicalHistory_Hospital.json');
-            const json = await res.json();
-            const item = json.find(item => item.id === 1); // Filter data for ID 1
-            setData(item);
-        };
-
-        fetchData();
-    }, []);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
 
     return ( 
         <Layout pageName="Medical History">
         <>
+            {medicalHistory && (
             <div className={styles.container}>      
                 <div className={styles.reserveSpace}></div>
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Doctor Consulted</p>   
-                        <p className={styles.dataFormat}>{data.basicInfo.doctor}</p>
-                        <p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p>
+                        <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
+                        {/**<p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p> */}
                     </div>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Date of Diagnosis</p>  
-                        <p className={styles.dataFormat}>{data.basicInfo.dateDiagnosis}</p> 
+                        <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
                     </div>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Diagnosis</p>   
-                        <p className={styles.dataFormat_diag}>{data.basicInfo.diagnosis}</p> 
+                        <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
                     </div>
                     <div className={styles.headingAttrb_des}>
                         <p className={styles.headingAttrb}>Description</p>   
-                        <p className={styles.dataFormat_des}>{data.basicInfo.description}</p> 
+                        <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
                     </div>
                 </div>
         
@@ -345,14 +381,14 @@ const MedicalHistoryHospital = () => {
                     </div>
 
                     <div className={styles.scrollableTable_container}>
-                        {data.signsAndSymptoms.map(data => (
-                            <div key={data.sANDs_ID} className={styles.sANDs_data}>
-                                <p>{data.symptoms}</p>
-                                <p>{data.duration}</p>
-                                <p>{data.severity}</p>
-                                <p>{data.location}</p>
-                            </div>
-                        ))}
+                            {medicalHistory.symptoms.names.map((symptom, index) => (
+                                <div key={index} className={styles.sANDs_data}>
+                                    <p>{symptom}</p>
+                                    <p>{medicalHistory.symptoms.duration[index]}</p>
+                                    <p>{medicalHistory.symptoms.severity[index]}</p>
+                                    <p>{medicalHistory.symptoms.location[index]}</p>
+                                </div>
+                            ))}
                     </div>
                 </div>
 
@@ -367,17 +403,18 @@ const MedicalHistoryHospital = () => {
                     </div>
 
                     <div className={styles.scrollableTable_container}>
-                        {data.treatment.map(data => (
-                            <div key={data.treatment_ID} className={styles.treatment_data}>
-                                <p>{data.treatment}</p>
-                                <p>{data.medicalTeam}</p>
-                                <p>{data.dateStarted}</p>
-                                <p>{data.dateEnd}</p>
-                                <p>{data.duration}</p>
+                        {medicalHistory.treatmentProcedure.names.map((data, index) => (
+                            <div key={index} className={styles.treatment_data}>
+                                <p>{data}</p>
+                                <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
+                                <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
+                                <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
+                                <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
                             </div>
                         ))}
                     </div>
                 </div>
+
 
                 <div className={styles.table_container}>
                     <p className={styles.table_title}>Test</p>
@@ -390,13 +427,13 @@ const MedicalHistoryHospital = () => {
                     </div>
 
                     <div className={styles.scrollableTable_container}>
-                        {data.test.map(data => (
-                            <div key={data.test_ID} className={styles.test_data}>
-                                <p>{data.testType}</p>
-                                <p>{data.orderingPhysician}</p>
-                                <p>{data.date}</p>
-                                <p>{data.reviewingPhysician}</p>
-                                <p>{data.result}</p>
+                        {medicalHistory.tests.types.map((data, index) => (
+                            <div key={index} className={styles.test_data}>
+                                <p>{data}</p>
+                                <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
+                                <p>{medicalHistory.tests.dates[index]}</p>
+                                <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
+                                <p>{medicalHistory.tests.results[index]}</p>
                             </div>
                         ))}
                     </div>
@@ -414,14 +451,14 @@ const MedicalHistoryHospital = () => {
                     </div>
 
                     <div className={styles.scrollableTable_container}>
-                        {data.medication.map(data => (
-                            <div key={data.medication_ID} className={styles.medication_data}>
-                                <p>{data.medicationType}</p>
-                                <p>{data.prescriptionDate}</p>
-                                <p>{data.prescribingPhysician}</p>
-                                <p>{data.frequency}</p>
-                                <p>{data.duration}</p>
-                                <p>{data.endDate}</p>
+                        {medicalHistory.medications.names.map((data, index) => (
+                            <div key={index} className={styles.medication_data}>
+                                <p>{data}</p>
+                                <p>{medicalHistory.medications.prescriptionDates[index]}</p>
+                                <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
+                                <p>{medicalHistory.medications.frequencies[index]}</p>
+                                <p>{medicalHistory.medications.durations[index]}</p>
+                                <p>{medicalHistory.medications.endDates[index]}</p>
                             </div>
                         ))}
                     </div>
@@ -437,17 +474,18 @@ const MedicalHistoryHospital = () => {
                     </div>
 
                     <div className={styles.scrollableTable_container}>
-                        {data.admission.map(data => (
-                            <div key={data.admission_ID} className={styles.sANDs_data}>
-                                <p>{data.hospital}</p>
-                                <p>{data.admissionDate}</p>
-                                <p>{data.dischargeDate}</p>
-                                <p>{data.lengthOfStay}</p>
+                        {medicalHistory.admissions.hospitalNames.map((data, index) => (
+                            <div key={index} className={styles.sANDs_data}>
+                                <p>{data}</p>
+                                <p>{medicalHistory.admissions.admissionDates[index]}</p>
+                                <p>{medicalHistory.admissions.dischargeDates[index]}</p>
+                                <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+            )}
         </>
         </Layout>
      );

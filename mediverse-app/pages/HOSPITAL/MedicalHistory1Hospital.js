@@ -8,20 +8,6 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-/**
- * TODO: Retrieve data from the blockchain then display/populate the table
- * ! Note: Bali i-reretrieve ang record then display lang yung diagnosis, hospital name, physician , admission and discharge data
- * * nakatuple ang data na i-reretrieve, need gumawa ng function na naghihiwalay ng data at siya na bahala magpopulate ng table
- * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
- */
-
-
-/**
- * *variables sa medical history
- * *patientAddr, address hospitalAddr, string physician, diagnosis, signsAndSymptoms, treatmentProcedure
- * *tests, medications, admission, creationDate
- */
-
 const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);

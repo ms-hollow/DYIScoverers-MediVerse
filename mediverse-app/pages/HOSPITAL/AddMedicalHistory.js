@@ -15,6 +15,11 @@ import mvContract from '../../blockchain/mediverse';
  * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
  */
 
+//TODO: Lagyan ng limit kada forms. Sa Diagnosis and Description lagyan lang na limit na 60 letters.
+//TODO: Lagyan mo rin ng alert message sa alam mong may notification dapat na lalabas
+//TODO: Lagyan din ng loading message kapag gagwa ng transaction kasi once network na ang gamit natin, matagal na ang process ng transaction
+//! Ikaw na bahala sa ibang forms kung ilan ilalagay mo.
+
 const addMedicalHistory = () => {
     const router = useRouter();
 
@@ -42,7 +47,7 @@ const addMedicalHistory = () => {
             });
             setFormData({ ...formData, symptoms: updatedSymptoms });
 
-        } else if (name === 'tp' || name === 'tpDateStarted' || name === 'tpDateEnd' || name === 'tpDuration') {
+        } else if (name === 'tp' || name == 'medTeam'|| name === 'tpDateStarted' || name === 'tpDateEnd' || name === 'tpDuration') {
             const updatedTreatmentProcedure = formData.treatmentProcedure.map((treatmentProcedure, i) => {
                 if (i === index) {
                     return { ...treatmentProcedure, [name]: value };
@@ -59,8 +64,8 @@ const addMedicalHistory = () => {
                 return test;
             });
             setFormData({ ...formData, test: updatedTest });
-
-        } else if (name === 'medicationType' || name === 'dateOfPrescription' || name === 'medicationReviewingPhysician' || name === 'medicationFrequency' || name === 'medicationDuration' || name === 'medicationEndDate') {
+            
+        } else if (name === 'medicationType' || name === 'dateOfPrescription' || name === 'medicationPrescribingPhysician' || name === 'medicationReviewingPhysician' || name === 'medicationFrequency' || name === 'medicationDuration' || name === 'medicationEndDate') {
             const updatedMedication = formData.medication.map((medication, i) => {
                 if (i === index) {
                     return { ...medication, [name]: value };
@@ -105,7 +110,7 @@ const addMedicalHistory = () => {
 
     const handleAddRowMedication = () => {
         if (formData.medication.length < 3) {
-            const newMedication = { noMedication: formData.medication.length + 1, medicationType: '', dateOfPrescription: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''};
+            const newMedication = { noMedication: formData.medication.length + 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''};
             setFormData({ ...formData, medication: [...formData.medication, newMedication] });
         }
     };
@@ -130,12 +135,12 @@ const addMedicalHistory = () => {
         const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('/');
         const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('/');
         
-        // console.log('Patient Consultation:', patientDiagnosis);
-        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        // console.log('Concatenated Test:', concatenatedTest);
-        // console.log('Concatenated Medication:', concatenatedMedication);
-        // console.log('Concatenated Admission:', concatenatedAdmission);
+        console.log('Patient Consultation:', patientDiagnosis);
+        console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        console.log('Concatenated Test:', concatenatedTest);
+        console.log('Concatenated Medication:', concatenatedMedication);
+        console.log('Concatenated Admission:', concatenatedAdmission);
 
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
