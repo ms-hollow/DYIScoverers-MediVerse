@@ -28,10 +28,10 @@ const HomeSidebarHeaderHospital = ({children, pageName}) => {
 
                     <div className={styles.headerButtons}>
                         <div className={`${styles.searchBar}`}> 
-                            <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                            <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
+                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification"/> </a>
                         <AccountDropdown />
                     </div>
                     

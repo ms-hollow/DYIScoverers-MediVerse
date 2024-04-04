@@ -13,7 +13,7 @@ const AccountDropdown = () => {
     return (
         <div className={styles2.dropdown}>
             <div className={styles2.accountIcon} onClick={toggleMenu}> 
-                <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} />
+                <img src="/Account Icon.svg" alt="Account" className={styles.logo} />
                 {isOpen && (
                     <div className={styles2.dropdownContent}>
                         <Link href="/account/profile"><img src="/dropdown_profile.svg" alt="Profile Dropdown Icon" />Profile</Link>

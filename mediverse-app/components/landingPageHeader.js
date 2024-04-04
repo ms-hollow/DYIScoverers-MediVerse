@@ -9,7 +9,7 @@ const LandingPageHeader = ({buttonText, buttonLink }) => {
     <>
       <header className={styles.header}>
         <div className={styles.logoContainer}>
-          <Image src="/MediVerse Logo (with Text).png" alt="Logo" width={217} height={58.06} className={styles.logo} />
+          <Image src="/MediVerse Logo (with Text).svg" alt="Logo" width={217} height={58.06}/>
         </div>
 
         <ul className={styles.navbar}>

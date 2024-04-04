@@ -122,8 +122,7 @@
 .headerButtons {
     display: flex;
     align-items: center; /* Align vertically */
-    margin-right: 20px; /* Add margin to the right */
-    margin-left: auto; /* Move buttons to the right */
+    margin-right: 50px;
     transition: all 0.50s ease;
 }
 

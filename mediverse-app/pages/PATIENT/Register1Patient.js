@@ -61,7 +61,7 @@ const Register1Patient = () => {
                 <button className={styles.backButton} onClick={goBack}>←</button>
                 <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                     <div className={styles.metaMaskLogo}>
-                        <Image src="/MetamaskLogo.png" width={35} height={35} />
+                        <Image src="/MetamaskLogo.svg" width={35} height={35} />
                     </div>
                     <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
                 </button>
