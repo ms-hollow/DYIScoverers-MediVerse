@@ -1,4 +1,4 @@
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import styles from '../../styles/medicalHistoryHospital.module.css';
 import React, { useState, useEffect } from 'react';
 

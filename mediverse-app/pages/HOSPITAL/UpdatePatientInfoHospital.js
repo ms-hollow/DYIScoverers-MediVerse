@@ -1,5 +1,5 @@
 import styles from '../../styles/addPatient.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';

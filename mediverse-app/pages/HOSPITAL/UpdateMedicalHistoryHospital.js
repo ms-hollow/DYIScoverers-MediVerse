@@ -1,5 +1,5 @@
 import styles from '../../styles/updateMedicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import React, { useState, useEffect } from 'react';
 
 /**

@@ -1,5 +1,5 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';

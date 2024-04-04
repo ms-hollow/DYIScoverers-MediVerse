@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdown.js';
 
-const HomeSidebarHeader = ({children, pageName}) => {
+const HomeSidebarHeaderHospital = ({children, pageName}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -52,7 +52,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                     <div className={styles.menuItems}>
                         <ul>
                             <li><a href="/HOSPITAL/HomeHospital/">Home</a></li>
-                            <li><a href="/HOSPITAL/MedicalHistory1Hospital/">Medical History</a></li>
+                            <li><a href="/HOSPITAL/PatientRecordsHospital/">Patient Records</a></li>
                         </ul>
                     </div>
                 </div>
@@ -66,4 +66,4 @@ const HomeSidebarHeader = ({children, pageName}) => {
     );
 };
 
-export default HomeSidebarHeader;
+export default HomeSidebarHeaderHospital;
