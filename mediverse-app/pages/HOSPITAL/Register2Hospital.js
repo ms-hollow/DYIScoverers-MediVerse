@@ -25,8 +25,7 @@ const Register2Hospital = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        const requiredFields = ['hospitalName', 'contactNumber', 'hospitalAddress'];
-        
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
         const isEmpty = requiredFields.some(field => !formData[field]);
 
         if (isEmpty) {
