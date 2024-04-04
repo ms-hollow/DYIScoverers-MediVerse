@@ -147,7 +147,7 @@ const AddPatient = () => {
                     </div>
 
                     <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">Add Patient</Link>
+                        <Link href="/HOSPITAL/AddMedicalHistory/">Add Patient</Link>
                     </button>
                 </form>
             </div>

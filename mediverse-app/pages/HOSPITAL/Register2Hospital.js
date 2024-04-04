@@ -83,7 +83,9 @@ const Register2Hospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                    <button className={styles.submitButton} onClick={handleSubmit}>
+                        <Link href="/HOSPITAL/Register3Hospital/">PROCEED</Link>
+                    </button>
 
                 </form>
             </div>

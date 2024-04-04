@@ -55,7 +55,7 @@ const MedicalHistoryPatient = ({ data }) => {
                 </div>
 
                 <button className={styles.submitButton} onClick={handleAdd}>
-                    <Link href="/">Add Patient</Link>
+                    <Link href="/HOSPITAL/AddPatient/">Add Patient</Link>
                 </button>
             </div>
         </>
