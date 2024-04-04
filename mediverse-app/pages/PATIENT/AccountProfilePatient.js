@@ -1,7 +1,7 @@
 import LandingPageHeader from "@/components/landingPageHeader";
 import RegistrationProcess from "@/components/RegistrationProcess";
 import Layout from '../../components/HomeSidebarHeaderHospital.js';
-import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
+import styles from '../../styles/accountProfilePatient.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -94,11 +94,6 @@ const AccountProfilePatient = () => {
         setEditable(!editable); // pagpinindot ang edit button, gagawing editable ang fields. 
     };
 
-   
-    const goBack = () => {
-        window.history.back(); // Go back to the previous page
-    };
-
     return (
         <>
         <Layout pageName = "Account Profile">
@@ -108,70 +103,86 @@ const AccountProfilePatient = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <div className={styles.formContainer}>
-                <div className={styles.formTitle}>Confirmation</div>
-                <button className={styles.backButton} onClick={goBack}>←</button>
-                <form className={styles.registrationForm} onSubmit={handleEdit}>
+            <div className={styles.formTitle}>Account Information</div>
+            <form className={styles.registrationForm} onSubmit={handleEdit}>
+                <div className={styles.formContainer}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} value={formData.firstName} readOnly={!editable} />
+                            <label htmlFor="first-name" className={styles.formLabel}>First Name:</label>
+                            <input type="text" id="first-name" name="firstName" required onChange={handleChange} value={formData.firstName} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="middle-name" name="middleName" placeholder="Middle Name" required onChange={handleChange} value={formData.middleName} readOnly={!editable} />
+                            <label htmlFor="middle-name" className={styles.formLabel}>Middle Name:</label>
+                            <input type="text" id="middle-name" name="middleName" required onChange={handleChange} value={formData.middleName} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="last-name" name="lastName" placeholder="Last Name" required onChange={handleChange} value={formData.lastName} readOnly={!editable} />
+                            <label htmlFor="last-name" className={styles.formLabel}>Last Name:</label>
+                            <input type="text" id="last-name" name="lastName" required onChange={handleChange} value={formData.lastName} readOnly={!editable} />
                         </div>
                     </div>
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="number" id="age" name="age" placeholder="Age" required onChange={handleChange} value={formData.age} readOnly={!editable} />
+                            <label htmlFor="age" className={styles.formLabel}>Age:</label>
+                            <input type="number" id="age" name="age" required onChange={handleChange} value={formData.age} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="gender" name="gender" placeholder="Gender" required onChange={handleChange} value={formData.gender} readOnly={!editable} />
+                            <label htmlFor="gender" className={styles.formLabel}>Gender:</label>
+                            <input type="text" id="gender" name="gender" required onChange={handleChange} value={formData.gender} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="birth-date" name="dob" placeholder="Date of Birth" required onChange={handleChange} value={formData.dob} readOnly={!editable} />
+                            <label htmlFor="birth-date" className={styles.formLabel}>Date of Birth:</label>
+                            <input type="text" id="birth-date" name="dob" required onChange={handleChange} value={formData.dob} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <label htmlFor="height" className={styles.formLabel}>Height:</label>
+                            <input type="text" id="height" name="height" required onChange={handleChange} value={formData.height} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <label htmlFor="weight" className={styles.formLabel}>Weight:</label>
+                            <input type="text" id="weight" name="weight" required onChange={handleChange} value={formData.weight} readOnly={!editable} />
+                        </div>
+                    </div>
+                </div>
+            
+                <div className={styles.formTitle2}>Contact Information</div>
+                <div className={styles.formContainer}>
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <label htmlFor="phone-number" className={styles.formLabel}>Phone Number:</label>
+                            <input type="tel" id="phone-number" name="phoneNumber" required onChange={handleChange} value={formData.phoneNumber} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <label htmlFor="house-no" className={styles.formLabel}>House No:</label>
+                            <input type="text" id="house-no" name="houseNo" required onChange={handleChange} value={formData.houseNo} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <label htmlFor="street-no" className={styles.formLabel}>Street No:</label>
+                            <input type="text" id="street-no" name="streetNo" required onChange={handleChange} value={formData.streetNo} readOnly={!editable} />
                         </div>
                     </div>
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="tel" id="phone-number" name="phoneNumber" placeholder="Phone Number" required onChange={handleChange} value={formData.phoneNumber} readOnly={!editable} />
+                            <label htmlFor="barangay" className={styles.formLabel}>Barangay:</label>
+                            <input type="text" id="barangay" name="barangay" required onChange={handleChange} value={formData.barangay} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="height" name="height" placeholder="Height" required onChange={handleChange} value={formData.height} readOnly={!editable} />
+                            <label htmlFor="city-municipality" className={styles.formLabel}>City/Municipality:</label>
+                            <input type="text" id="city-municipality" name="cityMunicipality" required onChange={handleChange} value={formData.cityMunicipality} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="weight" name="weight" placeholder="Weight" required onChange={handleChange} value={formData.weight}  readOnly={!editable} />
+                            <label htmlFor="region" className={styles.formLabel}>Region:</label>
+                            <input type="text" id="region" name="region" required onChange={handleChange} value={formData.region} readOnly={!editable} />
                         </div>
                     </div>
+                </div>
+            </form>
 
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} value={formData.houseNo} readOnly={!editable} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} value={formData.streetNo} readOnly={!editable} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} value={formData.barangay} readOnly={!editable} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="city-municipality" name="cityMunicipality" placeholder="City/Municipality" required onChange={handleChange} value={formData.cityMunicipality} readOnly={!editable} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} value={formData.region} readOnly={!editable} />
-                        </div>
-                    </div>
-                    
-                    <button className={styles.editButton} onClick={handleEdit}>
-                        {editable ? <Link href="/PATIENT/AccountProfilePatient/">SAVE</Link> : 'EDIT'} {/*If pinindot edit button, magiging "SAVE:" ang next button*/}
-                    </button>
-                    
-                </form>
-            </div>
+            <button className={styles.editButton} onClick={handleEdit}>
+                {editable ? <Link href="/PATIENT/AccountProfilePatient/">SAVE</Link> : 'EDIT'}
+            </button>
+            
         </Layout>
         </>
         

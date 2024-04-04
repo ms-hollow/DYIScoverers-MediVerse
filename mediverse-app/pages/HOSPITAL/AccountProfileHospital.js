@@ -71,7 +71,6 @@ const AccountProfileHospital = () => {
             </div>
 
             <div className={styles.formContainer}>
-                <button className={styles.backButton} onClick={goBack}>←</button>
                 <div className={styles.formTitle}>Hospital Details</div>
                 <form className={styles.registrationForm} onSubmit={handleEdit}>
                     <div className={styles.formRow}>
