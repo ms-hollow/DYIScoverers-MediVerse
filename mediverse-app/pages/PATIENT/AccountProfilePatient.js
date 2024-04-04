@@ -1,0 +1,180 @@
+import LandingPageHeader from "@/components/landingPageHeader";
+import RegistrationProcess from "@/components/RegistrationProcess";
+import Layout from '../../components/HomeSidebarHeaderHospital.js';
+import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
+import Link from "next/link";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse"; // ABI
+
+
+const AccountProfilePatient = () => {
+    const router = useRouter();
+    const [patientFullName, setPatientFullName] = useState('');
+    
+    const [formData, setFormData] = useState({ 
+        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
+        firstName: '', 
+        middleName: '', 
+        lastName: '',
+        age: '',
+        gender: '',
+        dob: '',
+        phoneNumber: '',
+        height: '',
+        weight: '',
+        houseNo: '',
+        streetNo: '',
+        barangay: '',
+        cityMunicipality: '',
+        region: ''
+    });
+
+    const [editable, setEditable] = useState(false); // State variable to track edit mode
+
+    useEffect(() => {
+        async function fetchPatientInfo() {
+            try {
+                // Connect to the deployed smart contract
+                const accounts = await web3.eth.getAccounts();
+    
+                //console.log("Account:", accounts[0]);
+    
+                // Call the getPatientInfo function on the smart contract
+                const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
+                
+                console.log(patientInfo)
+                // Splitting the patient full name and full address to subcategories
+                const patientFullName = patientInfo[0].split('+');
+                const patientFullAddress = patientInfo[7].split('+');
+
+                // Set patient full name state
+                setPatientFullName(patientFullName);
+
+                // Set form data with patient info
+                setFormData({
+                    ...formData,
+                    firstName: patientFullName[0], // Set first name
+                    middleName: patientFullName[1], // Set middle name
+                    lastName: patientFullName[2], // Set last name
+                    age: patientInfo[1], // Set age
+                    gender: patientInfo[2],
+                    dob: patientInfo[3],
+                    phoneNumber: patientInfo[4],
+                    height: patientInfo[5],
+                    weight: patientInfo[6],
+                    houseNo: patientFullAddress[0],
+                    streetNo: patientFullAddress[1],
+                    barangay: patientFullAddress[2],
+                    cityMunicipality: patientFullAddress[3],
+                    region: patientFullAddress[4]
+                    // Set other form fields accordingly
+                });
+
+            } catch (error) {
+                console.error('Error retrieving patient information:', error);
+            }
+        }
+
+        fetchPatientInfo();
+    }, []); // Empty dependency array to run only once when component mounts
+    
+
+    {/** Function that handles changes in the form fields. It is triggered by the 'onChange' event. */}
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        setEditable(!editable); // pagpinindot ang edit button, gagawing editable ang fields. 
+    };
+
+   
+    const goBack = () => {
+        window.history.back(); // Go back to the previous page
+    };
+
+    return (
+        <>
+        <Layout pageName = "Account Profile">
+
+            {/*KUHANIN DATA, ILAGAY SA FIELD, THEN READ ONLY.*/}
+            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
+                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
+            </div>
+
+            <div className={styles.formContainer}>
+                <div className={styles.formTitle}>Confirmation</div>
+                <button className={styles.backButton} onClick={goBack}>←</button>
+                <form className={styles.registrationForm} onSubmit={handleEdit}>
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} value={formData.firstName} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="middle-name" name="middleName" placeholder="Middle Name" required onChange={handleChange} value={formData.middleName} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="last-name" name="lastName" placeholder="Last Name" required onChange={handleChange} value={formData.lastName} readOnly={!editable} />
+                        </div>
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="number" id="age" name="age" placeholder="Age" required onChange={handleChange} value={formData.age} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="gender" name="gender" placeholder="Gender" required onChange={handleChange} value={formData.gender} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="birth-date" name="dob" placeholder="Date of Birth" required onChange={handleChange} value={formData.dob} readOnly={!editable} />
+                        </div>
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="tel" id="phone-number" name="phoneNumber" placeholder="Phone Number" required onChange={handleChange} value={formData.phoneNumber} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="height" name="height" placeholder="Height" required onChange={handleChange} value={formData.height} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="weight" name="weight" placeholder="Weight" required onChange={handleChange} value={formData.weight}  readOnly={!editable} />
+                        </div>
+                    </div>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} value={formData.houseNo} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} value={formData.streetNo} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} value={formData.barangay} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="city-municipality" name="cityMunicipality" placeholder="City/Municipality" required onChange={handleChange} value={formData.cityMunicipality} readOnly={!editable} />
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} value={formData.region} readOnly={!editable} />
+                        </div>
+                    </div>
+                    
+                    <button className={styles.editButton} onClick={handleEdit}>
+                        {editable ? <Link href="/PATIENT/AccountProfilePatient/">SAVE</Link> : 'EDIT'} {/*If pinindot edit button, magiging "SAVE:" ang next button*/}
+                    </button>
+                    
+                </form>
+            </div>
+        </Layout>
+        </>
+        
+    );
+};
+export default AccountProfilePatient;

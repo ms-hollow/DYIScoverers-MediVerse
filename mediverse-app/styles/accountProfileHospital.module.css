@@ -31,6 +31,14 @@
     margin-bottom: 15px;
 }
 
+.formLabel {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 500; 
+  margin-bottom: 10px;
+  color: #909090;
+}
+
 .formField {
     flex: 1;
     margin-right: 1px;
@@ -55,7 +63,7 @@
 
 .editButton {
     display: block; 
-    margin-left: 90%; /* Center horizontally with auto margins */
+    margin-left: 90.5%; /* Center horizontally with auto margins */
     padding: 10px 20px;
     margin-top: 30px;
     border: none;
@@ -97,7 +105,7 @@
     .container {
       padding: 7vw; 
       position: relative; /* Set position to relative */
-      margin-top: 80vh; /* Move the container down by 20 pixels */
+      margin-top: 40%
     }
     
     .formField {

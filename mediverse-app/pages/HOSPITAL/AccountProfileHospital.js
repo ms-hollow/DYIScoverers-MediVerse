@@ -70,23 +70,25 @@ const AccountProfileHospital = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-
             <div className={styles.formContainer}>
                 <button className={styles.backButton} onClick={goBack}>←</button>
                 <div className={styles.formTitle}>Hospital Details</div>
                 <form className={styles.registrationForm} onSubmit={handleEdit}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="hospital-name" name="hospitalName" placeholder="Hospital Name" required onChange={handleChange} value={formData.hospitalName} readOnly={!editable}/>
+                            <label htmlFor="hospital-name" className={styles.formLabel}>Hospital Name</label>
+                            <input type="text" id="hospital-name" name="hospitalName" required onChange={handleChange} value={formData.hospitalName} readOnly={!editable}/>
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="contact-number" name="contactNumber" placeholder="Contact Number" required onChange={handleChange} value={formData.contactNumber} readOnly={!editable}/>
+                            <label htmlFor="contact-number" className={styles.formLabel}>Contact Number</label>
+                            <input type="text" id="contact-number" name="contactNumber" required onChange={handleChange} value={formData.contactNumber} readOnly={!editable}/>
                         </div>
                     </div>
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" required onChange={handleChange} value={formData.hospitalAddress} readOnly={!editable}/>
+                            <label htmlFor="hospital-address" className={styles.formLabel}>Hospital Address</label>
+                            <input type="text" id="hospital-address" name="hospitalAddress" required onChange={handleChange} value={formData.hospitalAddress} readOnly={!editable}/>
                         </div>
                     </div>
                     
