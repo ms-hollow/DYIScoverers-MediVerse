@@ -124,16 +124,20 @@ const addMedicalHistory = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
+
+
+        
+        
         console.log('Form submitted:', formData);
         // Concatenate physician, diagnosis, and dateOfDiagnosis
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
 
         // Concatenate arrays using symbols
-        const concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('/');
-        const concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('/');
-        const concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('/');
-        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('/');
-        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('/');
+        const concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
+        const concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
+        const concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
+        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
+        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         
         console.log('Patient Consultation:', patientDiagnosis);
         console.log('Concatenated Symptoms:', concatenatedSymptoms);
@@ -142,24 +146,31 @@ const addMedicalHistory = () => {
         console.log('Concatenated Medication:', concatenatedMedication);
         console.log('Concatenated Admission:', concatenatedAdmission);
 
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
-            const receipt = await mvContract.methods.addMedicalHistory(
-                formData.patientAddress,
-                formData.physician,
-                patientDiagnosis,
-                concatenatedSymptoms,
-                concatenatedTreatmentProcedure,
-                concatenatedTest,
-                concatenatedMedication,
-                concatenatedAdmission
-            ).send({ from: accounts[0] });
-            console.log("Transaction Hash:", receipt.transactionHash);
-            router.push('/HOSPITAL/Register1Hospital/');
-        } catch (error) {
+
+        // * need below 60 ung length ng diagnosis at description
+        if (formData.diagnosis.length < 60 && formData.description.length < 60) {
+            try {
+                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                console.log("Account:", accounts[0]);
+                const receipt = await mvContract.methods.addMedicalHistory(
+                    formData.patientAddress,
+                    formData.physician,
+                    patientDiagnosis,
+                    concatenatedSymptoms,
+                    concatenatedTreatmentProcedure,
+                    concatenatedTest,
+                    concatenatedMedication,
+                    concatenatedAdmission
+                ).send({ from: accounts[0] });
+                console.log("Transaction Hash:", receipt.transactionHash);
+                router.push('/HOSPITAL/Register1Hospital/');
+            } catch (error) {
+                alert('Patient is not registered.');
+            };
+        } else {
             //console.error('Error sending transaction:', error.message);
-            alert('Patient is not registered.');
+            alert('Diagnosis and Description should be below 60 letters');
+            //
         }
     };
 
