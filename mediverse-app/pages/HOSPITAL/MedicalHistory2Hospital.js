@@ -6,6 +6,7 @@ import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
 //TODO: Lagay ng comment for notifcation message
+//TODO: Get patient info and display ito sa history
 
 //! Specific Patient. Use the patient address to track kung anong record 'to. Use creationDate para ma-search ang specific record
 //! Galing MedicalHistory1Hospital, pinasa ko yung address and creationDate
@@ -20,6 +21,9 @@ const MedicalHistoryHospital = () => {
     // console.log('Creation Date:', creationDate);
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
+        patientName: '',
+        patientAge: '',
+        patientDob: '',
         hospitalName: '',
         physicianName: '',
         diagnosis: {
@@ -77,6 +81,7 @@ const MedicalHistoryHospital = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
+                let patientName, patientAge, patientDob;
                 let hospitalName;
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
@@ -94,6 +99,13 @@ const MedicalHistoryHospital = () => {
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
                 console.log(patientRecords);
+                
+                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                //console.log(patientInfo);
+                const patientNameHolder = patientInfo[0].split('+');
+                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                patientAge = patientInfo[1];
+                patientDob = patientInfo[3];
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
@@ -126,48 +138,48 @@ const MedicalHistoryHospital = () => {
                 //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
                 //* '+' means paghihiwalayin ang concatenated data sa isang array
                 const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
-                    if (item.diagnosis.includes('/')) {
-                        item.diagnosis = item.diagnosis.split('/').map(diagnosis => diagnosis.split('+'));
+                    if (item.diagnosis.includes('~')) {
+                        item.diagnosis = item.diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
                         //console.log(item.diagnosis); 
                     } else {
                         item.diagnosis = [item.diagnosis.split('+')];
                         //console.log(item.diagnosis); 
                     }
 
-                    if (item.signsAndSymptoms.includes('/')) {
-                        item.signsAndSymptoms = item.signsAndSymptoms.split('/').map(signsAndSymptoms => signsAndSymptoms.split('+'));
+                    if (item.signsAndSymptoms.includes('~')) {
+                        item.signsAndSymptoms = item.signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
                         //console.log(item.signsAndSymptoms); 
                     } else {
                         item.signsAndSymptoms = [item.signsAndSymptoms.split('+')];
                         //console.log(item.signsAndSymptoms); 
                     }
 
-                    if (item.treatmentProcedure.includes('/')) {
-                        item.treatmentProcedure = item.treatmentProcedure.split('/').map(treatmentProcedure => treatmentProcedure.split('+'));
+                    if (item.treatmentProcedure.includes('~')) {
+                        item.treatmentProcedure = item.treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
                         //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
                     } else {
                         item.treatmentProcedure = [item.treatmentProcedure.split('+')];
                         //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
                     }
 
-                    if (item.tests.includes('/')) {
-                        item.tests = item.tests.split('/').map(tests => tests.split('+'));
+                    if (item.tests.includes('~')) {
+                        item.tests = item.tests.split('~').map(tests => tests.split('+'));
                         //console.log(item.tests); 
                     } else {
                         item.tests = [item.tests.split('+')];
                         //console.log(item.tests); 
                     }
 
-                    if (item.medications.includes('/')) {
-                        item.medications= item.medications.split('/').map(medications => medications.split('+'));
+                    if (item.medications.includes('~')) {
+                        item.medications= item.medications.split('~').map(medications => medications.split('+'));
                         //console.log(item.medications); 
                     } else {
                         item.medications = [item.medications.split('+')];
                         //console.log(item.medications); 
                     }
 
-                    if (item.admission.includes('/')) {
-                        item.admission = item.admission.split('/').map(admission => admission.split('+'));
+                    if (item.admission.includes('~')) {
+                        item.admission = item.admission.split('~').map(admission => admission.split('+'));
                         //console.log(item.admission); 
                     } else {
                         item.admission = [item.admission.split('+')];
@@ -292,6 +304,9 @@ const MedicalHistoryHospital = () => {
                 });
 
                 const medicalHistory = {
+                    patientName,
+                    patientAge,
+                    patientDob,
                     hospitalName,
                     physicianName,
                     diagnosis: {
@@ -351,6 +366,23 @@ const MedicalHistoryHospital = () => {
             {medicalHistory && (
             <div className={styles.container}>      
                 <div className={styles.reserveSpace}></div>
+                
+                {/* ----------------- Patient Basic Info (Name, Age, Date of Birth and Gender) -----------------  */}
+                <div className={styles.basicInfoContainer}>
+                    <div className={styles.headingAttrb_formatting}>
+                        <p className={styles.headingAttrb}>Patient Name</p>   
+                        <p className={styles.dataFormat}>{medicalHistory.patientName}</p>
+                    </div>
+                    <div className={styles.headingAttrb_formatting}>
+                        <p className={styles.headingAttrb}>Age</p>   
+                        <p className={styles.dataFormat}>{medicalHistory.patientAge}</p>
+                    </div>
+                    <div className={styles.headingAttrb_formatting}>
+                        <p className={styles.headingAttrb}>Birthday</p>   
+                        <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
+                    </div>
+                </div>
+
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Doctor Consulted</p>   

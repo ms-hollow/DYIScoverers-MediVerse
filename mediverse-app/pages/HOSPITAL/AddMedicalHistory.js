@@ -147,8 +147,8 @@ const addMedicalHistory = () => {
         console.log('Concatenated Admission:', concatenatedAdmission);
 
 
-        // * need below 60 ung length ng diagnosis at description
-        if (formData.diagnosis.length < 60 && formData.description.length < 60) {
+        // * need below 100 ung length ng diagnosis at description
+        if (formData.diagnosis.length < 100 && formData.description.length < 100) {
             try {
                 const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
                 console.log("Account:", accounts[0]);
@@ -169,7 +169,7 @@ const addMedicalHistory = () => {
             };
         } else {
             //console.error('Error sending transaction:', error.message);
-            alert('Diagnosis and Description should be below 60 letters');
+            alert('Diagnosis and Description should be below 100 letters');
             //
         }
     };
