@@ -1,19 +1,16 @@
-import Layout from '../../components/HomeSidebarHeaderHospital.js'
+import Layout from '../../components/HomeSidebarHeader.js'
 import styles from '../../styles/medicalHistoryHospital.module.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-<<<<<<< HEAD
 //TODO: Lagay ng comment for notifcation message
 //TODO: Get patient info and display ito sa history
 
 //! Specific Patient. Use the patient address to track kung anong record 'to. Use creationDate para ma-search ang specific record
 //! Galing MedicalHistory1Hospital, pinasa ko yung address and creationDate
 
-=======
->>>>>>> front-end
 const MedicalHistoryHospital = () => {
 
     const [hospitalAddress, setHospitalAddress] = useState('');

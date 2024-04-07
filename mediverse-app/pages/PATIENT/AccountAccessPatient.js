@@ -4,6 +4,10 @@ import fs from 'fs';
 import path from 'path';
 import React, { useState } from 'react';
 
+/**
+ * TODO: Get name, doctor and date of consultation ng mga hospitals na may access sa lahat ng record
+ * 
+ */
 
 export async function getStaticProps() {
     const filePath = path.join(process.cwd(), 'public/placeHolder/dummyData_AccountAccess.json');

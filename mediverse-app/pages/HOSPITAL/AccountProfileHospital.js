@@ -7,6 +7,12 @@ import React, { useState, useEffect } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
+/**
+ * TODO: Kunin ang pinaka-latest date sa may creation date
+ * ? Gamit ang getHospitalInfo method
+ * TODO: Retrieve ang data then display sa forms
+ * TODO: Add yung data gamit yung edit profile na method sa may solidity
+ */
 
 const AccountProfileHospital = () => {
     const [formData, setFormData] = useState({ 
