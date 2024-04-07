@@ -1,19 +1,11 @@
 import styles from '../../styles/UpdateMedicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
-import mvContract from '../../blockchain/mediverse';
+//import web3 from "../../blockchain/web3";
+//import mvContract from '../../blockchain/mediverse';
 
-/**
- * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
- * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
- * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
- * ! tests, medication, and admission
- * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
- */
 
 //TODO: Lagyan ng limit kada forms. Sa Diagnosis and Description lagyan lang na limit na 60 letters.
 //TODO: Lagyan mo rin ng alert message sa alam mong may notification dapat na lalabas
@@ -21,10 +13,8 @@ import mvContract from '../../blockchain/mediverse';
 //! Ikaw na bahala sa ibang forms kung ilan ilalagay mo.
 
 const addMedicalHistory = () => {
-    const router = useRouter();
 
     const [formData, setFormData] = useState({ 
-        patientAddress: '',
         physician: '',
         diagnosis: '',
         dateOfDiagnosis: '',
@@ -96,7 +86,7 @@ const addMedicalHistory = () => {
 
     const handleAddRowTreatmentProcedure = () => {
         if (formData.treatmentProcedure.length < 3) {
-            const newTreatmentProcedure = { noTP: formData.treatmentProcedure.length + 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' };
+            const newTreatmentProcedure = { noTP: formData.treatmentProcedure.length + 1, tp: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' };
             setFormData({ ...formData, treatmentProcedure: [...formData.treatmentProcedure, newTreatmentProcedure] });
         }
     };
@@ -129,6 +119,7 @@ const addMedicalHistory = () => {
         
         
         console.log('Form submitted:', formData);
+<<<<<<< HEAD
         // Concatenate physician, diagnosis, and dateOfDiagnosis
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
 
@@ -172,6 +163,8 @@ const addMedicalHistory = () => {
             alert('Diagnosis and Description should be below 100 letters');
             //
         }
+=======
+>>>>>>> front-end
     };
 
     const goBack = () => {
@@ -183,12 +176,6 @@ const addMedicalHistory = () => {
         <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
-                    <div className={styles.formTitle}>Patient Address</div>
-                        <div className={styles.formRow}>
-                            <div className={styles.formField}>
-                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
-                            </div>
-                        </div>
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -477,7 +464,7 @@ const addMedicalHistory = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
+                    <button className={styles.submitButton}>Add Patient
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     

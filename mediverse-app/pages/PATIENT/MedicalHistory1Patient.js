@@ -25,7 +25,7 @@ const MedicalHistoryPatient = ({ data }) => {
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
                     <p>Diagnosis</p>
-                    <p>Hospital</p>
+                    <p>Hospital</p>s
                     <p>Physician</p>
                     <p>Admission Date</p>
                     <p>Discharge Date</p>

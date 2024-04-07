@@ -1,4 +1,4 @@
-import HomeSidebarHeader from "@/components/HomeSidebarHeader";
+import HomeSidebarHeader from "@/components/HomeSidebarHeaderHospital";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -1,8 +1,9 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 //import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
@@ -21,9 +22,23 @@ const MedicalHistoryPatient = () => {
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
-        }
-    }
+=======
 
+
+export async function getStaticProps() {
+    const filePath = path.join(process.cwd(), 'public/placeHolder/dummyData.json');
+    const jsonData = fs.readFileSync(filePath, 'utf8');
+    const data = JSON.parse(jsonData);
+
+    return {
+        props: {
+            data
+>>>>>>> front-end
+        }
+    };
+}
+
+<<<<<<< HEAD
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
@@ -106,6 +121,13 @@ const MedicalHistoryPatient = () => {
 
     return (
         <Layout pageName="Medical History">
+=======
+const MedicalHistoryPatient = ({ data }) => {
+    return (  
+        <Layout pageName = "Medical History">
+        <>
+        
+>>>>>>> front-end
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
                     <p>Diagnosis</p>
@@ -114,7 +136,9 @@ const MedicalHistoryPatient = () => {
                     <p>Admission Date</p>
                     <p>Discharge Date</p>
                 </div>
+
                 <div className={styles.dataContainer}>
+<<<<<<< HEAD
                     {medicalHistory.map((record, index) => (
                         <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
                             <p className={styles.diaAttrb}>{record.diagnosis}</p>
@@ -128,9 +152,22 @@ const MedicalHistoryPatient = () => {
             </div>
 
             
+=======
+                    {data.map(data => (
+                        <Link href="/" key={data.id} className={styles.data}>
+                            <p className={styles.diaAttrb}>{data.diagnosis}</p>
+                            <p>{data.hospital}</p>
+                            <p>{data.physician}</p>
+                            <p>{data.admissionDate}</p>
+                            <p>{data.dischargeDate}</p>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </>
+>>>>>>> front-end
         </Layout>
     );
-};
-
+}
  
 export default MedicalHistoryPatient;

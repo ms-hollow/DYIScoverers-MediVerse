@@ -1,0 +1,135 @@
+
+.formContainer{
+  max-width: 70%; 
+  margin: 10% auto; 
+  padding: 3%; 
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+  
+.registrationForm {
+    margin: 0 auto; /* Center the registration form horizontally */
+    width: 100%; /* Ensure the form takes up the full width of the container */
+    padding: 0% 0% 0% 2%; /* Add padding to the left side */
+}
+
+.formTitle {
+    text-align: center;
+    white-space: nowrap;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 2%;
+    padding-bottom: 5%;
+    color: #4A5568; 
+}
+
+.formRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Align buttons at opposite ends */
+    margin-bottom: 15px;
+}
+
+.formLabel {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 500; 
+  margin-bottom: 10px;
+  color: #909090;
+}
+
+.formField {
+    flex: 1;
+    margin-right: 1px;
+}
+
+.formField input::placeholder,
+.formField select::placeholder,
+.formField select option[disabled]:nth-child(),
+.formField input[type="date"]::placeholder{
+    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+}
+
+.formField input,
+.formField select {
+    width: calc(100% - 20px); /* Make input fields slightly wider */
+    height: 46px;
+    padding: 10px; /* Adjust padding for responsiveness */
+    border: 1px solid rgb(199, 199, 199);
+    border-radius: 5px;
+    font-family: Roboto Condensed;
+}
+
+.editButton {
+    display: block; 
+    margin-left: 90.5%; /* Center horizontally with auto margins */
+    padding: 10px 20px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+}
+
+.editButton:hover {
+    background-color: var(--cyan);
+}
+
+.backButton {
+    display: block; 
+    float: left; /* Add float property to move it to the left */
+    margin-top: 1%;
+    margin-left: 2%;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--gray);
+    cursor: pointer;
+    font-weight: bold; 
+    font-size: 1.5rem; 
+}
+
+.backButton:hover {
+    color: var(--cyan);
+}
+
+.backButton:hover {
+    color: var(--cyan);
+}
+
+/* ------------------RESPONSIVENESS------------------*/
+  
+@media (max-width: 768px) {
+    .container {
+      padding: 7vw; 
+      position: relative; /* Set position to relative */
+      margin-top: 80vh; /* Move the container down by 20 pixels */
+    }
+    
+    .formField {
+      flex: 1 1 100%; 
+      margin-left: 9%; 
+      margin-bottom: 10px;
+    }
+  
+    .backButton {
+      display: none; /* Hide the backButton on screens smaller than 768px */
+    }
+    
+    .submitButton {
+      width: 48%; /* Make buttons full width on smaller screens */
+      margin-right: 25%; 
+    }
+    
+    .formTitle {
+      margin-bottom: 10px; /* Adjust margin for responsiveness */
+      font-size: 1.2rem; 
+    }
+    
+  }
+
+
+
+

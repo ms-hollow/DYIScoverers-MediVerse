@@ -1,10 +1,10 @@
 import styles from '../../styles/addPatient.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-import web3 from "../../blockchain/web3";
-import mvContract from '../../blockchain/mediverse';
+//import web3 from "../../blockchain/web3";
+//import mvContract from '../../blockchain/mediverse';
 
 
 const AddPatient = () => {
@@ -147,7 +147,7 @@ const AddPatient = () => {
                     </div>
 
                     <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">Add Patient</Link>
+                        <Link href="/HOSPITAL/AddMedicalHistory/">Add Patient</Link>
                     </button>
                 </form>
             </div>

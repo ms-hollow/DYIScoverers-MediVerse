@@ -22,6 +22,8 @@ html.index {
 .logoContainer {
     display: flex;
     align-items: center;
+    width: 217px;
+    height: 58.06px;
 }
 
 .logo {
