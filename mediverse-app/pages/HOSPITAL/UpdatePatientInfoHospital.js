@@ -4,6 +4,17 @@ import path from 'path';
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 
+//! Hindi na tatanggalin, maglalagay nalang ng parameters
+/**
+ * TODO: Add restrictions, gamit yung getHospitalList method sa solidity, i-confirm mo kung hospital ba ang nakalogged in sa metamask
+ * TODO: if hospital nakaloggedin, error siya dapat patient address
+ * TODO: Gamit ang address kunin ang pinaka-latest date sa may creation date 
+ * ? Gamit ang getPatientInfo method
+ * TODO: Retrieve ang data then display sa forms
+ * TODO: Add yung data gamit yung edit profile na method sa may solidity 
+ * ! NOTE LAHAT NG DATA ISA-SAVE ULIT
+ */
+
 const UpdatePatientHOspital = () => {
 
     const [formData, setFormData] = useState({ 

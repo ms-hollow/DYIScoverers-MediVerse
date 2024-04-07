@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//Note kapag ginawa na ang backend. If halo halong characters ang isa-save, dapat may " "
-//bago ilagay sa function ng smart contract
+//! Hindi pa deployed sa network
 
 contract MediVerse {
     
@@ -16,14 +15,14 @@ contract MediVerse {
         string contactNum;
         string addr;
         address[] authorizedHospitals;
-        uint registrationDate;
+        uint creationDate;
     }
 
     struct Hospital {
         string name;
         string contactNum;
         string addr;
-        uint registrationDate;
+        uint creationDate;
     }
 
     struct MedicalHistory {
@@ -39,21 +38,14 @@ contract MediVerse {
         uint creationDate;
     }
 
-    address[] public patientList; // Dynamic array to store the addresses of registered patients
+    address[] public patientList; 
     address[] public hospitalList;
     MedicalHistory[] public medicalHistoryList;
     mapping(address => bool) public isRegistered;
     mapping(address => Patient) public patients;
     mapping(address => Hospital) public hospitals;
     mapping(address => MedicalHistory[]) public medicalHistories;
-    mapping(address => address[]) public pendingRequests;
-
-    event PatientRegistered(address patientAddr);
-    event HospitalRegistered(address hospitalAddr);
-    event MedicalHistoryAdded(address patientAddr, address hospitalAddr);
-    event GeneralHealthProfileAdded(address patientAddr, address hospitalAddr);
-    event PermissionGranted(address patientAddr, address hospitalAddr);
-    event PermissionRevoked(address patientAddr, address hospitalAddr);
+    mapping(address => address[]) private pendingRequests;
 
     modifier isRegister() {
         require(isRegistered[msg.sender], "Account is not registered");
@@ -99,10 +91,9 @@ contract MediVerse {
         patient.contactNum = _contactNum;
         patient.addr = _address;
 
-        patient.registrationDate = block.timestamp;
+        patient.creationDate = block.timestamp;
         patientList.push(msg.sender);
         isRegistered[msg.sender] = true;
-        emit PatientRegistered(msg.sender);
     }
 
     function editPatientDetails(
@@ -124,6 +115,7 @@ contract MediVerse {
         patient.weight = _weight;
         patient.contactNum = _contactNum;
         patient.addr = _address;
+        patient.creationDate = block.timestamp;
     }
 
     function registerHospital(
@@ -131,15 +123,15 @@ contract MediVerse {
         string memory _contactNum,
         string memory _address
     ) public {
-        require(!isRegistered[msg.sender], "Patient already registered");
+        require(!isRegistered[msg.sender], "Hospital already registered");
         Hospital storage hospital = hospitals[msg.sender];
         hospital.name = _name;
         hospital.contactNum = _contactNum;
         hospital.addr = _address;
-        hospital.registrationDate = block.timestamp;
+        hospital.creationDate = block.timestamp;
 
         hospitalList.push(msg.sender);
-        emit HospitalRegistered(msg.sender);
+        isRegistered[msg.sender] = true;
     }
 
     function editHospitalDetails(
@@ -151,6 +143,7 @@ contract MediVerse {
         hospital.name = _name;
         hospital.contactNum = _contactNum;
         hospital.addr = _addr;
+        hospital.creationDate = block.timestamp;
     }
 
     function addMedicalHistory(
@@ -163,13 +156,11 @@ contract MediVerse {
         string memory _medications,
         string memory _admission
     ) public {
-        // Check if the patient is registered
+
         require(isRegistered[_patientAddr], "Patient not registered");
 
-        // Check if the hospital is authorized, if not, grant access
         if (!isHospitalAuthorized(_patientAddr, msg.sender)) {
             patients[_patientAddr].authorizedHospitals.push(msg.sender);
-            emit PermissionGranted(_patientAddr, msg.sender);
         }
 
         MedicalHistory memory history;
@@ -186,53 +177,13 @@ contract MediVerse {
 
         medicalHistories[_patientAddr].push(history);
         medicalHistoryList.push(history);
-        emit MedicalHistoryAdded(_patientAddr, msg.sender);
     }
 
-    function editMedicalHistory(
-        address _patientAddr,
-        string memory _physician,
-        string memory _diagnosis,
-        string memory _signsAndSymptoms,
-        string memory _treatmentProcedure,
-        string memory _tests,
-        string memory _medications,
-        string memory _admission
-    ) public {
-        MedicalHistory[] storage history = medicalHistories[_patientAddr];
-
-        // Check if there are any records for the specified patient
-        require(history.length > 0, "No medical history records found for the patient");
-
-        // Iterate through the records to find the one matching your criteria
-        for (uint i = 0; i < history.length; i++) {
-            if (history[i].hospitalAddr == msg.sender) {
-                // Update the record with the new information
-                history[i].physician = _physician;
-                history[i].diagnosis = _diagnosis;
-                history[i].signsAndSymptoms = _signsAndSymptoms;
-                history[i].treatmentProcedure = _treatmentProcedure;
-                history[i].tests = _tests;
-                history[i].medications = _medications;
-                history[i].admission = _admission;
-
-                return; // Exit the function after updating the record
-            }
-        }
-        // If no matching record is found, revert the transaction
-        revert("Medical history record not found for the specified hospital");
-    }
-
-    // Function that retrieves medical records for a specific patient
     function getMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {
-        // Check if the caller is the patient themselves
         if (msg.sender == _patientAddr) {
-            // Return medical records for the patient
             return medicalHistories[_patientAddr];
         } else {
-            // Check if the caller is authorized to access the patient's medical history
             require(isHospitalAuthorized(_patientAddr, msg.sender), "Caller is not authorized to access patient records");
-            // Return medical records for the patient
             return medicalHistories[_patientAddr];
         }
     }
@@ -245,18 +196,17 @@ contract MediVerse {
     // Function to retrieve patient information
     function getPatientInfo(address patientAddress) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory, string memory, address[] memory, uint) {
         Patient storage patient = patients[patientAddress];
-        return (patient.name, patient.age, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.registrationDate);
+        return (patient.name, patient.age, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.creationDate);
     }
 
     // Function to retrieve hospital information
     function getHospitalInfo(address hospitalAddress) external view returns (string memory, string memory, string memory, uint) {
         Hospital storage hospital = hospitals[hospitalAddress];
-        return (hospital.name, hospital.contactNum, hospital.addr, hospital.registrationDate);
+        return (hospital.name, hospital.contactNum, hospital.addr, hospital.creationDate);
     }
     
     function givePermission(address _hospitalAddr) public  {
         require(!isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital already authorized");
-
         // Check if the hospital is already in the pending requests
         bool isPending = false;
         for (uint i = 0; i < pendingRequests[msg.sender].length; i++) {
@@ -270,30 +220,30 @@ contract MediVerse {
             patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
             pendingRequests[msg.sender].push(_hospitalAddr);
         }
-
-        emit PermissionGranted(msg.sender, _hospitalAddr);
     }
 
     function revokeAccess(address _hospitalAddr) public {
         require(isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital not authorized");
-
         address[] storage authorizedHospitals = patients[msg.sender].authorizedHospitals;
         for (uint i = 0; i < authorizedHospitals.length; i++) {
             if (authorizedHospitals[i] == _hospitalAddr) {
                 authorizedHospitals[i] = authorizedHospitals[authorizedHospitals.length - 1];
                 authorizedHospitals.pop();
-                emit PermissionRevoked(msg.sender, _hospitalAddr);
                 return;
             }
         }
     }
+    
+    // Function that will request access for patients medical record
+    function requestPermission(address _patientAddr) public {
+        require(!isHospitalAuthorized(_patientAddr, msg.sender), "Request already sent");
+        pendingRequests[_patientAddr].push(msg.sender);
+    }
 
-    /** FUNCTION THAT WILL GET THE LIST OF AUTHORIZED HOSPITALS TO VIEW PATIENTS MEDICAL RECORDS **/
     function getAuthorizedHospitals(address _patientAddr) public view returns (address[] memory) {
         return patients[_patientAddr].authorizedHospitals;
     }
 
-    // Function to get the list of pending permission requests for a patient
     function getPendingRequests(address _patientAddr) public view returns (address[] memory) {
         return pendingRequests[_patientAddr];
     }

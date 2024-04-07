@@ -57,11 +57,13 @@ const MedicalHistoryPatient = () => {
                         admission,
                         creationDate
                     };
-                    
                 });
-                console.log(parsedMedicalHistory);
+                //console.log(parsedMedicalHistory);
+
+                //? Function that will filter the medical history 
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
                 
-                const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
+                const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
                     console.log("Diagnosis:", splitDiagnosis[0]);
                     // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
