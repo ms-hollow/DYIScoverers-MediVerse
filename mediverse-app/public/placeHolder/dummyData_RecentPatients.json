@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "patientName": "Nick Holster",
+        "admissionDate": "03/17/24",
+        "dischargeDate": "03/18/24",
+        "gender": "Male",
+        "diagnosis": "Dislocated Shoulder" 
+    },
+    {
+        "id": 2,
+        "patientName": "Pauline Atlas",
+        "admissionDate": "03/17/24",
+        "dischargeDate": "03/29/24",
+        "gender": "Female",
+        "diagnosis": "Skeletal Tubercolosis" 
+    },
+    {
+        "id": 3,
+        "patientName": "James Snyder",
+        "admissionDate": "03/17/24",
+        "dischargeDate": "03/17/24",
+        "gender": "Male",
+        "diagnosis": "Type 2 Diabetes" 
+    }
+]
