@@ -95,9 +95,7 @@ const HospitalHome = ({data1, data2}) => {
                                 ))}
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </>
