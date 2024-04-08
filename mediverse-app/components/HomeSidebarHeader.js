@@ -31,7 +31,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                             <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                        <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
+                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
                         <AccountDropdown />
                     </div>
                     
