@@ -3,13 +3,10 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-<<<<<<< HEAD
-=======
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
->>>>>>> 4271c5d64ec4b40dd4aaf5e2efab03b09135f817
 
 export async function getStaticProps() {
     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
@@ -31,20 +28,33 @@ const HospitalHome = ({data1, data2}) => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
+    let patientAddress, patientName, creationDates;
 
     // Function to set the hospital address
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
         }
     };
 
+    async function getLatestCreationDate(array) {
+        if (!Array.isArray(array)) {
+            return "Input is not an array";
+          }
+        if (array.length <= 3) {
+            return array;
+        } else {
+            return array.slice(-3);
+        }
+    };
+
     useEffect(() => {
         async function fetchPatientHistory() {
+            
             try {
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
@@ -57,6 +67,8 @@ const HospitalHome = ({data1, data2}) => {
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    patientAddress = patientAddr;
+                    creationDates = creationDate;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -70,7 +82,8 @@ const HospitalHome = ({data1, data2}) => {
                         creationDate
                     };
                 });
-                
+
+                console.log(patientAddress);
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
@@ -82,23 +95,42 @@ const HospitalHome = ({data1, data2}) => {
                 const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
                     console.log("Diagnosis:", splitDiagnosis[0]);
+                    // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
+                    // console.log("Signs and Symptoms:", splitSignsAndSymptoms);
+                    // const splitTreatmentProcedure = item.treatmentProcedure.split('+');
+                    // console.log("Treatment Procedure:", splitTreatmentProcedure);
+                    // const splitTests = item.tests.split('+');
+                    // console.log("Treatment Procedure:", splitTests);
+                    // const splitMedications = item.medications.split('+');
+                    // console.log("Medications:", splitMedications);
                     console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
                     console.log("Admission Date:", splitAdmission[2]);
                     console.log("Discharge Date:", splitAdmission[3]);
                     return {
-                        hospitalName,
-                        diagnosis: splitDiagnosis[0],
-                        physician: item.physician,
+                        patientName,
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
-                        patientAddr: item.patientAddr,
+                        gender: patientInfo[2],
+                        diagnosis: splitDiagnosis[0],
                         creationDate: item.creationDate
                     };
                 });
+                setMedicalHistory(modifiedMedicalHistory);
+
+                
+
+                
+                console.log(typeof creationDates);
+                let creationDate = parseInt(creationDates);
+
+                // Print the latest three dates
+                const latestThreeDates = getLatestCreationDate([creationDate]);
+                console.log("Latest three dates:", latestThreeDates);
+                
 
             } catch (error) {
-
+                console.error('Error fetching medical history:', error);
             }
         }
 
