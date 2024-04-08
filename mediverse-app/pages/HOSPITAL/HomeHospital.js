@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import HomeSidebarHeader from "@/components/HomeSidebarHeaderHospital";
-import Image from "next/image";
-import Link from "next/link";
-=======
 import styles from '../../styles/homeHospital.module.css'
 import Layout from '../../components/HomeSidebarHeader.js'
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
->>>>>>> front-end-kelvin
 
 export async function getStaticProps() {
     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');

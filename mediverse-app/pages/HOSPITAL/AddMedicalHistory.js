@@ -7,18 +7,7 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-/**
- * TODO: Concatenate physician, diagnosis and dateOfDiagnosis then save sa isang variable
- * TODO: Concatenate ang arrays ng symptoms, treatmentProcedure, test, medication and admission. Use symbols like "+" or anything para may mark siya
- * ! Note: sa solidity natin ito lang lahat ng variables for medical history ay patientAddress, physician, diagnosis, signsAndSymptoms, treatmentProcedure,
- * ! tests, medication, and admission
- * * Lagi i-test ang smart contract sa remix then tignan kung paano ito gumagana.
- */
-
-//TODO: Lagyan ng limit kada forms. Sa Diagnosis and Description lagyan lang na limit na 60 letters.
-//TODO: Lagyan mo rin ng alert message sa alam mong may notification dapat na lalabas
-//TODO: Lagyan din ng loading message kapag gagwa ng transaction kasi once network na ang gamit natin, matagal na ang process ng transaction
-//! Ikaw na bahala sa ibang forms kung ilan ilalagay mo.
+//TODO: Lagay ng loading animation kapag gagawa ng transaction
 
 const addMedicalHistory = () => {
     const router = useRouter();

@@ -6,11 +6,17 @@ import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-
+/**
+ ** Added function that will check the address if it is already registered or already belongs to the hospital
+ *! Need to test
+ */
 
 const Register1Patient = () => {
     const router = useRouter();
     const [walletAddress, setWalletAddress] = useState("")
+    const [isPatient, setIsPatient] = useState(false);
+    const [isHospital, setIsHospital] = useState(false);
+
     //connect wallet prompt
     const connectMetaMask = async () => {
         if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
@@ -27,15 +33,70 @@ const Register1Patient = () => {
             console.log("Please install MetaMask");
         }
     };
+
+    // Function to check if the address is registered as a patient
+    const isPatientRegistered = async (address) => {
+        try {
+            const patientList = await mvContract.methods.getPatientList().call();
+            return patientList.includes(address);
+        } catch (error) {
+            console.error('Error checking patient registration:', error);
+            throw error;
+        }
+    };
+
+    // Function to check if the address is registered as a hospital
+    const isHospitalRegistered = async (address) => {
+        try {
+            const hospitalList = await mvContract.methods.getHospitalList().call();
+            return hospitalList.includes(address);
+        } catch (error) {
+            console.error('Error checking hospital registration:', error);
+            throw error;
+        }
+    };
+
+    const checkRegistration = async () => {
+        try {
+            // Check if the patient list is empty
+            if (patientList.length === 0) {
+                setIsPatient(false);
+                setIsHospital(false);
+                return;
+            }
+    
+            const isPatient = await isPatientRegistered(address);
+            if (isPatient) {
+                alert('You are already registered as a patient.');
+                return;
+            }
+
+            // Check if the address is already registered as a hospital
+            const isHospital = await isHospitalRegistered(address);
+            if (isHospital) {
+                alert('You are already registered as a hospital.');
+                return;
+            }
+
+            // If the address is not registered as a patient or hospital, continue with other actions
+            setIsPatient(false);
+            setIsHospital(false);
+        } catch (error) {
+            // Handle the error
+            console.error("Error checking registration:", error);
+            alert("Error: Failed to check registration status. Please try again later or contact support if the problem persists.");
+        }
+    };
     
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission
+        await checkRegistration();
         // Check if the checkbox is checked
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
             alert('Please agree to the terms before proceeding.');
             return; 
         }
+        e.preventDefault(); // Prevent default form submission
         // Redirect to the next page only if the checkbox is checked
         router.push('/PATIENT/register2Patient/');
     };

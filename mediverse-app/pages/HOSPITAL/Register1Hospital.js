@@ -6,10 +6,17 @@ import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
+/**
+ ** Added function that will check the address if it is already registered or already belongs to the hospital
+ *! Need to test
+ */
+
 
 const Register1Hospital = () => {
     const router = useRouter();
     const [walletAddress, setWalletAddress] = useState("")
+    const [isPatient, setIsPatient] = useState(false);
+    const [isHospital, setIsHospital] = useState(false);
 
     const connectMetaMask = async () => {
         if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
@@ -27,9 +34,34 @@ const Register1Hospital = () => {
         }
     };
 
+    // const checkRegistration = async () => {
+    //     try {
+    //         // Check if the wallet address is already registered as a patient
+    //         const patientList = await mvContract.methods.getPatientList().call();
+    //         if (patientList.includes(walletAddress)) {
+    //             alert("You are already registered as a patient.");
+    //             return;
+    //         }
+    
+    //         // Check if the wallet address is already registered as a hospital
+    //         const hospitalList = await mvContract.methods.getHospitalList().call();
+    //         if (hospitalList.includes(walletAddress)) {
+    //             alert("You are already registered as a hospital.");
+    //             return;
+    //         }
+    
+    //         // If the address is not registered as a patient or hospital, continue with other actions
+    //         setIsPatient(false);
+    //         setIsHospital(false);
+    //     } catch (error) {
+    //         // Handle other potential errors
+    //         alert("Error: Failed to check registration status. Please try again later or contact support if the problem persists.");
+    //     }
+    // };
+
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-    
+        // checkRegistration();
         // Check if the checkbox is checked
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {

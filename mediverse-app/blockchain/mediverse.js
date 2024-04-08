@@ -5,8 +5,8 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
 /**
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
-//const mvContract = new web3.eth.Contract(ContractABI, "0x83Fc7DF031178dcD27Ee8C3fd4f8C729D6Cdf8f9"); // for network
-const mvContract = new web3.eth.Contract(ContractABI, "0xdBF2f4c210Bde0Fa8Bf0564F298Bc62883F30140"); //for development
+const mvContract = new web3.eth.Contract(ContractABI, "0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d"); // for network
+//const mvContract = new web3.eth.Contract(ContractABI, "0x91cC30c14c76f2DaF48Bd43D492614CA42E2C727"); //for development
 
 /**
  * * Note: if gagamiting ang development, follow the steps below:
@@ -18,3 +18,24 @@ const mvContract = new web3.eth.Contract(ContractABI, "0xdBF2f4c210Bde0Fa8Bf0564
  */
 
 export default mvContract
+
+/**
+ * 1_deploy_contract.js
+====================
+
+   Replacing 'MediVerse'
+   ---------------------
+   > transaction hash:    0x4e2f078571a9a861465e94c2f850b32bedda018bc6900c9a0157fefe5f162efb
+   > Blocks: 1            Seconds: 9
+   > contract address:    0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d
+   > block number:        5654698
+   > block timestamp:     1712585160
+   > account:             0x77BC521989EfB176291BE7343E19025b7d7fC004
+   > balance:             10.896292392333146003
+   > gas used:            5042928 (0x4cf2f0)
+   > gas price:           3.665105104 gwei
+   > value sent:          0 ETH
+   > total cost:          0.018482861151904512 ETH
+
+   Pausing for 2 confirmations...
+ */
