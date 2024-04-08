@@ -3,6 +3,13 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
+<<<<<<< HEAD
+=======
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
+>>>>>>> 4271c5d64ec4b40dd4aaf5e2efab03b09135f817
 
 export async function getStaticProps() {
     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
@@ -21,6 +28,84 @@ export async function getStaticProps() {
 }
 
 const HospitalHome = ({data1, data2}) => {
+    const router = useRouter();
+    const [medicalHistory, setMedicalHistory] = useState([]);
+    const [hospitalAddress, setHospitalAddress] = useState('');
+
+    // Function to set the hospital address
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); // Set the hospital address
+        } catch (error) {
+            alert('Error fetching hospital address.');
+        }
+    };
+
+    useEffect(() => {
+        async function fetchPatientHistory() {
+            try {
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+
+                // Call the smart contract function with hospital address
+                const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                
+                const parsedMedicalHistory = medicalHistoryString.map(item => {
+                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    return {
+                        patientAddr,
+                        hospitalAddr,
+                        physician,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
+                });
+                
+                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                const patientNameHolder = patientInfo[0].split('+');
+                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                console.log(patientName);
+                console.log(patientInfo[2]);
+
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+
+                const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
+                    const splitDiagnosis = item.diagnosis.split('+');
+                    console.log("Diagnosis:", splitDiagnosis[0]);
+                    console.log("Creation Date: ",item.creationDate);
+                    const splitAdmission = item.admission.split('+');
+                    console.log("Admission Date:", splitAdmission[2]);
+                    console.log("Discharge Date:", splitAdmission[3]);
+                    return {
+                        hospitalName,
+                        diagnosis: splitDiagnosis[0],
+                        physician: item.physician,
+                        admissionDate: splitAdmission[2],
+                        dischargeDate: splitAdmission[3],
+                        patientAddr: item.patientAddr,
+                        creationDate: item.creationDate
+                    };
+                });
+
+            } catch (error) {
+
+            }
+        }
+
+        fetchPatientHistory();
+    }, [hospitalAddress]);
+
+
     return (  
         <Layout pageName="Home">
         <>
