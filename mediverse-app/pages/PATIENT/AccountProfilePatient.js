@@ -13,7 +13,7 @@ import mvContract from "../../blockchain/mediverse"; // ABI
  * ? Gamit ang getPatientInfo method
  * TODO: Retrieve ang data then display sa forms
  * TODO: Add yung data gamit yung edit profile na method sa may solidity
- * ! IN PROGRESS PA AAAA
+ *
  */
 
 const AccountProfilePatient = () => {
