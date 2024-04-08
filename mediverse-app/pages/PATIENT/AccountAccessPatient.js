@@ -27,6 +27,7 @@ const AccountAccessPatient = ({data}) => {
 
     const [patientAddress, setPatientAddress] = useState('');
     const [listOfAuthorizedHospitals, setAuthorizedHospitals] = useState([]);
+    const [listOfHospitalNames, setHospitalNames] = useState([]);
 
     const setAddress = async () => {
         try {
@@ -47,7 +48,7 @@ const AccountAccessPatient = ({data}) => {
                 }
 
                 const hospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
-                //console.log(hospitals);
+                console.log(hospitals);
                 
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
@@ -65,10 +66,10 @@ const AccountAccessPatient = ({data}) => {
                         creationDate
                     };
                 });
-                //console.log(parsedMedicalHistory);
+                console.log(parsedMedicalHistory);
                 
                 const filteredMedicalHistory = medicalHistoryString.filter(item => hospitals.includes(item.hospitalAddr));
-                //console.log("Filtered Medical History:", filteredMedicalHistory);
+                console.log("Filtered Medical History:", filteredMedicalHistory);
 
                 const modifiedList = filteredMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
@@ -81,19 +82,20 @@ const AccountAccessPatient = ({data}) => {
                     };
                 });
                 setAuthorizedHospitals(modifiedList);
-                //console.log(modifiedList)
+                console.log("Authorized Hospitals: ", modifiedList)
 
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
-                //console.log(hospitalRequest);
+                console.log("Pending Request: " ,hospitalRequest);
+               
                 const hospitalsInfo = [];
-
                 for (const hospitalAddress of hospitalRequest) {
                     const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
                     hospitalsInfo.push({
                         name: hospitalInfo[0],
                     });
                 }
-                console.log(hospitalsInfo);
+                console.log("Hospital Names: ", hospitalsInfo);
+                setHospitalNames(hospitalsInfo)
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -103,98 +105,98 @@ const AccountAccessPatient = ({data}) => {
     }, [patientAddress]);
 
 
-    // const handleGrantAccess = async () => {
-    //     try {
-    //         await mvContract.methods.givePermission(hospitalAddr).send({ from: patientAddress }); 
-    //         console.log('Permission granted to hospital:', hospitalAddr);
-    //     } catch (error) {
-    //         console.error('Error granting permission:', error);
-    //     }
-    // };
+    const handleGrantAccess = async () => {
+        try {
+            await mvContract.methods.givePermission(hospitalAddr).send({ from: patientAddress }); 
+            console.log('Permission granted to hospital:', hospitalAddr);
+        } catch (error) {
+            console.error('Error granting permission:', error);
+        }
+    };
 
-    // const handleRevokeAccess = async () => {
-    //     try {
-    //         await mvContract.methods.revokeAccess(hospitalAddr).send({ from: patientAddress }); 
-    //         console.log('Access was removed:', hospitalAddr);
-    //     } catch (error) {
-    //         console.error('Error revoking access:', error);
-    //     }
-    // };
+    const handleRevokeAccess = async () => {
+        try {
+            await mvContract.methods.revokeAccess(hospitalAddr).send({ from: patientAddress }); 
+            console.log('Access was removed:', hospitalAddr);
+        } catch (error) {
+            console.error('Error revoking access:', error);
+        }
+    };
 
-    // const [showAccountAccess, setShowAccountAccess] = useState(true);
+    const [showAccountAccess, setShowAccountAccess] = useState(true);
 
-    // const handleAccountAccessClick = () => {
-    //     setShowAccountAccess(true);
-    // };
+    const handleAccountAccessClick = () => {
+        setShowAccountAccess(true);
+    };
 
-    // const handleRequestAccessClick = () => {
-    //     setShowAccountAccess(false);
-    // };
+    const handleRequestAccessClick = () => {
+        setShowAccountAccess(false);
+    };
 
-    // const handleRevokeAccessClick = () => {
-    //     //onClick Function for Revoke Access Button
-    // }
+    const handleRevokeAccessClick = () => {
+        //onClick Function for Revoke Access Button
+    }
 
-    // const handleAcceptAccessClick = () => {
-    //     //onClick Function for Accept Account Access Request Button
-    // }
+    const handleAcceptAccessClick = () => {
+        //onClick Function for Accept Account Access Request Button
+    }
 
-    // const handleDeclineAccessClick = () => {
-    //     //onClick Function for Decline Account Access Request Button
-    // }
+    const handleDeclineAccessClick = () => {
+        //onClick Function for Decline Account Access Request Button
+    }
 
-    // return ( 
-    //     <Layout pageName="Account Access">
-    //     <>
-    //         <div className={styles.container}>
-    //             <div className={styles.pageNavigator}>
-    //                 <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Account Access</button>
-    //                 <button className={showAccountAccess ? '' : styles.activeButton_reqAccess} onClick={handleRequestAccessClick}>Request Access</button>
-    //             </div>
+    return ( 
+        <Layout pageName="Account Access">
+        <>
+            <div className={styles.container}>
+                <div className={styles.pageNavigator}>
+                    <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Authorized Hospitals</button>
+                    <button className={showAccountAccess ? '' : styles.activeButton_reqAccess} onClick={handleRequestAccessClick}>Pending Request</button>
+                </div>
 
-    //             {showAccountAccess ? (
-    //                 <div className={styles.tableContainer}>
-    //                     <div className={styles.tableHeading}>
-    //                         <p>Hospital Name</p>
-    //                         <p>Doctor Consulted</p>
-    //                         <p>Date of Consultation</p>
-    //                         <p>Account Access</p>
-    //                     </div>
+                {showAccountAccess ? (
+                    <div className={styles.tableContainer}>
+                        <div className={styles.tableHeading}>
+                            <p>Hospital Name</p>
+                            <p>Doctor Consulted</p>
+                            <p>Date of Consultation</p>
+                            <p>Account Access</p>
+                        </div>
 
-    //                     <div className={styles.dataContainer}>
-    //                         {data.map(data => (
-    //                             <div key={data.id} className={styles.data}>
-    //                                 <p>{data.hospitalName}</p>
-    //                                 <p>{data.doctorConsulted}</p>
-    //                                 <p>{data.dateConsultation}</p>
-    //                                 <button onClick={handleRevokeAccessClick}>Revoke Access</button>
-    //                             </div>
-    //                         ))}
-    //                     </div>
-    //                 </div>
-    //             ) : (
-    //                 <div className={styles.tableContainer}>
-    //                     <div className={styles.tableHeading_reqAccess}>
-    //                         <p>Hospital Name</p>
-    //                         <p>Account Access</p>
-    //                     </div>
+                        <div className={styles.dataContainer}>
+                            {listOfAuthorizedHospitals.map((item, index) => (
+                                <div key={index} className={styles.data}>
+                                    <p>{item.hospitalName}</p>
+                                    <p>{item.physician}</p>
+                                    <p>{item.dateOfConsultation}</p>
+                                    <button onClick={handleRevokeAccessClick}>Revoke Access</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <div className={styles.tableContainer}>
+                        <div className={styles.tableHeading_reqAccess}>
+                            <p>Hospital Name</p>
+                            <p>Account Access</p>
+                        </div>
 
-    //                     <div className={styles.dataContainer}>
-    //                         {data.map(data => (
-    //                             <div key={data.id} className={styles.data_reqAccess}>
-    //                                 <p>{data.hospitalName}</p>
-    //                                 <button onClick={handleAcceptAccessClick}>Accept</button>
-    //                                 <button onClick={handleDeclineAccessClick}>Decline</button>
-    //                             </div>
-    //                         ))}
-    //                     </div>
-    //                 </div>
-    //             )}
+                        <div className={styles.dataContainer}>
+                            {listOfHospitalNames.map((hospital, index) => (
+                                <div key={index} className={styles.data_reqAccess}>
+                                    <p>{hospital.name}</p>
+                                    <button onClick={handleAcceptAccessClick}>Accept</button>
+                                    <button onClick={handleDeclineAccessClick}>Decline</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
-    //         </div>
-    //     </>
-    //     </Layout>
-    // );
+            </div>
+        </>
+        </Layout>
+    );
 }
  
 export default AccountAccessPatient;

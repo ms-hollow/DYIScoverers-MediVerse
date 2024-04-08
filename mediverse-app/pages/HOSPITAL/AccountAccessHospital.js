@@ -1,8 +1,83 @@
 import styles from '../../styles/accountAccess.module.css';
 import Layout from '../../components/HomeSidebarHeader.js'
 import React, { useState, useEffect  } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 const AccountAccessHospital = () => {
+
+    //TODO: Get lahat ng record and check if may permission si hospital
+    //TODO: Display ito 
+    //TODO: Palitan ang view records ng request access buttons
+    //! DAPAT LIST NG MEDICAL RECORD NA WALANG PERMISSION
+
+    const [medicalHistory, setMedicalHistory] = useState([]);
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    let patientAddress, patientName;
+
+    // Function to set the hospital address
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); // Set the hospital address
+        } catch (error) {
+            alert('Error fetching hospital address.');
+        }
+    };
+
+    useEffect(() => {
+        async function fetchMedicalHistory() {
+            try {
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+
+                const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                
+                const parsedMedicalHistory = medicalHistoryString.map(item => {
+                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    patientAddress = patientAddr;
+                    return {
+                        hospitalAddr,
+                        diagnosis,
+                    };
+                });
+                console.log(parsedMedicalHistory);
+
+                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                const patientNameHolder = patientInfo[0].split('+');
+                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+
+                // //? Function that will filter the medical history 
+                // const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+                
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => {
+                    // Check if the hospital is not authorized to access this medical record
+                    return !isHospitalAuthorized(item.patientAddr, hospitalAddress);
+                });
+
+                const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
+                    const splitDiagnosis = item.diagnosis.split('+');
+                    console.log("Diagnosis:", splitDiagnosis[1]);
+                    return {
+                        patientName,
+                        diagnosis: splitDiagnosis[1],
+                    };
+                });
+                setMedicalHistory(modifiedMedicalHistory);
+                console.log("Modified", modifiedMedicalHistory);
+
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        
+        fetchMedicalHistory();
+    }, [hospitalAddress]);
 
     const [showAccountAccess, setShowAccountAccess] = useState(true);
 
