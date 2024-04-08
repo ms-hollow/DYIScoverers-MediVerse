@@ -28,7 +28,9 @@ const HospitalHome = ({data1, data2}) => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
-    let patientAddress, patientName, creationDates;
+    const [creationDates, setCreationDates] = useState([]);
+    let patientAddress, patientName;
+    
 
     // Function to set the hospital address
     const setAddress = async () => {
@@ -68,7 +70,7 @@ const HospitalHome = ({data1, data2}) => {
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
                     patientAddress = patientAddr;
-                    creationDates = creationDate;
+                    const creationDateInt = parseInt(creationDate);
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -79,53 +81,48 @@ const HospitalHome = ({data1, data2}) => {
                         tests,
                         medications,
                         admission,
-                        creationDate
+                        creationDate: creationDateInt
                     };
                 });
+                
+                //? listOfCreationDates = array ng lahat ng creation dates
+                //* ito gamitin mo kapag hahanapin mo yung last 3 index
+                const listOfCreationDates = parsedMedicalHistory.map(item => item.creationDate);
+                setCreationDates(listOfCreationDates); 
+                console.log("Creation Dates: ", listOfCreationDates);
 
-                console.log(patientAddress);
+                // console.log(patientAddress);
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-                console.log(patientName);
+                // console.log(patientName);
                 console.log(patientInfo[2]);
 
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
 
                 const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[0]);
-                    // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
-                    // console.log("Signs and Symptoms:", splitSignsAndSymptoms);
-                    // const splitTreatmentProcedure = item.treatmentProcedure.split('+');
-                    // console.log("Treatment Procedure:", splitTreatmentProcedure);
-                    // const splitTests = item.tests.split('+');
-                    // console.log("Treatment Procedure:", splitTests);
-                    // const splitMedications = item.medications.split('+');
-                    // console.log("Medications:", splitMedications);
-                    console.log("Creation Date: ",item.creationDate);
+                    // console.log("Diagnosis:", splitDiagnosis[0]);
+                    // console.log("Creation Date: ", item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    console.log("Admission Date:", splitAdmission[2]);
-                    console.log("Discharge Date:", splitAdmission[3]);
+                    // console.log("Admission Date:", splitAdmission[2]);
+                    // console.log("Discharge Date:", splitAdmission[3]);
                     return {
                         patientName,
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         gender: patientInfo[2],
                         diagnosis: splitDiagnosis[0],
-                        creationDate: item.creationDate
+                        creationDates
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);
 
-                
-
-                
-                console.log(typeof creationDates);
-                let creationDate = parseInt(creationDates);
+                // console.log(typeof creationDates);
+                // let creationDate = parseInt(creationDates);
 
                 // Print the latest three dates
-                const latestThreeDates = getLatestCreationDate([creationDate]);
+                let latestThreeDates = getLatestCreationDate(creationDates);
                 console.log("Latest three dates:", latestThreeDates);
                 
 
