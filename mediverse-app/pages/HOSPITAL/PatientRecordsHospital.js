@@ -37,7 +37,7 @@ const MedicalHistoryPatient = ({ data }) => {
 
                 <div className={styles.dataContainer}>
                     {data.map(data => (
-                        <Link href="/" key={data.id} className={styles.data}>
+                        <Link href="/HOSPITAL/MedicalHistory1Hospital" key={data.id} className={styles.data}>
                             <p className={styles.diaAttrb}>{data.name}</p>
                             <p>{data.hospital}</p>
                             <p>{data.admissionDate}</p>
@@ -48,7 +48,7 @@ const MedicalHistoryPatient = ({ data }) => {
                 </div>
 
                 <button className={styles.submitButton} onClick={handleAdd}>
-                    <Link href="/">Add Patient</Link>
+                    <Link href="/HOSPITAL/AddPatient">+</Link>
                 </button>
             </div>
         </>

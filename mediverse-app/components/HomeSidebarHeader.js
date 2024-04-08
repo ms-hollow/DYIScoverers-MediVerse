@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
@@ -10,18 +10,11 @@ const HomeSidebarHeader = ({children, pageName}) => {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
+    
     return (
         <>
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-                <header className={styles.header}>
-                    
+                <header className={styles.header}>   
                     <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
                         {pageName}
                     </div>
@@ -33,11 +26,9 @@ const HomeSidebarHeader = ({children, pageName}) => {
                         </div>
                         <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
                         <AccountDropdown />
-                    </div>
-                    
+                    </div>   
                 </header>
                 
-            
                 <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>
                     <div className={styles.triangle}></div> {/* Add the triangle directly inside the .sidebarMenuBtn */}
                 </div>
@@ -60,9 +51,10 @@ const HomeSidebarHeader = ({children, pageName}) => {
                 </div>
 
                 <div className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
-                    {children}
+                    <div id='content'>
+                        {children}
+                    </div>
                 </div>
-                
             </div>       
         </>
     );

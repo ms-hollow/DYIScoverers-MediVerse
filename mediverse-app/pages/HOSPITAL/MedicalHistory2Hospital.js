@@ -1,8 +1,26 @@
 import Layout from '../../components/HomeSidebarHeader.js'
 import styles from '../../styles/medicalHistoryHospital.module.css';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 const MedicalHistoryHospital = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleButton = () => {
+        setIsOpen(!isOpen);
+    };
+
+    useEffect(() => {
+        const container = document.getElementById('container');
+        if(container){
+            if (isOpen) {
+                container.classList.add(styles.blur);
+            } else {
+                container.classList.remove(styles.blur);
+            }
+        }
+    }, [isOpen]);
 
     const [data, setData] = useState(null);
 
@@ -24,7 +42,7 @@ const MedicalHistoryHospital = () => {
     return ( 
         <Layout pageName="Medical History">
         <>
-            <div className={styles.container}>   
+            <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
@@ -162,6 +180,17 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
+            <button className={styles.submitButton} onClick={toggleButton}>
+                <div className={styles.dropdown}>     
+                    <img src="/edit.svg" alt="Edit Icon"/>
+                    {isOpen && (
+                        <div className={styles.dropdownContent}>
+                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
+                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
+                        </div>
+                    )}
+                </div>
+            </button>
         </>
         </Layout>
      );
