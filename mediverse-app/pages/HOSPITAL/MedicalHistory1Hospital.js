@@ -12,6 +12,7 @@ import mvContract from '../../blockchain/mediverse';
 //* modified
 
 const MedicalHistoryPatient = () => {
+
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');

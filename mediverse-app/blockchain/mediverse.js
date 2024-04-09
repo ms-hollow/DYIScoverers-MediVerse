@@ -5,8 +5,8 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
 /**
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
-//const mvContract = new web3.eth.Contract(ContractABI, "0x83Fc7DF031178dcD27Ee8C3fd4f8C729D6Cdf8f9"); // for network
-const mvContract = new web3.eth.Contract(ContractABI, "0x8AB73737b752692C630b9cE0a6E3D0a708e3b7cf"); //for development
+//const mvContract = new web3.eth.Contract(ContractABI, "0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d"); // for network
+const mvContract = new web3.eth.Contract(ContractABI, "0xB35D8B4Eb38DDDb35E6c20d90bc31D13d1Dd9EE9"); //for development
 
 /**
  * * Note: if gagamiting ang development, follow the steps below:

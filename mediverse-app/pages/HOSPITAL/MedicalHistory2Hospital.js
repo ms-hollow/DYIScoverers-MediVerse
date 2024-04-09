@@ -13,7 +13,6 @@ import mvContract from '../../blockchain/mediverse';
 
 const MedicalHistoryHospital = () => {
 
-
     const [hospitalAddress, setHospitalAddress] = useState('');
     const router = useRouter();
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
@@ -361,6 +360,11 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleButton = () => {
+        // setIsOpen(!isOpen);
+    };
 
     return ( 
         <Layout pageName="Medical History">
@@ -520,16 +524,8 @@ const MedicalHistoryHospital = () => {
             </div>
             )}
 
-            <button className={styles.submitButton} onClick={toggleButton}>
-                <div className={styles.dropdown}>     
-                    <img src="/edit.svg" alt="Edit Icon"/>
-                    {isOpen && (
-                        <div className={styles.dropdownContent}>
-                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
-                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
-                        </div>
-                    )}
-                </div>
+            <button className={styles.submitButton} onClick={toggleButton}> 
+                <img src="/edit.svg" alt="Edit Icon"/>
             </button>
         </>
         </Layout>
