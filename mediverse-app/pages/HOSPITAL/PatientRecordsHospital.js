@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+//* Modified
 
 const MedicalHistoryPatient = () => {
 
@@ -104,7 +105,7 @@ const MedicalHistoryPatient = () => {
 
     const clickRow = (patientAddr, creationDate) => {
         router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
             query: { patientAddr, creationDate }
         });
     };

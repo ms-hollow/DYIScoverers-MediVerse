@@ -8,10 +8,14 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+//! List ng lahat ng medical history ni SPECIFIC PATIENT
+//* modified
+
 const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
+    const { patientAddr, creationDate } = router.query;
 
     // Function to set the hospital address
     const setAddress = async () => {
@@ -39,9 +43,8 @@ const MedicalHistoryPatient = () => {
                 console.log(hospitalInfo[0]);
                 hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
-                // Call the smart contract function with hospital address
-                const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                //console.log(medicalHistoryString);
+                const medicalHistoryString = await mvContract.methods.getMedicalHistory(patientAddr).call();
+                console.log("Get all medical record of specific patient", medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;

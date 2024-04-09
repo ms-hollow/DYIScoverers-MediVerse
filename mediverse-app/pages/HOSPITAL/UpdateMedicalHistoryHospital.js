@@ -2,9 +2,15 @@ import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import React, { useState, useEffect } from 'react';
 
+//! Note: Sa may MedicalHistory2Hospital, meron update or edit button
 
 const UpdateMedicalHistoryHospital = () => {
 
+    //TODO: Lagay ang info ni patient sa taas. SHOULD BE IN READ ONLY FORMAT
+    //TODO: Retrieve ang medical record
+    //TODO: Display sa forms and table
+    //TODO: Save lahat ng data ulit
+    
     const [formData, setFormData] = useState({ 
         physician: '',
         diagnosis: '',

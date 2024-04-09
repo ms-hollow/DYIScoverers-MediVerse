@@ -6,11 +6,11 @@ import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
 const AccountAccessHospital = () => {
-
-    //TODO: Get lahat ng record and check if may permission si hospital
-    //TODO: Display ito 
-    //TODO: Palitan ang view records ng request access buttons
-    //! DAPAT LIST NG MEDICAL RECORD NA WALANG PERMISSION
+    //! DAPAT MAGKACONNECT ITO AT NASA PATIENT
+    //TODO: Get lahat ng record and check if may permission si hospital (IDK IF POSSIBLE!)
+    //TODO: Display ito (NOT POSSIBLE!)
+    //TODO: Palitan ang view records ng request access buttons (IDK IF POSSIBLE!)
+    //! DAPAT LIST NG MEDICAL RECORD NA WALANG PERMISSION (IDK POSSIBLE!)
 
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
@@ -37,6 +37,20 @@ const AccountAccessHospital = () => {
                 }
 
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                const unauthorizedHospitals = [];
+
+                for (const medicalHistory of medicalHistoryString) {
+                    const patientAddress = medicalHistory.patientAddr;
+
+                    // Check if the hospital is authorized to access the patient's records
+                    const isAuthorized = await mvContract.methods.isHospitalAuthorized(patientAddress, hospitalAddress).call();
+
+                    if (!isAuthorized) {
+                        unauthorizedHospitals.push(patientAddress);
+                    }
+                }
+
+                console.log(unauthorizedHospitals);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;

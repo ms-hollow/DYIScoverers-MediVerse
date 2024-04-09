@@ -125,9 +125,6 @@ const addMedicalHistory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
-
-        
-        
         console.log('Form submitted:', formData);
         // Concatenate physician, diagnosis, and dateOfDiagnosis
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
@@ -163,7 +160,7 @@ const addMedicalHistory = () => {
                     concatenatedAdmission
                 ).send({ from: accounts[0] });
                 console.log("Transaction Hash:", receipt.transactionHash);
-                router.push('/HOSPITAL/MedicalHistory1Hospital/');
+                router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
                 alert('Patient is not registered.');
             };

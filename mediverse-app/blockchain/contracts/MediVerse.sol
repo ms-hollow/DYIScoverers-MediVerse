@@ -58,7 +58,7 @@ contract MediVerse {
         _;
     }
 
-    function isHospitalAuthorized(address _patientAddr, address _hospitalAddr) internal view returns (bool) {
+    function isHospitalAuthorized(address _patientAddr, address _hospitalAddr) public view returns (bool) {
         for (uint i = 0; i < patients[_patientAddr].authorizedHospitals.length; i++) {
             if (patients[_patientAddr].authorizedHospitals[i] == _hospitalAddr) {
                 return true;

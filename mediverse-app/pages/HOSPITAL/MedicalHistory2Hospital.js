@@ -13,6 +13,7 @@ import mvContract from '../../blockchain/mediverse';
 
 const MedicalHistoryHospital = () => {
 
+
     const [hospitalAddress, setHospitalAddress] = useState('');
     const router = useRouter();
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
@@ -79,6 +80,7 @@ const MedicalHistoryHospital = () => {
     }
 
     useEffect(() => {
+
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob;
@@ -447,7 +449,6 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
 
-
                 <div className={styles.table_container}>
                     <p className={styles.table_title}>Test</p>
                     <div className={styles.test_heading}>
@@ -518,6 +519,18 @@ const MedicalHistoryHospital = () => {
                 </div>
             </div>
             )}
+
+            <button className={styles.submitButton} onClick={toggleButton}>
+                <div className={styles.dropdown}>     
+                    <img src="/edit.svg" alt="Edit Icon"/>
+                    {isOpen && (
+                        <div className={styles.dropdownContent}>
+                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
+                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
+                        </div>
+                    )}
+                </div>
+            </button>
         </>
         </Layout>
      );
