@@ -8,7 +8,7 @@ import mvContract from '../../blockchain/mediverse';
 
 /**
  * TODO: Get name, doctor and date of consultation ng mga hospitals na may access sa lahat ng record
- * 
+ *  ! IN PROGRESS PA AAAA
  */
 
 export async function getStaticProps() {

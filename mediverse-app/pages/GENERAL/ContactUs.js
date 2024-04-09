@@ -18,65 +18,46 @@ const ContactUs = () => {
 
     return (
         <>
-            <div> 
-                <LandingPageHeader buttonText="Connect Wallet" />
-            </div>
-            <div style={{ position: 'absolute', left: '74px', top: '169px', width: '1377px', height: '524px' }}>
-                <img src="/ContactUsRectangle.png" alt="Contact Us" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '877px', top: '215px', width: '450px', height: '408.54px' }}>
-                <img src="/ContactUsPic1.png" alt="Contact Us Picture 1" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '625px', top: '154px', width: 'px', height: 'px' }}>
-                <img src="/ContactUsText.png" alt="Contact Us Text" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '1400px', top: '595px', width: '50px', height: '100px' }}>
-                <img src="/Frame5.png" alt="Frame 5" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '1409px', top: '609px', width: '35px', height: '35px' }}>
-                <img src="/ContactUsEmail.png" alt="Contact Us Email" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '1410px', top: '647px', width: '35px', height: '35px' }}>
-                <img src="/ContactUsCall.png" alt="Contact Us Email" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '149px', top: '236px', width: '540px', height: '47px' }}>
-                <img src="/ContactUsText2.png" alt="text2" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div style={{ position: 'absolute', left: '150px', top: '315px', fontFamily: 'Roboto Condensed', fontSize: '16px', color: 'black' }}>
-                Name
-            </div>
-            <div style={{ position: 'absolute', left: '150px', top: '400px', fontFamily: 'Roboto Condensed', fontSize: '16px', color: 'black' }}>
-                Email
-            </div>
-            <div style={{ position: 'absolute', left: '150px', top: '485px', fontFamily: 'Roboto Condensed', fontSize: '16px', color: 'black' }}>
-                Message
-            </div>
+            <LandingPageHeader buttonText="Connect Wallet" />
 
-            {/* Text boxes for entering name, email, and message */}
-            <input
-                type="text"
-                placeholder="Enter your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={styles.customInputName} 
-            />
-            <input
-                type="text"
-                placeholder="Enter your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.customInputEmail} 
-            />
-            <input
-                type="text"
-                placeholder="Enter your Message or Concern"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className={styles.customInputMessage} 
-            />
-
-            {/* Submit button */}
-            <button onClick={handleSubmit} className={styles.submitButton}>Submit</button>
+            <div className={styles.mainContainer}>
+                <p className={styles.contactUS_txt}>C O N T A C T    U S</p>
+                <div className={styles.contactUsContainer}>
+                    <div className={styles.fieldContainer}>
+                        <p>
+                            If you have any questions, concerns, or feedback about the MediVerse app, please don't 
+                            hesitate to reach out to us. Our dedicated customer support team is here to assist you.
+                        </p>
+                        <p>Name</p>
+                        <input
+                            type="text"
+                            placeholder="Enter your name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)} 
+                        />
+                        <p>Email</p>
+                        <input
+                            type="text"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <p>Message</p>
+                        <input
+                            type="text"
+                            placeholder="Enter your message or concern"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        />
+                        <button onClick={handleSubmit} className={styles.submitButton}>Submit</button>
+                    </div>
+                    <img src= '/Contact Us img.svg' alt='Contact Us Image' className={styles.image}/>
+                </div>
+                <div className={styles.messageCall}>
+                    <img src='/message icon.svg' alt='Message Icon'/>
+                    <img src='/call icon.svg' alt='Call Icon'/>
+                </div>
+            </div>
         </>
     );
 };

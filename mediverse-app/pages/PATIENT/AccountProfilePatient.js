@@ -1,6 +1,6 @@
 import LandingPageHeader from "@/components/landingPageHeader";
 import RegistrationProcess from "@/components/RegistrationProcess";
-import Layout from '../../components/HomeSidebarHeaderHospital.js';
+import Layout from '../../components/HomeSidebarHeader.js';
 import styles from '../../styles/accountProfilePatient.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
@@ -13,7 +13,7 @@ import mvContract from "../../blockchain/mediverse"; // ABI
  * ? Gamit ang getPatientInfo method
  * TODO: Retrieve ang data then display sa forms
  * TODO: Add yung data gamit yung edit profile na method sa may solidity
- * ! IN PROGRESS PA AAAA
+ *
  */
 
 const AccountProfilePatient = () => {

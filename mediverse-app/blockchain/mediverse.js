@@ -18,3 +18,24 @@ const mvContract = new web3.eth.Contract(ContractABI, "0x8AB73737b752692C630b9cE
  */
 
 export default mvContract
+
+/**
+ * 1_deploy_contract.js
+====================
+
+   Replacing 'MediVerse'
+   ---------------------
+   > transaction hash:    0x4e2f078571a9a861465e94c2f850b32bedda018bc6900c9a0157fefe5f162efb
+   > Blocks: 1            Seconds: 9
+   > contract address:    0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d
+   > block number:        5654698
+   > block timestamp:     1712585160
+   > account:             0x77BC521989EfB176291BE7343E19025b7d7fC004
+   > balance:             10.896292392333146003
+   > gas used:            5042928 (0x4cf2f0)
+   > gas price:           3.665105104 gwei
+   > value sent:          0 ETH
+   > total cost:          0.018482861151904512 ETH
+
+   Pausing for 2 confirmations...
+ */

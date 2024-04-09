@@ -2,21 +2,19 @@
 
 
 /* CONTACT US PAGE PROPERTIES */
-.customInputName {
-    position: absolute;
-    left: 149px;
-    top: 345px;
+.fieldContainer input {
     width: 538px;
-    height: 40px;
+    height: 39px;
     padding: 10px;
-    font-size: 16px;
     border: 3px solid transparent;
-    border-image: linear-gradient(45deg, #22D3D8, #0054F5) 1;
-    border-radius: 15px; 
-    outline: none;
-    background-origin: border-box; 
-    background-clip: padding-box;
-    transition: box-shadow 0.3s; 
+    border-image: linear-gradient(45deg, #22D3D8, #0054F5);
+    border-image-slice: 1;    
+}
+
+.fieldContainer input::placeholder {
+    font-family: Roboto Condensed;
+    font-size: 14px;
+    color: #999;
 }
 
 .customInputEmail {
@@ -54,22 +52,40 @@
 }
 
 .submitButton {
-  
     background-color: #2264DC;
     color: #fff;
     border: none;
     padding: 5px 45px;
-    border-radius: 7px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 16px;
     font-family: Roboto Condensed;
-    position: absolute;
-    left: 345px;
-    top: 620px; 
+    width: 146px;
+    justify-content: center;
+    margin-top: 37px;
+    margin-left: 180px;
 }
 
 .submitButton:hover {
     background-color: #22D3D8;
+}
+
+.messageCall {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #0566F1;
+    height: 100px;
+    width: 50px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.messageCall img {
+    width: 40px;
 }
 
 /* FAQS PAGE PROPERTIES */
@@ -176,7 +192,60 @@
     color: #000000; 
 }
 
+.mainContainer {
+    display: flex;
+    width: 1320px;
+    height: 540px;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 130px;
+    position: relative;
+    border: 2px black;
+}
 
+.contactUsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 1320px;
+    height: 524px;
+    border: 4px solid transparent;
+    border-image: linear-gradient(230deg, rgba(0,84,245,1) 0%, rgba(34,211,216,1) 76%);
+    border-image-slice: 1;
+    justify-content: center;
+    top: 16px;
+    position: absolute;
+}
 
+.contactUS_txt {
+    font-family: Raleway;
+    font-size: 32px;
+    font-weight: bold;
+    white-space: pre;
+    margin: 0 auto;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    padding-right: 15px;
+    padding-left: 15px;
+}
 
+.fieldContainer {
+    padding-top: 45px;
+    display: flex;
+    flex-direction: column;
+    width: 688.5px;
+    height: 524px;
 
+}
+
+.fieldContainer p {
+    font-family: Roboto Condensed;
+    font-size: 16px;
+    width: 540px;
+    justify-content: center;
+}
+
+.image {
+    width: 450px;
+}
