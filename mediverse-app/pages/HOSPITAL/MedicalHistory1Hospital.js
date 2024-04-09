@@ -16,13 +16,13 @@ const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
-    const { patientAddr, creationDate } = router.query;
-
+    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    
     // Function to set the hospital address
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
@@ -41,11 +41,11 @@ const MedicalHistoryPatient = () => {
 
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                console.log(hospitalInfo[0]);
+                //console.log(hospitalInfo[0]);
                 hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 const medicalHistoryString = await mvContract.methods.getMedicalHistory(patientAddr).call();
-                console.log("Get all medical record of specific patient", medicalHistoryString);
+                //console.log("Get all medical record of specific patient", medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
@@ -94,7 +94,7 @@ const MedicalHistoryPatient = () => {
                 });
                 
                 setMedicalHistory(modifiedMedicalHistory);
-                console.log("Modified", modifiedMedicalHistory);
+                //console.log("Modified", modifiedMedicalHistory);
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }

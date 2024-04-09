@@ -1,6 +1,9 @@
 import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 //! Note: Sa may MedicalHistory2Hospital, meron update or edit button
 
@@ -10,6 +13,365 @@ const UpdateMedicalHistoryHospital = () => {
     //TODO: Retrieve ang medical record
     //TODO: Display sa forms and table
     //TODO: Save lahat ng data ulit
+    
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
+    const router = useRouter();
+    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+
+    //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
+    const [medicalHistory, setMedicalHistory] = useState({
+        patientName: '',
+        patientAge: '',
+        patientDob: '',
+        hospitalName: '',
+        physicianName: '',
+        diagnosis: {
+            names: [],
+            dates: [],
+            descriptions: []
+        },
+        symptoms: {
+            names: [],
+            duration: [],
+            severity: [],
+            location: []
+        },
+        treatmentProcedure: {
+            names: [],
+            medicalProviders: [],
+            dateStarted: [],
+            dateEnd: [],
+            duration: []
+        },
+        tests: {
+            types: [],
+            orderingPhysicians: [],
+            dates: [],
+            reviewingPhysicians: [],
+            results: []
+        },
+        medications: {
+            names: [],
+            prescriptionDates: [],
+            prescribingPhysicians: [],
+            frequencies: [],
+            durations: [],
+            endDates: []
+        },
+        admissions: {
+            hospitalNames: [],
+            admissionDates: [],
+            dischargeDates: [],
+            lengthsOfStay: []
+        }
+    });
+
+     // Function to set the hospital address
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            //console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); // Set the hospital address
+        } catch (error) {
+            alert('Error fetching hospital address.');
+        }
+    }
+
+    useEffect(() => {
+
+        async function fetchMedicalHistory() {
+            try {
+                let patientName, patientAge, patientDob;
+                let hospitalName;
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+
+                //* Retrieve muna ang hospital na currently naka logged in
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                //(hospitalInfo[0]);
+                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
+
+                let patientAddress;
+                patientAddress = patientAddr;
+
+                const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
+                console.log(patientRecords);
+                
+                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                console.log(patientInfo);
+                const patientNameHolder = patientInfo[0].split('+');
+                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                patientAge = patientInfo[1];
+                patientDob = patientInfo[3];
+                
+                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
+                //* using creation date as key para masearch
+                const getPatientMedicalHistory = patientRecords.filter(record => {
+                    return record[9] === creationDate;
+                });
+                console.log(getPatientMedicalHistory);
+
+                let physicianName;
+                //* Get yung data sa array na nag equal sa may creationDate
+                const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
+                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    physicianName = physician;
+                    return {
+                        patientAddr: patientAddr,
+                        hospitalAddr,
+                        physician,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
+                });
+                setcurrentMedicalHistory(parsedPatientMedicalHistory);
+
+                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
+
+                //* Split ang mga data. '~' means paghihiwalay ang array kapag marami nilagay si hospital
+                //* '+' means paghihiwalayin ang concatenated data sa isang array
+                const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
+                    if (item.diagnosis.includes('~')) {
+                        item.diagnosis = item.diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
+                        //console.log(item.diagnosis); 
+                    } else {
+                        item.diagnosis = [item.diagnosis.split('+')];
+                        //console.log(item.diagnosis); 
+                    }
+
+                    if (item.signsAndSymptoms.includes('~')) {
+                        item.signsAndSymptoms = item.signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
+                        //console.log(item.signsAndSymptoms); 
+                    } else {
+                        item.signsAndSymptoms = [item.signsAndSymptoms.split('+')];
+                        //console.log(item.signsAndSymptoms); 
+                    }
+
+                    if (item.treatmentProcedure.includes('~')) {
+                        item.treatmentProcedure = item.treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
+                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                    } else {
+                        item.treatmentProcedure = [item.treatmentProcedure.split('+')];
+                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                    }
+
+                    if (item.tests.includes('~')) {
+                        item.tests = item.tests.split('~').map(tests => tests.split('+'));
+                        //console.log(item.tests); 
+                    } else {
+                        item.tests = [item.tests.split('+')];
+                        //console.log(item.tests); 
+                    }
+
+                    if (item.medications.includes('~')) {
+                        item.medications= item.medications.split('~').map(medications => medications.split('+'));
+                        //console.log(item.medications); 
+                    } else {
+                        item.medications = [item.medications.split('+')];
+                        //console.log(item.medications); 
+                    }
+
+                    if (item.admission.includes('~')) {
+                        item.admission = item.admission.split('~').map(admission => admission.split('+'));
+                        //console.log(item.admission); 
+                    } else {
+                        item.admission = [item.admission.split('+')];
+                        //console.log(item.admission); 
+                    }
+                    return {
+                        diagnosis: item.diagnosis,
+                        signsAndSymptoms: item.signsAndSymptoms,
+                        treatmentProcedure: item.treatmentProcedure,
+                        tests: item.tests,
+                        medications: item.medications,
+                        admission: item.admission,
+                        patientAddr: item.patientAddr,
+                        creationDate: item.creationDate
+                    };
+                    
+                });
+                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+
+                //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
+                //! Important para sa pagpopulate ng table. 
+                const diagnosisNames = [];
+                const dateOfDiagnoses = [];
+                const diagnosisDescriptions = [];
+
+                const symptomNames = []; 
+                const symptomDuration = []; 
+                const symptomSeverity = []; 
+                const symptomLocation = [];
+
+                const tpName = []; 
+                const tpMedicalProvider = []; 
+                const tpDateStarted = []; 
+                const tpDateEnd = []; 
+                const tpDuration = [];
+
+                const testType = []; 
+                const testOrderingPhysician = []; 
+                const testDate = []; 
+                const testReviewingPhysician = []; 
+                const testResult = [];
+
+                const medicationName = []; 
+                const prescriptionDate = []; 
+                const prescribingPhysician = []; 
+                const medicationFrequency = []; 
+                const medicationDuration = []; 
+                const medicationEndDate = [];
+
+                const admissionHospitalName = [];  
+                const aadmissionDate = []; 
+                const adischargeDate = []; 
+                const lengthOfStay = [];
+
+                //* Ang ginagawa nito ay hinihiwalay hiwalay niya ang laman ng array then s-store niya sa kanya kanyang variable
+                //? Purose nito? Diba sa isang variable for example, signAndSymptoms, kapag nag add ka ng maraming data mahirap i-populate
+                //? 'yon sa table and hindi rin siya directly kasi meron silang kanya kanyang lugar na pagdidisplayan
+                modifiedPatientMedicalHistory.forEach(item => {
+                    
+                    if (Array.isArray(item.diagnosis)) {
+                        item.diagnosis.forEach(array => {
+                            const [diagnosisName, dateOfDiagnosis, diagnosisDescription] = array;
+                            diagnosisNames.push(diagnosisName);
+                            dateOfDiagnoses.push(dateOfDiagnosis);
+                            diagnosisDescriptions.push(diagnosisDescription);
+                        });
+                    }
+                
+                    if (Array.isArray(item.signsAndSymptoms)) {
+                        item.signsAndSymptoms.forEach(array => {
+                            const [_, symptomName, duration, severity, location] = array;
+                            symptomNames.push(symptomName);
+                            symptomDuration.push(duration);
+                            symptomSeverity.push(severity);
+                            symptomLocation.push(location);
+                        });
+                    }
+
+                    if (Array.isArray(item.treatmentProcedure)) {
+                        item.treatmentProcedure.forEach(array => {
+                            const [name, medicalProvider, dateStarted, dateEnd, duration] = array;
+                            tpName.push(name);
+                            tpMedicalProvider.push(medicalProvider);
+                            tpDateStarted.push(dateStarted);
+                            tpDateEnd.push(dateEnd);
+                            tpDuration.push(duration);
+                        });
+                    }
+                
+                    if (Array.isArray(item.tests)) {
+                        item.tests.forEach(array => {
+                            const [type, orderingPhysician, date, reviewingPhysician, result] = array;
+                            testType.push(type);
+                            testOrderingPhysician.push(orderingPhysician);
+                            testDate.push(date);
+                            testReviewingPhysician.push(reviewingPhysician);
+                            testResult.push(result);
+                        });
+                    }
+                
+                    if (Array.isArray(item.medications)) {
+                        item.medications.forEach(array => {
+                            const [name, date, physician, frequency, duration, endDate] = array;
+                            medicationName.push(name);
+                            prescriptionDate.push(date);
+                            prescribingPhysician.push(physician);
+                            medicationFrequency.push(frequency);
+                            medicationDuration.push(duration);
+                            medicationEndDate.push(endDate);
+                        });
+                    }
+                
+                    if (Array.isArray(item.admission)) {
+                        item.admission.forEach(array => {
+                            const [hospitalName, admissionDate, dischargeDate, stayLength] = array;
+                            admissionHospitalName.push(hospitalName);
+                            aadmissionDate.push(admissionDate);
+                            adischargeDate.push(dischargeDate);
+                            lengthOfStay.push(stayLength);
+                        });
+                    }
+                });
+
+                const medicalHistory = {
+                    patientName,
+                    patientAge,
+                    patientDob,
+                    hospitalName,
+                    physicianName,
+                    diagnosis: {
+                        names: diagnosisNames,
+                        dates: dateOfDiagnoses,
+                        descriptions: diagnosisDescriptions
+                    },
+                    symptoms: {
+                        names: symptomNames,
+                        duration: symptomDuration,
+                        severity: symptomSeverity,
+                        location: symptomLocation
+                    },
+                    treatmentProcedure: {
+                        names: tpName,
+                        medicalProviders: tpMedicalProvider,
+                        dateStarted: tpDateStarted,
+                        dateEnd: tpDateEnd,
+                        duration: tpDuration
+                    },
+                    tests: {
+                        types: testType,
+                        orderingPhysicians: testOrderingPhysician,
+                        dates: testDate,
+                        reviewingPhysicians: testReviewingPhysician,
+                        results: testResult
+                    },
+                    medications: {
+                        names: medicationName,
+                        prescriptionDates: prescriptionDate,
+                        prescribingPhysicians: prescribingPhysician,
+                        frequencies: medicationFrequency,
+                        durations: medicationDuration,
+                        endDates: medicationEndDate
+                    },
+                    admissions: {
+                        hospitalNames: admissionHospitalName,
+                        admissionDates: aadmissionDate,
+                        dischargeDates: adischargeDate,
+                        lengthsOfStay: lengthOfStay
+                    }
+                };
+                setMedicalHistory(medicalHistory);
+                
+                setFormData({
+                    physician: medicalHistory.physicianName || '',
+                    diagnosis: medicalHistory.diagnosis.names || '',
+                    dateOfDiagnosis: medicalHistory.diagnosis.dates || '',
+                    description: medicalHistory.diagnosis.descriptions || '',
+                    symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+                    treatmentProcedure: [{noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+                    test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
+                    medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
+                    admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+                });
+                console.log(medicalHistory)
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        
+        fetchMedicalHistory();
+    }, [hospitalAddress]);
     
     const [formData, setFormData] = useState({ 
         physician: '',
@@ -25,6 +387,8 @@ const UpdateMedicalHistoryHospital = () => {
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
+        // console.log('Name:', name);
+        // console.log('Value:', value);
         if (name === 'symptomName' || name === 'symptomDuration' || name === 'symptomSeverity' || name === 'symptomLocation') {
             const updatedSymptoms = formData.symptoms.map((symptom, i) => {
                 if (i === index) {
@@ -34,7 +398,7 @@ const UpdateMedicalHistoryHospital = () => {
             });
             setFormData({ ...formData, symptoms: updatedSymptoms });
 
-        } else if (name === 'tp' || name === 'tpDateStarted' || name === 'tpDateEnd' || name === 'tpDuration') {
+        } else if (name === 'tp' || name == 'medTeam'|| name === 'tpDateStarted' || name === 'tpDateEnd' || name === 'tpDuration') {
             const updatedTreatmentProcedure = formData.treatmentProcedure.map((treatmentProcedure, i) => {
                 if (i === index) {
                     return { ...treatmentProcedure, [name]: value };
@@ -52,7 +416,7 @@ const UpdateMedicalHistoryHospital = () => {
             });
             setFormData({ ...formData, test: updatedTest });
 
-        } else if (name === 'medicationType' || name === 'dateOfPrescription' || name === 'medicationReviewingPhysician' || name === 'medicationFrequency' || name === 'medicationDuration' || name === 'medicationEndDate') {
+        } else if (name === 'medicationType' || name === 'dateOfPrescription' || name === 'medicationPrescribingPhysician' || name === 'medicationReviewingPhysician' || name === 'medicationFrequency' || name === 'medicationDuration' || name === 'medicationEndDate') {
             const updatedMedication = formData.medication.map((medication, i) => {
                 if (i === index) {
                     return { ...medication, [name]: value };
@@ -69,6 +433,21 @@ const UpdateMedicalHistoryHospital = () => {
                 return admission;
             });
             setFormData({ ...formData, admission: updatedAdmission });
+        } else if (e.target.name === 'patientName') {
+            setFormData({
+                ...formData,
+                patientName: e.target.value,
+            });
+        } else if (e.target.name === 'patientAge') {
+            setFormData({
+                ...formData,
+                patientAge: e.target.value,
+            });
+        } else if (e.target.name === 'patientDob') {
+            setFormData({
+                ...formData,
+                patientDob: e.target.value,
+            });
         } else {
             setFormData({ ...formData, [name]: value });
         }
@@ -109,72 +488,152 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
+    const mergeHistories = async (e) => {
+
+        console.log('Form submitted:', formData);
+
+        currentMedicalHistory.forEach(historyItem => {
+            const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = historyItem;
+            return {
+                patientAddr,
+                hospitalAddr,
+                physician,
+                diagnosis,
+                signsAndSymptoms,
+                treatmentProcedure,
+                tests,
+                medications,
+                admission,
+                creationDate
+            };
+        });
+        console.log("Current Med History" ,currentMedicalHistory);
+
+        // Concatenate physician, diagnosis, and dateOfDiagnosis
+        const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+
+        // Concatenate arrays using symbols
+        const countNonEmpty = obj => Object.values(obj).filter(value => value !== '' && value !== null).length;
+
+        const concatenatedSymptoms = formData.symptoms.length > 0 && countNonEmpty(formData.symptoms[0]) >= 4 && formData.symptoms
+          .map(symptom => Object.values(symptom).filter(value => value !== '' && value !== null).join('+'))
+          .join('~');
+        
+        const concatenatedTreatmentProcedure = formData.treatmentProcedure.length > 0 && countNonEmpty(formData.treatmentProcedure[0]) >= 4 && formData.treatmentProcedure
+          .map(tp => Object.values(tp).filter(value => value !== '' && value !== null).join('+'))
+          .join('~');
+        
+        const concatenatedTest = formData.test.length > 0 && countNonEmpty(formData.test[0]) >= 4 && formData.test
+          .map(test => Object.values(test).filter(value => value !== '' && value !== null).join('+'))
+          .join('~');
+        
+        const concatenatedMedication = formData.medication.length > 0 && countNonEmpty(formData.medication[0]) >= 4 && formData.medication
+          .map(medication => Object.values(medication).filter(value => value !== '' && value !== null).join('+'))
+          .join('~');
+        
+        const concatenatedAdmission = formData.admission.length > 0 && countNonEmpty(formData.admission[0]) >= 4 && formData.admission
+          .map(admission => Object.values(admission).filter(value => value !== '' && value !== null).join('+'))
+          .join('~');
+
+        console.log('Patient Consultation:', patientDiagnosis);
+        console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        console.log('Concatenated Test:', concatenatedTest);
+        console.log('Concatenated Medication:', concatenatedMedication);
+        console.log('Concatenated Admission:', concatenatedAdmission);
+
+        // * need below 100 ung length ng diagnosis at description
+        if (formData.diagnosis.length < 100 && formData.description.length < 100) {
+            try {
+                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                console.log("Account:", accounts[0]);
+
+                const newMedicalRecord = {
+                    patientAddr: formData.patientAddress,
+                    hospitalAddr: formData.hospitalAddress,
+                    physician: formData.physician,
+                    diagnosis: patientDiagnosis,
+                    signsAndSymptoms: concatenatedSymptoms,
+                    treatmentProcedure: concatenatedTreatmentProcedure,
+                    tests: concatenatedTest,
+                    medications: concatenatedMedication,
+                    admission: concatenatedAdmission,
+                    creationDate: Math.floor(Date.now() / 1000).toString() // Get current Unix timestamp
+                };
+    
+                // Add the new record to the existing medical history array
+                const updatedMedicalHistory = [...currentMedicalHistory, newMedicalRecord];
+    
+                // Log the updated medical history
+                console.log("Updated Medical History:", updatedMedicalHistory);
+
+                const receipt = await mvContract.methods.addMedicalHistory(
+                    newMedicalRecord.patientAddr,
+                    newMedicalRecord.physician,
+                    newMedicalRecord.diagnosis,
+                    newMedicalRecord.signsAndSymptoms,
+                    newMedicalRecord.treatmentProcedure,
+                    newMedicalRecord.tests,
+                    newMedicalRecord.medications,
+                    newMedicalRecord.admission
+                ).send({ from: accounts[0] });
+                console.log("Transaction Hash:", receipt.transactionHash);
+                router.push('/HOSPITAL/PatientRecordsHospital/');
+                
+            } catch (error) {
+                alert('Patient is not registered.');
+            };
+        } else {
+            //console.error('Error sending transaction:', error.message);
+            alert('Diagnosis and Description should be below 100 letters');
+            //
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
-        console.log('Form submitted:', formData);
+        mergeHistories();
     };
 
     const goBack = () => {
         window.history.back(); 
     };
 
-    //This is only for fetching the dummy data
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('/placeHolder/dummyData_MedicalHistory_Hospital.json');
-            const json = await res.json();
-            const item = json.find(item => item.id === 1); // Filter data for ID 1
-            setData(item);
-        };
-
-        fetchData();
-    }, []);
-
-    //Makes the field editable
-    const updateChange = (e) => {
-        let newData = { ...data };
-        if (e.target.name === 'physician') {
-            newData.basicInfo.doctor = e.target.value;
-        }
-        else if (e.target.name === 'diagnosis') {
-            newData.basicInfo.diagnosis = e.target.value;
-        }
-        else if (e.target.name === 'dateOfDiagnosis') {
-            newData.basicInfo.dateOfDiagnosis = e.target.value;
-        }
-        else if (e.target.name === 'description') {
-            newData.basicInfo.description = e.target.value;
-        }
-        setData(newData);
-    }
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
-    
     return (  
         <Layout pageName = "Update Medical History">
         <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
+
+                <div className={styles.formTitle}>Patient Information</div>
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="patient-name" name="patientName" value={medicalHistory.patientName} placeholder="Patient Name" required onChange={handleChange} readOnly/>
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="text" id="patient-Age" name="patientAge" value={medicalHistory.patientAge} placeholder="Age" required onChange={handleChange}readOnly/>
+                        </div>
+                        <div className={styles.formField}>
+                            <input type="date" id="patient-dob" name="patientDob"  value={medicalHistory.patientDob} placeholder="Gender" required onChange={handleChange} readOnly/>
+                        </div>
+                    </div>
+            
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="physician" name="physician" value={data.basicInfo.doctor} placeholder="Physician"  required onChange={updateChange} />
+                            <input type="text" id="physician" name="physician" value={formData.physician} placeholder="Physician"  required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="diagnosis" name="diagnosis" value={data.basicInfo.diagnosis} placeholder="Diagnosis" required onChange={updateChange} />
+                            <input type="text" id="diagnosis" name="diagnosis" value={formData.diagnosis} placeholder="Diagnosis" required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis"  value={data.basicInfo.dateOfDiagnosis} placeholder="Date of Diagnosis" required onChange={updateChange} />
+                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis"  value={formData.dateOfDiagnosis} placeholder="Date of Diagnosis" required onChange={handleChange} />
                         </div>
                     </div>
             
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="description" name="description" value={data.basicInfo.description} placeholder="Description" required onChange={updateChange} />
+                            <input type="text" id="description" name="description" value={formData.description} placeholder="Description" required onChange={handleChange} />
                         </div>
                     </div>
 
@@ -190,12 +649,12 @@ const UpdateMedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                            {data.signsAndSymptoms.map(data => (
-                                <div key={data.sANDs_ID} className={styles.sANDs_data}>
-                                    <p>{data.symptoms}</p>
-                                    <p>{data.duration}</p>
-                                    <p>{data.severity}</p>
-                                    <p>{data.location}</p>
+                            {medicalHistory.symptoms.names.map((symptom, index) => (
+                                <div key={index} className={styles.sANDs_data}>
+                                    <p>{symptom}</p>
+                                    <p>{medicalHistory.symptoms.duration[index]}</p>
+                                    <p>{medicalHistory.symptoms.severity[index]}</p>
+                                    <p>{medicalHistory.symptoms.location[index]}</p>
                                 </div>
                             ))}
                         </div>
@@ -252,15 +711,15 @@ const UpdateMedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                            {data.treatment.map(data => (
-                                <div key={data.treatment_ID} className={styles.tp_data}>
-                                    <p>{data.treatment}</p>
-                                    <p>{data.medicalTeam}</p>
-                                    <p>{data.dateStarted}</p>
-                                    <p>{data.dateEnd}</p>
-                                    <p>{data.duration}</p>
+                            {medicalHistory.treatmentProcedure.names.map((data, index) => (
+                                <div key={index} className={styles.tp_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
                                 </div>
-                            ))}
+                        ))}
                         </div>
                     </div>
 
@@ -312,13 +771,13 @@ const UpdateMedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                            {data.test.map(data => (
-                                <div key={data.test_ID} className={styles.test_data}>
-                                    <p>{data.testType}</p>
-                                    <p>{data.orderingPhysician}</p>
-                                    <p>{data.date}</p>
-                                    <p>{data.reviewingPhysician}</p>
-                                    <p>{data.result}</p>
+                            {medicalHistory.tests.types.map((data, index) => (
+                                <div key={index} className={styles.test_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.dates[index]}</p>
+                                    <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.results[index]}</p>
                                 </div>
                             ))}
                         </div>
@@ -451,14 +910,14 @@ const UpdateMedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                            {data.medication.map(data => (
-                                <div key={data.medication_ID} className={styles.medication_data}>
-                                    <p>{data.medicationType}</p>
-                                    <p>{data.prescriptionDate}</p>
-                                    <p>{data.prescribingPhysician}</p>
-                                    <p>{data.frequency}</p>
-                                    <p>{data.duration}</p>
-                                    <p>{data.endDate}</p>
+                            {medicalHistory.medications.names.map((data, index) => (
+                                <div key={index} className={styles.medication_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.medications.prescriptionDates[index]}</p>
+                                    <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
+                                    <p>{medicalHistory.medications.frequencies[index]}</p>
+                                    <p>{medicalHistory.medications.durations[index]}</p>
+                                    <p>{medicalHistory.medications.endDates[index]}</p>
                                 </div>
                             ))}
                         </div>
@@ -519,12 +978,12 @@ const UpdateMedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                            {data.admission.map(data => (
-                                <div key={data.admission_ID} className={styles.sANDs_data}>
-                                    <p>{data.hospital}</p>
-                                    <p>{data.admissionDate}</p>
-                                    <p>{data.dischargeDate}</p>
-                                    <p>{data.lengthOfStay}</p>
+                            {medicalHistory.admissions.hospitalNames.map((data, index) => (
+                                <div key={index} className={styles.sANDs_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.admissions.admissionDates[index]}</p>
+                                    <p>{medicalHistory.admissions.dischargeDates[index]}</p>
+                                    <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
                                 </div>
                             ))}
                         </div>
@@ -560,7 +1019,7 @@ const UpdateMedicalHistoryHospital = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton}>Update
+                    <button className={styles.submitButton} onClick={handleSubmit}>Update
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     

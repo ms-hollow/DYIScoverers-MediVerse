@@ -17,8 +17,6 @@ const MedicalHistoryHospital = () => {
     const router = useRouter();
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
-    // console.log('Patient Address:', patientAddr); 
-    // console.log('Creation Date:', creationDate);
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
         patientName: '',
@@ -71,7 +69,7 @@ const MedicalHistoryHospital = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
@@ -92,7 +90,7 @@ const MedicalHistoryHospital = () => {
 
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                console.log(hospitalInfo[0]);
+                //(hospitalInfo[0]);
                 hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 let patientAddress;
@@ -113,7 +111,7 @@ const MedicalHistoryHospital = () => {
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                console.log(getPatientMedicalHistory);
+                //console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -134,7 +132,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
                 //* '+' means paghihiwalayin ang concatenated data sa isang array
@@ -198,7 +196,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
                 //! Important para sa pagpopulate ng table. 
@@ -351,7 +349,7 @@ const MedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory)
+                //console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -359,8 +357,6 @@ const MedicalHistoryHospital = () => {
         
         fetchMedicalHistory();
     }, [hospitalAddress]);
-
-    const [isOpen, setIsOpen] = useState(false);
 
     const toggleButton = (patientAddr, creationDate) => {
         router.push({
@@ -443,14 +439,14 @@ const MedicalHistoryHospital = () => {
                         </div>
 
                         <div className={styles.scrollableTable_container}>
-                        {medicalHistory.treatmentProcedure.names.map((data, index) => (
-                            <div key={index} className={styles.treatment_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
-                            </div>
+                            {medicalHistory.treatmentProcedure.names.map((data, index) => (
+                                <div key={index} className={styles.treatment_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
+                                </div>
                         ))}
                         </div>
                     </div>
@@ -525,7 +521,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
-            <button className={styles.submitButton} onClick={toggleButton}>
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}>
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
         </>
