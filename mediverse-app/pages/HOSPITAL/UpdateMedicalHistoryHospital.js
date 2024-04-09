@@ -99,7 +99,8 @@ const UpdateMedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientRecords);
+                //console.log(patientRecords);
+                setcurrentMedicalHistory(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 console.log(patientInfo);
@@ -133,7 +134,6 @@ const UpdateMedicalHistoryHospital = () => {
                         creationDate
                     };
                 });
-                setcurrentMedicalHistory(parsedPatientMedicalHistory);
 
                 //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
@@ -262,7 +262,7 @@ const UpdateMedicalHistoryHospital = () => {
 
                     if (Array.isArray(item.treatmentProcedure)) {
                         item.treatmentProcedure.forEach(array => {
-                            const [name, medicalProvider, dateStarted, dateEnd, duration] = array;
+                            const [_, name, medicalProvider, dateStarted, dateEnd, duration] = array;
                             tpName.push(name);
                             tpMedicalProvider.push(medicalProvider);
                             tpDateStarted.push(dateStarted);
@@ -273,7 +273,7 @@ const UpdateMedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.tests)) {
                         item.tests.forEach(array => {
-                            const [type, orderingPhysician, date, reviewingPhysician, result] = array;
+                            const [_, type, orderingPhysician, date, reviewingPhysician, result] = array;
                             testType.push(type);
                             testOrderingPhysician.push(orderingPhysician);
                             testDate.push(date);
@@ -284,7 +284,7 @@ const UpdateMedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.medications)) {
                         item.medications.forEach(array => {
-                            const [name, date, physician, frequency, duration, endDate] = array;
+                            const [_, name, date, physician, frequency, duration, endDate] = array;
                             medicationName.push(name);
                             prescriptionDate.push(date);
                             prescribingPhysician.push(physician);
@@ -296,7 +296,7 @@ const UpdateMedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(array => {
-                            const [hospitalName, admissionDate, dischargeDate, stayLength] = array;
+                            const [_, hospitalName, admissionDate, dischargeDate, stayLength] = array;
                             admissionHospitalName.push(hospitalName);
                             aadmissionDate.push(admissionDate);
                             adischargeDate.push(dischargeDate);
@@ -352,7 +352,8 @@ const UpdateMedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                
+                console.log("Set Med His: ", medicalHistory)
+
                 setFormData({
                     physician: medicalHistory.physicianName || '',
                     diagnosis: medicalHistory.diagnosis.names || '',
@@ -378,17 +379,15 @@ const UpdateMedicalHistoryHospital = () => {
         diagnosis: '',
         dateOfDiagnosis: '',
         description: '',
-        symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
-        test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
-        medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
-        admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+        symptoms: [{ noSymptom: 2, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+        treatmentProcedure: [{noTP: 2, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+        test: [{noTest: 2, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
+        medication: [{noMedication: 2, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
+        admission: [{noAdmission: 2, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
     });
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
-        // console.log('Name:', name);
-        // console.log('Value:', value);
         if (name === 'symptomName' || name === 'symptomDuration' || name === 'symptomSeverity' || name === 'symptomLocation') {
             const updatedSymptoms = formData.symptoms.map((symptom, i) => {
                 if (i === index) {
@@ -454,46 +453,57 @@ const UpdateMedicalHistoryHospital = () => {
     };
 
     const handleAddRowSymptoms = () => {
-        if (formData.symptoms.length < 3) {
+        if (formData.symptoms.length < 2) {
             const newSymptom = { noSymptom: formData.symptoms.length + 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: ''};
             setFormData({ ...formData, symptoms: [...formData.symptoms, newSymptom] });
         }
     };
 
     const handleAddRowTreatmentProcedure = () => {
-        if (formData.treatmentProcedure.length < 3) {
+        if (formData.treatmentProcedure.length < 2) {
             const newTreatmentProcedure = { noTP: formData.treatmentProcedure.length + 1, tp: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' };
             setFormData({ ...formData, treatmentProcedure: [...formData.treatmentProcedure, newTreatmentProcedure] });
         }
     };
 
     const handleAddRowTest = () => {
-        if (formData.test.length < 3) {
+        if (formData.test.length < 2) {
             const newTest = { noTest: formData.test.length + 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''};
             setFormData({ ...formData, test: [...formData.test, newTest] });
         }
     };
 
     const handleAddRowMedication = () => {
-        if (formData.medication.length < 3) {
+        if (formData.medication.length < 2) {
             const newMedication = { noMedication: formData.medication.length + 1, medicationType: '', dateOfPrescription: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''};
             setFormData({ ...formData, medication: [...formData.medication, newMedication] });
         }
     };
 
     const handleAddRowAdmission = () => {
-        if (formData.admission.length < 3) {
+        if (formData.admission.length < 2) {
             const newAdmission = { noAdmission: formData.admission.length + 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''};
             setFormData({ ...formData, admission: [...formData.admission, newAdmission] });
         }
     };
 
-    const mergeHistories = async (e) => {
+    const handleSubmit = async (e) => {
 
         console.log('Form submitted:', formData);
-
-        currentMedicalHistory.forEach(historyItem => {
-            const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = historyItem;
+        console.log('current', currentMedicalHistory);
+    
+        let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
+    
+        const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
+            const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+            newPatientAddr = patientAddr;
+            newPhysician = physician;
+            newDiagnosis = diagnosis;
+            newSymptoms = signsAndSymptoms;
+            newTP = treatmentProcedure;
+            newTest = tests;
+            newMedications = medications;
+            newAdmission = admission;
             return {
                 patientAddr,
                 hospitalAddr,
@@ -507,93 +517,87 @@ const UpdateMedicalHistoryHospital = () => {
                 creationDate
             };
         });
-        console.log("Current Med History" ,currentMedicalHistory);
+        
 
-        // Concatenate physician, diagnosis, and dateOfDiagnosis
+        const concatenatedSymptoms = (
+            (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
+            `${formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~')}` :
+            ''
+        );
+        
+        const concatenatedTreatmentProcedure = (
+            (formData.treatmentProcedure.length > 0 && formData.treatmentProcedure.every(tp => Object.values(tp).every(value => value !== '' && value !== null))) ?
+            `${formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~')}` :
+            ''
+        );
+        
+        const concatenatedTest = (
+            (formData.test.length > 0 && formData.test.every(test => Object.values(test).every(value => value !== '' && value !== null))) ?
+            `${formData.test.map(test => Object.values(test).join('+')).join('~')}` :
+            ''
+        );
+        
+        const concatenatedMedication = (
+            (formData.medication.length > 0 && formData.medication.every(medication => Object.values(medication).every(value => value !== '' && value !== null))) ?
+            `${formData.medication.map(medication => Object.values(medication).join('+')).join('~')}` :
+            ''
+        );
+        
+        const concatenatedAdmission = (
+            (formData.admission.length > 0 && formData.admission.every(admission => Object.values(admission).every(value => value !== '' && value !== null))) ?
+            `${formData.admission.map(admission => Object.values(admission).join('+')).join('~')}` :
+            ''
+        );
+        
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
-
-        // Concatenate arrays using symbols
-        const countNonEmpty = obj => Object.values(obj).filter(value => value !== '' && value !== null).length;
-
-        const concatenatedSymptoms = formData.symptoms.length > 0 && countNonEmpty(formData.symptoms[0]) >= 4 && formData.symptoms
-          .map(symptom => Object.values(symptom).filter(value => value !== '' && value !== null).join('+'))
-          .join('~');
+        const updatedSymptoms = concatenatedSymptoms ? `${newSymptoms}~${concatenatedSymptoms}` : newSymptoms;
+        const updatedTP = concatenatedTreatmentProcedure ? `${newTP}~${concatenatedTreatmentProcedure}` : newTP;
+        const updatedTest = concatenatedTest ? `${newTest}~${concatenatedTest}` : newTest;
+        const updatedMedication = concatenatedMedication ? `${newMedications}~${concatenatedMedication}` : newMedications;
+        const updatedAdmission = concatenatedAdmission ? `${newAdmission}~${concatenatedAdmission}` : newAdmission;
         
-        const concatenatedTreatmentProcedure = formData.treatmentProcedure.length > 0 && countNonEmpty(formData.treatmentProcedure[0]) >= 4 && formData.treatmentProcedure
-          .map(tp => Object.values(tp).filter(value => value !== '' && value !== null).join('+'))
-          .join('~');
+        // console.log(patientDiagnosis);
+        // console.log(updatedSymptoms);
+        // console.log(updatedTP);
+        // console.log(updatedTest);
+        // console.log(updatedMedication);
+        // console.log(updatedAdmission);
         
-        const concatenatedTest = formData.test.length > 0 && countNonEmpty(formData.test[0]) >= 4 && formData.test
-          .map(test => Object.values(test).filter(value => value !== '' && value !== null).join('+'))
-          .join('~');
-        
-        const concatenatedMedication = formData.medication.length > 0 && countNonEmpty(formData.medication[0]) >= 4 && formData.medication
-          .map(medication => Object.values(medication).filter(value => value !== '' && value !== null).join('+'))
-          .join('~');
-        
-        const concatenatedAdmission = formData.admission.length > 0 && countNonEmpty(formData.admission[0]) >= 4 && formData.admission
-          .map(admission => Object.values(admission).filter(value => value !== '' && value !== null).join('+'))
-          .join('~');
-
-        console.log('Patient Consultation:', patientDiagnosis);
-        console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        console.log('Concatenated Test:', concatenatedTest);
-        console.log('Concatenated Medication:', concatenatedMedication);
-        console.log('Concatenated Admission:', concatenatedAdmission);
-
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {
             try {
                 const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
                 console.log("Account:", accounts[0]);
-
-                const newMedicalRecord = {
-                    patientAddr: formData.patientAddress,
-                    hospitalAddr: formData.hospitalAddress,
-                    physician: formData.physician,
-                    diagnosis: patientDiagnosis,
-                    signsAndSymptoms: concatenatedSymptoms,
-                    treatmentProcedure: concatenatedTreatmentProcedure,
-                    tests: concatenatedTest,
-                    medications: concatenatedMedication,
-                    admission: concatenatedAdmission,
-                    creationDate: Math.floor(Date.now() / 1000).toString() // Get current Unix timestamp
-                };
     
-                // Add the new record to the existing medical history array
-                const updatedMedicalHistory = [...currentMedicalHistory, newMedicalRecord];
-    
-                // Log the updated medical history
-                console.log("Updated Medical History:", updatedMedicalHistory);
-
-                const receipt = await mvContract.methods.addMedicalHistory(
-                    newMedicalRecord.patientAddr,
-                    newMedicalRecord.physician,
-                    newMedicalRecord.diagnosis,
-                    newMedicalRecord.signsAndSymptoms,
-                    newMedicalRecord.treatmentProcedure,
-                    newMedicalRecord.tests,
-                    newMedicalRecord.medications,
-                    newMedicalRecord.admission
+                const receipt = await mvContract.methods.editMedicalHistory(
+                    newPatientAddr,
+                    newPhysician,
+                    patientDiagnosis,
+                    updatedSymptoms,
+                    updatedTP,
+                    updatedTest,
+                    updatedMedication,
+                    updatedAdmission
                 ).send({ from: accounts[0] });
+                
                 console.log("Transaction Hash:", receipt.transactionHash);
                 router.push('/HOSPITAL/PatientRecordsHospital/');
-                
             } catch (error) {
-                alert('Patient is not registered.');
+                alert('Failed to update medical history record.');
+                console.error('Error updating medical history:', error);
             };
         } else {
-            //console.error('Error sending transaction:', error.message);
             alert('Diagnosis and Description should be below 100 letters');
-            //
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission 
-        mergeHistories();
-    };
+    // const pushRoute = async (patientAddr, creationDate) => {
+    //     await handleSubmit();
+    //     router.push({
+    //         pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+    //         query: { patientAddr, creationDate }
+    //     });
+    // };
 
     const goBack = () => {
         window.history.back(); 

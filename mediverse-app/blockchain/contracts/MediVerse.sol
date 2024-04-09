@@ -58,7 +58,7 @@ contract MediVerse {
         _;
     }
 
-    function isHospitalAuthorized(address _patientAddr, address _hospitalAddr) public view returns (bool) {
+    function isHospitalAuthorized(address _patientAddr, address _hospitalAddr) internal view returns (bool) {
         for (uint i = 0; i < patients[_patientAddr].authorizedHospitals.length; i++) {
             if (patients[_patientAddr].authorizedHospitals[i] == _hospitalAddr) {
                 return true;
@@ -175,6 +175,40 @@ contract MediVerse {
 
         medicalHistories[_patientAddr].push(history);
         medicalHistoryList.push(history);
+    }
+
+    function editMedicalHistory(
+        address _patientAddr,
+        string memory _physician,
+        string memory _diagnosis,
+        string memory _signsAndSymptoms,
+        string memory _treatmentProcedure,
+        string memory _tests,
+        string memory _medications,
+        string memory _admission
+    ) public {
+        MedicalHistory[] storage history = medicalHistories[_patientAddr];
+
+        // Check if there are any records for the specified patient
+        require(history.length > 0, "No medical history records found for the patient");
+
+        // Iterate through the records to find the one matching your criteria
+        for (uint i = 0; i < history.length; i++) {
+            if (history[i].hospitalAddr == msg.sender) {
+                // Update the record with the new information
+                history[i].physician = _physician;
+                history[i].diagnosis = _diagnosis;
+                history[i].signsAndSymptoms = _signsAndSymptoms;
+                history[i].treatmentProcedure = _treatmentProcedure;
+                history[i].tests = _tests;
+                history[i].medications = _medications;
+                history[i].admission = _admission;
+
+                return; // Exit the function after updating the record
+            }
+        }
+        // If no matching record is found, revert the transaction
+        revert("Medical history record not found for the specified hospital");
     }
 
     function getMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {

@@ -259,7 +259,7 @@ const MedicalHistoryHospital = () => {
 
                     if (Array.isArray(item.treatmentProcedure)) {
                         item.treatmentProcedure.forEach(array => {
-                            const [name, medicalProvider, dateStarted, dateEnd, duration] = array;
+                            const [_, name, medicalProvider, dateStarted, dateEnd, duration] = array;
                             tpName.push(name);
                             tpMedicalProvider.push(medicalProvider);
                             tpDateStarted.push(dateStarted);
@@ -270,7 +270,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.tests)) {
                         item.tests.forEach(array => {
-                            const [type, orderingPhysician, date, reviewingPhysician, result] = array;
+                            const [_, type, orderingPhysician, date, reviewingPhysician, result] = array;
                             testType.push(type);
                             testOrderingPhysician.push(orderingPhysician);
                             testDate.push(date);
@@ -281,7 +281,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.medications)) {
                         item.medications.forEach(array => {
-                            const [name, date, physician, frequency, duration, endDate] = array;
+                            const [_, name, date, physician, frequency, duration, endDate] = array;
                             medicationName.push(name);
                             prescriptionDate.push(date);
                             prescribingPhysician.push(physician);
@@ -293,7 +293,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(array => {
-                            const [hospitalName, admissionDate, dischargeDate, stayLength] = array;
+                            const [_, hospitalName, admissionDate, dischargeDate, stayLength] = array;
                             admissionHospitalName.push(hospitalName);
                             aadmissionDate.push(admissionDate);
                             adischargeDate.push(dischargeDate);
