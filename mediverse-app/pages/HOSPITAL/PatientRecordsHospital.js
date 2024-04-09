@@ -103,11 +103,21 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
+    // const clickRow = (patientAddr, creationDate) => {
+    //     router.push({
+    //         pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+    //         query: { patientAddr, creationDate }
+    //     });
+    // };
+
     const clickRow = (patientAddr, creationDate) => {
-        router.push({
-            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+        // Construct the URL with patient address and creation date as query parameters
+        const url = {
+            pathname: '/HOSPITAL/MedicalHistory1Hospital',
             query: { patientAddr, creationDate }
-        });
+        };
+        // Navigate using Next.js router
+        router.push(url);
     };
 
     const handleAdd = () => {

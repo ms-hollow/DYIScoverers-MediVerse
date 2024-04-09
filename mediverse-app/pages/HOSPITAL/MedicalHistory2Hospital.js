@@ -362,18 +362,18 @@ const MedicalHistoryHospital = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleButton = () => {
-        // setIsOpen(!isOpen);
+    const toggleButton = (patientAddr, creationDate) => {
+        router.push({
+            pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
+            query: { patientAddr, creationDate }
+        });
     };
 
     return ( 
         <Layout pageName="Medical History">
         <>
-            {medicalHistory && (
-            <div className={styles.container}>      
-                <div className={styles.reserveSpace}></div>
-                
-                {/* ----------------- Patient Basic Info (Name, Age, Date of Birth and Gender) -----------------  */}
+            <div id='container' className={styles.container}>   
+                <div className={styles.outerContainer}>
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Patient Name</p>   
@@ -388,37 +388,40 @@ const MedicalHistoryHospital = () => {
                         <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
                     </div>
                 </div>
+                </div>   
 
-                <div className={styles.basicInfoContainer}>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Doctor Consulted</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
-                        {/**<p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p> */}
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Date of Diagnosis</p>  
-                        <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Diagnosis</p>   
-                        <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_des}>
-                        <p className={styles.headingAttrb}>Description</p>   
-                        <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
+                <div className={styles.outerContainer}>
+                    <div className={styles.basicInfoContainer}>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Doctor Consulted</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
+                            {/**<p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p> */}
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Date of Diagnosis</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Diagnosis</p>   
+                            <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
+                        </div>
+                        <div className={styles.headingAttrb_des}>
+                            <p className={styles.headingAttrb}>Description</p>   
+                            <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
+                        </div>
                     </div>
                 </div>
-        
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Signs and Symptoms</p>
-                    <div className={styles.sANDs_heading}>
-                        <p>Symptoms</p>
-                        <p>Duration</p>
-                        <p>Severity</p>
-                        <p>Location</p>
-                    </div>
 
-                    <div className={styles.scrollableTable_container}>
+                <div className={styles.scrollable_container}>
+                    <p className={styles.table_title}>Signs and Symptoms</p>
+                        <div className={styles.sANDs_heading}>
+                            <p>Symptoms</p>
+                            <p>Duration</p>
+                            <p>Severity</p>
+                            <p>Location</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
                             {medicalHistory.symptoms.names.map((symptom, index) => (
                                 <div key={index} className={styles.sANDs_data}>
                                     <p>{symptom}</p>
@@ -427,20 +430,19 @@ const MedicalHistoryHospital = () => {
                                     <p>{medicalHistory.symptoms.location[index]}</p>
                                 </div>
                             ))}
-                    </div>
-                </div>
+                        </div>
 
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Treatment/Procedure</p>
-                    <div className={styles.treatment_heading}>
-                        <p>Treatment/Procedure</p>
-                        <p>Medical Team/Provider</p>
-                        <p>Date Started</p>
-                        <p>Date End</p>
-                        <p>Duration</p>
-                    </div>
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Treatment/Procedure</p>
+                        <div className={styles.treatment_heading}>
+                            <p>Treatment/Procedure</p>
+                            <p>Medical Team/Provider</p>
+                            <p>Date Started</p>
+                            <p>Date End</p>
+                            <p>Duration</p>
+                        </div>
 
-                    <div className={styles.scrollableTable_container}>
+                        <div className={styles.scrollableTable_container}>
                         {medicalHistory.treatmentProcedure.names.map((data, index) => (
                             <div key={index} className={styles.treatment_data}>
                                 <p>{data}</p>
@@ -450,81 +452,80 @@ const MedicalHistoryHospital = () => {
                                 <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
                             </div>
                         ))}
-                    </div>
-                </div>
-
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Test</p>
-                    <div className={styles.test_heading}>
-                        <p>Type of Test</p>
-                        <p>Ordering Physician</p>
-                        <p>Date</p>
-                        <p>Reviewing Physician</p>
-                        <p>Result</p>
+                        </div>
                     </div>
 
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.tests.types.map((data, index) => (
-                            <div key={index} className={styles.test_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
-                                <p>{medicalHistory.tests.dates[index]}</p>
-                                <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
-                                <p>{medicalHistory.tests.results[index]}</p>
-                            </div>
-                        ))}
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Test</p>
+                        <div className={styles.test_heading}>
+                            <p>Type of Test</p>
+                            <p>Ordering Physician</p>
+                            <p>Date</p>
+                            <p>Reviewing Physician</p>
+                            <p>Result</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.tests.types.map((data, index) => (
+                                <div key={index} className={styles.test_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.dates[index]}</p>
+                                    <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.results[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Medication</p>
-                    <div className={styles.medication_heading}>
-                        <p>Medication</p>
-                        <p>Date of Prescription</p>
-                        <p>Prescribing Physician</p>
-                        <p>Frequency</p>
-                        <p>Duration</p>
-                        <p>End Date</p>
+                    
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Medication</p>
+                        <div className={styles.medication_heading}>
+                            <p>Medication</p>
+                            <p>Date of Prescription</p>
+                            <p>Prescribing Physician</p>
+                            <p>Frequency</p>
+                            <p>Duration</p>
+                            <p>End Date</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.medications.names.map((data, index) => (
+                                <div key={index} className={styles.medication_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.medications.prescriptionDates[index]}</p>
+                                    <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
+                                    <p>{medicalHistory.medications.frequencies[index]}</p>
+                                    <p>{medicalHistory.medications.durations[index]}</p>
+                                    <p>{medicalHistory.medications.endDates[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.medications.names.map((data, index) => (
-                            <div key={index} className={styles.medication_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.medications.prescriptionDates[index]}</p>
-                                <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
-                                <p>{medicalHistory.medications.frequencies[index]}</p>
-                                <p>{medicalHistory.medications.durations[index]}</p>
-                                <p>{medicalHistory.medications.endDates[index]}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Admission</p>
+                        <div className={styles.sANDs_heading}>
+                            <p>Hospital</p>
+                            <p>Admission Date</p>
+                            <p>Discharge Date</p>
+                            <p>Length of Stay</p>
+                        </div>
 
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Admission</p>
-                    <div className={styles.sANDs_heading}>
-                        <p>Hospital</p>
-                        <p>Admission Date</p>
-                        <p>Discharge Date</p>
-                        <p>Length of Stay</p>
-                    </div>
-
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.admissions.hospitalNames.map((data, index) => (
-                            <div key={index} className={styles.sANDs_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.admissions.admissionDates[index]}</p>
-                                <p>{medicalHistory.admissions.dischargeDates[index]}</p>
-                                <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
-                            </div>
-                        ))}
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.admissions.hospitalNames.map((data, index) => (
+                                <div key={index} className={styles.sANDs_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.admissions.admissionDates[index]}</p>
+                                    <p>{medicalHistory.admissions.dischargeDates[index]}</p>
+                                    <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-            )}
-
-            <button className={styles.submitButton} onClick={toggleButton}> 
+            <button className={styles.submitButton} onClick={toggleButton}>
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
         </>
