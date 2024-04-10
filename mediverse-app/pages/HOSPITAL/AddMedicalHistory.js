@@ -7,11 +7,9 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-//TODO: Lagay ng loading animation kapag gagawa ng transaction
-
 const addMedicalHistory = () => {
     const router = useRouter();
-
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({ 
         patientAddress: '',
         physician: '',
@@ -115,48 +113,92 @@ const addMedicalHistory = () => {
         e.preventDefault(); // Prevent default form submission 
 
         console.log('Form submitted:', formData);
-        // Concatenate physician, diagnosis, and dateOfDiagnosis
-        const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+        let  patientDiagnosis = '';
+        let concatenatedSymptoms = '';
+        let concatenatedTreatmentProcedure = '';
+        let concatenatedTest = '';
+        let concatenatedMedication = '';
+        let concatenatedAdmission = '';
 
-        // Concatenate arrays using symbols
-        const concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
-        const concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
-        const concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
-        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
-        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        
-        console.log('Patient Consultation:', patientDiagnosis);
-        console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        console.log('Concatenated Test:', concatenatedTest);
-        console.log('Concatenated Medication:', concatenatedMedication);
-        console.log('Concatenated Admission:', concatenatedAdmission);
+        let formComplete = true; 
 
-
-        // * need below 100 ung length ng diagnosis at description
-        if (formData.diagnosis.length < 100 && formData.description.length < 100) {
-            try {
-                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                console.log("Account:", accounts[0]);
-                const receipt = await mvContract.methods.addMedicalHistory(
-                    formData.patientAddress,
-                    formData.physician,
-                    patientDiagnosis,
-                    concatenatedSymptoms,
-                    concatenatedTreatmentProcedure,
-                    concatenatedTest,
-                    concatenatedMedication,
-                    concatenatedAdmission
-                ).send({ from: accounts[0] });
-                console.log("Transaction Hash:", receipt.transactionHash);
-                router.push('/HOSPITAL/PatientRecordsHospital/');
-            } catch (error) {
-                alert('Patient is not registered.');
-            };
+        if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
+            alert("Diagnosis form fields are incomplete. Please fill them out."); 
+            formComplete = false;
         } else {
-            //console.error('Error sending transaction:', error.message);
-            alert('Diagnosis and Description should be below 100 letters');
-            //
+            patientDiagnosis = formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+        }
+
+        if (formData.symptoms.every(symptom => symptom.symptomName && symptom.symptomDuration && symptom.symptomSeverity && symptom.symptomLocation)) {
+            concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
+        } else if (formData.symptoms.some(symptom => symptom.symptomName || symptom.symptomDuration || symptom.symptomSeverity || symptom.symptomLocation)) {
+            alert("Symptoms form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.treatmentProcedure.every(treatmentProcedure => treatmentProcedure.tp && treatmentProcedure.medTeam && treatmentProcedure.tpDateStarted && treatmentProcedure.tpDuration)) {
+            concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
+        } else if (formData.treatmentProcedure.some(treatmentProcedure => treatmentProcedure.tp || treatmentProcedure.medTeam || treatmentProcedure.tpDateStarted || treatmentProcedure.tpDuration)) {
+            alert("Treatment/Procedure form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.test.every(test => test.testType && test.orderingPhysician && test.testDate && test.reviewingPhysician && test.testResult)) {
+            concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
+        } else if (formData.test.some(test => test.testType || test.orderingPhysician || test.testDate || test.reviewingPhysician || test.testResult)) {
+            alert("Test form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
+            concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
+        } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
+            alert("Medication form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate && admission.lengthOfStay)) {
+            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+        } else {
+            alert("Admission is required. Admission form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+        
+        // console.log('Patient Consultation:', patientDiagnosis);
+        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        // console.log('Concatenated Test:', concatenatedTest);
+        // console.log('Concatenated Medication:', concatenatedMedication);
+        // console.log('Concatenated Admission:', concatenatedAdmission);
+
+        if (formComplete) {
+            // * need below 100 ung length ng diagnosis at description
+            if (formData.diagnosis.length < 100 && formData.description.length < 100) {
+                setIsLoading(true);
+                try {
+                    const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                    console.log("Account:", accounts[0]);
+                    const receipt = await mvContract.methods.addMedicalHistory(
+                        formData.patientAddress,
+                        formData.physician,
+                        patientDiagnosis,
+                        concatenatedSymptoms,
+                        concatenatedTreatmentProcedure,
+                        concatenatedTest,
+                        concatenatedMedication,
+                        concatenatedAdmission
+                    ).send({ from: accounts[0] });
+                    console.log("Transaction Hash:", receipt.transactionHash);
+                    setIsLoading(false);
+                    router.push('/HOSPITAL/PatientRecordsHospital/');
+                } catch (error) {
+                    alert('Patient is not registered.');
+                    //console.error('Error sending transaction:', error.message);
+                };
+            } else {
+                //console.error('Error sending transaction:', error.message);
+                alert('Diagnosis and Description should be below 100 letters');
+            }
         }
     };
 
@@ -463,8 +505,11 @@ const addMedicalHistory = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
-                            {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
+                    {/* <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
+                    </button> */}
+
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                        {isLoading ? 'Adding...' : 'Add Medical History'}
                     </button>
     
                 </form>

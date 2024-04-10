@@ -5,15 +5,15 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-//! Note: Sa may MedicalHistory2Hospital, meron update or edit button
+/**
+ * ! CHANGES
+ * * Added loading animation kapag gagawa ng transaction. Sa button lang din nakalagay, if possible palagyan ng test na "Please wait it may take a while eme"
+ * ? After niya mag-edit, babalik ulit sa may MedicalHistory2Hospital
+ */
 
 const UpdateMedicalHistoryHospital = () => {
 
-    //TODO: Lagay ang info ni patient sa taas. SHOULD BE IN READ ONLY FORMAT
-    //TODO: Retrieve ang medical record
-    //TODO: Display sa forms and table
-    //TODO: Save lahat ng data ulit
-    
+    const [isLoading, setIsLoading] = useState(false);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
@@ -565,6 +565,7 @@ const UpdateMedicalHistoryHospital = () => {
         
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {
+            setIsLoading(true);
             try {
                 const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
                 console.log("Account:", accounts[0]);
@@ -581,6 +582,7 @@ const UpdateMedicalHistoryHospital = () => {
                 ).send({ from: accounts[0] });
                 
                 console.log("Transaction Hash:", receipt.transactionHash);
+                setIsLoading(false);
                 //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
                 alert('Failed to update medical history record.');
@@ -1024,13 +1026,15 @@ const UpdateMedicalHistoryHospital = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
-                            {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
+                    {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
+                    </button> */}
+
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDate)} disabled={isLoading}> 
+                        {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
                 </form>
             </div>
-        
         </>
         </Layout>
     );
