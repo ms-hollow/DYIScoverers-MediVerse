@@ -33,13 +33,22 @@ const MedicalHistoryPatient = ({ data }) => {
 
                 <div className={styles.dataContainer}>
                     {data.map(data => (
-                        <Link href="/HOSPITAL/MedicalHistory2Hospital" key={data.id} className={styles.data}>
-                            <p className={styles.diaAttrb}>{data.diagnosis}</p>
-                            <p>{data.hospital}</p>
-                            <p>{data.physician}</p>
-                            <p>{data.admissionDate}</p>
-                            <p>{data.dischargeDate}</p>
-                        </Link>
+                        <div className={styles.perSection}>
+                            <div className={styles.forResponsiveness}>
+                                <p>Diagnosis</p>
+                                <p>Hospital</p>
+                                <p>Physician</p>
+                                <p>Admission Date</p>
+                                <p>Discharge Date</p>
+                            </div>
+                            <Link href="/HOSPITAL/MedicalHistory2Hospital" key={data.id} className={styles.data}>
+                                <p className={styles.diaAttrb}>{data.diagnosis}</p>
+                                <p>{data.hospital}</p>
+                                <p>{data.physician}</p>
+                                <p>{data.admissionDate}</p>
+                                <p>{data.dischargeDate}</p>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             </div>
