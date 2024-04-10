@@ -12,7 +12,7 @@ const LogInPatientHeader = () => {
         </div>
 
         <ul className={styles.navbar}>
-          <li><a href="/GENERAL/Features/">FEATURES</a></li>
+          <li><a href="/#features">FEATURES</a></li>
           <li><a href="/GENERAL/ContactUs/">CONTACT US</a></li>
           <li><a href="/GENERAL/FAQs/">FAQS</a></li>
         </ul>

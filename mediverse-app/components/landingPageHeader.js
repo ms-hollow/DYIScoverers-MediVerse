@@ -3,8 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/landingPageHeader.module.css';
 
-const LandingPageHeader = ({buttonText, buttonLink }) => {
-
+const LandingPageHeader = ({ buttonText, buttonLink, scrollToFeatures }) => {
   return (
     <>
       <header className={styles.header}>
@@ -13,7 +12,7 @@ const LandingPageHeader = ({buttonText, buttonLink }) => {
         </div>
 
         <ul className={styles.navbar}>
-          <li><a href="/GENERAL/Features/">FEATURES</a></li>
+          <li><a href="/#features">FEATURES</a></li>
           <li><a href="/GENERAL/ContactUs">CONTACT US</a></li>
           <li><a href="/GENERAL/FAQs/">FAQS</a></li>
         </ul>

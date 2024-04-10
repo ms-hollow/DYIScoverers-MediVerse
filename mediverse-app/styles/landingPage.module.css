@@ -402,6 +402,27 @@
   
   }
 
+  .button {
+    position: relative;
+    display: flex;
+    width: 18%;
+    padding: 15px 25px;
+    margin-top: 8%;
+    margin-bottom: 130%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(225deg, var(--blue) 0%, var(--pale-blue) 100%);
+    color: white;
+    white-space: nowrap; /* Prevent text from wrapping */
+    margin-left: 7%;
+}
+
+.button:hover {
+    background: var(--cyan);
+}
+
 
   /* ------------------RESPONSIVENESS------------------*/
  /*nahihirapan pa HAHAHA tinapos ko muna lahat ng page */

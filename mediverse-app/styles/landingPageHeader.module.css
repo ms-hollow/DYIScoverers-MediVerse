@@ -83,6 +83,10 @@ html.index {
     display: none;
 }
 
+.featuresSection {
+    margin-top: 2000px; /* Adjust the value as needed */
+}
+
 @media(max-width: 1200px){
     .header{
         padding: 1% 2%;
