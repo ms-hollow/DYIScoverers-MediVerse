@@ -581,7 +581,7 @@ const UpdateMedicalHistoryHospital = () => {
                 ).send({ from: accounts[0] });
                 
                 console.log("Transaction Hash:", receipt.transactionHash);
-                router.push('/HOSPITAL/PatientRecordsHospital/');
+                //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
                 alert('Failed to update medical history record.');
                 console.error('Error updating medical history:', error);
@@ -591,13 +591,14 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    // const pushRoute = async (patientAddr, creationDate) => {
-    //     await handleSubmit();
-    //     router.push({
-    //         pathname: '/HOSPITAL/MedicalHistory1Hospital/',
-    //         query: { patientAddr, creationDate }
-    //     });
-    // };
+    const pushRoute = async (patientAddr, creationDate) => {
+        await handleSubmit();
+
+        router.push({
+            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+            query: { patientAddr, creationDate }
+        });
+    };
 
     const goBack = () => {
         window.history.back(); 
@@ -1023,7 +1024,7 @@ const UpdateMedicalHistoryHospital = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    <button className={styles.submitButton} onClick={handleSubmit}>Update
+                    <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                             {/**<Link href="/PATIENT/Register3Patient/">Add Patient</Link> */}
                     </button>
     
