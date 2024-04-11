@@ -27,7 +27,7 @@
     left: 0;
     height: 100%;
     width: 250px;
-    background-color: var(--sidebar);
+    background-color: white;
     transition: all 0.50s ease;
     z-index: 1100;
     transform: translateX(-250px);
@@ -44,7 +44,6 @@
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid white; /* Adjust the size and color of the triangle */
-    transform: translateY(-50%);
 }
 
 .sidebarOpen .sidebar {
@@ -69,6 +68,15 @@
     transform: translateX(250px);
 }
 
+.hamburger {
+    display: flex;
+    position: absolute;
+    left: 35px;
+    width: 20px;
+    visibility: hidden;
+}
+
+
 .triangle {
     position: absolute;
     left: 15px; /* Adjust to align with the left side of the sidebar */
@@ -86,10 +94,6 @@
 .sidebarMenuBtn:hover .triangle,
 .sidebarMenuBtn.menuOpen .triangle {
     transform: translateY(50%) scale(1.5); /* Increase size by 50% when hovered or when menu is open */
-}
-
-.sidebarMenuBtn.menuOpen .triangle {
-    transform: translateY(-50%) rotate(180deg); /* Rotate the triangle 180 degrees when menu is open */
 }
 
 .categoryName {
@@ -144,6 +148,14 @@
     margin-right: 10px;
 }
 
+.search {
+    display: none;
+}
+
+.searchBarResponsive {
+    display: none;
+}
+
 .searchInput {
     border: none;
     outline: none;
@@ -179,6 +191,16 @@
     padding: 5px 30px;
     line-height: 50px;
     transition: all 0.3s ease; /* Add transition for color change */
+}
+
+.close {
+    visibility: hidden;
+    color: red;
+    text-align: center;
+    line-height: 0px;
+    font-family: Raleway, sans-serif; /* Use Raleway font */
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .menuItems a:hover {
@@ -238,8 +260,15 @@
     transform: translateX(120px); /* Adjust as necessary based on the width of the sidebar */   
 }
 
+.blurNotif {
+    filter: blur(5px);
+    transition: 0.1s ease;
+    pointer-events: none;
+}
+
 /* Responsive styles */
 /* Responsive styles */
+/*
 @media screen and (max-width: 768px) {
     .header {
         padding: 2% 1%;
@@ -251,15 +280,15 @@
     }
     
     .sidebar {
-        width: 150px; /* Adjusted width for smaller screens */
+        width: 150px; 
     }
     
     .searchBar {
-        width: 150px; /* Adjusted width for smaller screens */
+        width: 150px; 
     }
     
     .headerButtons {
-        margin-left: auto; /* Shift header buttons to the right for smaller screens */
+        margin-left: auto; 
     }
 
     .menuItems a {
@@ -267,26 +296,282 @@
     }
 
     .sidebarMenuBtn {
-        width: 30px; /* Adjusted width for smaller screens */
+        width: 30px; 
     }
 
     .triangle {
-        border-top: 8px solid transparent; /* Adjusted size for smaller screens */
-        border-bottom: 8px solid transparent; /* Adjusted size for smaller screens */
-        border-left: 8px solid var(--cyan); /* Adjusted size and color for smaller screens */
+        border-top: 8px solid transparent; 
+        border-bottom: 8px solid transparent; 
+        border-left: 8px solid var(--cyan); 
     }
 
     .contentContainer {
-        padding: 0.5rem; /* Adjusted padding for smaller screens */
+        padding: 0.5rem; 
     }
 
-    /* Adjust header buttons when sidebar is open */
     .sidebarOpen .headerButtons {
-        transform: translateX(200px); /* Translate header buttons if sidebar is open on small screens */
+        transform: translateX(200px); 
     }
 
     .sidebarOpen .categoryName{
         margin-right: 20%;
         margin-left: -20%;
+    }
+}*/
+
+@media screen and (max-width: 1216px) {
+    .header{
+        padding-left: 60px;
+    }
+    .categoryName{
+        font-size: 15px;
+    }
+
+    .headerButtons{
+        transform: scale(0.8);
+        margin-right: 0px;
+    }
+
+    .sidebar{
+        width: 210px;
+    }
+
+    .sidebarLogo {
+        transform: scale(0.8);
+    }
+
+    .menuItems a{
+        font-size: 15px;
+        line-height: 40px;
+        padding: 0;
+    }
+
+    .sidebarMenuBtn.menuOpen {
+        transform: translateX(210px);
+    }
+
+    .triangle{
+        border-top: 12px solid transparent; /* Adjust the size */
+        border-bottom: 12px solid transparent; 
+        border-left: 12px solid var(--cyan);
+        left: 15px;
+    }
+
+    .contentShifted {
+        transform: translateX(200px); /* Adjust as necessary based on the width of the sidebar */
+    }
+
+    .contentAdjusted {
+        transform: translateX(100px); /* Adjust as necessary based on the width of the sidebar */   
+    }
+}
+
+@media screen and (max-width: 1115px) {
+    .blur {
+        filter: blur(5px) grayscale(1);
+        opacity: 50%;
+        pointer-events: none;
+    }
+
+    .contentShifted {
+        transform: translateX(0); /* Adjust as necessary based on the width of the sidebar */
+    }
+
+    .contentAdjusted {
+        transform: translateX(0); /* Adjust as necessary based on the width of the sidebar */   
+    }
+}
+
+@media screen and (max-width: 875px) {
+    .header{
+        height: 70px;
+        padding: 0px 0px;
+        padding-left: 90px;
+    }
+
+    .categoryName{
+        font-size: 12px;
+    }
+
+    .headerButtons{
+        transform: scale(0.6);
+    }    
+
+    .sidebar{
+        width: 210px;
+    }
+
+    .sidebarLogo {
+        transform: scale(0.6);
+        justify-items: center;
+    }
+
+    .menuItems{
+        margin-top: 10px;
+    }
+
+    .menuItems a{
+        font-size: 13px;
+        line-height: 30px;
+        padding: 0;
+    }
+
+    .sidebarMenuBtn.menuOpen {
+        transform: translateX(210px);
+    }
+
+    .triangle{
+        border-top: 8px solid transparent; /* Adjust the size */
+        border-bottom: 8px solid transparent; 
+        border-left: 8px solid var(--cyan);
+        left: 15px;
+    }
+}
+
+@media screen and (max-width: 757px) {
+    .header{
+        padding-left: 40px;
+    }
+    
+    .categoryName{
+        font-size: 11px;
+    }
+
+    .headerButtons{
+        transform: scale(0.6);
+        margin-left: auto;
+        margin-right: -50px ;
+    }    
+
+    .sidebar{
+        width: 210px;
+    }
+
+    .sidebarLogo {
+        transform: scale(0.6);
+        justify-items: center;
+    }
+
+    .menuItems{
+        margin-top: 10px;
+    }
+
+    .menuItems a{
+        font-size: 13px;
+        line-height: 30px;
+        padding: 0;
+    }
+
+    .sidebarMenuBtn.menuOpen {
+        transform: translateX(210px);
+    }
+
+    .triangle{
+        border-top: 8px solid transparent; /* Adjust the size */
+        border-bottom: 8px solid transparent; 
+        border-left: 8px solid var(--cyan);
+        left: 15px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+
+    .categoryName{
+        padding-left: 20px;
+    }
+
+    .triangle{
+        visibility: hidden;
+    }
+
+    .close{
+        visibility: visible;
+    }
+
+    .hamburger {
+        visibility: visible;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 290px;
+        transform: translateY(-300px);
+    }
+
+    .sidebarLogo {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        margin-top: 3%;
+        margin: 0 auto;
+        justify-content: center;
+        position: relative;
+    }
+
+    .menuItems {
+        margin-top: 0px;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .sidebarMenuBtn {
+        display: flex;
+        position: fixed;
+        top: 0;
+        margin-top: -15px;
+        cursor: pointer;
+        z-index: 1100;
+        transition: none;
+        z-index: 2000;
+    }
+    
+    .sidebarMenuBtn.menuOpen .hamburger {
+        visibility: hidden;
+    }
+    
+    .sidebarMenuBtn.menuOpen .close {
+        visibility: visible;
+        top: 0px;
+    }
+}
+
+@media screen and (max-width: 594px) {
+    .categoryName{
+        margin-right: 0;
+        padding-right: 0;
+    
+    }
+    .search {
+        display: flex;
+        width: 30px;
+    }
+
+    .searchBar {
+        display: none;
+        visibility: hidden;
+    }
+
+    .searchBarResponsive {
+        display: none;
+        align-items: center;
+        width: 300px;
+        height: 41px;
+        background-color: #F4F7FE;
+        border-radius: 20px;
+        padding: 0 10px;
+    }
+
+    .searchOpen {
+        display: flex;
+        position: fixed;
+        width: 150%;
+        transform: scale(0.6) translateY(90px);
+        right:-25%;
+        z-index: 1500;
+    }
+
+    .headerButtons{
+        transform: scale(0.5);
+        margin-right: -5px;
     }
 }

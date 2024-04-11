@@ -25,7 +25,6 @@ const MedicalHistoryPatient = ({ data }) => {
     return (  
         <Layout pageName = "Patient Records">
         <>
-        
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
                     <p>Patient Name</p>
@@ -37,18 +36,26 @@ const MedicalHistoryPatient = ({ data }) => {
 
                 <div className={styles.dataContainer}>
                     {data.map(data => (
-                        <Link href="/" key={data.id} className={styles.data}>
-                            <p className={styles.diaAttrb}>{data.name}</p>
-                            <p>{data.hospital}</p>
-                            <p>{data.admissionDate}</p>
-                            <p>{data.dischargeDate}</p>
-                            <p>{data.stayLength}</p>
-                        </Link>
+                        < div className={styles.perSection}>
+                            <div className={styles.forResponsiveness}>
+                                <p>Patient Name</p>
+                                <p>Hospital</p>
+                                <p>Admission Date</p>
+                                <p>Discharge Date</p>
+                                <p>Length of Stay</p>
+                            </div>
+                            <Link href="/HOSPITAL/MedicalHistory1Hospital" key={data.id} className={styles.data}>
+                                <p className={styles.diaAttrb}>{data.name}</p>
+                                <p>{data.hospital}</p>
+                                <p>{data.admissionDate}</p>
+                                <p>{data.dischargeDate}</p>
+                                <p>{data.stayLength}</p>
+                            </Link> 
+                        </div>
                     ))}
                 </div>
-
                 <button className={styles.submitButton} onClick={handleAdd}>
-                    <Link href="/HOSPITAL/AddPatient/">Add Patient</Link>
+                    <Link href="/HOSPITAL/AddPatient">+</Link>
                 </button>
             </div>
         </>
