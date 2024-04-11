@@ -115,8 +115,6 @@ const HomeSidebarHeader = ({children, pageName}) => {
                             <ul>
                                 <li><a href="view-appointments.html">Home</a></li>
                                 <li><a href="./book-appointment/book-appointment.html">Medical History</a></li>
-                                <li><a href="profile.html">General Health Profile</a></li>
-                                <li><a href="change-password.html">Account</a></li>
                                 <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                             </ul>
                         </div>

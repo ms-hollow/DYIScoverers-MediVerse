@@ -6,6 +6,9 @@ import React, { useState, useEffect } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
+{/*FOR TOAST NOTIFICATION */}
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const Register2Hospital = () => {
     const [formData, setFormData] = useState({ 
@@ -54,7 +57,8 @@ const Register2Hospital = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         console.log('Form submitted:', formData);
-        alert('User Register Successfully!');
+        toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
+        
     };
 
     const goBack = () => {
@@ -97,6 +101,7 @@ const Register2Hospital = () => {
                     </button>
 
                 </form>
+                <ToastWrapper/>
             </div>
         </>
         
