@@ -8,8 +8,6 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-//! List ng lahat ng medical history ni SPECIFIC PATIENT
-//* modified
 
 const MedicalHistoryPatient = () => {
 
@@ -70,14 +68,6 @@ const MedicalHistoryPatient = () => {
                 const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
                     console.log("Diagnosis:", splitDiagnosis[0]);
-                    // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
-                    // console.log("Signs and Symptoms:", splitSignsAndSymptoms);
-                    // const splitTreatmentProcedure = item.treatmentProcedure.split('+');
-                    // console.log("Treatment Procedure:", splitTreatmentProcedure);
-                    // const splitTests = item.tests.split('+');
-                    // console.log("Treatment Procedure:", splitTests);
-                    // const splitMedications = item.medications.split('+');
-                    // console.log("Medications:", splitMedications);
                     console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
                     console.log("Admission Date:", splitAdmission[2]);

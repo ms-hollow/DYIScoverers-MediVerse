@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//? Changes: Modified request permission
+
 contract MediVerse {
     
     struct Patient {
@@ -239,19 +241,15 @@ contract MediVerse {
     
     function givePermission(address _hospitalAddr) public  {
         require(!isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital already authorized");
-        // Check if the hospital is already in the pending requests
-        bool isPending = false;
-        for (uint i = 0; i < pendingRequests[msg.sender].length; i++) {
-            if (pendingRequests[msg.sender][i] == _hospitalAddr) {
-                isPending = true;
+        address[] storage pending = pendingRequests[msg.sender];
+        for (uint i = 0; i < pending.length; i++) {
+            if (pending[i] == _hospitalAddr) {
+                pending[i] = pending[pending.length - 1];
+                pending.pop();
                 break;
             }
         }
-        // If not in pending, add to both authorized and pending requests
-        if (!isPending) {
-            patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
-            pendingRequests[msg.sender].push(_hospitalAddr);
-        }
+        patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
     }
 
     function revokeAccess(address _hospitalAddr) public {

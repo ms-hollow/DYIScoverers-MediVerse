@@ -6,10 +6,8 @@ import React, { useState, useEffect } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-/**
- * TODO: Get name, doctor and date of consultation ng mga hospitals na may access sa lahat ng record
- *  ! IN PROGRESS PA AAAA
- */
+//! Done with the process sa buttons
+//TODO: Needs to update yung table kapag nabigyan na ng access
 
 export async function getStaticProps() {
     const filePath = path.join(process.cwd(), 'public/placeHolder/dummyData_AccountAccess.json');
@@ -28,6 +26,7 @@ const AccountAccessPatient = ({data}) => {
     const [patientAddress, setPatientAddress] = useState('');
     const [listOfAuthorizedHospitals, setAuthorizedHospitals] = useState([]);
     const [listOfHospitalNames, setHospitalNames] = useState([]);
+    const [hospitalAddress, setHospitalAddress] = useState('');
 
     const setAddress = async () => {
         try {
@@ -38,7 +37,7 @@ const AccountAccessPatient = ({data}) => {
             alert('Error fetching hospital address.');
         }
     };
-    
+
     useEffect(() => {
         async function authorizedHospitalList() {
             try {
@@ -46,46 +45,35 @@ const AccountAccessPatient = ({data}) => {
                     await setAddress();
                     return;
                 }
-
-                const hospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
-                console.log(hospitals);
+    
+                const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
+                console.log("Authorized Hospitals:", authorizedHospitals);
                 
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
-                    return {
-                        patientAddr,
-                        hospitalAddr,
-                        physician,
-                        diagnosis,
-                        signsAndSymptoms,
-                        treatmentProcedure,
-                        tests,
-                        medications,
-                        admission,
-                        creationDate
-                    };
-                });
-                console.log(parsedMedicalHistory);
                 
-                const filteredMedicalHistory = medicalHistoryString.filter(item => hospitals.includes(item.hospitalAddr));
+                // Filter medical history records to include only those made by the currently logged-in patient
+                const filteredMedicalHistory = medicalHistoryString.filter(item => item.patientAddr === patientAddress);
+                
                 console.log("Filtered Medical History:", filteredMedicalHistory);
-
+    
                 const modifiedList = filteredMedicalHistory.map(item => {
+                    let hospitalHolder = item.hospitalAddr;
+                    setHospitalAddress(hospitalHolder);
                     const splitDiagnosis = item.diagnosis.split('+');
                     const splitAdmission = item.admission.split('+');
                     return {
                         physician: item.physician,
+                        hospitalAddress: item.hospitalAddr,
                         dateOfConsultation: splitDiagnosis[1],
                         hospitalName: splitAdmission[1],
-                        lengOfStay: splitAdmission[4],
+                        lengthOfStay: splitAdmission[4],
                     };
                 });
                 setAuthorizedHospitals(modifiedList);
                 console.log("Authorized Hospitals: ", modifiedList)
-
+    
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
-                console.log("Pending Request: " ,hospitalRequest);
+                console.log("Pending Request: ", hospitalRequest);
                
                 const hospitalsInfo = [];
                 for (const hospitalAddress of hospitalRequest) {
@@ -96,7 +84,7 @@ const AccountAccessPatient = ({data}) => {
                 }
                 console.log("Hospital Names: ", hospitalsInfo);
                 setHospitalNames(hospitalsInfo)
-
+                
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -104,11 +92,10 @@ const AccountAccessPatient = ({data}) => {
         authorizedHospitalList();
     }, [patientAddress]);
 
-
     const handleGrantAccess = async () => {
         try {
-            await mvContract.methods.givePermission(hospitalAddr).send({ from: patientAddress }); 
-            console.log('Permission granted to hospital:', hospitalAddr);
+            await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress }); 
+            console.log('Permission granted to hospital:', hospitalAddress);
         } catch (error) {
             console.error('Error granting permission:', error);
         }
@@ -116,8 +103,10 @@ const AccountAccessPatient = ({data}) => {
 
     const handleRevokeAccess = async () => {
         try {
-            await mvContract.methods.revokeAccess(hospitalAddr).send({ from: patientAddress }); 
-            console.log('Access was removed:', hospitalAddr);
+            console.log("Revoke Address: ", hospitalAddress);
+            await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress }); 
+            console.log('Access was removed:', hospitalAddress);
+            alert('Access was removed:', hospitalAddress);
         } catch (error) {
             console.error('Error revoking access:', error);
         }
@@ -169,7 +158,7 @@ const AccountAccessPatient = ({data}) => {
                                     <p>{item.hospitalName}</p>
                                     <p>{item.physician}</p>
                                     <p>{item.dateOfConsultation}</p>
-                                    <button onClick={handleRevokeAccessClick}>Revoke Access</button>
+                                    <button onClick={handleRevokeAccess}>Revoke Access</button>
                                 </div>
                             ))}
                         </div>
@@ -185,8 +174,8 @@ const AccountAccessPatient = ({data}) => {
                             {listOfHospitalNames.map((hospital, index) => (
                                 <div key={index} className={styles.data_reqAccess}>
                                     <p>{hospital.name}</p>
-                                    <button onClick={handleAcceptAccessClick}>Accept</button>
-                                    <button onClick={handleDeclineAccessClick}>Decline</button>
+                                    <button onClick={handleGrantAccess}>Grant Access</button>
+                                    {/* <button onClick={handleDeclineAccessClick}>Reject</button> */}
                                 </div>
                             ))}
                         </div>

@@ -1,26 +1,28 @@
 import styles from '../../styles/accountAccess.module.css';
-import Layout from '../../components/HomeSidebarHeaderHospital.js'
+import Layout from '../../components/HomeSidebarHeader.js'
 import React, { useState, useEffect  } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+//! Done with the process sa buttons
+//TODO: Needs to update yung table kapag nabigyan na ng access
+//* Note abby, once na detect na grant ang access, mareremove na siya sa list ng pendingRequest
+//* Para sa notification, kukunin lang don kung grant ba ang access or nirevoke ni patient.
+
 const AccountAccessHospital = () => {
-    //! DAPAT MAGKACONNECT ITO AT NASA PATIENT
-    //TODO: Get lahat ng record and check if may permission si hospital (IDK IF POSSIBLE!)
-    //TODO: Display ito (NOT POSSIBLE!)
-    //TODO: Palitan ang view records ng request access buttons (IDK IF POSSIBLE!)
-    //! DAPAT LIST NG MEDICAL RECORD NA WALANG PERMISSION (IDK POSSIBLE!)
 
-    const [medicalHistory, setMedicalHistory] = useState([]);
+    const router = useRouter();
     const [hospitalAddress, setHospitalAddress] = useState('');
-    let patientAddress, patientName;
+    const [authorizedList, setAuthorizedList] = useState([]);
+    const [unauthorizedList, setUnauthorizedList] = useState([]);
+    const [pendingRequests, setPendingRequests] = useState([]);
+    const [patientAddress, setPatientAddress] = useState('');
 
-    // Function to set the hospital address
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
@@ -28,70 +30,210 @@ const AccountAccessHospital = () => {
     };
 
     useEffect(() => {
-        async function fetchMedicalHistory() {
+        async function authorizedPatientList() {
             try {
-                // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
                     await setAddress();
                     return;
                 }
-
+    
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                const unauthorizedHospitals = [];
-
-                for (const medicalHistory of medicalHistoryString) {
-                    const patientAddress = medicalHistory.patientAddr;
-
-                    // Check if the hospital is authorized to access the patient's records
-                    const isAuthorized = await mvContract.methods.isHospitalAuthorized(patientAddress, hospitalAddress).call();
-
-                    if (!isAuthorized) {
-                        unauthorizedHospitals.push(patientAddress);
-                    }
-                }
-
-                console.log(unauthorizedHospitals);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
-                    patientAddress = patientAddr;
                     return {
+                        patientAddr,
                         hospitalAddr,
+                        physician,
                         diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
                     };
                 });
-                console.log(parsedMedicalHistory);
-
-                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
-                const patientNameHolder = patientInfo[0].split('+');
-                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-
-                // //? Function that will filter the medical history 
-                // const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+    
+                // Filter medical records to include only those made by the specific hospital
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
                 
-                const filteredMedicalHistory = parsedMedicalHistory.filter(item => {
-                    // Check if the hospital is not authorized to access this medical record
-                    return !isHospitalAuthorized(item.patientAddr, hospitalAddress);
+                const firstMedicalRecords = {};
+                filteredMedicalHistory.forEach(item => {
+                    if (!firstMedicalRecords[item.patientAddr]) {
+                        firstMedicalRecords[item.patientAddr] = item;
+                    }
                 });
 
-                const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
-                    const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[1]);
-                    return {
-                        patientName,
-                        diagnosis: splitDiagnosis[1],
-                    };
-                });
-                setMedicalHistory(modifiedMedicalHistory);
-                console.log("Modified", modifiedMedicalHistory);
+                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
 
+                const modifiedMedicalHistoryPromises = uniqueMedicalRecords.map(async item => {
+                    let patientAddress = item.patientAddr;
+                    const patientAddr = item.patientAddr;
+                    const creationDate = item.creationDate;
+                    setPatientAddress(patientAddress);
+                    async function isHospitalAuthorized(patientAddress, hospitalAddress) {
+                        const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
+                        return authorizedHospitals.includes(hospitalAddress);
+                    }
+                
+                    const isAuthorized = await isHospitalAuthorized(patientAddress, hospitalAddress);
+                    // console.log("Is hospital authorized?", isAuthorized);
+                
+                    if (isAuthorized) {
+                        const splitAdmission = item.admission.split('+');
+                        const splitDiagnosis = item.diagnosis.split('+');
+                
+                        const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
+                        const patientNameHolder = patientInfo[0].split('+');
+                        const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                        
+                        return {
+                            patientAddr,
+                            patientName,
+                            dateConsultation: splitDiagnosis[1],
+                            // hospitalName: splitAdmission[1],
+                            // admissionDate: splitAdmission[2],
+                            // dischargeDate: splitAdmission[3],
+                            // lengthOfStay: splitAdmission[4],
+                            creationDate
+                        };
+                    } else {
+                        return null;
+                    }
+                });
+                
+                const modifiedMedicalHistory = await Promise.all(modifiedMedicalHistoryPromises);
+                const authorizedMedicalHistory = modifiedMedicalHistory.filter(record => record !== null);
+                setAuthorizedList(authorizedMedicalHistory);
+                // console.log("Processed Medical History:", authorizedMedicalHistory);
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
         }
-        
-        fetchMedicalHistory();
+        authorizedPatientList();
     }, [hospitalAddress]);
+
+    useEffect(() => {
+        async function unauthorizedPatientList() {
+            try {
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+    
+                const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                
+                const parsedMedicalHistory = medicalHistoryString.map(item => {
+                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    return {
+                        patientAddr,
+                        hospitalAddr,
+                        physician,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
+                });
+    
+                // Filter medical records to include only those made by the specific hospital
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+                
+                const firstMedicalRecords = {};
+                filteredMedicalHistory.forEach(item => {
+                    if (!firstMedicalRecords[item.patientAddr]) {
+                        firstMedicalRecords[item.patientAddr] = item;
+                    }
+                });
+
+                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
+
+                const modifiedMedicalHistoryPromises = uniqueMedicalRecords.map(async item => {
+                    let patientAddress = item.patientAddr;
+                    const patientAddr = item.patientAddr;
+                    const creationDate = item.creationDate;
+
+                    async function isHospitalAuthorized(patientAddress, hospitalAddress) {
+                        const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
+                        return authorizedHospitals.includes(hospitalAddress);
+                    }
+
+                    const isAuthorized = await isHospitalAuthorized(patientAddress, hospitalAddress);
+                    console.log("Is hospital authorized?", isAuthorized);
+
+                    if (!isAuthorized) {
+                        const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
+                        const patientNameHolder = patientInfo[0].split('+');
+                        const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                        
+                        const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
+                        const status = pendingRequests.length > 0 ? 'Pending' : '';
+                        setPendingRequests(status);
+                        return {
+                            patientAddr,
+                            patientName,
+                            unauthorized: true,
+                            creationDate,
+                            status
+                        };
+                    
+                    } else {
+                        // Here, you need to return the authorized record
+                        const splitAdmission = item.admission.split('+');
+                        const splitDiagnosis = item.diagnosis.split('+');
+                        const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
+                        const patientNameHolder = patientInfo[0].split('+');
+                        const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+
+                        return {
+                            patientAddr,
+                            patientName,
+                            dateConsultation: splitDiagnosis[1],
+                            // hospitalName: splitAdmission[1],
+                            // admissionDate: splitAdmission[2],
+                            // dischargeDate: splitAdmission[3],
+                            // lengthOfStay: splitAdmission[4],
+                            creationDate
+                        };
+                    }
+                });
+
+                const modifiedMedicalHistory = await Promise.all(modifiedMedicalHistoryPromises);
+                const unauthorizedMedicalHistory = modifiedMedicalHistory.filter(record => record.unauthorized);
+    
+                setUnauthorizedList(unauthorizedMedicalHistory);
+                console.log("Unauthorized Medical History:", unauthorizedMedicalHistory);
+                
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        unauthorizedPatientList();
+    }, [hospitalAddress]);
+
+    const handleRequest = async () => {
+        try {
+            await mvContract.methods.requestPermission(patientAddress).send({ from: hospitalAddress }); 
+            console.log('Access requested to:', patientAddress);
+            setPendingRequests('Pending');
+            alert("Request Sent!");
+        } catch (error) {
+            console.error('Error requesting access:', error);
+            console.log('Error requesting access')
+        }
+    };
+
+    const handleViewMedicalHistory = async (patientAddr, creationDate) => {
+        //console.log(patientAddr);
+        router.push({
+            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+            query: { patientAddr, creationDate }
+        });
+    }
 
     const [showAccountAccess, setShowAccountAccess] = useState(true);
 
@@ -102,37 +244,6 @@ const AccountAccessHospital = () => {
     const handleRequestAccessClick = () => {
         setShowAccountAccess(false);
     };
-
-    const handleRevokeAccessClick = () => {
-        //onClick Function for Revoke Access Button
-    }
-
-    const handleAcceptAccessClick = () => {
-        //onClick Function for Accept Account Access Request Button
-    }
-
-    const handleDeclineAccessClick = () => {
-        //onClick Function for Decline Account Access Request Button
-    }
-
-
-    //for fetching dummy data
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('/placeHolder/dummyData_AccountAccessHospital.json');
-            const json = await res.json();
-            const item = json.find(item => item.id === 1); // Filter data for ID 1
-            setData(item);
-        };
-
-        fetchData();
-    }, []);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
 
     return ( 
         <Layout pageName="Account Access">
@@ -151,15 +262,13 @@ const AccountAccessHospital = () => {
                             <p>Account Access</p>
                         </div>
 
-                        <div className={styles.dataContainer}>
-                            {data.accountAccess.map(data => (
-                                <div key={data.accountAccess_ID} className={styles.data_hospital}>
-                                    <p>{data.patientName}</p>
-                                    <p>{data.dateConsultation}</p>
-                                    <button onClick={handleRevokeAccessClick}>View Medical Records</button>
-                                </div>
-                            ))}
-                        </div>
+                        {authorizedList.map((data, index) => (
+                            <div key={`${data.patientAddr}-${index}`} className={styles.data_hospital}>
+                                <p>{data.patientName}</p>
+                                <p>{data.dateConsultation}</p>
+                                <button onClick={() => handleViewMedicalHistory(data.patientAddr, data.creationDate)}>View Medical Records</button>
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <div className={styles.tableContainer}>
@@ -169,11 +278,11 @@ const AccountAccessHospital = () => {
                         </div>
 
                         <div className={styles.dataContainer}>
-                            {data.requestAccess.map(data => (
-                                <div key={data.request_ID} className={styles.data_reqAccess}>
+                            {unauthorizedList.map(data => (
+                                <div key={data.patientAddr} className={styles.data_reqAccess}>
                                     <p>{data.patientName}</p>
                                     <p>{data.status}</p>
-                                    <button onClick={handleAcceptAccessClick}>Add Patient</button>
+                                    <button onClick={handleRequest}>Request</button>
                                 </div>
                             ))}
                         </div>
@@ -186,4 +295,4 @@ const AccountAccessHospital = () => {
     );
 }
  
-export default AccountAccessHospital;;
+export default AccountAccessHospital;

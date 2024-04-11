@@ -7,20 +7,19 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-//NEED TO TEST AND MODIFY
+//? Changes: Added lines of code if the hospital is authorized to view the medical history if the patient
 
 const MedicalHistoryPatient = () => {
 
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
-    let patientAddress, patientName;
 
     const setAddress = async () => {
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await web3.eth.getAccounts();
             console.log("Account:", accounts[0]);
-            setHospitalAddress(accounts[0]); // Set the hospital address
+            setHospitalAddress(accounts[0]); 
         } catch (error) {
             alert('Error fetching hospital address.');
         }
@@ -105,11 +104,25 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
     
-    const clickRow = (patientAddr, creationDate) => {
-        router.push({
-            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
-            query: { patientAddr, creationDate }
-        });
+    const clickRow = async (patientAddr, creationDate) => {
+
+        async function isHospitalAuthorized(patientAddr, hospitalAddress) {
+            const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddr).call();
+            return authorizedHospitals.includes(hospitalAddress);
+        }
+        
+        const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
+        console.log("Is hospital authorized?", isAuthorized);
+      
+       if (isAuthorized){
+            router.push({
+                pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+                query: { patientAddr, creationDate }
+            });
+       } else {
+            alert("You don't have permission do view this record.");
+            console.log("You don't have permission do view this record.");
+       }
     };
 
     const handleAdd = () => {
