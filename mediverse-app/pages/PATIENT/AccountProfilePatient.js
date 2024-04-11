@@ -178,10 +178,6 @@ const AccountProfilePatient = () => {
                     </div>
                 </div>
             </form>
-
-            <button className={styles.editButton} onClick={handleEdit}>
-                {editable ? <Link href="/PATIENT/AccountProfilePatient/">SAVE</Link> : 'EDIT'}
-            </button>
             
         </Layout>
         </>
