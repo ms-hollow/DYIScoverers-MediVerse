@@ -18,7 +18,7 @@ const ContactUs = () => {
 
     return (
         <>
-            <LandingPageHeader buttonText="Connect Wallet" />
+            <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
 
             <div className={styles.mainContainer}>
                 <p className={styles.contactUS_txt}>C O N T A C T    U S</p>

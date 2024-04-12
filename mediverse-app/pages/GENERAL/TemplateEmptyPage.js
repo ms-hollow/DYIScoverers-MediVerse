@@ -10,7 +10,7 @@ const Features = () => {
     return (
         <>
             <div> 
-                <LandingPageHeader buttonText="Connect Wallet" />
+                <LandingPageHeader buttonText="LOG IN" />
             </div>
              <div style={{position: 'absolute', top: '500px', left: '196.49px', backgroundColor: '#00838F', width: '253.31px', height: '2px'}}></div>
           
