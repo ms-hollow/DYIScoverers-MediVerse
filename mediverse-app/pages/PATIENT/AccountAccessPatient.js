@@ -8,6 +8,7 @@ import mvContract from '../../blockchain/mediverse';
 
 //! Done with the process sa buttons
 //TODO: Needs to update yung table kapag nabigyan na ng access
+//! HINDI PA MAAYOS CONTRACT
 
 export async function getStaticProps() {
     const filePath = path.join(process.cwd(), 'public/placeHolder/dummyData_AccountAccess.json');
@@ -27,6 +28,8 @@ const AccountAccessPatient = ({data}) => {
     const [listOfAuthorizedHospitals, setAuthorizedHospitals] = useState([]);
     const [listOfHospitalNames, setHospitalNames] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
+    const [grantAccess, setGrantAccess] = useState(false); 
+    const [revokeAccess, setRevokeAccess] = useState(false); 
 
     const setAddress = async () => {
         try {
@@ -47,15 +50,12 @@ const AccountAccessPatient = ({data}) => {
                 }
     
                 const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
-                console.log("Authorized Hospitals:", authorizedHospitals);
-                
+                //console.log("Authorized Hospitals:", authorizedHospitals);
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                
                 // Filter medical history records to include only those made by the currently logged-in patient
                 const filteredMedicalHistory = medicalHistoryString.filter(item => item.patientAddr === patientAddress);
-                
-                console.log("Filtered Medical History:", filteredMedicalHistory);
-    
+                //console.log("Filtered Medical History:", filteredMedicalHistory);
+
                 const modifiedList = filteredMedicalHistory.map(item => {
                     let hospitalHolder = item.hospitalAddr;
                     setHospitalAddress(hospitalHolder);
@@ -69,11 +69,14 @@ const AccountAccessPatient = ({data}) => {
                         lengthOfStay: splitAdmission[4],
                     };
                 });
-                setAuthorizedHospitals(modifiedList);
-                console.log("Authorized Hospitals: ", modifiedList)
+
+                // Filter out hospitals that are not in the authorized list
+                const authorizedModifiedList = modifiedList.filter(item => authorizedHospitals.includes(item.hospitalAddress));
+                setAuthorizedHospitals(authorizedModifiedList);
+               //console.log("Authorized Hospitals: ", authorizedModifiedList);
     
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
-                console.log("Pending Request: ", hospitalRequest);
+                //console.log("Pending Request: ", hospitalRequest);  
                
                 const hospitalsInfo = [];
                 for (const hospitalAddress of hospitalRequest) {
@@ -82,7 +85,7 @@ const AccountAccessPatient = ({data}) => {
                         name: hospitalInfo[0],
                     });
                 }
-                console.log("Hospital Names: ", hospitalsInfo);
+                console.log("Requesting Hospitals: ", hospitalsInfo);
                 setHospitalNames(hospitalsInfo)
                 
             } catch (error) {
@@ -90,10 +93,12 @@ const AccountAccessPatient = ({data}) => {
             }
         }
         authorizedHospitalList();
-    }, [patientAddress]);
+
+    }, [patientAddress, grantAccess, revokeAccess]);
 
     const handleGrantAccess = async () => {
         try {
+            console.log("Grant Address: ", hospitalAddress);
             await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress }); 
             console.log('Permission granted to hospital:', hospitalAddress);
         } catch (error) {
@@ -175,7 +180,6 @@ const AccountAccessPatient = ({data}) => {
                                 <div key={index} className={styles.data_reqAccess}>
                                     <p>{hospital.name}</p>
                                     <button onClick={handleGrantAccess}>Grant Access</button>
-                                    {/* <button onClick={handleDeclineAccessClick}>Reject</button> */}
                                 </div>
                             ))}
                         </div>

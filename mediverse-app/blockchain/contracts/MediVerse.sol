@@ -242,6 +242,7 @@ contract MediVerse {
     function givePermission(address _hospitalAddr) public  {
         require(!isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital already authorized");
         address[] storage pending = pendingRequests[msg.sender];
+        
         for (uint i = 0; i < pending.length; i++) {
             if (pending[i] == _hospitalAddr) {
                 pending[i] = pending[pending.length - 1];

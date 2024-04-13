@@ -18,6 +18,7 @@ const AccountAccessHospital = () => {
     const [unauthorizedList, setUnauthorizedList] = useState([]);
     const [pendingRequests, setPendingRequests] = useState([]);
     const [patientAddress, setPatientAddress] = useState('');
+    const [requestPermission, setRequestPermission] = useState(false); 
 
     const setAddress = async () => {
         try {
@@ -121,7 +122,7 @@ const AccountAccessHospital = () => {
                     await setAddress();
                     return;
                 }
-    
+        
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
@@ -139,7 +140,7 @@ const AccountAccessHospital = () => {
                         creationDate
                     };
                 });
-    
+        
                 // Filter medical records to include only those made by the specific hospital
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
                 
@@ -149,22 +150,22 @@ const AccountAccessHospital = () => {
                         firstMedicalRecords[item.patientAddr] = item;
                     }
                 });
-
+        
                 const uniqueMedicalRecords = Object.values(firstMedicalRecords);
-
+                
                 const modifiedMedicalHistoryPromises = uniqueMedicalRecords.map(async item => {
                     let patientAddress = item.patientAddr;
                     const patientAddr = item.patientAddr;
                     const creationDate = item.creationDate;
-
+        
                     async function isHospitalAuthorized(patientAddress, hospitalAddress) {
                         const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
                         return authorizedHospitals.includes(hospitalAddress);
                     }
-
+        
                     const isAuthorized = await isHospitalAuthorized(patientAddress, hospitalAddress);
                     console.log("Is hospital authorized?", isAuthorized);
-
+        
                     if (!isAuthorized) {
                         const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
                         const patientNameHolder = patientInfo[0].split('+');
@@ -177,35 +178,37 @@ const AccountAccessHospital = () => {
                             patientAddr,
                             patientName,
                             unauthorized: true,
+                            hasPermission: false, // Assume initially no permission
                             creationDate,
                             status
                         };
                     
                     } else {
-                        // Here, you need to return the authorized record
-                        const splitAdmission = item.admission.split('+');
-                        const splitDiagnosis = item.diagnosis.split('+');
-                        const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
-                        const patientNameHolder = patientInfo[0].split('+');
-                        const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-
-                        return {
-                            patientAddr,
-                            patientName,
-                            dateConsultation: splitDiagnosis[1],
-                            // hospitalName: splitAdmission[1],
-                            // admissionDate: splitAdmission[2],
-                            // dischargeDate: splitAdmission[3],
-                            // lengthOfStay: splitAdmission[4],
-                            creationDate
-                        };
+                        // Check if the request has been granted
+                        const hasPermission = await mvContract.methods.checkPermission(patientAddr, hospitalAddress).call();
+                        if (hasPermission) {
+                            // If permission granted, return null to remove from list
+                            return null;
+                        } else {
+                            // Otherwise, return the record
+                            const splitAdmission = item.admission.split('+');
+                            const splitDiagnosis = item.diagnosis.split('+');
+                            const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
+                            const patientNameHolder = patientInfo[0].split('+');
+                            const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+        
+                            return {
+                                patientAddr,
+                                patientName,
+                                dateConsultation: splitDiagnosis[1],
+                                creationDate
+                            };
+                        }
                     }
                 });
-
                 const modifiedMedicalHistory = await Promise.all(modifiedMedicalHistoryPromises);
-                const unauthorizedMedicalHistory = modifiedMedicalHistory.filter(record => record.unauthorized);
-    
-                setUnauthorizedList(unauthorizedMedicalHistory);
+                const unauthorizedMedicalHistory = modifiedMedicalHistory.filter(record => record && record.unauthorized);
+                setUnauthorizedList(unauthorizedMedicalHistory.filter(record => record !== null));
                 console.log("Unauthorized Medical History:", unauthorizedMedicalHistory);
                 
             } catch (error) {
@@ -213,22 +216,28 @@ const AccountAccessHospital = () => {
             }
         }
         unauthorizedPatientList();
-    }, [hospitalAddress]);
+    }, [hospitalAddress, requestPermission]);
 
     const handleRequest = async () => {
         try {
-            await mvContract.methods.requestPermission(patientAddress).send({ from: hospitalAddress }); 
-            console.log('Access requested to:', patientAddress);
-            setPendingRequests('Pending');
-            alert("Request Sent!");
+            const pendingRequests = await mvContract.methods.getPendingRequests(patientAddress).call();  
+            const hasPending = pendingRequests.includes(hospitalAddress);
+            if (hasPending) {
+                console.log('Hospital already has a pending request.');
+            } else {
+                await mvContract.methods.requestPermission(patientAddress).send({ from: hospitalAddress });
+                console.log('Access requested to:', patientAddress);
+                setPendingRequests('Pending');
+                alert("Request Sent!");
+                setRequestPermission(true);
+            }
         } catch (error) {
             console.error('Error requesting access:', error);
-            console.log('Error requesting access')
+            console.log('Error requesting access');
         }
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
-        //console.log(patientAddr);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory1Hospital/',
             query: { patientAddr, creationDate }
