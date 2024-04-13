@@ -43,14 +43,16 @@ const HospitalHome = ({data1, data2}) => {
         }
     };
 
-    async function getLatestCreationDate(array) {
+
+    function getLatestCreationDate(array) {
         if (!Array.isArray(array)) {
             return "Input is not an array";
-          }
-        if (array.length <= 3) {
-            return array;
+        }
+
+        if (array.sort.length <= 3) {
+            return array.map(item => item[1]);
         } else {
-            return array.slice(-3);
+            return array.slice(-3).map(item => item[1]);
         }
     };
 
@@ -84,29 +86,63 @@ const HospitalHome = ({data1, data2}) => {
                         creationDate: creationDateInt
                     };
                 });
+
+                //console.log(parsedMedicalHistory);
+
+                const patientAddrAndCreationDate = parsedMedicalHistory.map(entry => [entry.creationDate, entry.patientAddr ]);
+                console.log(patientAddrAndCreationDate);
+
+                console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate)[0]);
                 
                 //? listOfCreationDates = array ng lahat ng creation dates
                 //* ito gamitin mo kapag hahanapin mo yung last 3 index
                 const listOfCreationDates = parsedMedicalHistory.map(item => item.creationDate);
                 setCreationDates(listOfCreationDates); 
-                console.log("Creation Dates: ", listOfCreationDates);
+                console.log(parsedMedicalHistory[0].patientAddr);
+                console.log(listOfCreationDates);
+                //console.log("Creation Dates: ", listOfCreationDates);
+                //console.log("Creation Dates: ", listOfCreationDates[0]);
+                //console.log("Creation Dates: ", listOfCreationDates[1]);
+                //console.log("Creation Dates: ", listOfCreationDates[2]);
 
                 // console.log(patientAddress);
-                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                
+                //* eto ung function for returning a list of Recent Patient bali tatlo sila 
+                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[0]))
+                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[1]))
+                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[2]))
+
+                // console.log(typeof creationDates);
+                // let creationDate = parseInt(creationDates);
+
+                // Print the latest three dates
+                // const latestThreeDates = getLatestCreationDate(listOfCreationDates);
+                // console.log("Latest three dates:", latestThreeDates);
+                
+
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+
+            async function parse(parsedMedicalHistory, address) {
+                const patientInfo = await mvContract.methods.getPatientInfo(address).call();
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-                // console.log(patientName);
-                console.log(patientInfo[2]);
 
-                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+                //console.log(patientName);
+                //console.log(patientInfo[2]); // Gender
 
-                const modifiedMedicalHistory = filteredMedicalHistory.map(item => {
+                console.log(hospitalAddress);
+                console.log(parsedMedicalHistory[1].hospitalAddr);
+                const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    // console.log("Diagnosis:", splitDiagnosis[0]);
-                    // console.log("Creation Date: ", item.creationDate);
+                    //console.log("Diagnosis:", splitDiagnosis[0]);
+                    //console.log("Creation Date: ", item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    // console.log("Admission Date:", splitAdmission[2]);
-                    // console.log("Discharge Date:", splitAdmission[3]);
+                    //console.log("Admission Date:", splitAdmission[2]);
+                    //console.log("Discharge Date:", splitAdmission[3]);
+
+
                     return {
                         patientName,
                         admissionDate: splitAdmission[2],
@@ -118,16 +154,7 @@ const HospitalHome = ({data1, data2}) => {
                 });
                 setMedicalHistory(modifiedMedicalHistory);
 
-                // console.log(typeof creationDates);
-                // let creationDate = parseInt(creationDates);
-
-                // Print the latest three dates
-                let latestThreeDates = getLatestCreationDate(creationDates);
-                console.log("Latest three dates:", latestThreeDates);
-                
-
-            } catch (error) {
-                console.error('Error fetching medical history:', error);
+                return [patientName, patientInfo[2]]
             }
         }
 
