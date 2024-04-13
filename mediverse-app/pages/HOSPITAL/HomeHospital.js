@@ -152,6 +152,7 @@ const HospitalHome = ({data1, data2}) => {
                 let listDiagnosis = getLatestListDiagnosis(patientAddrAndCreationDate);
                 let listAdmission = getLatestListAdmission(patientAddrAndCreationDate);
                 //console.log(listAddress)
+                // * eto ung recent patients naka auto na yan mag  anti duplicate
                 for (let i = 0; i < listAddress.length; i++) {
                     let p = await parse(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
                     console.log(p);
