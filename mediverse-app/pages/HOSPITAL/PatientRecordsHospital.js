@@ -7,19 +7,19 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+//? Changes: Added lines of code if the hospital is authorized to view the medical history if the patient
 
 const MedicalHistoryPatient = () => {
 
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
-    let patientAddress, patientName;
 
     const setAddress = async () => {
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await web3.eth.getAccounts();
             console.log("Account:", accounts[0]);
-            setHospitalAddress(accounts[0]); // Set the hospital address
+            setHospitalAddress(accounts[0]); 
         } catch (error) {
             alert('Error fetching hospital address.');
         }
@@ -34,19 +34,16 @@ const MedicalHistoryPatient = () => {
                     await setAddress();
                     return;
                 }
-
-                //* Retrieve muna ang hospital na currently naka logged in
+    
+                //* Retrieve the hospital currently logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                // console.log(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
-
+                hospitalName = hospitalInfo[0]; //* Get the hospital name
+    
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                //console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
-                    patientAddress = patientAddr;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -60,53 +57,72 @@ const MedicalHistoryPatient = () => {
                         creationDate
                     };
                 });
-                // console.log(parsedMedicalHistory);
+    
+                // Filter medical records to include only those made by the specific hospital
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+    
+                // Create an object to store the first medical record for each patient
+                const firstMedicalRecords = {};
+                filteredMedicalHistory.forEach(item => {
+                    if (!firstMedicalRecords[item.patientAddr]) {
+                        firstMedicalRecords[item.patientAddr] = item;
+                    }
+                });
+    
+                // Convert the object values (first medical records) to an array
+                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
                 
-                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
-                //console.log(patientInfo);
-                const patientNameHolder = patientInfo[0].split('+');
-                patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-            
-                const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
-                    // const splitDiagnosis = item.diagnosis.split('+');
-                    // console.log("Diagnosis:", splitDiagnosis[0]);
-                    // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
-                    // console.log("Signs and Symptoms:", splitSignsAndSymptoms);
-                    // const splitTreatmentProcedure = item.treatmentProcedure.split('+');
-                    // console.log("Treatment Procedure:", splitTreatmentProcedure);
-                    // const splitTests = item.tests.split('+');
-                    // console.log("Treatment Procedure:", splitTests);
-                    // const splitMedications = item.medications.split('+');
-                    // console.log("Medications:", splitMedications);
-                    //console.log("Creation Date: ",item.creationDate);
+                // Process each medical record to format it as needed
+                const modifiedMedicalHistory = uniqueMedicalRecords.map(item => {
                     const splitAdmission = item.admission.split('+');
-                    // console.log("Admission Date:", splitAdmission[2]);
-                    // console.log("Discharge Date:", splitAdmission[3]);
                     return {
-                        patientName,
+                        patientAddr: item.patientAddr,
+                        patientName: "", // Fetch patient name here
                         physician: item.physician,
                         hospitalName: splitAdmission[1],
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
-                        lengOfStay: splitAdmission[4],
-                        patientAddr: item.patientAddr,
+                        lengthOfStay: splitAdmission[4],
                         creationDate: item.creationDate
                     };
                 });
+    
+                // Fetch patient names for each medical record
+                const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
+                const patientInfoPromises = patientAddresses.map(address => mvContract.methods.getPatientInfo(address).call());
+                const allPatientInfo = await Promise.all(patientInfoPromises);
+                allPatientInfo.forEach((info, index) => {
+                    const patientNameHolder = info[0].split('+');
+                    modifiedMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                });
+    
                 setMedicalHistory(modifiedMedicalHistory);
-                // console.log("Modified", modifiedMedicalHistory);
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
         }
         fetchMedicalHistory();
     }, [hospitalAddress]);
+    
+    const clickRow = async (patientAddr, creationDate) => {
 
-    const clickRow = (patientAddr, creationDate) => {
-        router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
-        });
+        async function isHospitalAuthorized(patientAddr, hospitalAddress) {
+            const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddr).call();
+            return authorizedHospitals.includes(hospitalAddress);
+        }
+        
+        const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
+        console.log("Is hospital authorized?", isAuthorized);
+      
+       if (isAuthorized){
+            router.push({
+                pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+                query: { patientAddr, creationDate }
+            });
+       } else {
+            alert("You don't have permission do view this record.");
+            console.log("You don't have permission do view this record.");
+       }
     };
 
     const handleAdd = () => {

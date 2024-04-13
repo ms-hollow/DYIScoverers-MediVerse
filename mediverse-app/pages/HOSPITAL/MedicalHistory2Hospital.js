@@ -17,8 +17,6 @@ const MedicalHistoryHospital = () => {
     const router = useRouter();
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
-    // console.log('Patient Address:', patientAddr); 
-    // console.log('Creation Date:', creationDate);
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
         patientName: '',
@@ -71,7 +69,7 @@ const MedicalHistoryHospital = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
             alert('Error fetching hospital address.');
@@ -79,6 +77,7 @@ const MedicalHistoryHospital = () => {
     }
 
     useEffect(() => {
+
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob;
@@ -91,7 +90,7 @@ const MedicalHistoryHospital = () => {
 
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                console.log(hospitalInfo[0]);
+                //(hospitalInfo[0]);
                 hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 let patientAddress;
@@ -112,7 +111,7 @@ const MedicalHistoryHospital = () => {
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                console.log(getPatientMedicalHistory);
+                //console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -133,7 +132,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
                 //* '+' means paghihiwalayin ang concatenated data sa isang array
@@ -197,7 +196,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
                 //! Important para sa pagpopulate ng table. 
@@ -260,7 +259,7 @@ const MedicalHistoryHospital = () => {
 
                     if (Array.isArray(item.treatmentProcedure)) {
                         item.treatmentProcedure.forEach(array => {
-                            const [name, medicalProvider, dateStarted, dateEnd, duration] = array;
+                            const [_, name, medicalProvider, dateStarted, dateEnd, duration] = array;
                             tpName.push(name);
                             tpMedicalProvider.push(medicalProvider);
                             tpDateStarted.push(dateStarted);
@@ -271,7 +270,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.tests)) {
                         item.tests.forEach(array => {
-                            const [type, orderingPhysician, date, reviewingPhysician, result] = array;
+                            const [_, type, orderingPhysician, date, reviewingPhysician, result] = array;
                             testType.push(type);
                             testOrderingPhysician.push(orderingPhysician);
                             testDate.push(date);
@@ -282,7 +281,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.medications)) {
                         item.medications.forEach(array => {
-                            const [name, date, physician, frequency, duration, endDate] = array;
+                            const [_, name, date, physician, frequency, duration, endDate] = array;
                             medicationName.push(name);
                             prescriptionDate.push(date);
                             prescribingPhysician.push(physician);
@@ -294,7 +293,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(array => {
-                            const [hospitalName, admissionDate, dischargeDate, stayLength] = array;
+                            const [_, hospitalName, admissionDate, dischargeDate, stayLength] = array;
                             admissionHospitalName.push(hospitalName);
                             aadmissionDate.push(admissionDate);
                             adischargeDate.push(dischargeDate);
@@ -350,7 +349,7 @@ const MedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory)
+                //console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -359,15 +358,18 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
+    const toggleButton = (patientAddr, creationDate) => {
+        router.push({
+            pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
+            query: { patientAddr, creationDate }
+        });
+    };
 
     return ( 
         <Layout pageName="Medical History">
         <>
-            {medicalHistory && (
-            <div className={styles.container}>      
-                <div className={styles.reserveSpace}></div>
-                
-                {/* ----------------- Patient Basic Info (Name, Age, Date of Birth and Gender) -----------------  */}
+            <div id='container' className={styles.container}>   
+                <div className={styles.outerContainer}>
                 <div className={styles.basicInfoContainer}>
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Patient Name</p>   
@@ -382,37 +384,40 @@ const MedicalHistoryHospital = () => {
                         <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
                     </div>
                 </div>
+                </div>   
 
-                <div className={styles.basicInfoContainer}>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Doctor Consulted</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
-                        {/**<p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p> */}
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Date of Diagnosis</p>  
-                        <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Diagnosis</p>   
-                        <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_des}>
-                        <p className={styles.headingAttrb}>Description</p>   
-                        <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
+                <div className={styles.outerContainer}>
+                    <div className={styles.basicInfoContainer}>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Doctor Consulted</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
+                            {/**<p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p> */}
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Date of Diagnosis</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Diagnosis</p>   
+                            <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
+                        </div>
+                        <div className={styles.headingAttrb_des}>
+                            <p className={styles.headingAttrb}>Description</p>   
+                            <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
+                        </div>
                     </div>
                 </div>
-        
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Signs and Symptoms</p>
-                    <div className={styles.sANDs_heading}>
-                        <p>Symptoms</p>
-                        <p>Duration</p>
-                        <p>Severity</p>
-                        <p>Location</p>
-                    </div>
 
-                    <div className={styles.scrollableTable_container}>
+                <div className={styles.scrollable_container}>
+                    <p className={styles.table_title}>Signs and Symptoms</p>
+                        <div className={styles.sANDs_heading}>
+                            <p>Symptoms</p>
+                            <p>Duration</p>
+                            <p>Severity</p>
+                            <p>Location</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
                             {medicalHistory.symptoms.names.map((symptom, index) => (
                                 <div key={index} className={styles.sANDs_data}>
                                     <p>{symptom}</p>
@@ -421,103 +426,104 @@ const MedicalHistoryHospital = () => {
                                     <p>{medicalHistory.symptoms.location[index]}</p>
                                 </div>
                             ))}
-                    </div>
-                </div>
+                        </div>
 
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Treatment/Procedure</p>
-                    <div className={styles.treatment_heading}>
-                        <p>Treatment/Procedure</p>
-                        <p>Medical Team/Provider</p>
-                        <p>Date Started</p>
-                        <p>Date End</p>
-                        <p>Duration</p>
-                    </div>
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Treatment/Procedure</p>
+                        <div className={styles.treatment_heading}>
+                            <p>Treatment/Procedure</p>
+                            <p>Medical Team/Provider</p>
+                            <p>Date Started</p>
+                            <p>Date End</p>
+                            <p>Duration</p>
+                        </div>
 
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.treatmentProcedure.names.map((data, index) => (
-                            <div key={index} className={styles.treatment_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
-                                <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
-                            </div>
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.treatmentProcedure.names.map((data, index) => (
+                                <div key={index} className={styles.treatment_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.treatmentProcedure.medicalProviders[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateStarted[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
+                                    <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
+                                </div>
                         ))}
-                    </div>
-                </div>
-
-
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Test</p>
-                    <div className={styles.test_heading}>
-                        <p>Type of Test</p>
-                        <p>Ordering Physician</p>
-                        <p>Date</p>
-                        <p>Reviewing Physician</p>
-                        <p>Result</p>
+                        </div>
                     </div>
 
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.tests.types.map((data, index) => (
-                            <div key={index} className={styles.test_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
-                                <p>{medicalHistory.tests.dates[index]}</p>
-                                <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
-                                <p>{medicalHistory.tests.results[index]}</p>
-                            </div>
-                        ))}
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Test</p>
+                        <div className={styles.test_heading}>
+                            <p>Type of Test</p>
+                            <p>Ordering Physician</p>
+                            <p>Date</p>
+                            <p>Reviewing Physician</p>
+                            <p>Result</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.tests.types.map((data, index) => (
+                                <div key={index} className={styles.test_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.tests.orderingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.dates[index]}</p>
+                                    <p>{medicalHistory.tests.reviewingPhysicians[index]}</p>
+                                    <p>{medicalHistory.tests.results[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Medication</p>
-                    <div className={styles.medication_heading}>
-                        <p>Medication</p>
-                        <p>Date of Prescription</p>
-                        <p>Prescribing Physician</p>
-                        <p>Frequency</p>
-                        <p>Duration</p>
-                        <p>End Date</p>
+                    
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Medication</p>
+                        <div className={styles.medication_heading}>
+                            <p>Medication</p>
+                            <p>Date of Prescription</p>
+                            <p>Prescribing Physician</p>
+                            <p>Frequency</p>
+                            <p>Duration</p>
+                            <p>End Date</p>
+                        </div>
+
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.medications.names.map((data, index) => (
+                                <div key={index} className={styles.medication_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.medications.prescriptionDates[index]}</p>
+                                    <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
+                                    <p>{medicalHistory.medications.frequencies[index]}</p>
+                                    <p>{medicalHistory.medications.durations[index]}</p>
+                                    <p>{medicalHistory.medications.endDates[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.medications.names.map((data, index) => (
-                            <div key={index} className={styles.medication_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.medications.prescriptionDates[index]}</p>
-                                <p>{medicalHistory.medications.prescribingPhysicians[index]}</p>
-                                <p>{medicalHistory.medications.frequencies[index]}</p>
-                                <p>{medicalHistory.medications.durations[index]}</p>
-                                <p>{medicalHistory.medications.endDates[index]}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                    <div className={styles.table_container}>
+                        <p className={styles.table_title}>Admission</p>
+                        <div className={styles.sANDs_heading}>
+                            <p>Hospital</p>
+                            <p>Admission Date</p>
+                            <p>Discharge Date</p>
+                            <p>Length of Stay</p>
+                        </div>
 
-                <div className={styles.table_container}>
-                    <p className={styles.table_title}>Admission</p>
-                    <div className={styles.sANDs_heading}>
-                        <p>Hospital</p>
-                        <p>Admission Date</p>
-                        <p>Discharge Date</p>
-                        <p>Length of Stay</p>
-                    </div>
-
-                    <div className={styles.scrollableTable_container}>
-                        {medicalHistory.admissions.hospitalNames.map((data, index) => (
-                            <div key={index} className={styles.sANDs_data}>
-                                <p>{data}</p>
-                                <p>{medicalHistory.admissions.admissionDates[index]}</p>
-                                <p>{medicalHistory.admissions.dischargeDates[index]}</p>
-                                <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
-                            </div>
-                        ))}
+                        <div className={styles.scrollableTable_container}>
+                            {medicalHistory.admissions.hospitalNames.map((data, index) => (
+                                <div key={index} className={styles.sANDs_data}>
+                                    <p>{data}</p>
+                                    <p>{medicalHistory.admissions.admissionDates[index]}</p>
+                                    <p>{medicalHistory.admissions.dischargeDates[index]}</p>
+                                    <p>{medicalHistory.admissions.lengthsOfStay[index]}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-            )}
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}>
+                <img src="/edit.svg" alt="Edit Icon"/>
+            </button>
         </>
         </Layout>
      );

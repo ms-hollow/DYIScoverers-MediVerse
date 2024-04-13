@@ -3,6 +3,9 @@ import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse";
 
 //! Hindi na tatanggalin, maglalagay nalang ng parameters
 /**
@@ -16,6 +19,7 @@ import React, { useState, useEffect } from 'react';
  */
 
 const UpdatePatientHOspital = () => {
+    const router = useRouter();
 
     const [formData, setFormData] = useState({ 
         firstName: '', 
@@ -55,6 +59,14 @@ const UpdatePatientHOspital = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+        const isEmpty = requiredFields.some(field => !formData[field]);
+        
+        if (isEmpty) {
+            alert('Please fill in all required fields.');
+            return; // Exit early if any required field is empty
+        }
+
         const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
         console.log("Account:", accounts[0]);
         console.log('Form submitted:', formData);
@@ -206,8 +218,8 @@ const UpdatePatientHOspital = () => {
                         </div>
                     </div>
 
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/Register3Patient/">Update</Link>
+                    <button className={styles.submitButton} onClick={handleSubmit}>Update
+                        {/*<Link href="/PATIENT/Register3Patient/">Update</Link>*/}
                     </button>
                 </form>
             </div>

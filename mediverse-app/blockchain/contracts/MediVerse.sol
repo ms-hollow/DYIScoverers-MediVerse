@@ -78,7 +78,6 @@ contract MediVerse {
         string memory _address
     ) public {
         require(!isRegistered[msg.sender], "Patient already registered");
-
         Patient storage patient = patients[msg.sender];
         patient.name = _name;
         patient.age = _age;
@@ -88,7 +87,6 @@ contract MediVerse {
         patient.weight = _weight;
         patient.contactNum = _contactNum;
         patient.addr = _address;
-
         patient.creationDate = block.timestamp;
         patientList.push(msg.sender);
         isRegistered[msg.sender] = true;
@@ -154,13 +152,10 @@ contract MediVerse {
         string memory _medications,
         string memory _admission
     ) public {
-
         require(isRegistered[_patientAddr], "Patient not registered");
-
         if (!isHospitalAuthorized(_patientAddr, msg.sender)) {
             patients[_patientAddr].authorizedHospitals.push(msg.sender);
         }
-
         MedicalHistory memory history;
         history.patientAddr = _patientAddr;
         history.hospitalAddr = msg.sender;
@@ -177,6 +172,34 @@ contract MediVerse {
         medicalHistoryList.push(history);
     }
 
+    function editMedicalHistory(
+        address _patientAddr,
+        string memory _physician,
+        string memory _diagnosis,
+        string memory _signsAndSymptoms,
+        string memory _treatmentProcedure,
+        string memory _tests,
+        string memory _medications,
+        string memory _admission
+    ) public {
+        MedicalHistory[] storage history = medicalHistories[_patientAddr];
+
+        require(history.length > 0, "No medical history records found for the patient");
+        for (uint i = 0; i < history.length; i++) {
+            if (history[i].hospitalAddr == msg.sender) {
+                history[i].physician = _physician;
+                history[i].diagnosis = _diagnosis;
+                history[i].signsAndSymptoms = _signsAndSymptoms;
+                history[i].treatmentProcedure = _treatmentProcedure;
+                history[i].tests = _tests;
+                history[i].medications = _medications;
+                history[i].admission = _admission;
+                return; 
+            }
+        }
+        revert("Medical history record not found for the specified hospital");
+    }
+
     function getMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {
         if (msg.sender == _patientAddr) {
             return medicalHistories[_patientAddr];
@@ -186,18 +209,15 @@ contract MediVerse {
         }
     }
 
-    // function that will retrieve all the list of medical record
     function getAllMedicalHistory() public view returns (MedicalHistory[] memory) {
         return medicalHistoryList;
     }
 
-    // Function to retrieve patient information
     function getPatientInfo(address patientAddress) external view returns (string memory, string memory, string memory, string memory, string memory, string memory, string memory, string memory, address[] memory, uint) {
         Patient storage patient = patients[patientAddress];
         return (patient.name, patient.age, patient.gender, patient.dateOfBirth, patient.height, patient.weight, patient.contactNum, patient.addr, patient.authorizedHospitals, patient.creationDate);
     }
 
-    // Function to retrieve hospital information
     function getHospitalInfo(address hospitalAddress) external view returns (string memory, string memory, string memory, uint) {
         Hospital storage hospital = hospitals[hospitalAddress];
         return (hospital.name, hospital.contactNum, hospital.addr, hospital.creationDate);
@@ -205,19 +225,15 @@ contract MediVerse {
     
     function givePermission(address _hospitalAddr) public  {
         require(!isHospitalAuthorized(msg.sender, _hospitalAddr), "Hospital already authorized");
-        // Check if the hospital is already in the pending requests
-        bool isPending = false;
-        for (uint i = 0; i < pendingRequests[msg.sender].length; i++) {
-            if (pendingRequests[msg.sender][i] == _hospitalAddr) {
-                isPending = true;
+        address[] storage pending = pendingRequests[msg.sender];
+        for (uint i = 0; i < pending.length; i++) {
+            if (pending[i] == _hospitalAddr) {
+                pending[i] = pending[pending.length - 1];
+                pending.pop();
                 break;
             }
         }
-        // If not in pending, add to both authorized and pending requests
-        if (!isPending) {
-            patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
-            pendingRequests[msg.sender].push(_hospitalAddr);
-        }
+        patients[msg.sender].authorizedHospitals.push(_hospitalAddr);
     }
 
     function revokeAccess(address _hospitalAddr) public {
@@ -231,8 +247,7 @@ contract MediVerse {
             }
         }
     }
-    
-    // Function that will request access for patients medical record
+
     function requestPermission(address _patientAddr) public {
         require(!isHospitalAuthorized(_patientAddr, msg.sender), "Request already sent");
         pendingRequests[_patientAddr].push(msg.sender);
@@ -252,39 +267,5 @@ contract MediVerse {
 
     function getHospitalList() public view returns (address[] memory) {
         return hospitalList;
-    }
-
-    function searchByName(string memory query) public view returns (address[] memory) {
-        address[] memory searchResults = new address[](patientList.length + hospitalList.length);
-
-        uint resultIndex = 0;
-
-        // Search among patients by name
-        for (uint i = 0; i < patientList.length; i++) {
-            address patientAddr = patientList[i];
-            if (compareStringsIgnoreCase(patients[patientAddr].name, query)) {
-                searchResults[resultIndex] = patientAddr;
-                resultIndex++;
-            }
-        }
-
-        // Search among hospitals by name
-        for (uint j = 0; j < hospitalList.length; j++) {
-            if (compareStringsIgnoreCase(hospitals[hospitalList[j]].name, query)) {
-                searchResults[resultIndex] = hospitalList[j];
-                resultIndex++;
-            }
-        }
-
-        // Resize the array to remove any unused slots
-        assembly {
-            mstore(searchResults, resultIndex)
-        }
-
-        return searchResults;
-    }
-
-    function compareStringsIgnoreCase(string memory a, string memory b) internal pure returns (bool) {
-        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 }
