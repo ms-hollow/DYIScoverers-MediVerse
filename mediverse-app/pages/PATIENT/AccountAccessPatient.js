@@ -56,7 +56,16 @@ const AccountAccessPatient = ({data}) => {
                 const filteredMedicalHistory = medicalHistoryString.filter(item => item.patientAddr === patientAddress);
                 //console.log("Filtered Medical History:", filteredMedicalHistory);
 
-                const modifiedList = filteredMedicalHistory.map(item => {
+                const firstMedicalRecords = {};
+                filteredMedicalHistory.forEach(item => {
+                    if (!firstMedicalRecords[item.patientAddr]) {
+                        firstMedicalRecords[item.patientAddr] = item;
+                    }
+                });
+
+                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
+
+                const modifiedList = uniqueMedicalRecords.map(item => {
                     let hospitalHolder = item.hospitalAddr;
                     setHospitalAddress(hospitalHolder);
                     const splitDiagnosis = item.diagnosis.split('+');
@@ -99,19 +108,24 @@ const AccountAccessPatient = ({data}) => {
     const handleGrantAccess = async () => {
         try {
             console.log("Grant Address: ", hospitalAddress);
-            await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress }); 
+            await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress });
             console.log('Permission granted to hospital:', hospitalAddress);
+            // After granting access, set the grantAccess state to trigger a refresh
+            setGrantAccess(prevState => !prevState); // Toggle grantAccess state
         } catch (error) {
             console.error('Error granting permission:', error);
         }
     };
-
+    
+    // Function to handle revoking access
     const handleRevokeAccess = async () => {
         try {
             console.log("Revoke Address: ", hospitalAddress);
-            await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress }); 
+            await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
             console.log('Access was removed:', hospitalAddress);
             alert('Access was removed:', hospitalAddress);
+            // After revoking access, set the revokeAccess state to trigger a refresh
+            setRevokeAccess(prevState => !prevState); // Toggle revokeAccess state
         } catch (error) {
             console.error('Error revoking access:', error);
         }

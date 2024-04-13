@@ -19,6 +19,7 @@ const AccountAccessHospital = () => {
     const [pendingRequests, setPendingRequests] = useState([]);
     const [patientAddress, setPatientAddress] = useState('');
     const [requestPermission, setRequestPermission] = useState(false); 
+    const [sentRequestPatients, setSentRequestPatients] = useState([]);
 
     const setAddress = async () => {
         try {
@@ -172,7 +173,8 @@ const AccountAccessHospital = () => {
                         const patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                         
                         const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
-                        const status = pendingRequests.length > 0 ? 'Pending' : '';
+                        const hasPendingRequest = pendingRequests.includes(hospitalAddress) || sentRequestPatients.includes(patientAddr);
+                        const status = hasPendingRequest ? 'Pending' : '';
                         setPendingRequests(status);
                         return {
                             patientAddr,
@@ -184,12 +186,6 @@ const AccountAccessHospital = () => {
                         };
                     
                     } else {
-                        // Check if the request has been granted
-                        const hasPermission = await mvContract.methods.checkPermission(patientAddr, hospitalAddress).call();
-                        if (hasPermission) {
-                            // If permission granted, return null to remove from list
-                            return null;
-                        } else {
                             // Otherwise, return the record
                             const splitAdmission = item.admission.split('+');
                             const splitDiagnosis = item.diagnosis.split('+');
@@ -203,7 +199,6 @@ const AccountAccessHospital = () => {
                                 dateConsultation: splitDiagnosis[1],
                                 creationDate
                             };
-                        }
                     }
                 });
                 const modifiedMedicalHistory = await Promise.all(modifiedMedicalHistoryPromises);
@@ -218,18 +213,20 @@ const AccountAccessHospital = () => {
         unauthorizedPatientList();
     }, [hospitalAddress, requestPermission]);
 
-    const handleRequest = async () => {
+    const handleRequest = async (patientAddr) => {
         try {
-            const pendingRequests = await mvContract.methods.getPendingRequests(patientAddress).call();  
+            const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
             const hasPending = pendingRequests.includes(hospitalAddress);
-            if (hasPending) {
-                console.log('Hospital already has a pending request.');
+    
+            if (hasPending || sentRequestPatients.includes(patientAddr)) {
+                console.log('Hospital already has a pending request for this patient.');
             } else {
-                await mvContract.methods.requestPermission(patientAddress).send({ from: hospitalAddress });
-                console.log('Access requested to:', patientAddress);
+                await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
+                console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
                 alert("Request Sent!");
                 setRequestPermission(true);
+                setSentRequestPatients([...sentRequestPatients, patientAddr]);
             }
         } catch (error) {
             console.error('Error requesting access:', error);
@@ -291,7 +288,7 @@ const AccountAccessHospital = () => {
                                 <div key={data.patientAddr} className={styles.data_reqAccess}>
                                     <p>{data.patientName}</p>
                                     <p>{data.status}</p>
-                                    <button onClick={handleRequest}>Request</button>
+                                    <button onClick={() => handleRequest(data.patientAddr)}>Request</button>
                                 </div>
                             ))}
                         </div>
