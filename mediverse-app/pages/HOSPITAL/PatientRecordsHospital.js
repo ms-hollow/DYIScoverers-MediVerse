@@ -104,18 +104,18 @@ const MedicalHistoryPatient = () => {
                 });
     
 
-                //setMedicalHistory(modifiedMedicalHistory);
+                setMedicalHistory(modifiedMedicalHistory);
 
-                const searchTerm = "";
-                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchTerm.toLowerCase()));
+                // const searchTerm = "";
+                // const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchTerm.toLowerCase()));
 
-                setMedicalHistory(results);
+                // setMedicalHistory(results);
 
-                if (results.length > 0) {
-                    console.log("Found:", results);
-                } else {
-                    console.log("No matching entry found.");
-                }
+                // if (results.length > 0) {
+                //     console.log("Found:", results);
+                // } else {
+                //     console.log("No matching entry found.");
+                // }
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
