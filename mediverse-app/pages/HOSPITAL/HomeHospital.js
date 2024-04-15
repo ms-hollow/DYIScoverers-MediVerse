@@ -45,14 +45,63 @@ const HospitalHome = ({data1, data2}) => {
 
 
     function getLatestCreationDate(array) {
+        const lastOccurrenceMap = new Map();
+
+        for (let i = array.length - 1; i >= 0; i--) {
+            const firstElement = array[i][0];
+            // If the map doesn't have the first element, or if it's the first occurrence of this element, add it to the map
+            if (!lastOccurrenceMap.has(firstElement)) {
+                lastOccurrenceMap.set(firstElement, array[i]);
+            }
+        }
+
+        // Convert map values to an array and return the last three elements
+        return Array.from(lastOccurrenceMap.values()).slice(-3);
+        
+    };
+
+    function getLatestListAddress(array) {
+        let p = array.map(item =>  item[0] );
+        let unique = [...new Set(p)];
+
         if (!Array.isArray(array)) {
             return "Input is not an array";
         }
-
-        if (array.sort.length <= 3) {
-            return array.map(item => item[1]);
+        
+        if (unique.length <= 3) {
+            return unique.reverse();
         } else {
-            return array.slice(-3).map(item => item[1]);
+            return unique.slice(-3).reverse();
+        }
+    };
+
+    function getLatestListDiagnosis(array) {
+        let p = array.map(item =>  item[1] );
+        let unique = [...new Set(p)];
+
+        if (!Array.isArray(array)) {
+            return "Input is not an array";
+        }
+        
+        if (unique.length <= 3) {
+            return unique.reverse();
+        } else {
+            return unique.slice(-3).reverse();
+        }
+    };
+
+    function getLatestListAdmission(array) {
+        let p = array.map(item =>  item[2] );
+        let unique = [...new Set(p)];
+
+        if (!Array.isArray(array)) {
+            return "Input is not an array";
+        }
+        
+        if (unique.length <= 3) {
+            return unique.reverse();
+        } else {
+            return unique.slice(-3).reverse();
         }
     };
 
@@ -89,72 +138,63 @@ const HospitalHome = ({data1, data2}) => {
 
                 //console.log(parsedMedicalHistory);
 
-                const patientAddrAndCreationDate = parsedMedicalHistory.map(entry => [entry.creationDate, entry.patientAddr ]);
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+
+                console.log(filteredMedicalHistory);
+
+                const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
                 console.log(patientAddrAndCreationDate);
 
-                console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate)[0]);
+
+                console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate));
+
+                let listAddress = getLatestListAddress(patientAddrAndCreationDate);
+                let listDiagnosis = getLatestListDiagnosis(patientAddrAndCreationDate);
+                let listAdmission = getLatestListAdmission(patientAddrAndCreationDate);
+
                 
-                //? listOfCreationDates = array ng lahat ng creation dates
-                //* ito gamitin mo kapag hahanapin mo yung last 3 index
-                const listOfCreationDates = parsedMedicalHistory.map(item => item.creationDate);
-                setCreationDates(listOfCreationDates); 
-                console.log(parsedMedicalHistory[0].patientAddr);
-                console.log(listOfCreationDates);
-                //console.log("Creation Dates: ", listOfCreationDates);
-                //console.log("Creation Dates: ", listOfCreationDates[0]);
-                //console.log("Creation Dates: ", listOfCreationDates[1]);
-                //console.log("Creation Dates: ", listOfCreationDates[2]);
+                //console.log(listAddress)
+                // * eto ung recent patients naka auto na yan mag  anti duplicate
+                let p, temp =[]; 
+                for (let i = 0; i < listAddress.length; i++) {
+                    p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
+                    console.log(p);
+                    
+                    const obj = {
+                        patientName: p[0],
+                        admissionDate: p[1],
+                        dischargeDate: p[2],
+                        gender: p[3],
+                        diagnosis: p[4]
+                    };
 
-                // console.log(patientAddress);
+                    temp.push(obj);
+                }
+                setMedicalHistory(temp);
+                console.log(temp);
                 
-                //* eto ung function for returning a list of Recent Patient bali tatlo sila 
-                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[0]))
-                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[1]))
-                console.log(await parse(parsedMedicalHistory, getLatestCreationDate(patientAddrAndCreationDate)[2]))
-
-                // console.log(typeof creationDates);
-                // let creationDate = parseInt(creationDates);
-
-                // Print the latest three dates
-                // const latestThreeDates = getLatestCreationDate(listOfCreationDates);
-                // console.log("Latest three dates:", latestThreeDates);
                 
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
 
-            async function parse(parsedMedicalHistory, address) {
+            async function getRecentPatient(parsedMedicalHistory, address, diagnosis, admission) {
                 const patientInfo = await mvContract.methods.getPatientInfo(address).call();
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
 
                 //console.log(patientName);
                 //console.log(patientInfo[2]); // Gender
+                const splitDiagnosis = diagnosis.split('+');
+                //console.log("Diagnosis:", splitDiagnosis[0]);
+                const splitAdmission = admission.split('+');
+                //console.log("Admission Date:", splitAdmission[2]);
+                //console.log("Discharge Date:", splitAdmission[3]);
+                
+                
 
-                console.log(hospitalAddress);
-                console.log(parsedMedicalHistory[1].hospitalAddr);
-                const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
-                    const splitDiagnosis = item.diagnosis.split('+');
-                    //console.log("Diagnosis:", splitDiagnosis[0]);
-                    //console.log("Creation Date: ", item.creationDate);
-                    const splitAdmission = item.admission.split('+');
-                    //console.log("Admission Date:", splitAdmission[2]);
-                    //console.log("Discharge Date:", splitAdmission[3]);
-
-
-                    return {
-                        patientName,
-                        admissionDate: splitAdmission[2],
-                        dischargeDate: splitAdmission[3],
-                        gender: patientInfo[2],
-                        diagnosis: splitDiagnosis[0],
-                        creationDates
-                    };
-                });
-                setMedicalHistory(modifiedMedicalHistory);
-
-                return [patientName, patientInfo[2]]
+                return [patientName, splitAdmission[2], splitAdmission[3], patientInfo[2], splitDiagnosis[0]]
             }
         }
 
@@ -200,7 +240,7 @@ const HospitalHome = ({data1, data2}) => {
                         </div>
 
                         <div className={styles.dataContainer}>
-                            {data1.map(data => (
+                            {medicalHistory.map(data => (
                                 <Link href="/" key={data.id} className={styles.data}>
                                     <p className={styles.nameFormat}>{data.patientName}</p>
                                     <p>{data.admissionDate}</p>
