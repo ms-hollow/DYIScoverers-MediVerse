@@ -8,6 +8,10 @@ import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
 import React, { useState } from 'react';
 
+//TODO: Lagay ng function na magdedetect kung address ang nakalogged in sa metamask (kung patient ba or hospital)
+//TODO: Gamitin ang patientlist and hospitallist para makuha ang list ng registered user
+//TODO: Tignan kung included ba ang address na yon sa patientlist or sa hospitallist
+
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
   const [walletAddress, setWalletAddress] = useState("")

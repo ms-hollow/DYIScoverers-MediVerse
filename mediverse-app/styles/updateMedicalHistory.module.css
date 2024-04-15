@@ -212,6 +212,29 @@
     background-color: var(--cyan);
 }
 
+@keyframes loading {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+/* Button with loading animation */
+.submitButton.loading:after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: loading 1s infinite linear;
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
 .addButton {
   display: block; 
   margin: 10px auto; 
