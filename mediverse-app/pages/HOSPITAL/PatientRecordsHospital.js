@@ -1,4 +1,5 @@
 import styles from '../../styles/medicalHistory.module.css';
+import styles1 from '/styles/homeSidebarHeader.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from 'next/link';
@@ -23,6 +24,12 @@ const MedicalHistoryPatient = () => {
         } catch (error) {
             alert('Error fetching hospital address.');
         }
+    };
+
+    function searchInObject(obj, term) {
+        return Object.values(obj).some(value =>
+            typeof value === "string" && value.toLowerCase().includes(term.toLowerCase())
+        );
     };
 
     useEffect(() => {
@@ -96,7 +103,19 @@ const MedicalHistoryPatient = () => {
                     modifiedMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 });
     
-                setMedicalHistory(modifiedMedicalHistory);
+
+                //setMedicalHistory(modifiedMedicalHistory);
+
+                const searchTerm = "";
+                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchTerm.toLowerCase()));
+
+                setMedicalHistory(results);
+
+                if (results.length > 0) {
+                    console.log("Found:", results);
+                } else {
+                    console.log("No matching entry found.");
+                }
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -128,6 +147,12 @@ const MedicalHistoryPatient = () => {
     const handleAdd = () => {
         router.push('/HOSPITAL/AddPatient/');
     };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            
+        }
+    };
     
     return (  
         <Layout pageName = "Patient Records">
@@ -155,6 +180,10 @@ const MedicalHistoryPatient = () => {
                     ))}
                 </div>
 
+                <div className={`${styles1.searchBar}`}> 
+                    <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles1.searchIcon} /> </a>
+                    <input type="text" placeholder="Search" className={styles1.searchInput} />
+                </div>  
                 <button className={styles.submitButton} onClick={handleAdd}>
                     <Link href="/HOSPITAL/AddPatient/">Add Patient</Link>
                 </button>
