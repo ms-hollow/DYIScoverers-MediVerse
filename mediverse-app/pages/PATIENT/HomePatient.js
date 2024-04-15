@@ -24,8 +24,6 @@ export async function getStaticProps() {
     };
 }
 
-//* Diagnosis, Hospital, Physician, Admission Date, Discharge Date
-
 const HomePatient = ({ data1, data2 }) => {
 
     const router = useRouter();
@@ -55,6 +53,12 @@ const HomePatient = ({ data1, data2 }) => {
                     return;
                 }
 
+                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
+                //console.log(patientInfo);
+                const patientNameHolder = patientInfo[0].split('+');
+                let patientHolder = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                setPatientName(patientHolder);
+
                 const patientMedicalHistories = await mvContract.methods.getMedicalHistory(patientAddress).call();
                 console.log(patientMedicalHistories);
 
@@ -80,12 +84,6 @@ const HomePatient = ({ data1, data2 }) => {
                 hospitalName = hospitalInfo[0];
                 //console.log(hospitalName);
 
-                const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
-                //console.log(patientInfo);
-                const patientNameHolder = patientInfo[0].split('+');
-                let patientHolder = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
-                setPatientName(patientHolder);
-
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
                     console.log("Diagnosis:", splitDiagnosis[0]);
@@ -106,14 +104,13 @@ const HomePatient = ({ data1, data2 }) => {
                 setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
 
-                // // Sort the medical history by creation date in descending order
-                // modifiedMedicalHistory.sort((a, b) => b.creationDate - a.creationDate);
+                // Sort the medical history by creation date in descending order
+                modifiedMedicalHistory.sort((a, b) => b.creationDate - a.creationDate);
 
-                // // Get the latest medical record
-                // const latestMedicalRecord = modifiedMedicalHistory[0];
-                // console.log("Latest Medical Record:", latestMedicalRecord);
-
-                // setMedicalHistory(modifiedMedicalHistory);
+                // Get the latest medical record
+                const latestMedicalRecord = modifiedMedicalHistory[0];
+                console.log("Latest Medical Record:", latestMedicalRecord);
+                setMedicalHistory(modifiedMedicalHistory);
                 
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
                 const hospitalsInfo = [];
@@ -129,7 +126,6 @@ const HomePatient = ({ data1, data2 }) => {
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
-            console.log(patientAddress);
         }
         fetchMedicalHistory();
     }, [patientAddress]);
