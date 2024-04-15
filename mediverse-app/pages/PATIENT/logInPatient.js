@@ -7,34 +7,64 @@ import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
 import React, { useState } from 'react';
-
-//TODO: Lagay ng function na magdedetect kung address ang nakalogged in sa metamask (kung patient ba or hospital)
-//TODO: Gamitin ang patientlist and hospitallist para makuha ang list ng registered user
-//TODO: Tignan kung included ba ang address na yon sa patientlist or sa hospitallist
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
   const [walletAddress, setWalletAddress] = useState("")
+  const [patientList, setPatientList] = useState([]);
+  const [hospitalList, setHospitalList] = useState([]);
 
   const handleCreateWallet = () => {
     router.push("/PATIENT/Register1Patient"); // Navigate to the Register2Patient page
   };
 
+  const isAddressInList = (address, list) => {
+    return list.some(item => item.toLowerCase() === address.toLowerCase());
+  };
+
   const connectMetaMask = async () => {
-    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-        try{
-            /* If metamask is installed */
-            const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-            setWalletAddress(accounts[0]); 
-            console.log(accounts[0]);
-            router.push("/PATIENT/Register1Patient"); // Navigate to the User dashboard
-        } catch(err) {
+    if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+        try {
+            /* If MetaMask is installed */
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            const walletAddress = accounts[0];
+            setWalletAddress(walletAddress);
+            console.log(walletAddress);
+
+            const patientList = await mvContract.methods.getPatientList().call();
+            setPatientList(patientList);
+
+            const hospitalList = await mvContract.methods.getHospitalList().call();
+            setHospitalList(hospitalList);
+
+            // console.log("Patient List:", patientList);
+            // console.log("Hospital List:", hospitalList);
+
+            const isPatient = isAddressInList(walletAddress, patientList);
+            if (isPatient) {
+                console.log("This account belongs to a patient.");
+                alert("You have successfully logged into your account as a patient.");
+                router.push("/PATIENT/HomePatient");
+            } else {
+                const isHospital = isAddressInList(walletAddress, hospitalList);
+                if (isHospital) {
+                    console.log("This account belongs to a hospital.");
+                    alert("You have successfully logged into your account as a hospital.");
+                    router.push("/HOSPITAL/HomeHospital");
+                } else {
+                    console.log("This address is not registered as a patient or a hospital.");
+                    alert("This address is not registered as a patient or a hospital.");
+                }
+            }
+        } catch (err) {
             console.error(err.message);
         }
     } else {
-        /* if metamask is not installed */
+        /* If MetaMask is not installed */
         console.log("Please install MetaMask");
-        alert('Please install MetaMask');
+        alert("Please install MetaMask");
     }
   };
 

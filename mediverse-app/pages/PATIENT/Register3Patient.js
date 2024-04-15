@@ -91,7 +91,7 @@ const Register3Patient = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         alert('User Register Successfully!');
-        router.push('/PATIENT/logInPatient');
+        router.push('/PATIENT/HomePatient');
     };
 
    
@@ -175,9 +175,7 @@ const Register3Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton}>
-                        <Link href="/PATIENT/logInPatient/">REGISTER</Link>
-                    </button>
+                    <button className={styles.submitButton}>REGISTER</button>
                 </form>
             </div>
         </>

@@ -194,6 +194,7 @@ contract MediVerse {
                 history[i].tests = _tests;
                 history[i].medications = _medications;
                 history[i].admission = _admission;
+                history[i].creationDate  = block.timestamp;
                 return; 
             }
         }

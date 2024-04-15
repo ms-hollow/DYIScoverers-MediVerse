@@ -15,6 +15,10 @@ import mvContract from "../../blockchain/mediverse"; // ABI
  */
 
 const AccountProfileHospital = () => {
+    
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         hospitalName: '', contactNumber: '', hospitalAddress: ''
@@ -36,10 +40,9 @@ const AccountProfileHospital = () => {
                 const accounts = await web3.eth.getAccounts();
     
                 //console.log("Account:", accounts[0]);
-    
                 // Call the getPatientInfo function on the smart contract
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
-                
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); 
+                setHospitalAddress(accounts[0]);
                 console.log(hospitalInfo)
                 
 
@@ -51,19 +54,36 @@ const AccountProfileHospital = () => {
                     hospitalAddress: hospitalInfo[2]
                 });
 
-                
+
             } catch (error) {
                 console.error('Error retrieving patient information:', error);
             }
         }
 
         fetchPatientInfo();
-    }, []); // Empty dependency array to run only once when component mounts
+    }, []); 
 
     const handleEdit = (e) => {
         e.preventDefault();
         setEditable(!editable); // pagpinindot ang edit button, gagawing editable ang fields. 
     };
+    
+    const saveEditedProfile = async () => {
+        setIsLoading(true);
+        try {
+            await mvContract.methods.editHospitalDetails(
+                formData.hospitalName,
+                formData.contactNumber,
+                formData.hospitalAddress
+            ).send({ from: hospitalAddress });
+            console.log('Hospital details updated successfully');
+            setEditable(false);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error updating hospital details:', error);
+            alert('Error updating hospital details.');
+        }
+    }
 
     const goBack = () => {
         window.history.back(); // Go back to the previous page
@@ -97,8 +117,8 @@ const AccountProfileHospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.editButton} onClick={handleEdit}>
-                        {editable ? <Link href="/HOSPITAL/AccountProfileHospital/">SAVE</Link> : 'EDIT'} {/*If pinindot edit button, magiging "SAVE:" ang next button*/}
+                    <button className={styles.editButton} onClick={editable ? saveEditedProfile : handleEdit} disabled={isLoading}>
+                        {isLoading ? <span>Loading...</span> : (editable ? <span>SAVE</span> : <span>EDIT</span>)}
                     </button>
 
                 </form>

@@ -3,20 +3,22 @@ import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-
-/**
- ** Added function that will check the address if it is already registered or already belongs to the hospital
- *! Need to test
- */
-
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 const Register1Hospital = () => {
     const router = useRouter();
     const [walletAddress, setWalletAddress] = useState("")
+    const [patientList, setPatientList] = useState([]);
+    const [hospitalList, setHospitalList] = useState([]);
     const [isPatient, setIsPatient] = useState(false);
     const [isHospital, setIsHospital] = useState(false);
+
+    const isAddressInList = (address, list) => {
+        return list.some(item => item.toLowerCase() === address.toLowerCase());
+    };
 
     const connectMetaMask = async () => {
         if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
@@ -34,42 +36,37 @@ const Register1Hospital = () => {
         }
     };
 
-    // const checkRegistration = async () => {
-    //     try {
-    //         // Check if the wallet address is already registered as a patient
-    //         const patientList = await mvContract.methods.getPatientList().call();
-    //         if (patientList.includes(walletAddress)) {
-    //             alert("You are already registered as a patient.");
-    //             return;
-    //         }
-    
-    //         // Check if the wallet address is already registered as a hospital
-    //         const hospitalList = await mvContract.methods.getHospitalList().call();
-    //         if (hospitalList.includes(walletAddress)) {
-    //             alert("You are already registered as a hospital.");
-    //             return;
-    //         }
-    
-    //         // If the address is not registered as a patient or hospital, continue with other actions
-    //         setIsPatient(false);
-    //         setIsHospital(false);
-    //     } catch (error) {
-    //         // Handle other potential errors
-    //         alert("Error: Failed to check registration status. Please try again later or contact support if the problem persists.");
-    //     }
-    // };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        // checkRegistration();
-        // Check if the checkbox is checked
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
             alert('Please agree to the terms before proceeding.');
             return; 
         } else {
-            // Redirect to the next page only if the checkbox is checked
-            router.push('/HOSPITAL/Register2Hospital/');
+            const patientList = await mvContract.methods.getPatientList().call();
+            setPatientList(patientList);
+        
+            const hospitalList = await mvContract.methods.getHospitalList().call();
+            setHospitalList(hospitalList);
+        
+            const isPatient = isAddressInList(walletAddress, patientList);
+            if (isPatient) {
+                setIsPatient(true);
+                alert('This account is already registered as a patient.');
+                return;
+            }
+        
+            const isHospital = isAddressInList(walletAddress, hospitalList);
+            if (isHospital) {
+                setIsHospital(true);
+                alert('This account is already registered as a hospital.');
+                return;
+            }
+        
+            if (!isPatient && !isHospital) {
+                router.push('/HOSPITAL/Register2Hospital/');
+                return;
+            }
         }
     };
 
@@ -111,9 +108,7 @@ const Register1Hospital = () => {
                     <a href="#" className={styles.link}>Terms of Services and Privacy Policy</a>
                 </p>
 
-                <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="/HOSPITAL/Register2Hospital/">PROCEED</Link>
-                </button>
+                <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                 
             </div>
         </>

@@ -8,20 +8,13 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
-/**
- * TODO: Gamit ang address kunin ang pinaka-latest date sa may creation date
- * ? Gamit ang getPatientInfo method
- * TODO: Retrieve ang data then display sa forms
- * TODO: Add yung data gamit yung edit profile na method sa may solidity
- *
- */
-
 const AccountProfilePatient = () => {
     const router = useRouter();
     const [patientFullName, setPatientFullName] = useState('');
+    const [patientAddress, setPatientAddress] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     
     const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         firstName: '', 
         middleName: '', 
         lastName: '',
@@ -45,11 +38,11 @@ const AccountProfilePatient = () => {
             try {
                 // Connect to the deployed smart contract
                 const accounts = await web3.eth.getAccounts();
-    
+                setPatientAddress(accounts[0]);
                 //console.log("Account:", accounts[0]);
     
                 // Call the getPatientInfo function on the smart contract
-                const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
+                const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); 
                 
                 console.log(patientInfo)
                 // Splitting the patient full name and full address to subcategories
@@ -100,6 +93,32 @@ const AccountProfilePatient = () => {
         e.preventDefault();
         setEditable(!editable); // pagpinindot ang edit button, gagawing editable ang fields. 
     };
+
+    const saveEditedProfile = async () => {
+        setIsLoading(true);
+
+        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
+        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
+
+        try {
+           await mvContract.methods.editPatientDetails(
+                name,
+                formData.age,
+                formData.gender,
+                formData.dob,
+                formData.phoneNumber,
+                formData.height,
+                formData.weight,
+                address
+            ).send({ from: patientAddress });
+            console.log('Patient details updated successfully');
+            setEditable(false);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error updating patient details:', error);
+            alert('Error updating patient details.');
+        }
+    }
 
     return (
         <>
@@ -186,8 +205,8 @@ const AccountProfilePatient = () => {
                 </div>
             </form>
 
-            <button className={styles.editButton} onClick={handleEdit}>
-                {editable ? <Link href="/PATIENT/AccountProfilePatient/">SAVE</Link> : 'EDIT'}
+            <button className={styles.editButton} onClick={editable ? saveEditedProfile : handleEdit} disabled={isLoading}>
+                {isLoading ? <span>Loading...</span> : (editable ? <span>SAVE</span> : <span>EDIT</span>)}
             </button>
             
         </Layout>

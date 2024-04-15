@@ -5,9 +5,11 @@ import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
+import { useRouter } from 'next/router';
 
 
 const Register2Hospital = () => {
+    const router = useRouter();
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         hospitalName: '', contactNumber: '', hospitalAddress: ''
@@ -55,6 +57,8 @@ const Register2Hospital = () => {
         e.preventDefault(); // Prevent default form submission
         console.log('Form submitted:', formData);
         alert('User Register Successfully!');
+        router.push('/HOSPITAL/HomeHospital');
+        
     };
 
     const goBack = () => {
@@ -92,9 +96,7 @@ const Register2Hospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>
-                        <Link href="/HOSPITAL/HomeHospital/">PROCEED</Link>
-                    </button>
+                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
 
                 </form>
             </div>
