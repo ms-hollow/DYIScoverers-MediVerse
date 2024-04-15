@@ -151,13 +151,27 @@ const HospitalHome = ({data1, data2}) => {
                 let listAddress = getLatestListAddress(patientAddrAndCreationDate);
                 let listDiagnosis = getLatestListDiagnosis(patientAddrAndCreationDate);
                 let listAdmission = getLatestListAdmission(patientAddrAndCreationDate);
+
+                
                 //console.log(listAddress)
                 // * eto ung recent patients naka auto na yan mag  anti duplicate
+                let p, temp =[]; 
                 for (let i = 0; i < listAddress.length; i++) {
-                    let p = await parse(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
+                    p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
                     console.log(p);
-                }
+                    
+                    const obj = {
+                        patientName: p[0],
+                        admissionDate: p[1],
+                        dischargeDate: p[2],
+                        gender: p[3],
+                        diagnosis: p[4]
+                    };
 
+                    temp.push(obj);
+                }
+                setMedicalHistory(temp);
+                console.log(temp);
                 
                 
 
@@ -165,7 +179,7 @@ const HospitalHome = ({data1, data2}) => {
                 console.error('Error fetching medical history:', error);
             }
 
-            async function parse(parsedMedicalHistory, address, diagnosis, admission) {
+            async function getRecentPatient(parsedMedicalHistory, address, diagnosis, admission) {
                 const patientInfo = await mvContract.methods.getPatientInfo(address).call();
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
@@ -178,27 +192,9 @@ const HospitalHome = ({data1, data2}) => {
                 //console.log("Admission Date:", splitAdmission[2]);
                 //console.log("Discharge Date:", splitAdmission[3]);
                 
-                const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
-                    const splitDiagnosis = item.diagnosis.split('+');
-                    //console.log("Diagnosis:", splitDiagnosis[0]);
-                    //console.log("Creation Date: ", item.creationDate);
-                    const splitAdmission = item.admission.split('+');
-                    //console.log("Admission Date:", splitAdmission[2]);
-                    //console.log("Discharge Date:", splitAdmission[3]);
+                
 
-
-                    return {
-                        patientName,
-                        admissionDate: splitAdmission[2],
-                        dischargeDate: splitAdmission[3],
-                        gender: patientInfo[2],
-                        diagnosis: splitDiagnosis[0],
-                        //creationDates
-                    };
-                });
-                setMedicalHistory(modifiedMedicalHistory);
-
-                return [patientName, patientInfo[2], splitDiagnosis[0], splitAdmission[2], splitAdmission[3]]
+                return [patientName, splitAdmission[2], splitAdmission[3], patientInfo[2], splitDiagnosis[0]]
             }
         }
 
@@ -244,7 +240,7 @@ const HospitalHome = ({data1, data2}) => {
                         </div>
 
                         <div className={styles.dataContainer}>
-                            {data1.map(data => (
+                            {medicalHistory.map(data => (
                                 <Link href="/" key={data.id} className={styles.data}>
                                     <p className={styles.nameFormat}>{data.patientName}</p>
                                     <p>{data.admissionDate}</p>
