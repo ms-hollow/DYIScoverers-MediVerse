@@ -33,9 +33,9 @@ const NotificationHospital = ({ data }) => {
                 {filteredData.map(data => (
                     <Link href="/" key={data.id} className={styles.notifContainer}>
                         <p>{data.icon && <img src={data.icon}/>}</p>
-                        <div>
+                        <div className={styles.typeDes_format}>
                             <p className={styles.notifTypeFormat}>{data.notificationType}</p>
-                            <p>{data.description}</p>
+                            <p className={styles.des}>{data.description}</p>
                         </div>
                         <p className={styles.timeStampFormat}>{data.timeStamp}</p>
                     </Link>
