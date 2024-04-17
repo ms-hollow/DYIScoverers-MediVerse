@@ -1,5 +1,6 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeaderHospital.js'
+import styles1 from '/styles/homeSidebarHeader.module.css';
+import Layout from '../../components/PatientRecordsHeader.js'
 import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -14,6 +15,7 @@ const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
+    const { searchQuery } = router.query;
 
     const setAddress = async () => {
         try {
@@ -105,19 +107,16 @@ const MedicalHistoryPatient = () => {
 
                 //setMedicalHistory(modifiedMedicalHistory);
                
-                const searchTerm = "";
-                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchTerm.toLowerCase()));
-
-                //setMedicalHistory(results);
-                //console.log(results);
+                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
 
                 if (results.length > 0) {
                     console.log("Found:", results);
-                    setMedicalHistory(results);
-                } else if (searchTerm.trim() === '') {
-                    setMedicalHistory(modifiedMedicalHistory);
+                    setMedicalHistory(results);    
+                } else if (searchQuery.trim() === '') {
+                    setMedicalHistory(modifiedMedicalHistory);      
                 } else {
                     console.log("No matching entry found.");
+                    alert("No matching entry found.");
                 }
 
             } catch (error) {
@@ -125,7 +124,7 @@ const MedicalHistoryPatient = () => {
             }
         }
         fetchMedicalHistory();
-    }, [hospitalAddress]);
+    }, [hospitalAddress, searchQuery]);
     
     const clickRow = async (patientAddr, creationDate) => {
 

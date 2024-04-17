@@ -1,5 +1,5 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/MedicalHistory1PatientHeader'
 import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [patientAddress, setPatientAddress] = useState('');
+    const { searchQuery } = router.query;
     let hospitalAddress, hospitalName;
 
     const setAddress = async () => {
@@ -21,6 +22,12 @@ const MedicalHistoryPatient = () => {
         } catch (error) {
             alert('Error fetching patient address.');
         }
+    };
+
+    function searchInObject(obj, term) {
+        return Object.values(obj).some(value =>
+            typeof value === "string" && value.toLowerCase().includes(term.toLowerCase())
+        );
     };
 
     useEffect(() => {
@@ -73,15 +80,31 @@ const MedicalHistoryPatient = () => {
                         creationDate: item.creationDate
                     };
                 });
-                setMedicalHistory(modifiedMedicalHistory);
-                console.log("Modified", modifiedMedicalHistory);
+                // setMedicalHistory(modifiedMedicalHistory);
+                // console.log("Modified", modifiedMedicalHistory);
+
+                if (typeof searchQuery === 'undefined') {
+                    setMedicalHistory(modifiedMedicalHistory);
+                }
+
+                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
+
+                if (results.length > 0) {
+                    console.log("Found:", results);
+                    setMedicalHistory(results);    
+                } else if (searchQuery.trim() === '') {
+                    setMedicalHistory(modifiedMedicalHistory);      
+                } else {
+                    console.log("No matching entry found.");
+                    alert("No matching entry found.");
+                }
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
         }
         fetchMedicalHistory();
-    }, [patientAddress]);
+    }, [patientAddress, searchQuery]);
 
     const clickRow = (patientAddr, creationDate) => {
         router.push({
