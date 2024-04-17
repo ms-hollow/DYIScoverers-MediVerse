@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdownHospital.js';
+import { useRouter } from 'next/router';
 
 const HomeSidebarHeaderHospital = ({children, pageName}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,6 +18,17 @@ const HomeSidebarHeaderHospital = ({children, pageName}) => {
         setIsOpen(!isOpen);
     };
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const router = useRouter();
+
+    const handleSearch = () => {
+        router.push(`/search-results?q=${encodeURIComponent(searchQuery)}`);
+    };
+
+    const handleChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
     return (
         <>
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
@@ -27,10 +39,18 @@ const HomeSidebarHeaderHospital = ({children, pageName}) => {
                     </div>
 
                     <div className={styles.headerButtons}>
-                        {/* <div className={`${styles.searchBar}`}> 
-                            <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
-                            <input type="text" placeholder="Search" className={styles.searchInput} />
-                        </div> */}
+                        <div className={`${styles.searchBar}`}>
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className={styles.searchInput}
+                                value={searchQuery}
+                                onChange={handleChange}
+                            />
+                            <button  className={styles.searchIcon} onClick={handleSearch}>
+                                <img src="/Search icon.svg" alt="Search"/>
+                            </button>
+                        </div>
                         <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification"/> </a>
                         <AccountDropdown />
                     </div>

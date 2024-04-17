@@ -1,6 +1,6 @@
 import styles from '../../styles/homePatient.module.css'
 import Layout from '../../components/HomeSidebarHeader.js'
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -8,23 +8,8 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-export async function getStaticProps() {
-    const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_HomePatient.json');
-    const jsonData1 = fs.readFileSync(filePath1, 'utf8');
-    const data1 = JSON.parse(jsonData1);
 
-    const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHome.json');
-    const jsonData2 = fs.readFileSync(filePath2, 'utf8');
-    const data2 = JSON.parse(jsonData2);
-
-    return {
-        props: {
-            data1, data2
-        }
-    };
-}
-
-const HomePatient = ({ data1, data2 }) => {
+const HomePatient = () => {
 
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
@@ -33,6 +18,7 @@ const HomePatient = ({ data1, data2 }) => {
     const [patientAddress, setPatientAddress] = useState('');
     const [patientName, setPatientName] = useState('');
     let hospitalAddress, hospitalName;
+    const [patientList, setPatientList] = useState([]);
 
     const setAddress = async () => {
         try {
@@ -61,7 +47,7 @@ const HomePatient = ({ data1, data2 }) => {
 
                 const patientMedicalHistories = await mvContract.methods.getMedicalHistory(patientAddress).call();
                 console.log(patientMedicalHistories);
-
+                
                 const parsedMedicalHistory = patientMedicalHistories.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
                     hospitalAddress = hospitalAddr;
@@ -78,11 +64,7 @@ const HomePatient = ({ data1, data2 }) => {
                         creationDate
                     };
                 });
-                //console.log(parsedMedicalHistory);
-
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();    
-                hospitalName = hospitalInfo[0];
-                //console.log(hospitalName);
+                console.log(parsedMedicalHistory);
 
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
@@ -91,23 +73,22 @@ const HomePatient = ({ data1, data2 }) => {
                     const splitAdmission = item.admission.split('+');
                     console.log("Admission Date:", splitAdmission[2]);
                     console.log("Discharge Date:", splitAdmission[3]);
+                    const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
                     return {
-                        hospitalName,
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
+                        hospitalName : splitAdmission[1],
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate: item.creationDate
+                        creationDate: formattedDate
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);
-                //console.log("Modified", modifiedMedicalHistory);
+                console.log("Modified", modifiedMedicalHistory);
 
-                // Sort the medical history by creation date in descending order
                 modifiedMedicalHistory.sort((a, b) => b.creationDate - a.creationDate);
 
-                // Get the latest medical record
                 const latestMedicalRecord = modifiedMedicalHistory[0];
                 console.log("Latest Medical Record:", latestMedicalRecord);
                 setMedicalHistory(modifiedMedicalHistory);
@@ -141,31 +122,8 @@ const HomePatient = ({ data1, data2 }) => {
         <Layout pageName="Home">
         <>
             <div className={styles.container}>
-                <div className={styles.welcomeText}>
-                    <p>Welcome Back, {patientName}</p> 
-                </div>
 
-                <div className={styles.tableHeading}>
-                    <p>Diagnosis</p>
-                    <p>Hospital</p>
-                    <p>Physician</p>
-                    <p>Admission Date</p>
-                    <p>Discharge Date</p>
-                </div>
-
-                <div className={styles.dataContainer}>
-                    {medicalHistory.map((record, index) => (
-                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
-                                <p className={styles.diaAttrb}>{record.diagnosis}</p>
-                                <p>{record.hospitalName}</p>
-                                <p>{record.physician}</p>
-                                <p>{record.admissionDate}</p>
-                                <p>{record.dischargeDate}</p>
-                            </div>
-                        ))}
-                </div>
-
-                <div className={styles.notifContainer}>
+            <div className={styles.notifContainer}>
                     <div className={styles.notifSection_header}>
                         <div className={styles.notifTitle}>
                             <img src="/bell.svg" alt="bell-icon"/>
@@ -177,19 +135,51 @@ const HomePatient = ({ data1, data2 }) => {
                             <div></div>
                         </div>
                     </div>
-                    
+
                     <div className={styles.tableContainer}>
-                        {data2.map(data => (
-                            <Link href="/" key={data.id} className={styles.notifDataContainer}>
-                                <p className={styles.icon}>{data.icon && <img src={data.icon}/>}</p>
-                                <p className={styles.notifTypeFormat}>{data.notificationType}</p>
-                                <p className={styles.desFormat}>{data.description}</p>
-                                <p className={styles.timeStampFormat}>{data.timeStamp}</p>
-                            </Link>
+                        {listOfHospitalNames.map((hospital, index) => (
+                            <div className={styles.notifDataContainer} key={index}>
+                                {/* <img className={styles.icon} src={notif_requestAccess.svg.icon} alt="Icon" /> */}
+                                <p className={styles.notifTypeFormat}>Hospital Request</p>
+                                <p className={styles.desFormat}>{hospital.name}</p>
+                                <p className={styles.timeStampFormat}>{hospital.timeStamp}</p>
+                            </div>
+                        ))}
+                        {medicalHistory.map((record, index) => (
+                            <div className={styles.notifDataContainer} key={index}>
+                                {/* <img className={styles.icon} src={notif_medicalRecord} alt="Icon" /> */}
+                                <p className={styles.notifTypeFormat}>New Medical Record Added</p>
+                                <p className={styles.desFormat}>{record.hospitalName}</p>
+                                <p className={styles.timeStampFormat}>{record.creationDate}</p>
+                            </div>
                         ))}
                     </div>
-                    
                 </div>
+                
+                <div className={styles.welcomeText}>
+                    <p>Welcome Back, {patientName}</p> 
+                </div>
+                
+                <div className={styles.tableHeading}>
+                    <p>Diagnosis</p>
+                    <p>Hospital</p>
+                    <p>Physician</p>
+                    <p>Admission Date</p>
+                    <p>Discharge Date</p>
+                </div>
+
+                <div className={styles.dataContainer}>
+                    {medicalHistory.map((record, index) => (
+                            <div className={styles.data} key={index}>
+                                <p className={styles.diaAttrb}>{record.diagnosis}</p> 
+                                <p>{record.hospitalName}</p>
+                                <p>{record.physician}</p>
+                                <p>{record.admissionDate}</p>
+                                <p>{record.dischargeDate}</p>
+                            </div>
+                        ))}
+                </div>
+
             </div>
         </>
         </Layout>

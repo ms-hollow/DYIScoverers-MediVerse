@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//GALING REMIX TO ABBY AT TESTED NA TO
+
 contract MediVerse {
     
     struct Patient {
@@ -166,7 +168,7 @@ contract MediVerse {
         history.tests = _tests;
         history.medications = _medications;
         history.admission = _admission;
-        history.creationDate = block.timestamp;
+        history.creationDate = block.timestamp; //just added a timestamp here para sa pag check for notif
 
         medicalHistories[_patientAddr].push(history);
         medicalHistoryList.push(history);

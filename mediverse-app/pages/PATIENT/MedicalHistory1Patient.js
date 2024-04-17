@@ -7,8 +7,6 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
-//! TAPOS NA 
-
 const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
@@ -35,6 +33,8 @@ const MedicalHistoryPatient = () => {
                     return;
                 }
 
+                console.log(patientAddress);
+
                 const patientMedicalHistories = await mvContract.methods.getMedicalHistory(patientAddress).call();
                 console.log(patientMedicalHistories);
 
@@ -56,28 +56,15 @@ const MedicalHistoryPatient = () => {
                 });
                 //console.log(parsedMedicalHistory);
 
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();    
-                //console.log(hospitalInfo);
-                hospitalName = hospitalInfo[0];
-                //console.log(hospitalName);
-
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
                     console.log("Diagnosis:", splitDiagnosis[0]);
-                    // const splitSignsAndSymptoms = item.signsAndSymptoms.split('+');
-                    // console.log("Signs and Symptoms:", splitSignsAndSymptoms);
-                    // const splitTreatmentProcedure = item.treatmentProcedure.split('+');
-                    // console.log("Treatment Procedure:", splitTreatmentProcedure);
-                    // const splitTests = item.tests.split('+');
-                    // console.log("Treatment Procedure:", splitTests);
-                    // const splitMedications = item.medications.split('+');
-                    // console.log("Medications:", splitMedications);
                     console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
                     console.log("Admission Date:", splitAdmission[2]);
                     console.log("Discharge Date:", splitAdmission[3]);
                     return {
-                        hospitalName,
+                        hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
                         admissionDate: splitAdmission[2],
