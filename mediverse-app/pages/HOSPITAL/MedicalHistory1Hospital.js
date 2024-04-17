@@ -85,6 +85,7 @@ const MedicalHistoryPatient = () => {
                 
                 setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
+
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }

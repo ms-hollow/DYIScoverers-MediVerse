@@ -43,13 +43,13 @@ const AddPatient = () => {
             });
         }
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
         console.log("Account:", accounts[0]);
         console.log('Form submitted:', formData);
-        // Concatenate the address fields
+       
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
         const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
         console.log("name: ", name)

@@ -18,7 +18,7 @@ const Register1Patient = () => {
 
     const isAddressInList = (address, list) => {
         return list.some(item => item.toLowerCase() === address.toLowerCase());
-      };
+    };
 
     //connect wallet prompt
     const connectMetaMask = async () => {

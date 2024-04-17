@@ -39,11 +39,11 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
                     <div className={styles.headerButtons}>
                         <div className={`${styles.searchBar}`}> 
                             <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange}/>
-                            <button onClick={handleSearch}>
+                            <a href="#" onClick={handleSearch} className={styles.searchButton}>
                                 <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
-                            </button>
+                            </a>
                         </div>
-                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
+                        {/* <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
                         <AccountDropdown />
                     </div>   
                 </header>

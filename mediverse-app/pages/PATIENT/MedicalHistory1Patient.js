@@ -24,10 +24,15 @@ const MedicalHistoryPatient = () => {
         }
     };
 
-    function searchInObject(obj, term) {
-        return Object.values(obj).some(value =>
-            typeof value === "string" && value.toLowerCase().includes(term.toLowerCase())
-        );
+    function searchInObject(obj, searchQuery) {
+        // Check if searchQuery is null, undefined, or an empty string
+       if (searchQuery === null || searchQuery === undefined || searchQuery.trim().length === 0) {
+           return; // Exit the function
+       }
+       
+       return Object.values(obj).some(value =>
+           typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase())
+       );
     };
 
     useEffect(() => {
@@ -83,20 +88,23 @@ const MedicalHistoryPatient = () => {
                 // setMedicalHistory(modifiedMedicalHistory);
                 // console.log("Modified", modifiedMedicalHistory);
 
-                if (typeof searchQuery === 'undefined') {
-                    setMedicalHistory(modifiedMedicalHistory);
+                let searchQueryLower;
+                if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+                    searchQueryLower = searchQuery.toLowerCase();
                 }
-
-                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
-
-                if (results.length > 0) {
-                    console.log("Found:", results);
-                    setMedicalHistory(results);    
-                } else if (searchQuery.trim() === '') {
-                    setMedicalHistory(modifiedMedicalHistory);      
+                
+                if (!searchQueryLower) {
+                    setMedicalHistory(modifiedMedicalHistory);
                 } else {
-                    console.log("No matching entry found.");
-                    alert("No matching entry found.");
+                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                
+                    if (results.length > 0) {
+                        console.log("Found:", results);
+                        setMedicalHistory(results);
+                    } else {
+                        console.log("No matching entry found.");
+                        alert("No matching entry found.");
+                    }
                 }
 
             } catch (error) {

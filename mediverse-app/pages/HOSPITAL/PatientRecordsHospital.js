@@ -27,9 +27,14 @@ const MedicalHistoryPatient = () => {
         }
     };
 
-    function searchInObject(obj, term) {
+    function searchInObject(obj, searchQuery) {
+         // Check if searchQuery is null, undefined, or an empty string
+        if (searchQuery === null || searchQuery === undefined || searchQuery.trim().length === 0) {
+            return; // Exit the function
+        }
+        
         return Object.values(obj).some(value =>
-            typeof value === "string" && value.toLowerCase().includes(term.toLowerCase())
+            typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase())
         );
     };
 
@@ -106,17 +111,36 @@ const MedicalHistoryPatient = () => {
     
 
                 //setMedicalHistory(modifiedMedicalHistory);
-               
-                const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
 
-                if (results.length > 0) {
-                    console.log("Found:", results);
-                    setMedicalHistory(results);    
-                } else if (searchQuery.trim() === '') {
-                    setMedicalHistory(modifiedMedicalHistory);      
+                // const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
+
+                // if (results.length > 0) {
+                //     console.log("Found:", results);
+                //     setMedicalHistory(results);    
+                // } else if (searchQuery.trim() === '') {
+                //     setMedicalHistory(modifiedMedicalHistory);      
+                // } else {
+                //     console.log("No matching entry found.");
+                //     alert("No matching entry found.");
+                // }
+                
+                let searchQueryLower;
+                if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+                    searchQueryLower = searchQuery.toLowerCase();
+                }
+                
+                if (!searchQueryLower) {
+                    setMedicalHistory(modifiedMedicalHistory);
                 } else {
-                    console.log("No matching entry found.");
-                    alert("No matching entry found.");
+                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                
+                    if (results.length > 0) {
+                        console.log("Found:", results);
+                        setMedicalHistory(results);
+                    } else {
+                        console.log("No matching entry found.");
+                        alert("No matching entry found.");
+                    }
                 }
 
             } catch (error) {
@@ -183,11 +207,10 @@ const MedicalHistoryPatient = () => {
                     ))}
                 </div>
 
-                {/* <div className={`${styles1.searchBar}`}> 
-                    <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles1.searchIcon} /> </a>
-                    <input type="text" placeholder="Search" className={styles1.searchInput} />
-                </div>   */}
-                <button className={styles.submitButton} onClick={handleAdd}>Add Patient</button>
+                <button className={styles.submitButton} onClick={handleAdd}>
+                    <Link href="/HOSPITAL/AddPatient">+</Link>
+                </button>
+
             </div>
         </>
         </Layout>
