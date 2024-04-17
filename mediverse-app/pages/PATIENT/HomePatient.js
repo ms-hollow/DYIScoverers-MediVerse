@@ -18,7 +18,7 @@ const HomePatient = () => {
     const [patientAddress, setPatientAddress] = useState('');
     const [patientName, setPatientName] = useState('');
     let hospitalAddress, hospitalName;
-    const [patientList, setPatientList] = useState([]);
+    const [latestHistory, setLatestHistory] = useState([]);
 
     const setAddress = async () => {
         try {
@@ -87,22 +87,20 @@ const HomePatient = () => {
                 setMedicalHistory(modifiedMedicalHistory);
                 console.log("Modified", modifiedMedicalHistory);
 
-                modifiedMedicalHistory.sort((a, b) => b.creationDate - a.creationDate);
-
                 const latestMedicalRecord = modifiedMedicalHistory[0];
                 console.log("Latest Medical Record:", latestMedicalRecord);
-                setMedicalHistory(modifiedMedicalHistory);
-                
+                setLatestHistory([latestMedicalRecord]); // Set only the latest medical record
+
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
                 const hospitalsInfo = [];
-                for (const hospitalAddress of hospitalRequest) {
-                    const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                for (let i = 0; i < Math.min(hospitalRequest.length, 2); i++) { // Limit to 2 requests
+                    const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalRequest[i]).call();
                     hospitalsInfo.push({
                         name: hospitalInfo[0],
                     });
                 }
                 console.log("Requesting Hospitals: ", hospitalsInfo);
-                setHospitalNames(hospitalsInfo)
+                setHospitalNames(hospitalsInfo);
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -145,7 +143,7 @@ const HomePatient = () => {
                                 <p className={styles.timeStampFormat}>{hospital.timeStamp}</p>
                             </div>
                         ))}
-                        {medicalHistory.map((record, index) => (
+                        {latestHistory.map((record, index) => (
                             <div className={styles.notifDataContainer} key={index}>
                                 {/* <img className={styles.icon} src={notif_medicalRecord} alt="Icon" /> */}
                                 <p className={styles.notifTypeFormat}>New Medical Record Added</p>
