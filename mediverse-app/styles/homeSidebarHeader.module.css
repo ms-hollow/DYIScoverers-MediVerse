@@ -76,7 +76,6 @@
     visibility: hidden;
 }
 
-
 .triangle {
     position: absolute;
     left: 15px; /* Adjust to align with the left side of the sidebar */
@@ -94,6 +93,10 @@
 .sidebarMenuBtn:hover .triangle,
 .sidebarMenuBtn.menuOpen .triangle {
     transform: translateY(50%) scale(1.5); /* Increase size by 50% when hovered or when menu is open */
+}
+
+.sidebarMenuBtn.menuOpen .triangle {
+    transform: translateY(-50%) rotate(180deg); /* Rotate the triangle 180 degrees when menu is open */
 }
 
 .categoryName {

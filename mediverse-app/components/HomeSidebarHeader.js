@@ -94,14 +94,10 @@ const HomeSidebarHeader = ({children, pageName}) => {
                             </div>
                         </div>   
                     </header>
-                    
-                    
-                    
 
                     <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>
                         <div className={styles.triangle}></div> {/* Add the triangle directly inside the .sidebarMenuBtn */}
                         <img className={styles.hamburger} src='/hamburger.svg' alt='hamburger menu'/>
-                        {/*<img className={styles.close} src='/close.svg' alt='hamburger menu'/>*/}
                     </div>
                     
                     <div className={styles.sidebar}>

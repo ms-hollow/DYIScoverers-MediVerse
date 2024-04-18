@@ -41,7 +41,7 @@ const HomePatient = ({ data1, data2 }) => {
                 <div className={styles.dataContainer}>
                     {data1.map(data => (
                         <Link href="/" key={data.id} className={styles.data}>
-                            <p className={styles.diaAttrb}>{data.diagnosis}</p>
+                            <p>{data.diagnosis}</p>
                             <p>{data.hospital}</p>
                             <p>{data.physician}</p>
                             <p>{data.admissionDate}</p>
@@ -67,8 +67,10 @@ const HomePatient = ({ data1, data2 }) => {
                         {data2.map(data => (
                             <Link href="/" key={data.id} className={styles.notifDataContainer}>
                                 <p className={styles.icon}>{data.icon && <img src={data.icon}/>}</p>
-                                <p className={styles.notifTypeFormat}>{data.notificationType}</p>
-                                <p className={styles.desFormat}>{data.description}</p>
+                                <div className={styles.typedes}>
+                                    <p className={styles.notifTypeFormat}>{data.notificationType}</p>
+                                    <p className={styles.desFormat}>{data.description}</p>
+                                </div>
                                 <p className={styles.timeStampFormat}>{data.timeStamp}</p>
                             </Link>
                         ))}
