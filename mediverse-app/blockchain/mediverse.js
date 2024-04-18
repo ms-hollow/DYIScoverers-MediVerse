@@ -5,8 +5,8 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
 /**
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
-//const mvContract = new web3.eth.Contract(ContractABI, "0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d"); // for network
-const mvContract = new web3.eth.Contract(ContractABI, "0x0e8495041F549c106668867b4071e304151E8c86"); //for development
+//const mvContract = new web3.eth.Contract(ContractABI, "0x639413bC3B343667E7d8FF662Ce8a6EEfe7A7B0A"); // for network
+const mvContract = new web3.eth.Contract(ContractABI, "0xD80Bbbc2925668Cd03fb73540D178eb0E79F78B0"); //for development
 
 /**
  * * Note: if gagamiting ang development, follow the steps below:
@@ -19,23 +19,33 @@ const mvContract = new web3.eth.Contract(ContractABI, "0x0e8495041F549c106668867
 
 export default mvContract
 
-/**
- * 1_deploy_contract.js
-====================
+// 1_deploy_contract.js
+// ====================
 
-   Replacing 'MediVerse'
-   ---------------------
-   > transaction hash:    0x4e2f078571a9a861465e94c2f850b32bedda018bc6900c9a0157fefe5f162efb
-   > Blocks: 1            Seconds: 9
-   > contract address:    0x0A5cA33c154BdeC04cF627bd496deAEd1fC0509d
-   > block number:        5654698
-   > block timestamp:     1712585160
-   > account:             0x77BC521989EfB176291BE7343E19025b7d7fC004
-   > balance:             10.896292392333146003
-   > gas used:            5042928 (0x4cf2f0)
-   > gas price:           3.665105104 gwei
-   > value sent:          0 ETH
-   > total cost:          0.018482861151904512 ETH
+//    Deploying 'MediVerse'
+//    ---------------------
+//    > transaction hash:    0x6420f9e0b2c595ebe692d82fb382e31bf367c448291578fa9854834d6917de44
+//    > Blocks: 2            Seconds: 24
+//    > contract address:    0x639413bC3B343667E7d8FF662Ce8a6EEfe7A7B0A
+//    > block number:        5724438
+//    > block timestamp:     1713440652
+//    > account:             0x77BC521989EfB176291BE7343E19025b7d7fC004
+//    > balance:             10.421602020271997396
+//    > gas used:            5017973 (0x4c9175)
+//    > gas price:           94.435184315 gwei
+//    > value sent:          0 ETH
+//    > total cost:          0.473873205142693495 ETH
 
-   Pausing for 2 confirmations...
- */
+//    Pausing for 2 confirmations...
+
+//    -------------------------------
+//    > confirmation number: 1 (block: 5724440)
+//    > confirmation number: 2 (block: 5724441)
+//    > Saving artifacts
+//    -------------------------------------
+//    > Total cost:     0.473873205142693495 ETH
+
+// Summary
+// =======
+// > Total deployments:   1
+// > Final cost:          0.473873205142693495 ETH

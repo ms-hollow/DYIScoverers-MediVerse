@@ -17,7 +17,7 @@ const HomePatient = () => {
     const [updatedMedicalHistory, setUpdatedMedicalHistory] = useState([]);
     const [patientAddress, setPatientAddress] = useState('');
     const [patientName, setPatientName] = useState('');
-    let hospitalAddress, hospitalName;
+    let hospitalAddress;
     const [latestHistory, setLatestHistory] = useState([]);
 
     const setAddress = async () => {
@@ -77,7 +77,7 @@ const HomePatient = () => {
                     return {
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
-                        hospitalName : splitAdmission[1],
+                        hospitalName: splitAdmission[1],
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
@@ -89,7 +89,13 @@ const HomePatient = () => {
 
                 const latestMedicalRecord = modifiedMedicalHistory[0];
                 console.log("Latest Medical Record:", latestMedicalRecord);
-                setLatestHistory([latestMedicalRecord]); // Set only the latest medical record
+
+                if (latestMedicalRecord && typeof latestMedicalRecord === 'object') {
+                    const latestAdd = [latestMedicalRecord.hospitalName, latestMedicalRecord.creationDate];
+                    setLatestHistory([latestAdd]);
+                } else {
+                    console.log("No latest medical record found.");
+                }
 
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
                 const hospitalsInfo = [];
@@ -138,17 +144,16 @@ const HomePatient = () => {
                         {listOfHospitalNames.map((hospital, index) => (
                             <div className={styles.notifDataContainer} key={index}>
                                 {/* <img className={styles.icon} src={notif_requestAccess.svg.icon} alt="Icon" /> */}
-                                <p className={styles.notifTypeFormat}>Hospital Request</p>
-                                <p className={styles.desFormat}>{hospital.name}</p>
+                                <p className={styles.notifTypeFormat}>Hospital Request: </p>
+                                <p className={styles.desFormat}>{hospital.name} sends a request to access your medical history.</p>
                                 <p className={styles.timeStampFormat}>{hospital.timeStamp}</p>
                             </div>
                         ))}
-                        {latestHistory.map((record, index) => (
+                       {latestHistory.map((record, index) => (
                             <div className={styles.notifDataContainer} key={index}>
-                                {/* <img className={styles.icon} src={notif_medicalRecord} alt="Icon" /> */}
-                                <p className={styles.notifTypeFormat}>New Medical Record Added</p>
-                                <p className={styles.desFormat}>{record.hospitalName}</p>
-                                <p className={styles.timeStampFormat}>{record.creationDate}</p>
+                                <p className={styles.notifTypeFormat}>New Medical Record Added: </p>
+                                <p className={styles.desFormat}>{record[0]} added new medical history.</p> 
+                                <p className={styles.timeStampFormat}>{record[1]}</p>
                             </div>
                         ))}
                     </div>

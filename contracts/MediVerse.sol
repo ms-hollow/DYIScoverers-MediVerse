@@ -203,12 +203,7 @@ contract MediVerse {
     }
 
     function getMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {
-        if (msg.sender == _patientAddr) {
-            return medicalHistories[_patientAddr];
-        } else {
-            require(isHospitalAuthorized(_patientAddr, msg.sender), "Caller is not authorized to access patient records");
-            return medicalHistories[_patientAddr];
-        }
+        return medicalHistories[_patientAddr];
     }
 
     function getAllMedicalHistory() public view returns (MedicalHistory[] memory) {
