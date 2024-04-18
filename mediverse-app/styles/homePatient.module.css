@@ -4,6 +4,7 @@
     width: 1118px;
     margin: 0 auto;
     margin-top: 120px;
+    margin-bottom: 40px;
     align-content: center;
 }
 
@@ -51,9 +52,10 @@
     border-radius: 18px;
     background: rgb(247,246,255);
     background: linear-gradient(135deg, rgba(247,246,255,1) 0%, rgba(221,234,241,1) 0%, rgba(69,164,158,1) 40%, rgba(47,142,136,1) 76%);
-    height: 286px;
+    height: auto;
     margin-top: 30px;
     justify-content: center;
+    padding-bottom: 20px;
 }
 
 .notifSection_header {
@@ -103,7 +105,6 @@
     display: flex;
     flex-direction: row;
     width: 1053px;
-    height: 54px;
     background-color: #FFFFFF;
     border-radius: 12px;
     opacity: 80%;
@@ -111,7 +112,6 @@
     margin-bottom: 7px;
     position: relative;
     align-items: center;
-
 }
 
 .notifDataContainer p {
@@ -141,6 +141,307 @@
     text-overflow: ellipsis;
 }
 
+.typedes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .icon {
     padding-left: 20px;
+}
+
+@media screen and (max-width: 2491px) {
+    .container {
+        margin-top: 170px;
+    }
+}
+
+@media screen and (max-width: 1928px) {
+    .container {
+        margin-top: 140px;
+    }
+}
+
+@media screen and (max-width: 1537px) {
+    .container {
+        margin-top: 120px;
+    }
+}
+
+@media screen and (max-width: 1488px) {
+    .container , .tableHeading, .data{
+        width: 1000px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 200px 250px 200px 200px 150px;
+        padding-left: 40px;
+    }
+
+    .notifDataContainer {
+        width: 935px;
+    }
+
+    .notifTypeFormat{
+        width: auto;
+    }
+
+    .desFormat {
+        width: 570px;
+    }
+
+    .threeDot {
+        margin-right: 40px;
+    }
+}
+
+@media screen and (max-width: 1376px) {
+    
+    .container , .tableHeading, .data{
+        width: 800px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 160px 190px 160px 160px 120px;
+        padding-left: 0px;
+    }
+
+    .notifDataContainer {
+        width: 735px;
+    }
+
+    .notifTypeFormat{
+        width: auto;
+        font-size: 13px;
+        padding-left: 5px;
+        margin-bottom: 0px;
+    }
+
+    .desFormat {
+        font-size: 12px;
+        width: 590px;
+        margin-top: 0px;
+        padding-left: 5px;
+    }
+
+    .timeStampFormat {
+        font-size: 9px;
+    }
+
+    .typedes {
+        flex-direction: column;
+        align-items: baseline;
+    }
+}
+
+@media screen and (max-width: 919px) {
+    
+    .container{
+        margin-top: 80px;
+    }
+
+    .container , .tableHeading, .data{
+        width: 700px;
+    }
+
+    .tableHeading{
+        font-size: 13px;
+    }
+
+    .welcomeText {
+        font-size: 17px;
+    }
+
+    .data {
+        font-size: 11px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 140px 160px 140px 140px 140px;
+        padding-left: 40px;
+    }
+
+    .notifDataContainer {
+        width: 635px;
+    }
+
+    .notifTitle p{
+        font-size: 16px;
+    }
+
+    .notifTitle img {
+        width: 25px;
+    }
+
+    .threeDot div {
+        height: 4px;
+        width: 4px;
+    }
+
+    .threeDot {
+        height: 20px;
+    }
+
+    .icon {
+        transform: scale(0.9);
+        padding-left: 10px;
+        margin: 0px;
+
+    }
+
+    .notifTypeFormat{
+        width: auto;
+        font-size: 11px;
+    }
+
+    .desFormat {
+        font-size: 10px;
+        width: 505px;
+    }
+}
+
+@media screen and (max-width: 875px) {
+    
+    .container{
+        margin-top: 55px;
+    }
+
+    .container , .tableHeading, .data{
+        width: 550px;
+    }
+
+    .tableHeading{
+        font-size: 10px;
+    }
+
+    .welcomeText {
+        font-size: 13px;
+    }
+
+    .data {
+        font-size: 9px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 110px 130px 120px 100px 110px;
+        padding-left: 30px;
+    }
+
+    .notifDataContainer {
+        width: 510px;
+        margin-left: 20px;
+    }
+
+    .notifTitle {
+        margin-left: 20px;
+    }
+
+    .notifTitle p{
+        font-size: 12px;
+        padding-left: 5px;
+    }
+
+    .notifTitle img {
+        width: 15px;
+    }
+
+    .threeDot div {
+        height: 4px;
+        width: 3px;
+    }
+
+    .threeDot {
+        height: 15px;
+        margin-top: 12px;
+        margin-right: 25px;
+    }
+
+    .notifDataContainer p{
+        margin-right: 0px;
+    }
+
+    .icon {
+        transform: scale(0.7);
+        padding-left: 10px;
+    }
+
+    .notifTypeFormat{
+        width: auto;
+        font-size: 10px;
+    }
+
+    .desFormat {
+        font-size: 9px;
+        width: 410px;
+    }
+
+    .timeStampFormat {
+        font-size: 8px;
+        width: 40px;
+        right: 10px;
+        padding-right: 0px;
+    }
+}
+
+@media screen and (max-width: 601px) {
+
+    .container , .tableHeading, .data{
+        width: 450px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 90px 100px 90px 90px 90px;
+        padding-left: 10px;
+    }
+
+    .notifDataContainer {
+        width: 410px;
+    }
+
+    .notifTypeFormat{
+        width: 250px;
+        margin-bottom: 0px;
+        padding-left: 0px;
+    }
+
+    .desFormat {
+        width: 310px;
+        margin-top: 0;
+        padding-left: 0px;
+    }
+
+    .typedes{
+        margin-left: 5px;
+        flex-direction: column;
+        align-items: baseline;
+    }
+}
+
+@media screen and (max-width: 495px) {
+
+    .container , .tableHeading, .data{
+        width: 330px;
+    }
+
+    .tableHeading, .data {
+        grid-template-columns: 66px 83px 66px 60px 53px;
+    }
+
+    .notifDataContainer {
+        margin-left: 10px;
+        width: 310px;
+    }
+
+    .notifTitle {
+        margin-left: 10px;
+    }
+
+    .threeDot {
+        margin-right: 15px;
+    }
+
+    .desFormat {
+        width: 210px;
+    }
 }
