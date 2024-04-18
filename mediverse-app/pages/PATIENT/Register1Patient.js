@@ -5,39 +5,71 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-
-
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
 const Register1Patient = () => {
     const router = useRouter();
     const [walletAddress, setWalletAddress] = useState("")
+    const [patientList, setPatientList] = useState([]);
+    const [hospitalList, setHospitalList] = useState([]);
+    const [isPatient, setIsPatient] = useState(false);
+    const [isHospital, setIsHospital] = useState(false);
+
+    const isAddressInList = (address, list) => {
+        return list.some(item => item.toLowerCase() === address.toLowerCase());
+    };
+
     //connect wallet prompt
     const connectMetaMask = async () => {
-        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-            try{
-                /* If metamask is installed */
-                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-                setWalletAddress(accounts[0]); 
-                console.log(accounts[0]);
-            } catch(err) {
+        if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+            try {
+                /* If MetaMask is installed */
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const walletAddress = accounts[0];
+                setWalletAddress(walletAddress);
+    
+            } catch (err) {
                 console.error(err.message);
             }
         } else {
-            /* if metamask is not installed */
             console.log("Please install MetaMask");
         }
     };
     
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission
-        // Check if the checkbox is checked
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const agreeCheckbox = document.getElementById('agreeCheckbox');
+      
         if (!agreeCheckbox.checked) {
-            alert('Please agree to the terms before proceeding.');
-            return; 
+          alert('Please agree to the terms before proceeding.');
+          return;
+        } else {
+            const patientList = await mvContract.methods.getPatientList().call();
+            setPatientList(patientList);
+        
+            const hospitalList = await mvContract.methods.getHospitalList().call();
+            setHospitalList(hospitalList);
+        
+            const isPatient = isAddressInList(walletAddress, patientList);
+            if (isPatient) {
+                setIsPatient(true);
+                alert('This account is already registered as a patient.');
+                return;
+            }
+        
+            const isHospital = isAddressInList(walletAddress, hospitalList);
+            if (isHospital) {
+                setIsHospital(true);
+                alert('This account is already registered as a hospital.');
+                return;
+            }
+        
+            if (!isPatient && !isHospital) {
+                router.push('/PATIENT/register2Patient/');
+                return;
+            }
         }
-        // Redirect to the next page only if the checkbox is checked
-        router.push('/PATIENT/register2Patient/');
     };
 
     const goBack = () => {
@@ -78,9 +110,7 @@ const Register1Patient = () => {
                     <a href="#" className={styles.link}>Terms of Services and Privacy Policy</a>
                 </p>
 
-                <button className={styles.submitButton} onClick={handleSubmit}>
-                    <Link href="/PATIENT/register2Patient/">PROCEED</Link>
-                </button>
+                <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
             </div>
         </>
         

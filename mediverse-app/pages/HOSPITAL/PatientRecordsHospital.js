@@ -1,25 +1,184 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeaderHospital.js'
-import fs from 'fs';
+import styles1 from '/styles/homeSidebarHeader.module.css';
+import Layout from '../../components/PatientRecordsHeader.js'
 import path from 'path';
 import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
 
+//? Changes: Added lines of code if the hospital is authorized to view the medical history if the patient
 
-export async function getStaticProps() {
-    const filePath = path.join(process.cwd(), 'public/placeHolder/dummyData_PatientRecords.json');
-    const jsonData = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(jsonData);
+const MedicalHistoryPatient = () => {
 
-    return {
-        props: {
-            data
+    const router = useRouter();
+    const [medicalHistory, setMedicalHistory] = useState([]);
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    const { searchQuery } = router.query;
+
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts();
+            console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); 
+        } catch (error) {
+            alert('Error fetching hospital address.');
         }
     };
-}
 
-const MedicalHistoryPatient = ({ data }) => {
+    function searchInObject(obj, searchQuery) {
+         // Check if searchQuery is null, undefined, or an empty string
+        if (searchQuery === null || searchQuery === undefined || searchQuery.trim().length === 0) {
+            return; // Exit the function
+        }
+        
+        return Object.values(obj).some(value =>
+            typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    };
+
+    useEffect(() => {
+        async function fetchMedicalHistory() {
+            try {
+                let hospitalName;
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+    
+                //* Retrieve the hospital currently logged in
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                hospitalName = hospitalInfo[0]; //* Get the hospital name
+    
+                // Call the smart contract function with hospital address
+                const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                
+                const parsedMedicalHistory = medicalHistoryString.map(item => {
+                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    return {
+                        patientAddr,
+                        hospitalAddr,
+                        physician,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
+                });
+    
+                // Filter medical records to include only those made by the specific hospital
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
+    
+                // Create an object to store the first medical record for each patient
+                const firstMedicalRecords = {};
+                filteredMedicalHistory.forEach(item => {
+                    if (!firstMedicalRecords[item.patientAddr]) {
+                        firstMedicalRecords[item.patientAddr] = item;
+                    }
+                });
+    
+                // Convert the object values (first medical records) to an array
+                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
+                
+                // Process each medical record to format it as needed
+                const modifiedMedicalHistory = uniqueMedicalRecords.map(item => {
+                    const splitAdmission = item.admission.split('+');
+                    return {
+                        patientAddr: item.patientAddr,
+                        patientName: "", // Fetch patient name here
+                        physician: item.physician,
+                        hospitalName: splitAdmission[1],
+                        admissionDate: splitAdmission[2],
+                        dischargeDate: splitAdmission[3],
+                        lengthOfStay: splitAdmission[4],
+                        creationDate: item.creationDate
+                    };
+                });
+    
+                // Fetch patient names for each medical record
+                const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
+                const patientInfoPromises = patientAddresses.map(address => mvContract.methods.getPatientInfo(address).call());
+                const allPatientInfo = await Promise.all(patientInfoPromises);
+                allPatientInfo.forEach((info, index) => {
+                    const patientNameHolder = info[0].split('+');
+                    modifiedMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                });
+    
+
+                //setMedicalHistory(modifiedMedicalHistory);
+
+                // const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
+
+                // if (results.length > 0) {
+                //     console.log("Found:", results);
+                //     setMedicalHistory(results);    
+                // } else if (searchQuery.trim() === '') {
+                //     setMedicalHistory(modifiedMedicalHistory);      
+                // } else {
+                //     console.log("No matching entry found.");
+                //     alert("No matching entry found.");
+                // }
+                
+                let searchQueryLower;
+                if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+                    searchQueryLower = searchQuery.toLowerCase();
+                }
+                
+                if (!searchQueryLower) {
+                    setMedicalHistory(modifiedMedicalHistory);
+                } else {
+                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                
+                    if (results.length > 0) {
+                        console.log("Found:", results);
+                        setMedicalHistory(results);
+                    } else {
+                        console.log("No matching entry found.");
+                        alert("No matching entry found.");
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        fetchMedicalHistory();
+    }, [hospitalAddress, searchQuery]);
+    
+    const clickRow = async (patientAddr, creationDate) => {
+
+        async function isHospitalAuthorized(patientAddr, hospitalAddress) {
+            const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddr).call();
+            return authorizedHospitals.includes(hospitalAddress);
+        }
+        
+        const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
+        console.log("Is hospital authorized?", isAuthorized);
+      
+       if (isAuthorized){
+            router.push({
+                pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+                query: { patientAddr, creationDate }
+            });
+       } else {
+            alert("You don't have permission do view this record.");
+            console.log("You don't have permission do view this record.");
+       }
+    };
+
     const handleAdd = () => {
-        console.log('Button clicked');
+        router.push('/HOSPITAL/AddPatient/');
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            
+        }
     };
     
     return (  
@@ -35,28 +194,21 @@ const MedicalHistoryPatient = ({ data }) => {
                 </div>
 
                 <div className={styles.dataContainer}>
-                    {data.map(data => (
-                        < div className={styles.perSection}>
-                            <div className={styles.forResponsiveness}>
-                                <p>Patient Name</p>
-                                <p>Hospital</p>
-                                <p>Admission Date</p>
-                                <p>Discharge Date</p>
-                                <p>Length of Stay</p>
-                            </div>
-                            <Link href="/HOSPITAL/MedicalHistory1Hospital" key={data.id} className={styles.data}>
-                                <p className={styles.diaAttrb}>{data.name}</p>
-                                <p>{data.hospital}</p>
-                                <p>{data.admissionDate}</p>
-                                <p>{data.dischargeDate}</p>
-                                <p>{data.stayLength}</p>
-                            </Link> 
+                    {medicalHistory.map((record, index) => (
+                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                            <p className={styles.diaAttrb}>{record.patientName}</p>
+                            <p>{record.hospitalName}</p>
+                            <p>{record.physician}</p>
+                            <p>{record.admissionDate}</p>
+                            <p>{record.dischargeDate}</p>
+                            <p>{record.stayLength}</p>
                         </div>
                     ))}
                 </div>
                 <button className={styles.submitButton} onClick={handleAdd}>
                     <Link href="/HOSPITAL/AddPatient">+</Link>
                 </button>
+
             </div>
         </>
         </Layout>

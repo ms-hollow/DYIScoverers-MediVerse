@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
@@ -14,6 +15,7 @@ import { toast } from 'react-toastify';
 
 
 const Register3Patient = () => {
+    const router = useRouter();
     const [patientFullName, setPatientFullName] = useState('');
     
     const [formData, setFormData] = useState({ 
@@ -92,8 +94,13 @@ const Register3Patient = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
+<<<<<<< HEAD
         toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
         router.push('/PATIENT/logInPatient');
+=======
+        alert('User Register Successfully!');
+        router.push('/PATIENT/HomePatient');
+>>>>>>> main
     };
 
    
@@ -177,10 +184,7 @@ const Register3Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>
-                        <Link href="/PATIENT/LogInPatient/">PROCEED</Link>
-                    </button>
-                    
+                    <button className={styles.submitButton}>REGISTER</button>
                 </form>
 
                 <ToastWrapper/> {/*Lagy to sa dulo ng container, */}

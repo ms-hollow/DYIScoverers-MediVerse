@@ -116,14 +116,13 @@ const HomeSidebarHeader = ({children, pageName}) => {
                         </div>
                     </div>
 
-                    <div id='toBlur1' className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
-                        <div id='content'>
-                            {children}
+                    <div className={styles.headerButtons}>
+                        {/* <div className={`${styles.searchBar}`}> 
+                            <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                            <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                    </div>
-                    <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
-                        <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
-                        <input type="text" placeholder="Search" className={styles.searchInput} />
+                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
+                        <AccountDropdown />
                     </div>   
             </div>   
         </>

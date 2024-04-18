@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from '/styles/landingPageHeader.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+//import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const LandingPageHeader = ({ buttonText, buttonLink}) => {
   // State to track whether the navbar is open or closed
