@@ -430,13 +430,14 @@ const MedicalHistoryHospital = () => {
 
                     <div className={styles.table_container}>
                         <p className={styles.table_title}>Treatment/Procedure</p>
-                        <div className={styles.treatment_heading}>
-                            <p>Treatment/Procedure</p>
-                            <p>Medical Team/Provider</p>
-                            <p>Date Started</p>
-                            <p>Date End</p>
-                            <p>Duration</p>
-                        </div>
+                        <div className={styles.responsiveTable}>
+                            <div className={styles.treatment_heading}>
+                                <p>Treatment/Procedure</p>
+                                <p>Medical Team/Provider</p>
+                                <p>Date Started</p>
+                                <p>Date End</p>
+                                <p>Duration</p>
+                            </div>
 
                         <div className={styles.scrollableTable_container}>
                             {medicalHistory.treatmentProcedure.names.map((data, index) => (
@@ -447,18 +448,21 @@ const MedicalHistoryHospital = () => {
                                     <p>{medicalHistory.treatmentProcedure.dateEnd[index]}</p>
                                     <p>{medicalHistory.treatmentProcedure.duration[index]}</p>
                                 </div>
-                        ))}
+                            ))}
+                        </div>
                         </div>
                     </div>
 
                     <div className={styles.table_container}>
                         <p className={styles.table_title}>Test</p>
-                        <div className={styles.test_heading}>
-                            <p>Type of Test</p>
-                            <p>Ordering Physician</p>
-                            <p>Date</p>
-                            <p>Reviewing Physician</p>
-                            <p>Result</p>
+                        <div className={styles.responsiveTable}>
+                            <div className={styles.test_heading}>
+                                <p>Type of Test</p>
+                                <p>Ordering Physician</p>
+                                <p>Date</p>
+                                <p>Reviewing Physician</p>
+                                <p>Result</p>
+                            </div>
                         </div>
 
                         <div className={styles.scrollableTable_container}>
@@ -476,13 +480,15 @@ const MedicalHistoryHospital = () => {
                     
                     <div className={styles.table_container}>
                         <p className={styles.table_title}>Medication</p>
-                        <div className={styles.medication_heading}>
-                            <p>Medication</p>
-                            <p>Date of Prescription</p>
-                            <p>Prescribing Physician</p>
-                            <p>Frequency</p>
-                            <p>Duration</p>
-                            <p>End Date</p>
+                        <div className={styles.responsiveTable}>
+                            <div className={styles.medication_heading}>
+                                <p>Medication</p>
+                                <p>Date of Prescription</p>
+                                <p>Prescribing Physician</p>
+                                <p>Frequency</p>
+                                <p>Duration</p>
+                                <p>End Date</p>
+                            </div>
                         </div>
 
                         <div className={styles.scrollableTable_container}>
@@ -501,11 +507,13 @@ const MedicalHistoryHospital = () => {
 
                     <div className={styles.table_container}>
                         <p className={styles.table_title}>Admission</p>
-                        <div className={styles.sANDs_heading}>
-                            <p>Hospital</p>
-                            <p>Admission Date</p>
-                            <p>Discharge Date</p>
-                            <p>Length of Stay</p>
+                        <div className={styles.responsiveTable}>
+                            <div className={styles.sANDs_heading}>
+                                <p>Hospital</p>
+                                <p>Admission Date</p>
+                                <p>Discharge Date</p>
+                                <p>Length of Stay</p>
+                            </div>
                         </div>
 
                         <div className={styles.scrollableTable_container}>

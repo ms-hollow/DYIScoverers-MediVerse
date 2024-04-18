@@ -157,7 +157,6 @@ const MedicalHistoryPatient = () => {
     return (  
         <Layout pageName = "Patient Records">
         <>
-        
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
                     <p>Patient Name</p>
