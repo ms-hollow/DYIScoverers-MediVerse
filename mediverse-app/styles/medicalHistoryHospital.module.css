@@ -2,15 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1137px;
+    width: 1260px;
     height: auto;
     margin: 0 auto;
-    margin-bottom: 100px;
-    margin-top: 145px;
+    margin-top: 133px;
 }
 
 .basicInfoContainer {
     display: flex;
+    background-color: white;
     width: 1137px;
     height: 95px;
     border-radius: 10px;
@@ -22,18 +22,16 @@
     left: 0;
     right: 0;
     z-index: 1100;
-    background-color: white;
 }
 
-.reserveSpace {
+.outerContainer {
     position: sticky;
-    top: 100px;
+    top: 120px;
     display: flex;
-    height: 170px;
-    width: 100vw;
     background-color: white;
+    height: 150px;
+    width: 1145px;
     z-index: 1000;
-    margin-top: -185px;
 }
 
 .headingAttrb {
@@ -58,290 +56,68 @@
 .headingAttrb_des {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
     height: 70px;
     margin-left: 50px;  
+    padding-right: 50px;
 }
 
 .headingAttrb_des p {
     margin: 3px;
 }
 
-.dataFormat {
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--navy-blue);
-}
-
-.doctorTypeFormat {
-    font-size: 12px;
-    font-family: Roboto Condensed;
-    color: var(--navy-blue);
-}
-
-.dataFormat_diag {
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--cyan);
-}
-
-.dataFormat_des {
+.des {
     font-size: 14px;
     font-family: Roboto Condensed;
     color: var(--navy-blue);
-}
-
-.table_container {
-    width: 1137px;
-    margin-top: 30px;
-}
-
-.table_title {
-    display: flex;
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--gray);
-    justify-content: center;
-}
-
-.sANDs_heading {
-    display: grid;
-    grid-template-columns: 280px 250px 250px 283px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 1137px;
-    height: 100vh;
-    margin: 0 auto;
-    margin-bottom: 100px;
-    margin-top: 145px;
-}
-
-.basicInfoContainer {
-    display: flex;
-    width: 1137px;
-    height: 95px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    /*position: fixed;
-    margin: 0 auto;
-    top: 145px;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: white;*/
-}
-
-.reserveTop {
-    display: flex;
-    width: 1137px;
-    height: 145px;
-    margin: 0 auto;
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    background-color: white;
-}
-
-.reserve {
-    display: flex;
-    width: 1137px;
-    height: 30px;
-    margin: 0 auto;
-    margin-top: 145px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    background-color: white;
-}
-
-.headingAttrb {
-    font-size: 14px;
-    font-family: Roboto Condensed;
-    color: #C9C9C9;
-}
-
-.headingAttrb_formatting {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 70px;
-    border-right: 1px solid #E3E3E3; 
-    margin-left: 50px;  
-}
-
-.headingAttrb_formatting p {
-    margin: 3px;
-}
-
-.headingAttrb_des {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    height: 70px;
-    margin-left: 50px;  
-}
-
-.headingAttrb_des p {
-    margin: 3px;
-}
-
-.dataFormat {
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--navy-blue);
-}
-
-.doctorTypeFormat {
-    font-size: 12px;
-    font-family: Roboto Condensed;
-    color: var(--navy-blue);
-}
-
-.dataFormat_diag {
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--cyan);
-}
-
-.dataFormat_des {
-    font-size: 14px;
-    font-family: Roboto Condensed;
-    color: var(--navy-blue);
-}
-
-.table_container {
-    width: 1137px;
-    margin-top: 30px;
-}
-
-.table_title {
-    display: flex;
-    font-size: 16px;
-    font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--gray);
-    justify-content: center;
-}
-
-.sANDs_heading {
-    display: grid;
-    grid-template-columns: 280px 250px 250px 283px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.sANDs_heading p{
-    margin: 4px;
-}
-
-.sANDs_data {
-    display: grid;
-    grid-template-columns: 280px 250px 250px 283px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.sANDs_data p{
-    margin: 7px;
-}
-
-.treatment_heading {
-    display: grid;
-    grid-template-columns: 270px 320px 180px 180px 120px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.treatment_heading p {
-    margin: 4px;
-}
-
-.treatment_data {
-    display: grid;
-    grid-template-columns: 270px 320px 180px 180px 120px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.treatment_data p {
-    margin: 7px;
-}
-
-.test_heading {
-    display: grid;
-    grid-template-columns: 190px 200px 150px 200px 330px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.test_heading p {
-    margin: 4px;
-}
-
-.test_data {
-    display: grid;
-    grid-template-columns: 190px 200px 150px 200px 330px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.test_data p {
-    margin: 7px;
-}
-
-.scrollableTable_container {
-    display: flex;
-    flex-direction: column;
-    max-height: 50px;
+    width: 392px;
     overflow-y: auto;
-    border: 2px solid black;
 }
 
-.medication_heading {
+.dataFormat {
+    font-size: 16px;
+    font-family: Roboto Condensed;
+    font-weight: 500;
+    color: var(--navy-blue);
+}
+
+.doctorTypeFormat {
+    font-size: 12px;
+    font-family: Roboto Condensed;
+    color: var(--navy-blue);
+}
+
+.dataFormat_diag {
+    font-size: 16px;
+    font-family: Roboto Condensed;
+    font-weight: 500;
+    color: var(--cyan);
+}
+
+.dataFormat_des {
+    font-size: 14px;
+    font-family: Roboto Condensed;
+    color: var(--navy-blue);
+}
+
+.table_container {
+    width: 1137px;
+    margin-bottom: 30px;
+}
+
+.table_title {
+    display: flex;
+    font-size: 16px;
+    font-family: Roboto Condensed;
+    font-weight: 500;
+    color: var(--gray);
+    justify-content: center;
+    margin-top: 0;
+}
+
+.sANDs_heading {
     display: grid;
-    grid-template-columns: 190px 190px 190px 190px 190px 190px;
-    height: 25px;
+    grid-template-columns: 280px 250px 250px 283px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -349,24 +125,6 @@
     background-color: var(--light-gray);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     justify-content: center;
-}
-
-.medication_heading p {
-    margin: 7px;
-}
-
-.medication_data {
-    display: grid;
-    grid-template-columns: 190px 190px 190px 190px 190px 190px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.medication_data p {
-    margin: 7px;
-}
 }
 
 .sANDs_heading p{
@@ -389,7 +147,6 @@
 .treatment_heading {
     display: grid;
     grid-template-columns: 270px 320px 180px 180px 120px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -419,7 +176,6 @@
 .test_heading {
     display: grid;
     grid-template-columns: 190px 200px 150px 200px 330px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -449,7 +205,6 @@
 .medication_heading {
     display: grid;
     grid-template-columns: 190px 190px 190px 190px 190px 190px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -481,5 +236,457 @@
     flex-direction: column;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 3px;
 }
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    bottom: 25px;
+    right: 135px;
+    height: 50px;
+    width: 50px;
+    background-color: var(--blue);
+    color: white;
+    cursor: pointer;
+    font-family: Roboto Condensed;
+    font-size: 30px;
+    border: none;
+    margin-left: auto;
+    border-radius: 100px;
+}
+
+.submitButton img {
+    display: flex;
+    margin-left: 5px;
+}
+  
+.submitButton:hover {
+    background-color: var(--cyan);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownContent {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    font-family: Roboto Condensed;
+    font-size: 14px;
+    width: 130px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    margin-bottom: 50px;
+    right: 0;
+    bottom: 0;
+}
+
+.dropdownContent img {
+    margin-right: 15px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dropdown a {
+    display: flex;
+    align-items: center;
+    color: black;
+    padding: 6px;
+}
+
+.patInfo_bg {
+    background-color: #ececec;
+}
+
+.dropdownContent a:hover {
+    color: white;
+    background-color: var(--blue);
+}
+
+.blur {
+    filter: blur(5px);
+    transition: 0.1s ease;
+    pointer-events: none;
+}
+
+@media screen and (max-width: 1524px){ 
+
+    .container{
+        width: 1100px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 1000px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 30px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 250px 200px 200px 210px;
+        
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 280px 270px 150px 150px 100px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 180px 150px 180px 258px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 200px 180px 200px 130px 100px 120px;
+    }
+}
+
+@media screen and (max-width: 1374px){      
+    .container{
+        width: 1000px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 900px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 20px;
+    }
+
+    .headingAttrb, .des, .sANDs_heading, .treatment_heading,
+    .test_heading, .medication_heading{
+        font-size: 12px;
+        align-items: center;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 14px;
+    }
+
+    .sANDs_data, .treatment_data, .test_data,
+    .medication_data {
+        font-size: 11px;
+    }
+
+    .doctorTypeFormat {
+        display: none;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 225px 150px 150px 225px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 230px 220px 140px 140px 100px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 160px 130px 150px 210px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 180px 150px 180px 110px 100px 100px;
+    }
+
+    .submitButton {
+        transform: scale(0.9);
+    }
+}
+
+@media screen and (max-width: 1251px){   
+    .container, .outerContainer{
+        width: 900px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 800px;
+       top: 115px;
+    }
+
+    .outerContainer {
+        top: 90px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 200px 200px 200px 100px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 190px 190px 130px 130px 120px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 150px 120px 130px 160px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 160px 140px 145px 100px 100px 133px;
+    }
+}
+
+@media screen and (max-width: 1182px){   
+   .submitButton {
+        right: 110px;
+   }
+}
+
+@media screen and (max-width: 1115px) {
+    .submitButton {
+        right: 35px;
+   }
+}
+
+@media screen and (max-width: 974px) {
+
+    .container, .outerContainer{
+        width: 710px;
+    }
+
+    .container {
+        margin-top: 65px;
+    }
+
+    .outerContainer {
+        top: 70px;
+    }
+
+    .basicInfoContainer {
+        top: 100px
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 700px;
+    }
+
+    .headingAttrb_formatting {
+        width: 133px;
+    }
+
+    .headingAttrb_des {
+        width: 300px;
+    }
+
+    .des {
+        width: 290px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 10px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 200px 130px 130px 100px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 180px 180px 120px 120px 70px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 160px 130px 105px 130px 170px;
+    }
+
+    .medication_heading, .medication_data {
+        
+        grid-template-columns: 135px 125px 135px 95px 70px 95px;
+    }
+
+    .submitButton {
+        transform: scale(0.7);
+        right: 15px;
+    }
+}
+
+@media screen and (max-width: 849px) {
+
+    .container, .outerContainer{
+        width: 610px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 600px;
+    }
+
+    .headingAttrb_formatting {
+        width: 116px;
+    }
+
+    .headingAttrb_des {
+        width: 250px;
+    }
+
+    .dataFormat, .dataFormat_diag {
+        padding-right: 5px;
+    }
+
+    .des {
+        width: 240px;
+    }
+
+    .headingAttrb, .des, .sANDs_heading, .treatment_heading,
+    .test_heading, .medication_heading{
+        font-size: 11px;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 13px;
+    }
+
+    .sANDs_data, .treatment_data, .test_data,
+    .medication_data {
+        font-size: 10px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 170px 150px 150px 60px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 160px 150px 100px 105px 60px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 130px 110px 93px 110px 140px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 120px 115px 120px 85px 60px 87px;
+    }
+}
+
+@media screen and (max-width: 673px) {
+
+    .container, .outerContainer{
+        width: 510px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 500px;
+    }
+
+    .headingAttrb_des {
+        width: 200px;
+    }
+
+    .des {
+        width: 190px;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 12px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 150px 100px 100px 80px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 120px 120px 90px 90px 60px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 100px 100px 70px 100px 130px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 110px 84px 110px 70px 50px 70px;
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .container, .outerContainer {
+        width: 360px;
+    }
+    
+    .outerContainer{
+        position: relative;
+        top: 0;
+    }
+
+    .basicInfoContainer {
+        position: relative;
+        flex-wrap: wrap;
+        width: 350px;
+        height: 150px;
+        align-content: center;
+        top: 10px;
+    }
+    
+    .headingAttrb_formatting {
+        width: 106px;
+        border: none;   
+    }
+
+    .headingAttrb_des{
+        width: 330px;
+        margin-top: -20px;
+    }
+
+    .des {
+        width: 320px;
+    }
+
+    .scrollable_container{
+        margin-top: 40px;
+    }
+
+    .table_container {
+        width: 350px;
+        
+    }
+
+    .sANDs_data, .treatment_data, .test_data, .medication_data {
+        width: 500px;
+    }
+
+    .sANDs_heading, .treatment_heading, .test_heading, .medication_heading{
+        width: 500px;
+        margin: 3px;
+    }
+
+    .scrollableTable_container {
+        width: 500px;
+    }
+
+    .responsiveTable{
+        overflow-x: auto;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .container{
+        transform: scale(0.9);
+        margin-top: 20px;
+        margin-bottom: -40px;
+    }
+}
+
+@media screen and (max-width: 358px) {
+    .container{
+        transform: translateX(-5%) scale(0.7);
+        margin-top: -80px;
+        margin-bottom: -140px;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .container{
+        transform: translateX(-7%) scale(0.7);
+    }
+}
+
+@media screen and (max-width: 294px) {
+    .container{
+        transform: translateX(-10%) scale(0.7);
+    }
+}
+
+

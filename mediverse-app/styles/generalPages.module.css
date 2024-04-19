@@ -69,6 +69,25 @@
     background-color: #22D3D8;
 }
 
+.messageCall {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #0566F1;
+    height: 100px;
+    width: 50px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.messageCall img {
+    width: 40px;
+}
+
 /* FAQS PAGE PROPERTIES */
 
 .faqTextContainer {
@@ -175,12 +194,13 @@
 
 .mainContainer {
     display: flex;
-    width: 1377px;
-    height: 550px;
+    width: 1320px;
+    height: 540px;
     margin: 0 auto;
     justify-content: center;
     margin-top: 130px;
     position: relative;
+    border: 2px black;
 }
 
 .contactUsContainer {
