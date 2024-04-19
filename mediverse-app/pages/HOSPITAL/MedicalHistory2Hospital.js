@@ -75,7 +75,7 @@ const MedicalHistoryHospital = () => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     }
 
@@ -365,7 +365,7 @@ const MedicalHistoryHospital = () => {
 
     const toggleButton = (patientAddr, creationDate) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
-            alert('You cannot edit this record');
+            toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',

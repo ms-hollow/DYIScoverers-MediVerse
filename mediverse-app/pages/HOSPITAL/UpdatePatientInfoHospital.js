@@ -65,7 +65,7 @@ const UpdatePatientHOspital = () => {
         const isEmpty = requiredFields.some(field => !formData[field]);
         
         if (isEmpty) {
-            alert('Please fill in all required fields.');
+            toast.error('Please fill in all required fields.');
             return; // Exit early if any required field is empty
         }
 

@@ -125,7 +125,7 @@ const addMedicalHistory = () => {
         let formComplete = true; 
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
-            toast.warning("Diagnosis form fields are incomplete. Please fill them out."); 
+            toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
             formComplete = false;
         } else {
             patientDiagnosis = formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
@@ -134,35 +134,35 @@ const addMedicalHistory = () => {
         if (formData.symptoms.every(symptom => symptom.symptomName && symptom.symptomDuration && symptom.symptomSeverity && symptom.symptomLocation)) {
             concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
         } else if (formData.symptoms.some(symptom => symptom.symptomName || symptom.symptomDuration || symptom.symptomSeverity || symptom.symptomLocation)) {
-            toast.warning("Symptoms form fields are incomplete. Please fill them out.");
+            toast.error("Symptoms form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.treatmentProcedure.every(treatmentProcedure => treatmentProcedure.tp && treatmentProcedure.medTeam && treatmentProcedure.tpDateStarted && treatmentProcedure.tpDuration)) {
             concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
         } else if (formData.treatmentProcedure.some(treatmentProcedure => treatmentProcedure.tp || treatmentProcedure.medTeam || treatmentProcedure.tpDateStarted || treatmentProcedure.tpDuration)) {
-            toast.warning("Treatment/Procedure form fields are incomplete. Please fill them out.");
+            toast.error("Treatment/Procedure form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.test.every(test => test.testType && test.orderingPhysician && test.testDate && test.reviewingPhysician && test.testResult)) {
             concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
         } else if (formData.test.some(test => test.testType || test.orderingPhysician || test.testDate || test.reviewingPhysician || test.testResult)) {
-            toast.warning("Test form fields are incomplete. Please fill them out.");
+            toast.error("Test form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
             concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
         } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
-            toast.warning("Medication form fields are incomplete. Please fill them out.");
+            toast.error("Medication form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate && admission.lengthOfStay)) {
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            toast.warning("Admission is required. Admission form fields are incomplete. Please fill them out.");
+            toast.error("Admission is required. Admission form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
         
@@ -194,12 +194,12 @@ const addMedicalHistory = () => {
                     setIsLoading(false);
                     router.push('/HOSPITAL/PatientRecordsHospital/');
                 } catch (error) {
-                    toast.warning('Patient is not registered.');
+                    toast.error('Patient is not registered.');
                     //console.error('Error sending transaction:', error.message);
                 };
             } else {
                 //console.error('Error sending transaction:', error.message);
-                toast.warning('Diagnosis and Description should be below 100 letters');
+                toast.error('Diagnosis and Description should be below 100 letters');
             }
         }
     };

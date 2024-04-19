@@ -39,7 +39,7 @@ const HospitalHome = ({data1, data2}) => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     };
 

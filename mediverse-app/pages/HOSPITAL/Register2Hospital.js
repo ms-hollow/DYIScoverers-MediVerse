@@ -32,7 +32,7 @@ const Register2Hospital = () => {
         const isEmpty = requiredFields.some(field => !formData[field]);
 
         if (isEmpty) {
-            alert('Please fill in all required fields.');
+            toast.warning
             return; // Exit early if any required field is empty
         }
         
@@ -46,7 +46,7 @@ const Register2Hospital = () => {
             router.push('/HOSPITAL/Register3Hospital/');
         } catch (error) {
             console.error('Error sending transaction:', error.message);
-            alert('Error Registering.');
+            toast.error('Error Registering.');
         }
     };
 

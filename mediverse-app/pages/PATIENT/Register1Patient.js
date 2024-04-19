@@ -44,7 +44,7 @@ const Register1Patient = () => {
         const agreeCheckbox = document.getElementById('agreeCheckbox');
       
         if (!agreeCheckbox.checked) {
-          toast.warning('Please agree to the terms before proceeding.');
+          toast.error('Please agree to the terms before proceeding.');
           return;
         } else {
             const patientList = await mvContract.methods.getPatientList().call();

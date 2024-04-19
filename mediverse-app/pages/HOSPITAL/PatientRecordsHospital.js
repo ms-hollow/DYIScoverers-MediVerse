@@ -25,7 +25,7 @@ const MedicalHistoryPatient = () => {
             console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); 
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     };
 
@@ -141,7 +141,7 @@ const MedicalHistoryPatient = () => {
                         setMedicalHistory(results);
                     } else {
                         console.log("No matching entry found.");
-                        alert("No matching entry found.");
+                        toast.warning("No matching entry found.");
                     }
                 }
 
@@ -168,7 +168,7 @@ const MedicalHistoryPatient = () => {
                 query: { patientAddr, creationDate }
             });
        } else {
-            alert("You don't have permission do view this record.");
+            toast.error("You don't have permission do view this record.");
             console.log("You don't have permission do view this record.");
        }
     };

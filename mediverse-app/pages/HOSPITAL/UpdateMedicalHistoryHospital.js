@@ -76,7 +76,7 @@ const UpdateMedicalHistoryHospital = () => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     }
 
@@ -587,11 +587,11 @@ const UpdateMedicalHistoryHospital = () => {
                 setIsLoading(false);
                 //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
-                alert('Failed to update medical history record.');
+                toast.error('Failed to update medical history record.');
                 console.error('Error updating medical history:', error);
             };
         } else {
-            alert('Diagnosis and Description should be below 100 letters');
+            toast.error('Diagnosis and Description should be below 100 letters');
         }
     };
 
