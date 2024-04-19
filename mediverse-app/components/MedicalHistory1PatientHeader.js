@@ -61,8 +61,8 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
 
                     <div className={styles.menuItems}>
                         <ul>
-                            <li><a href="/HOSPITAL/HomeHospital/">Home</a></li>
-                            <li><a href="/HOSPITAL/MedicalHistory1Hospital/">Medical History</a></li>
+                            <li><a href="/PATIENT/HomePatient//">Home</a></li>
+                            <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
                         </ul>
                     </div>
                 </div>
