@@ -8,6 +8,9 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
+
 const AccountProfilePatient = () => {
     const router = useRouter();
     const [patientFullName, setPatientFullName] = useState('');
@@ -209,6 +212,7 @@ const AccountProfilePatient = () => {
                 {isLoading ? <span>Loading...</span> : (editable ? <span>SAVE</span> : <span>EDIT</span>)}
             </button>
             
+            <ToastWrapper/>
         </Layout>
         </>
         

@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
+
 //! Done with the process sa buttons
 //TODO: Needs to update yung table kapag nabigyan na ng access
 //* Note abby, once na detect na grant ang access, mareremove na siya sa list ng pendingRequest
@@ -224,7 +227,7 @@ const AccountAccessHospital = () => {
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
                 console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
-                alert("Request Sent!");
+                toast.success("Request Sent!");
                 setRequestPermission(true);
                 setSentRequestPatients([...sentRequestPatients, patientAddr]);
             }
@@ -295,7 +298,9 @@ const AccountAccessHospital = () => {
                     </div>
                 )}
 
+                <ToastWrapper/>
             </div>
+            
         </>
         </Layout>
     );

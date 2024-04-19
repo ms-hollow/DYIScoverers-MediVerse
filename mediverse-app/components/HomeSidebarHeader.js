@@ -72,6 +72,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                         <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
                             {pageName}
                         </div>
+                        
                         <div className={styles.headerButtons}>
                             <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
                             <div className={`${styles.searchBar}`}> 

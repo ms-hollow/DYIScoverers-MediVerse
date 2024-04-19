@@ -27,11 +27,11 @@ const HomeSidebarHeaderHospital = ({children, pageName}) => {
                     </div>
 
                     <div className={styles.headerButtons}>
-                        {/* <div className={`${styles.searchBar}`}> 
+                        <div className={`${styles.searchBar}`}> 
                             <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification"/> </a> */}
+                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification"/> </a>
                         <AccountDropdown />
                     </div>
                     

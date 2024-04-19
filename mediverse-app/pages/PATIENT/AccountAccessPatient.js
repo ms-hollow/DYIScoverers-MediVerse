@@ -6,6 +6,9 @@ import React, { useState, useEffect } from 'react';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
+
 //! Done with the process sa buttons
 //TODO: Needs to update yung table kapag nabigyan na ng access
 //! HINDI PA MAAYOS CONTRACT
@@ -130,7 +133,7 @@ const AccountAccessPatient = () => {
             console.log("Revoke Address: ", hospitalAddress);
             await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
             console.log('Access was removed:', hospitalAddress);
-            alert('Access was removed:', hospitalAddress);
+            toast.info('Access was removed:', hospitalAddress);
             // After revoking access, set the revokeAccess state to trigger a refresh
             setRevokeAccess(prevState => !prevState); // Toggle revokeAccess state
         } catch (error) {
@@ -194,8 +197,10 @@ const AccountAccessPatient = () => {
                         </div>
                     </div>
                 )}
-
+                <ToastWrapper/>
+                
             </div>
+            
         </>
         </Layout>
     );
