@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const Register1Hospital = () => {
     const router = useRouter();
@@ -111,6 +113,7 @@ const Register1Hospital = () => {
                 <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                 
             </div>
+            <ToastWrapper/>
         </>
         
     );

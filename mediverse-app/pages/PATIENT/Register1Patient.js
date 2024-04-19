@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const Register1Patient = () => {
     const router = useRouter();
@@ -42,7 +44,7 @@ const Register1Patient = () => {
         const agreeCheckbox = document.getElementById('agreeCheckbox');
       
         if (!agreeCheckbox.checked) {
-          alert('Please agree to the terms before proceeding.');
+          toast.warning('Please agree to the terms before proceeding.');
           return;
         } else {
             const patientList = await mvContract.methods.getPatientList().call();
@@ -54,14 +56,14 @@ const Register1Patient = () => {
             const isPatient = isAddressInList(walletAddress, patientList);
             if (isPatient) {
                 setIsPatient(true);
-                alert('This account is already registered as a patient.');
+                toast.error('This account is already registered as a patient.');
                 return;
             }
         
             const isHospital = isAddressInList(walletAddress, hospitalList);
             if (isHospital) {
                 setIsHospital(true);
-                alert('This account is already registered as a hospital.');
+                toast.error('This account is already registered as a hospital.');
                 return;
             }
         
@@ -112,6 +114,7 @@ const Register1Patient = () => {
 
                 <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
             </div>
+            <ToastWrapper/>
         </>
         
     );

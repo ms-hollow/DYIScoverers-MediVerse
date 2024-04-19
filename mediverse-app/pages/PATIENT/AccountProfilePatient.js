@@ -7,7 +7,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
-
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
 
@@ -119,7 +118,7 @@ const AccountProfilePatient = () => {
             setIsLoading(false);
         } catch (error) {
             console.error('Error updating patient details:', error);
-            alert('Error updating patient details.');
+            toast.error('Error updating patient details.');
         }
     }
 
@@ -212,8 +211,8 @@ const AccountProfilePatient = () => {
                 {isLoading ? <span>Loading...</span> : (editable ? <span>SAVE</span> : <span>EDIT</span>)}
             </button>
             
-            <ToastWrapper/>
         </Layout>
+        <ToastWrapper/>
         </>
         
     );

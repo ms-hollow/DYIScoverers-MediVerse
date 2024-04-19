@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 //TODO: Lagay ng comment for notifcation message
 //TODO: Get patient info and display ito sa history
@@ -529,16 +531,18 @@ const MedicalHistoryHospital = () => {
                 </div>
             </div>
             <button className={styles.submitButton} onClick={toggleButton}>
-                    <div className={styles.dropdown}>     
-                        <img src="/edit.svg" alt="Edit Icon"/>
-                        {isOpen && (
-                            <div className={styles.dropdownContent}>
-                                <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
-                                <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
-                            </div>
-                        )}
-                    </div>
-                </button>
+                <div className={styles.dropdown}>     
+                    <img src="/edit.svg" alt="Edit Icon"/>
+                    {isOpen && (
+                        <div className={styles.dropdownContent}>
+                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
+                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
+                        </div>
+                    )}
+                </div>
+            </button>
+            <ToastWrapper/>
+            
         </>
         </Layout>
      );

@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 //? Changes: Added lines of code if the hospital is authorized to view the medical history if the patient
 
@@ -210,6 +212,7 @@ const MedicalHistoryPatient = () => {
                 </button>
 
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

@@ -151,6 +151,7 @@ const AddPatient = () => {
                     </button>
                 </form>
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

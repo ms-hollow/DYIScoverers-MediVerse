@@ -5,6 +5,8 @@ import styles from '../../styles/homeHospital.module.css'
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import fs from 'fs';
 import path from 'path';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 export async function getStaticProps() {
     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
@@ -363,6 +365,7 @@ const HospitalHome = ({data1, data2}) => {
                     </div>
                 </div>
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 
 const Register2Hospital = () => {
@@ -87,6 +89,7 @@ const Register2Hospital = () => {
 
                 </form>
             </div>
+            <ToastWrapper/>
         </>
         
     );

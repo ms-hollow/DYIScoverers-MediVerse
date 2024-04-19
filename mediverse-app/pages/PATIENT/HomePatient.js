@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from '@/components/ToastWrapper';
 
 
 const HomePatient = () => {
@@ -26,7 +27,7 @@ const HomePatient = () => {
             console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]); 
         } catch (error) {
-            alert('Error fetching patient address.');
+            toast.error('Error fetching patient address.');
         }
     };
 
@@ -184,6 +185,7 @@ const HomePatient = () => {
                 </div>
 
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
      );

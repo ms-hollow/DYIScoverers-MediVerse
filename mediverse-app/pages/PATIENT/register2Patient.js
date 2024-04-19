@@ -8,6 +8,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const Register2Patient = () => {
     const router = useRouter();
@@ -172,6 +174,7 @@ const Register2Patient = () => {
                     <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                 </form>
             </div>
+            <ToastWrapper/>
         </>
         
     );

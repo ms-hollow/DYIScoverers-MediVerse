@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
+
 const MedicalHistoryHospital = () => {
 
     const [patientAddress, setPatientAddress] = useState('');
@@ -65,7 +68,7 @@ const MedicalHistoryHospital = () => {
             console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]);
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     }
 
@@ -523,6 +526,7 @@ const MedicalHistoryHospital = () => {
                 </div>      
             </div>
             )}
+            <ToastWrapper/>
         </>
         </Layout>
      );
