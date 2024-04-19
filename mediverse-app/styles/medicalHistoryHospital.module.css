@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1290px;
+    width: 1260px;
     height: auto;
     margin: 0 auto;
     margin-top: 133px;
@@ -118,7 +118,6 @@
 .sANDs_heading {
     display: grid;
     grid-template-columns: 280px 250px 250px 283px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -148,7 +147,6 @@
 .treatment_heading {
     display: grid;
     grid-template-columns: 270px 320px 180px 180px 120px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -178,7 +176,6 @@
 .test_heading {
     display: grid;
     grid-template-columns: 190px 200px 150px 200px 330px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -208,7 +205,6 @@
 .medication_heading {
     display: grid;
     grid-template-columns: 190px 190px 190px 190px 190px 190px;
-    height: 25px;
     font-family: Roboto Condensed;
     font-size: 14px;
     font-weight: 500;
@@ -240,6 +236,7 @@
     flex-direction: column;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 3px;
 }
 
@@ -249,7 +246,7 @@
     align-items: center;
     position: sticky;
     bottom: 25px;
-    right: 130px;
+    right: 135px;
     height: 50px;
     width: 50px;
     background-color: var(--blue);
@@ -318,4 +315,378 @@
     transition: 0.1s ease;
     pointer-events: none;
 }
+
+@media screen and (max-width: 1524px){ 
+
+    .container{
+        width: 1100px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 1000px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 30px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 250px 200px 200px 210px;
+        
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 280px 270px 150px 150px 100px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 180px 150px 180px 258px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 200px 180px 200px 130px 100px 120px;
+    }
+}
+
+@media screen and (max-width: 1374px){      
+    .container{
+        width: 1000px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 900px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 20px;
+    }
+
+    .headingAttrb, .des, .sANDs_heading, .treatment_heading,
+    .test_heading, .medication_heading{
+        font-size: 12px;
+        align-items: center;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 14px;
+    }
+
+    .sANDs_data, .treatment_data, .test_data,
+    .medication_data {
+        font-size: 11px;
+    }
+
+    .doctorTypeFormat {
+        display: none;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 225px 150px 150px 225px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 230px 220px 140px 140px 100px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 160px 130px 150px 210px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 180px 150px 180px 110px 100px 100px;
+    }
+
+    .submitButton {
+        transform: scale(0.9);
+    }
+}
+
+@media screen and (max-width: 1251px){   
+    .container, .outerContainer{
+        width: 900px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 800px;
+       top: 115px;
+    }
+
+    .outerContainer {
+        top: 90px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 200px 200px 200px 100px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 190px 190px 130px 130px 120px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 200px 150px 120px 130px 160px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 160px 140px 145px 100px 100px 133px;
+    }
+}
+
+@media screen and (max-width: 1182px){   
+   .submitButton {
+        right: 110px;
+   }
+}
+
+@media screen and (max-width: 1115px) {
+    .submitButton {
+        right: 35px;
+   }
+}
+
+@media screen and (max-width: 974px) {
+
+    .container, .outerContainer{
+        width: 710px;
+    }
+
+    .container {
+        margin-top: 65px;
+    }
+
+    .outerContainer {
+        top: 70px;
+    }
+
+    .basicInfoContainer {
+        top: 100px
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 700px;
+    }
+
+    .headingAttrb_formatting {
+        width: 133px;
+    }
+
+    .headingAttrb_des {
+        width: 300px;
+    }
+
+    .des {
+        width: 290px;
+    }
+
+    .headingAttrb_formatting, .headingAttrb_des {
+        margin-left: 10px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 200px 130px 130px 100px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 180px 180px 120px 120px 70px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 160px 130px 105px 130px 170px;
+    }
+
+    .medication_heading, .medication_data {
+        
+        grid-template-columns: 135px 125px 135px 95px 70px 95px;
+    }
+
+    .submitButton {
+        transform: scale(0.7);
+        right: 15px;
+    }
+}
+
+@media screen and (max-width: 849px) {
+
+    .container, .outerContainer{
+        width: 610px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 600px;
+    }
+
+    .headingAttrb_formatting {
+        width: 116px;
+    }
+
+    .headingAttrb_des {
+        width: 250px;
+    }
+
+    .dataFormat, .dataFormat_diag {
+        padding-right: 5px;
+    }
+
+    .des {
+        width: 240px;
+    }
+
+    .headingAttrb, .des, .sANDs_heading, .treatment_heading,
+    .test_heading, .medication_heading{
+        font-size: 11px;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 13px;
+    }
+
+    .sANDs_data, .treatment_data, .test_data,
+    .medication_data {
+        font-size: 10px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 170px 150px 150px 60px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 160px 150px 100px 105px 60px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 130px 110px 93px 110px 140px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 120px 115px 120px 85px 60px 87px;
+    }
+}
+
+@media screen and (max-width: 673px) {
+
+    .container, .outerContainer{
+        width: 510px;
+    }
+
+    .basicInfoContainer, .table_container {
+       width: 500px;
+    }
+
+    .headingAttrb_des {
+        width: 200px;
+    }
+
+    .des {
+        width: 190px;
+    }
+
+    .dataFormat, .dataFormat_diag, .table_title {
+        font-size: 12px;
+    }
+
+    .sANDs_heading, .sANDs_data {
+        grid-template-columns: 150px 100px 100px 80px;
+    }
+
+    .treatment_heading, .treatment_data {
+        grid-template-columns: 120px 120px 90px 90px 60px;
+    }
+
+    .test_heading, .test_data {
+        grid-template-columns: 100px 100px 70px 100px 130px;
+    }
+
+    .medication_heading, .medication_data {
+        grid-template-columns: 110px 84px 110px 70px 50px 70px;
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .container, .outerContainer {
+        width: 360px;
+    }
+    
+    .outerContainer{
+        position: relative;
+        top: 0;
+    }
+
+    .basicInfoContainer {
+        position: relative;
+        flex-wrap: wrap;
+        width: 350px;
+        height: 150px;
+        align-content: center;
+        top: 10px;
+    }
+    
+    .headingAttrb_formatting {
+        width: 106px;
+        border: none;   
+    }
+
+    .headingAttrb_des{
+        width: 330px;
+        margin-top: -20px;
+    }
+
+    .des {
+        width: 320px;
+    }
+
+    .scrollable_container{
+        margin-top: 40px;
+    }
+
+    .table_container {
+        width: 350px;
+        
+    }
+
+    .sANDs_data, .treatment_data, .test_data, .medication_data {
+        width: 500px;
+    }
+
+    .sANDs_heading, .treatment_heading, .test_heading, .medication_heading{
+        width: 500px;
+        margin: 3px;
+    }
+
+    .scrollableTable_container {
+        width: 500px;
+    }
+
+    .responsiveTable{
+        overflow-x: auto;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .container{
+        transform: scale(0.9);
+        margin-top: 20px;
+        margin-bottom: -40px;
+    }
+}
+
+@media screen and (max-width: 358px) {
+    .container{
+        transform: translateX(-5%) scale(0.7);
+        margin-top: -80px;
+        margin-bottom: -140px;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .container{
+        transform: translateX(-7%) scale(0.7);
+    }
+}
+
+@media screen and (max-width: 294px) {
+    .container{
+        transform: translateX(-10%) scale(0.7);
+    }
+}
+
 

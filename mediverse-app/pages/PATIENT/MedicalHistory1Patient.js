@@ -134,12 +134,21 @@ const MedicalHistoryPatient = () => {
 
                 <div className={styles.dataContainer}>
                     {medicalHistory.map((record, index) => (
-                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
-                            <p className={styles.diaAttrb}>{record.diagnosis}</p>
-                            <p>{record.hospitalName}</p>
-                            <p>{record.physician}</p>
-                            <p>{record.admissionDate}</p>
-                            <p>{record.dischargeDate}</p>
+                        <div className={styles.perSection}>
+                            <div className={styles.forResponsiveness}>
+                                <p>Diagnosis</p>
+                                <p>Hospital</p>
+                                <p>Physician</p>
+                                <p>Admission Date</p>
+                                <p>Discharge Date</p>
+                            </div>
+                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                                <p className={styles.diaAttrb}>{record.diagnosis}</p>
+                                <p>{record.hospitalName}</p>
+                                <p>{record.physician}</p>
+                                <p>{record.admissionDate}</p>
+                                <p>{record.dischargeDate}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

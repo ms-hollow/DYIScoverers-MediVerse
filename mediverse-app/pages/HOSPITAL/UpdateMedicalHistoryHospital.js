@@ -379,11 +379,11 @@ const UpdateMedicalHistoryHospital = () => {
         diagnosis: '',
         dateOfDiagnosis: '',
         description: '',
-        symptoms: [{ noSymptom: 2, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-        treatmentProcedure: [{noTP: 2, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
-        test: [{noTest: 2, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
-        medication: [{noMedication: 2, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
-        admission: [{noAdmission: 2, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+        symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+        test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
+        medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
+        admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
     });
 
     const handleChange = (e, index) => {

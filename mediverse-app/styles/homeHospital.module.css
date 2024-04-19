@@ -223,6 +223,7 @@
     flex-direction: column;
     width: 244px;
 }
+
 .typeDesContainer p{
     margin: 0;
 }
@@ -259,3 +260,193 @@
     margin: 0;
 }
 
+
+@media screen and (max-width: 1661px) {
+    .mainContainer {
+        margin-top: 140px;
+    }
+}
+
+@media screen and (max-width: 1537px) {
+    .mainContainer {
+        margin-top: 137px;
+    }
+}
+
+@media screen and (max-width: 1387px) {
+    .mainContainer {
+        transform: scale(0.9);
+        margin-top: 110px;
+    }
+}
+
+@media screen and (max-width: 1275px) {
+    .mainContainer {
+        transform: scale(0.8);
+        margin-top: 60px;
+    }
+}
+
+@media screen and (max-width: 1001px) {
+    .mainContainer {
+        margin-left: -20px;
+    }
+}
+
+@media screen and (max-width: 946px) {
+    .mainContainer {
+        transform: scale(0.7);
+        margin-top: 20px;
+        margin-left: -50px;
+    }
+}
+
+@media screen and (max-width: 889px) {
+    .mainContainer {
+        margin-left: -70px;   
+    }
+}
+
+@media screen and (max-width: 856px) {
+    .mainContainer {
+        margin-left: -90px;   
+    }
+}
+
+@media screen and (max-width: 806px) {
+    .mainContainer{
+        height: auto;
+        max-width: 595px;
+        width: 100%;
+        margin: 0 auto;
+        margin-top: -50px;
+    }
+
+    .banner{
+        width: 595px;
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 21px;
+    }
+
+    .banner::before{
+        width: 595px;
+    }
+
+    .banner_info {
+        grid-template-columns: 198px 198px 198px;
+    }
+    
+    .infoFormat {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bottomHalf_container{
+        flex-direction: column;
+        height: auto;
+        width: 595px;
+        margin: 0 auto;
+        margin-top: 10px;
+        margin-bottom: -130px;
+    }
+
+    .newPatientAndNotif_container{
+        width: 595px;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+
+    .newPatient, .notifications, .notif_container{
+        width: 595px;
+    }
+
+    .notifData {
+        width: 550px;
+    }
+
+    .notifDesFormat {
+        width: 410px;
+    }
+
+    .timeStampFormat {
+        margin-left: 190px;
+    }
+
+    .notifTypeFormat{
+        font-size: 12px;
+    }
+
+    .notifDesFormat{
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 551px) {
+    .mainContainer {
+        margin-left: -20px;
+    }
+}
+
+@media screen and (max-width: 502px) {
+    .mainContainer {
+        margin-left: -40px;
+    }
+}
+
+@media screen and (max-width: 502px) {
+    .mainContainer {
+        transform: scale(0.6);
+        margin-top: -80px;
+        margin-left: -50px;
+    }
+
+    .bottomHalf_container{
+        margin-bottom: -200px;
+    }
+
+    .timeStampFormat {
+        margin-left: 180px;
+        font-size: 11px;
+    }
+
+    .notifTypeFormat{
+        font-size: 13px;
+    }
+
+    .notifDesFormat{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .mainContainer {
+        margin-left: -55px;
+    }
+}
+
+@media screen and (max-width: 392px) {
+    .mainContainer {
+        transform: scale(0.55);
+        margin-top: -10px;
+        margin-left: -65px;
+    }
+
+    .bottomHalf_container{
+        margin-bottom: -600px;
+    }
+
+    .timeStampFormat {
+        margin-left: 170px;
+        font-size: 13px;
+    }
+
+    .notifTypeFormat{
+        font-size: 16px;
+    }
+
+    .notifDesFormat{
+        font-size: 15px;
+        width: 380px;
+    }
+}

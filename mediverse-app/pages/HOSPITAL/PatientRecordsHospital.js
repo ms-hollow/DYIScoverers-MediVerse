@@ -184,7 +184,6 @@ const MedicalHistoryPatient = () => {
     return (  
         <Layout pageName = "Patient Records">
         <>
-        
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
                     <p>Patient Name</p>
@@ -206,7 +205,6 @@ const MedicalHistoryPatient = () => {
                         </div>
                     ))}
                 </div>
-
                 <button className={styles.submitButton} onClick={handleAdd}>
                     <Link href="/HOSPITAL/AddPatient">+</Link>
                 </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '/styles/homeSidebarHeader.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
-
+ 
 const AccountDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -15,6 +15,7 @@ const AccountDropdown = () => {
         if(container){
             if (isOpen) {
                 container.classList.add(styles.blur);
+                searchOpen.classList.remove(styles.searchOpen);
             } else {
                 container.classList.remove(styles.blur);
             }
