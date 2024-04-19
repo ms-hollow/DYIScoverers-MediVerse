@@ -1,13 +1,18 @@
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '/styles/landingPage.module.css';
-import styles2 from '/styles/landingPageHeader.module.css';
+import styles2 from '/styles/accountIconDropdown.module.css';
 import LandingPageHeader from '@/components/landingPageHeader';
-import Footer from '@/components/generalFooter';
 
 
 export default function LandingPage() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+      setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -28,8 +33,15 @@ export default function LandingPage() {
             <img src="/landingPagePic1.png" alt="Pic 1" className={styles.image} />
           </div>
 
-          <div className={styles.button}>
-            <Link href="/PATIENT/Register1Patient/">Get Started</Link>
+          <div className={styles2.registerDropdown}></div>
+            <div className={styles.button} onClick={toggleMenu}> 
+                Get Started
+                  {isOpen && (
+                      <div className={styles2.registerDropdownContent}>
+                          <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                      </div>
+                  )}
           </div>
 
         </section>

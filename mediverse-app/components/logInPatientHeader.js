@@ -1,8 +1,17 @@
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/logInPatientHeader.module.css';
+import styles2 from '/styles/accountIconDropdown.module.css';
 
 const LogInPatientHeader = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+      setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -17,9 +26,17 @@ const LogInPatientHeader = () => {
           <li><a href="/GENERAL/FAQs/">FAQS</a></li>
         </ul>
 
-        <div className={styles.button}>
-          <Link href="/PATIENT/Register1Patient/">REGISTER</Link>
+        <div className={styles2.registerDropdown2}></div>
+            <div className={styles.button} onClick={toggleMenu}> 
+                REGISTER
+                  {isOpen && (
+                      <div className={styles2.registerDropdownContent2}>
+                          <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                      </div>
+                  )}
         </div>
+        
 
         {/* Ito yung image behind ng content ng login */}
         <div className={styles.vector1577}>

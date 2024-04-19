@@ -80,19 +80,7 @@ const HomeSidebarHeader = ({children, pageName}) => {
                                 <input type="text" placeholder="Search" className={styles.searchInput} />
                             </div>
                             <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
-                            <div className={styles2.dropdown}>
-                                <div className={styles2.accountIcon} onClick={toggleMenu}> 
-                                    <img src="/Account Icon.svg" alt="Account" className={styles.logo} />
-                                    {isOpen && (
-                                        <div className={styles2.dropdownContent}>
-                                            <Link href="/PATIENT/AccountProfilePatient"><img src="/dropdown_profile.svg" alt="Profile Dropdown Icon" />Profile</Link>
-                                            <Link href="/account/settings"><img src="/dropdown_settings.svg" alt="Settings Dropdown Icon" />Settings</Link>
-                                            <Link href="/logout"><img src="/dropdown_access.svg" alt="Account Access Dropdown Icon" />Account Access</Link>
-                                            <Link href="/"><img src="/dropdown_logout.svg" alt="Logout Dropdown Icon" />Logout</Link>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                            <AccountDropdown/>
                         </div>   
                     </header>
 
