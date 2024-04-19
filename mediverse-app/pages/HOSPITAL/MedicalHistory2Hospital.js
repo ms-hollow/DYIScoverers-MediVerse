@@ -528,9 +528,17 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
-                <img src="/edit.svg" alt="Edit Icon"/>
-            </button>
+            <button className={styles.submitButton} onClick={toggleButton}>
+                    <div className={styles.dropdown}>     
+                        <img src="/edit.svg" alt="Edit Icon"/>
+                        {isOpen && (
+                            <div className={styles.dropdownContent}>
+                                <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
+                                <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
+                            </div>
+                        )}
+                    </div>
+                </button>
         </>
         </Layout>
      );

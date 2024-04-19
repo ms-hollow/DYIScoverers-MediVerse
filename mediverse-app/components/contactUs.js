@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import LandingPageHeader from "@/components/landingPageHeader";
 import styles from '/styles/generalPages.module.css'; 
-import Link from 'next/link';
 
 const ContactUs = () => {
     const router = useRouter();
@@ -18,9 +17,10 @@ const ContactUs = () => {
 
     return (
         <>
-            <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
+            <LandingPageHeader buttonText="Connect Wallet" />
 
             <div className={styles.mainContainer}>
+
                 <p className={styles.contactUS_txt}>C O N T A C T    U S</p>
                 <div className={styles.contactUsContainer}>
                     <div className={styles.fieldContainer}>
@@ -53,11 +53,37 @@ const ContactUs = () => {
                     </div>
                     <img src= '/Contact Us img.svg' alt='Contact Us Image' className={styles.image}/>
                 </div>
-                <div className={styles.messageCall}>
-                    <img src='/message icon.svg' alt='Message Icon'/>
-                    <img src='/call icon.svg' alt='Call Icon'/>
-                </div>
             </div>
+
+
+
+            {/* Text boxes for entering name, email, and message */}
+            
+            {/*<input
+                type="text"
+                placeholder="Enter your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={styles.customInputName} 
+            />
+            <input
+                type="text"
+                placeholder="Enter your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.customInputEmail} 
+            />
+            <input
+                type="text"
+                placeholder="Enter your Message or Concern"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className={styles.customInputMessage} 
+            />*/}
+
+           
+            {/*<button onClick={handleSubmit} className={styles.submitButton}>Submit</button>*/}
+        
         </>
     );
 };

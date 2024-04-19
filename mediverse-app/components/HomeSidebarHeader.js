@@ -75,19 +75,19 @@ const HomeSidebarHeader = ({children, pageName}) => {
                         <div className={styles.headerButtons}>
                             <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
                             <div className={`${styles.searchBar}`}> 
-                                <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                                <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
                                 <input type="text" placeholder="Search" className={styles.searchInput} />
                             </div>
-                            <a href="/destination-url"> <img src="/Notifications.png" alt="Notification" width={30} height={30} className={styles.logo} /> </a>
+                            <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
                             <div className={styles2.dropdown}>
                                 <div className={styles2.accountIcon} onClick={toggleMenu}> 
-                                    <img src="/Account Logo.png" alt="Account" width={35} height={35} className={styles.logo} />
+                                    <img src="/Account Icon.svg" alt="Account" className={styles.logo} />
                                     {isOpen && (
                                         <div className={styles2.dropdownContent}>
-                                            <Link href="/account/profile"><img src="/dropdown_profile.svg" alt="Profile Dropdown Icon" />Profile</Link>
+                                            <Link href="/PATIENT/AccountProfilePatient"><img src="/dropdown_profile.svg" alt="Profile Dropdown Icon" />Profile</Link>
                                             <Link href="/account/settings"><img src="/dropdown_settings.svg" alt="Settings Dropdown Icon" />Settings</Link>
                                             <Link href="/logout"><img src="/dropdown_access.svg" alt="Account Access Dropdown Icon" />Account Access</Link>
-                                            <Link href="/logout"><img src="/dropdown_logout.svg" alt="Logout Dropdown Icon" />Logout</Link>
+                                            <Link href="/"><img src="/dropdown_logout.svg" alt="Logout Dropdown Icon" />Logout</Link>
                                         </div>
                                     )}
                                 </div>
@@ -103,16 +103,14 @@ const HomeSidebarHeader = ({children, pageName}) => {
                     <div className={styles.sidebar}>
                         <div className={styles.top}>
                             <div className={styles.sidebarLogo}>                     
-                                <Image src="/MediVerse Logo (with Text).png" alt="Logo" width={217} height={58.06} className={styles.logo} />
+                                <Image src="/MediVerse Logo (with Text).svg" alt="Logo" width={217} height={58.06} className={styles.logo} />
                             </div>
                         </div>
 
                         <div className={styles.menuItems}>
                             <ul>
-                                <li><a href="view-appointments.html">Home</a></li>
-                                <li><a href="./book-appointment/book-appointment.html">Medical History</a></li>
-                                <li><a href="profile.html">General Health Profile</a></li>
-                                <li><a href="change-password.html">Account</a></li>
+                                <li><a href="/PATIENT/HomePatient/">Home</a></li>
+                                <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
                                 <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                             </ul>
                         </div>

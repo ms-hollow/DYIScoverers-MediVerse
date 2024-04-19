@@ -132,52 +132,225 @@
   .clickableText:hover {
     text-decoration: underline;
   }
-/* features, why mediverse? pictures to if ayaw ng ganito and dapat icode one by one pasabi lang*/
+/* FEATURES*/
+.lineStyleHead {
+  position: absolute;
+  top: 1420px;
+  left: 180px;
+  background: linear-gradient(to right, #4B7D84, #18C1C6);
+  width: 253.31px;
+  height: 500px;
+}
+.lineHead{
+  position: absolute;
+  top: 1138px;
+  left: 76.96px;
+  width: 1365.07px;
+  height: 3px;
+  background: linear-gradient(to right, #4B7D84, #18C1C6);
+}
+.Ftxt1 {
+  font-family: Raleway;
+  font-weight: bold;
+  font-size: 23px;
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  width: 259.88px;
+  height: 49.84px;
+  text-align: left;
+  color:#00838F;
+}
+
+.Ftxt11 {
+  font-family: Roboto Condensed;
+  font-size: 14px;
+  position: absolute;
+  color:#00838F;
+  left: 10px;
+  top: 90px;
+  width: 259.88px;
+  height: 49.84px;
+  text-align: left;
+}
 .feature1 {
     position: absolute;
     left: 150px;
     top: 1197px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
 
+  .whiteRectangle1 {
+    position: absolute;
+    left: 171px;
+    top: 1330px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+
+.lineStyle1 {
+    position: absolute;
+    top: 1420px;
+    left: 180px;
+    background-color: #00838F;
+    width: 253.31px;
+    height: 2px;
+}
   .feature2 {
     position: absolute;
     left: 596.5px;
     top: 1197px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
+  .whiteRectangle2 {
+    position: absolute;
+    left:618px;
+    top: 1330px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+.lineStyle2 {
+  position: absolute;
+  top: 1420px;
+  left: 630px;
+  background-color: #00838F;
+  width: 253.31px;
+  height: 2px;
+}
   .feature3 {
     position: absolute;
     left: 1023.04px;
     top: 1197px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
+  .Ftxt3 {
+    font-family: Raleway;
+    font-weight: bold;
+    font-size: 23px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 259.88px;
+    height: 49.84px;
+    text-align: left;
+    color:#00838F;
+  }
+  .whiteRectangle3 {
+    position: absolute;
+    left:1043px;
+    top: 1330px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+.lineStyle3 {
+  position: absolute;
+  top: 1420px;
+  left: 1055px;
+  background-color: #00838F;
+  width: 253.31px;
+  height: 2px;
+}
   
   .feature4 {
     position: absolute;
     left: 150px;
-    top: 1574.75px;
+    top: 1570px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
+  .Ftxt4 {
+    font-family: Raleway;
+    font-weight: bold;
+    font-size: 23px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 259.88px;
+    height: 49.84px;
+    text-align: left;
+    color:#00838F;
+  }
+  .whiteRectangle4 {
+    position: absolute;
+    left: 171px;
+    top: 1700px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+
+.lineStyle4 {
+    position: absolute;
+    top: 1790px;
+    left: 180px;
+    background-color: #00838F;
+    width: 253.31px;
+    height: 2px;
+}
   .feature5 {
     position: absolute;
     left: 596.5px;
-    top: 1574.75px;
+    top: 1570px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
+  .whiteRectangle5 {
+    position: absolute;
+    left:618px;
+    top: 1700px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+.lineStyle5 {
+  position: absolute;
+  top: 1790px;
+  left: 630px;
+  background-color: #00838F;
+  width: 253.31px;
+  height: 2px;
+}
   .feature6 {
     position: absolute;
     left: 1023.24px;
-    top: 1574.75px;
+    top: 1570px;
     width: 317.47px;
-    height: 322.75px;
+    height: 277.98px;
   }
-
+  .whiteRectangle6 {
+    position: absolute;
+    left:1043px;
+    top: 1700px;
+    width: 276.57px;
+    height: 190px;
+    background-color: white;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0.5, 0.5);
+    border-radius: 15px;
+}
+.lineStyle6 {
+  position: absolute;
+  top: 1790px;
+  left: 1055px;
+  background-color: #00838F;
+  width: 253.31px;
+  height: 2px;
+}
   /* component sa pinakababa sa baba*/
   .container34 {
     top: 2080px; 
@@ -228,6 +401,28 @@
     background-color: #22D3D8;
   
   }
+
+  .button {
+    position: relative;
+    display: flex;
+    width: 18%;
+    padding: 15px 25px;
+    margin-top: 8%;
+    margin-bottom: 130%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(225deg, var(--blue) 0%, var(--pale-blue) 100%);
+    color: white;
+    white-space: nowrap; /* Prevent text from wrapping */
+    margin-left: 7%;
+}
+
+.button:hover {
+    background: var(--cyan);
+}
+
 
   /* ------------------RESPONSIVENESS------------------*/
  /*nahihirapan pa HAHAHA tinapos ko muna lahat ng page */
