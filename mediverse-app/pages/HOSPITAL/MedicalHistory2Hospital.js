@@ -14,6 +14,7 @@ import mvContract from '../../blockchain/mediverse';
 const MedicalHistoryHospital = () => {
 
     const [hospitalAddress, setHospitalAddress] = useState('');
+    const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
@@ -114,10 +115,12 @@ const MedicalHistoryHospital = () => {
                 //console.log(getPatientMedicalHistory);
 
                 let physicianName;
+                
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
                     physicianName = physician;
+                    sethospitalAddrInHistory(hospitalAddr);
                     return {
                         patientAddr: patientAddr,
                         hospitalAddr,
@@ -359,10 +362,14 @@ const MedicalHistoryHospital = () => {
     }, [hospitalAddress]);
 
     const toggleButton = (patientAddr, creationDate) => {
-        router.push({
-            pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-            query: { patientAddr, creationDate }
-        });
+        if (hospitalAddrInHistory !== hospitalAddress) {
+            alert('You cannot edit this record');
+        } else {
+            router.push({
+                pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
+                query: { patientAddr, creationDate }
+            });
+        }
     };
 
     return ( 
@@ -521,7 +528,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}>
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
         </>
