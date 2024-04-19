@@ -18,6 +18,7 @@ body {
   margin: 0;
   font-family: Raleway, Roboto Condensed, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, Inter; 
+  scroll-behavior: smooth;
 }
 
 a {

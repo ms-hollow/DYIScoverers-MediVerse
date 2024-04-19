@@ -18,7 +18,6 @@ html.index {
     transition: all .50s ease;
 }
 
-
 .logoContainer {
     display: flex;
     align-items: center;
@@ -45,6 +44,10 @@ html.index {
     padding: 0px 0px;
     margin: 0px 60px;
     transition: all .50s ease;
+}
+
+.navbar.open {
+    display: flex; /* Show the navbar when open */
 }
 
 .navbar a:hover {
@@ -75,14 +78,21 @@ html.index {
     background: var(--cyan);
 }
 
-#menuIcon{
+.menuIcon{
     font-size: 35px;
     color: var(--text-color);
     cursor: pointer;
     z-index: 10001;
     display: none;
+    margin-left: 70%;
 }
 
+
+.featuresSection {
+    margin-top: 2000px; /* Adjust the value as needed */
+}
+
+/*
 @media(max-width: 1200px){
     .header{
         padding: 1% 2%;
@@ -92,7 +102,7 @@ html.index {
         padding: 10px 15px;
         margin: 0px 10px;
     }
-}
+}*/
 
 @media(max-width: 768px) {
     .header {
@@ -114,8 +124,9 @@ html.index {
         top: 100%;
         right: -100%;
         width: 270px;
-        height: 40vh;
-        background-color: var(--cyan);
+        height: 20vh;
+        background-color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -128,21 +139,34 @@ html.index {
         padding: 0px 25px;
         transition: all .50s ease;
         color: #EBEBEB;
+        color: var(--black-color);
     }
 
     .navbar a:hover{
-        color: var(--black-color);
+        color: var(--cyan);
+        font-weight: bold;
+        background-color: rgb(196, 196, 196);
         transform: translateY(5px);
     }
     .navbar a.active{
         color: var(--black-color);
+        font-weight: bold;
     }
     
     .navbar.open{
         right: 2%;
     }
+
+    .navbar {
+    display: none; /* Hide the navbar by default on small screens */
+    }
+
+    .menuIcon {
+    display: block; /* Show the menu icon on small screens */
+    }
 }
 
+/*
 @media(max-width: 576px) {
     .header {
         padding: 1% 2%; 
@@ -183,3 +207,4 @@ html.index {
         font-size: 0.7rem;
     }
 }
+*/
