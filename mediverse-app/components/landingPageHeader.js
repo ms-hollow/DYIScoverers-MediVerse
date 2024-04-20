@@ -28,7 +28,7 @@ const LandingPageHeader = ({ buttonText, buttonLink}) => {
         </ul>
 
         <div className={styles.menuIcon} onClick={toggleNavbar}>
-          <img src="burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
+          <img src="../burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
         </div>
 
         {/* Log in button and menu icon */}

@@ -269,9 +269,7 @@
     pointer-events: none;
 }
 
-/* Responsive styles */
-/* Responsive styles */
-/*
+
 @media screen and (max-width: 768px) {
     .header {
         padding: 2% 1%;
@@ -320,7 +318,7 @@
         margin-right: 20%;
         margin-left: -20%;
     }
-}*/
+}
 
 @media screen and (max-width: 1216px) {
     .header{

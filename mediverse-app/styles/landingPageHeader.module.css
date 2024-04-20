@@ -23,6 +23,7 @@ html.index {
     align-items: center;
     width: 217px;
     height: 58.06px;
+    margin: -50;
 }
 
 .logo {
@@ -81,28 +82,40 @@ html.index {
 .menuIcon{
     font-size: 35px;
     color: var(--text-color);
+    position: relative;
     cursor: pointer;
     z-index: 10001;
     display: none;
-    margin-left: 70%;
+    margin-left: 10%;
 }
-
 
 .featuresSection {
     margin-top: 2000px; /* Adjust the value as needed */
 }
 
-/*
-@media(max-width: 1200px){
-    .header{
-        padding: 1% 2%;
+@media(max-width: 475px) {
+    .navbar {
+        display: none;
     }
 
-    .navbar a{
-        padding: 10px 15px;
-        margin: 0px 10px;
+    .menuIcon {
+        display: block;
+        margin-left: 10px;
     }
-}*/
+
+    .logoContainer {
+        width: auto;
+    }
+
+    .logo {
+        width: 60%;
+    }
+
+    .button {
+        margin-right: 10px;
+    }
+
+}
 
 @media(max-width: 768px) {
     .header {
@@ -119,7 +132,7 @@ html.index {
         font-size: 0.8rem; 
     }
 
-    .navbar{
+    .navbar {
         position: absolute;
         top: 100%;
         right: -100%;
@@ -133,7 +146,8 @@ html.index {
         border-radius: 10px;
         transition: all .50s ease;
     }
-    .navbar a{
+
+    .navbar a {
         display: block;
         margin: 12px 0;
         padding: 0px 25px;
@@ -142,69 +156,32 @@ html.index {
         color: var(--black-color);
     }
 
-    .navbar a:hover{
+    .navbar a:hover {
         color: var(--cyan);
         font-weight: bold;
-        background-color: rgb(196, 196, 196);
+        background-color: rgb(196, 196, 196); /* Highlighted gray background */
         transform: translateY(5px);
     }
-    .navbar a.active{
+
+    .navbar a.active {
         color: var(--black-color);
         font-weight: bold;
+        background-color: rgb(196, 196, 196); /* Highlighted gray background */
     }
     
-    .navbar.open{
+    .navbar.open {
         right: 2%;
     }
 
     .navbar {
-    display: none; /* Hide the navbar by default on small screens */
+        display: none; /* Hide the navbar by default on small screens */
     }
 
     .menuIcon {
-    display: block; /* Show the menu icon on small screens */
+        display: block; /* Show the menu icon on small screens */
+    }
+
+    .logo {
+        width: 70%; /* Adjust the logo size for smaller screens */
     }
 }
-
-/*
-@media(max-width: 576px) {
-    .header {
-        padding: 1% 2%; 
-    }
-
-    .button {
-        padding: 6px 12px; 
-        font-size: 0.7rem; 
-    }
-}
-
-@media(max-width: 400px){
-    .header{
-        padding: 1% 1%;
-    }
-
-    .navbar a{
-        padding: 8px 12px;
-        margin: 0px 5px;
-    }
-    .button {
-        padding: 6px 10px;
-    }
-}
-
-@media(max-width: 320px){
-    .header{
-        padding: 1% 0.5%;
-    }
-
-    .navbar a{
-        padding: 6px 10px;
-        margin: 0px 3px;
-        font-size: 0.8rem;
-    }
-    .button {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-    }
-}
-*/
