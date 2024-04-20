@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
 const Register1Patient = () => {

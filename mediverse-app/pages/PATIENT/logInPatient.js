@@ -6,8 +6,7 @@ import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
-import React, { useState } from 'react';
-import web3 from "../../blockchain/web3";
+import React, { useState, useEffect } from 'react';
 import mvContract from '../../blockchain/mediverse';
 
 export default function Home() {
@@ -41,7 +40,6 @@ export default function Home() {
 
             // console.log("Patient List:", patientList);
             // console.log("Hospital List:", hospitalList);
-
             const isPatient = isAddressInList(walletAddress, patientList);
             if (isPatient) {
                 console.log("This account belongs to a patient.");

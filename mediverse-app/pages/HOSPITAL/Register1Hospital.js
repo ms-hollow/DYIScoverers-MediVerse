@@ -3,9 +3,9 @@ import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 
 const Register1Hospital = () => {
@@ -20,23 +20,13 @@ const Register1Hospital = () => {
         return list.some(item => item.toLowerCase() === address.toLowerCase());
     };
 
-    const connectMetaMask = async () => {
-        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-            try{
-                /* If metamask is installed */
-                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-                setWalletAddress(accounts[0]); 
-                console.log(accounts[0]);
-            } catch(err) {
-                console.error(err.message);
-            }
-        } else {
-            /* if metamask is not installed */
-            console.log("Please install MetaMask");
-        }
-    };
-
     const handleSubmit = async (e) => {
+
+        if (!walletAddress) {
+            console.log("Please connect MetaMask before proceeding.");
+            return;
+        }
+
         e.preventDefault(); // Prevent default form submission
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
@@ -67,6 +57,22 @@ const Register1Hospital = () => {
                 router.push('/HOSPITAL/Register2Hospital/');
                 return;
             }
+        }
+    };
+
+    const connectMetaMask = async () => {
+        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+            try{
+                /* If metamask is installed */
+                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+                setWalletAddress(accounts[0]); 
+                console.log(accounts[0]);
+            } catch(err) {
+                console.error(err.message);
+            }
+        } else {
+            /* if metamask is not installed */
+            console.log("Please install MetaMask");
         }
     };
 
@@ -109,7 +115,7 @@ const Register1Hospital = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
-                
+
             </div>
         </>
         

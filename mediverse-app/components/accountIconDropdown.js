@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '/styles/homeSidebarHeader.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
  
 const AccountDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -22,6 +24,18 @@ const AccountDropdown = () => {
         }
     }, [isOpen]);
 
+    const handleLogout = async () => {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                // Disconnect MetaMask provider
+                await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
+                await window.ethereum.request({ method: 'wallet_clearPermissions' });
+            } catch (error) {
+                console.error('Error disconnecting MetaMask:', error);
+            }
+        }
+    };
+
     return (
         <div className={styles2.dropdown}>
             <div className={styles2.accountIcon} onClick={toggleMenu}> 
@@ -31,7 +45,7 @@ const AccountDropdown = () => {
                         <Link href="/PATIENT/AccountProfilePatient"><img src="/dropdown_profile.svg" alt="Profile Dropdown Icon" />Profile</Link>
                         <Link href="/account/settings"><img src="/dropdown_settings.svg" alt="Settings Dropdown Icon" />Settings</Link>
                         <Link href="/PATIENT/AccountAccessPatient"><img src="/dropdown_access.svg" alt="Account Access Dropdown Icon" />Account Access</Link>
-                        <Link href="/"><img src="/dropdown_logout.svg" alt="Logout Dropdown Icon" />Logout</Link>
+                        <a href="/" onClick={handleLogout} ><img src="/dropdown_logout.svg" alt="Logout Dropdown Icon" />Logout</a>
                     </div>
                 )}
             </div>

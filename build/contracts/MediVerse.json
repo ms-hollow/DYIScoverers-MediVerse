@@ -29270,10 +29270,16 @@
       "links": {},
       "address": "0x9231679dC17eAd57e5ad08bDB202950a57c11F77",
       "transactionHash": "0x08aaa1af58bf974c95df33cd17a629e35a8af3f219b7c94818e141040cbc677b"
+    },
+    "1713594511629": {
+      "events": {},
+      "links": {},
+      "address": "0x88CC78F56b3658033e85B1199f70c7972C6BF7d0",
+      "transactionHash": "0x58b031a1f2062f43e0a8ff916e045bca8533072e1400be930b4910be330f51f3"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-04-19T04:49:12.069Z",
+  "updatedAt": "2024-04-20T06:29:30.193Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
