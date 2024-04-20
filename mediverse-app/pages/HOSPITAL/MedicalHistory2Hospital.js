@@ -375,7 +375,7 @@ const MedicalHistoryHospital = () => {
     };
 
     return ( 
-        <Layout pageName="Medical History">
+        <Layout id='layout' pageName="Medical History">
         <>
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
