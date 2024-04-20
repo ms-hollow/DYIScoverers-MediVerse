@@ -1,4 +1,4 @@
-import styles from '../../styles/UpdateMedicalHistory.module.css';
+import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeader.js'
 import path from 'path';
 import Link from "next/link";
@@ -206,7 +206,7 @@ const addMedicalHistory = () => {
                                 <input type="date" id="date-started" name="tpDateStarted" placeholder="Date Started" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" onfocus="(this.type='date')" onblur="(this.type='text')" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
