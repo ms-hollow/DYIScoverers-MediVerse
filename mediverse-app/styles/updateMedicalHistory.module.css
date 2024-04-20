@@ -400,7 +400,6 @@ color: var(--cyan);
   display: flex;
   flex-direction: column;
   max-height: 300px;
-  overflow-y: auto;
   padding: 3px;
 }
 
@@ -477,7 +476,6 @@ color: var(--cyan);
     border-radius: 5px; 
   }
 
-  
   .formField input,
   .formField select {
     width: 100%;
@@ -492,4 +490,44 @@ color: var(--cyan);
     width: 30%; 
     font-size: 12px; 
   }
+
+  .scrollableTable_container {
+    max-height: 200px; /* Adjusted maximum height for smaller screens */
+  }
+
+    /* Adjust text size for smaller screens */
+  .sANDs_heading p,
+  .sANDs_data p,
+  .tp_heading p,
+  .tp_data p,
+  .test_heading p,
+  .test_data p,
+  .medication_heading p,
+  .medication_data p {
+    font-size: 10px; /* Adjusted font size for smaller screens */
+  }
+
+  /* Adjust container width for smaller screens */
+  .table_container {
+    width: 95%; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px; 
+    padding-right: 10px; 
+    overflow-x: auto;
+  }
+
+
+  
+
+
+
+
+
+
+
+
+
+
 }
+
