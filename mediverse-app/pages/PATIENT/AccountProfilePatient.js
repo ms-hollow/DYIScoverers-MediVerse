@@ -131,8 +131,8 @@ const AccountProfilePatient = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <div className={styles.formTitle}>Account Information</div>
             <form className={styles.registrationForm} onSubmit={handleEdit}>
+                <div className={styles.formTitle}>Account Information</div>
                 <div className={styles.formContainer}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>

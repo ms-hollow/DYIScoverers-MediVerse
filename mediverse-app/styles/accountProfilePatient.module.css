@@ -72,7 +72,7 @@
 
 .editButton {
     display: block; 
-    margin-left: 83.5%; /* Center horizontally with auto margins */
+    margin: 0 auto; /* Center the button horizontally */
     padding: 10px 20px;
     margin-top: 30px;
     margin-bottom: 3%;
@@ -110,37 +110,47 @@
 }
   
   /* ------------------RESPONSIVENESS------------------*/
-    
-  @media (max-width: 768px) {
-      .container {
-        padding: 7vw; 
-        position: relative; /* Set position to relative */
-        margin-top: 40%
-      }
-      
-      .formField {
-        flex: 1 1 100%; 
-        margin-left: 9%; 
-        margin-bottom: 10px;
-      }
-    
-      .backButton {
-        display: none; /* Hide the backButton on screens smaller than 768px */
-      }
-      
-      .submitButton {
-        width: 48%; /* Make buttons full width on smaller screens */
-        margin-right: 25%; 
-      }
-      
-      .formTitle {
-        margin-bottom: 10px; /* Adjust margin for responsiveness */
-        font-size: 1.2rem; 
-      }
-      
-    }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 7vw; 
+    position: relative; /* Set position to relative */
+    margin-top: 50%
+  }
   
+  .formField {
+    flex: 1 1 100%; 
+    margin-left: 9%; 
+    margin-bottom: 10px;
+  }
+
+  .backButton {
+    display: none; /* Hide the backButton on screens smaller than 768px */
+  }
   
+  .submitButton {
+    width: 48%; /* Make buttons full width on smaller screens */
+    margin-right: 25%; 
+  }
   
+  .formTitle {
+    margin-bottom: 10px; /* Adjust margin for responsiveness */
+    margin-top: 20%;
+    font-size: 1.2rem; 
+  }
+
+  .formTitle2 {
+    margin-bottom: 10px; /* Adjust margin for responsiveness */
+    margin-top: 10%;
+    font-size: 1.2rem; 
+  }
+
+  .editButton {
+    margin-top: 10px; /* Adjust margin-top for the button */
+  }
   
-  
+}
+
+
+
+
