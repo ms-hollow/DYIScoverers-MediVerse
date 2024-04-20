@@ -97,7 +97,7 @@ const Register2Hospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                    <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
 
                 </form>
                 <ToastWrapper/>
