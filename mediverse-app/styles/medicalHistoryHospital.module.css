@@ -316,6 +316,18 @@
     pointer-events: none;
 }
 
+@media screen and (max-width: 2491px) {
+    .container {
+        margin-top: 195px;
+    }
+}
+
+@media screen and (max-width: 1701px) {
+    .container {
+        margin-top: 140px;
+    }
+}
+
 @media screen and (max-width: 1524px){ 
 
     .container{

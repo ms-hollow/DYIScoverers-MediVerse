@@ -13,6 +13,7 @@ const MedicalHistoryHospital = () => {
 
     useEffect(() => {
         const container = document.getElementById('container');
+        const layout = document.getElementById('layout');
         if(container){
             if (isOpen) {
                 container.classList.add(styles.blur);
@@ -40,7 +41,7 @@ const MedicalHistoryHospital = () => {
     }
 
     return ( 
-        <Layout pageName="Medical History">
+        <Layout id='layout' pageName="Medical History">
         <>
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
