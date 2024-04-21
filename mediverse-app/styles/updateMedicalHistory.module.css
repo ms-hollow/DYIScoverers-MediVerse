@@ -468,6 +468,7 @@ color: var(--cyan);
       font-size: 8px;
   }
 
+  .addMedicalHistoryButton
   .submitButton {
     width: 50%; 
     font-size: 10px;
@@ -527,6 +528,11 @@ color: var(--cyan);
 
   .submitButton {
     width: 30%; 
+    font-size: 12px; 
+  }
+
+  .addMedicalHistoryButton {
+    width: 50%; 
     font-size: 12px; 
   }
 
