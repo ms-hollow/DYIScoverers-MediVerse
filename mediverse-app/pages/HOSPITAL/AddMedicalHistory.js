@@ -510,7 +510,7 @@ const addMedicalHistory = () => {
                     {/* <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                    <button className={`${styles.addMedicalHistoryButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
                         {isLoading ? 'Adding...' : 'Add Medical History'}
                     </button>
     

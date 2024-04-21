@@ -210,6 +210,22 @@ flex: 5;
   white-space: nowrap;
 }
 
+.addMedicalHistoryButton {
+  display: block; 
+  margin: 10px auto; /* Center horizontally with auto margins */
+  padding: 10px 20px;
+  margin-top: 30px;
+  margin-left: auto; /* Move the button to the right */
+  width: 15%;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addMedicalHistoryButton:hover,
 .submitButton:hover {
   background-color: var(--cyan);
 }
