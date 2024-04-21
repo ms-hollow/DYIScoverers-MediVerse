@@ -1,4 +1,3 @@
-import LandingPageHeader from "@/components/landingPageHeader";
 import RegistrationProcess from "@/components/RegistrationProcess";
 import Layout from '../../components/HomeSidebarHeader.js';
 import styles from '../../styles/accountProfilePatient.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
