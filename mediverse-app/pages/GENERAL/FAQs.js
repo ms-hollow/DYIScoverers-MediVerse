@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '/styles/generalPages.module.css';
 import LandingPageHeader from "@/components/landingPageHeader";
+import LandingPageLayout from '@/components/landingPageLayout';
 
 const FAQs = () => {
     const [selectedQuestion, setSelectedQuestion] = useState(null); // State to store the selected question
@@ -25,37 +26,34 @@ const FAQs = () => {
     ];
 
     return (
+        <LandingPageLayout>
         <>
-            <div> 
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
-            </div>
-            <div className={styles.faqTextContainer}>
-                <h2 className={styles.faqText}>FREQUENTLY ASKED QUESTIONS</h2>
-            </div>
-            <div style={{ position: 'absolute', left: '71px', top: '160px', width: '1379.01px', height: 'px' }}>
-                <img src="/FAQsLine.png" alt="FAQSLINE" style={{ width: '100%', height: '100%' }} />
-            </div>
-            <div className={styles.helpText}>HOW CAN WE HELP YOU?</div>
-            <div className={styles.searchBar}>
-                <img src="/SearchIcon.png" alt="Search" className={styles.searchIcon} />
-                <input type="text" placeholder="Search..." className={styles.searchInput} />
-            </div>
-
-
-            <div className={styles.dropdownContainer}>
-                {faqs.map((faq) => (
-                    <div key={faq.id} className={styles.dropdownItem}>
-                        <div className={styles.dropdownQuestion} onClick={() => handleDropdownClick(faq.id)}>
-                            <span>{faq.question}</span>
-                            {selectedQuestion === faq.id ? <span>&#x25BC;</span> : <span>&#x25B6;</span>}
+            <LandingPageHeader buttonText="CONNECT WALLET" buttonLink= "/PATIENT/logInPatient/"/> 
+            
+            <div className={styles.faqContainer}>
+                <p className={styles.faqText}>FREQUENTLY ASKED QUESTIONS</p>
+                <div className={styles.faqLine}></div>
+                <p className={styles.helpText}>HOW CAN WE HELP YOU?</p>
+                <div className={styles.searchBar}>
+                    <img src="/SearchIcon.svg" alt="Search" className={styles.searchIcon} />
+                    <input type="text" placeholder="Search" className={styles.searchInput} />
+                </div>
+                <div className={styles.dropdownContainer}>
+                    {faqs.map((faq) => (
+                        <div key={faq.id} className={styles.dropdownItem}>
+                            <div className={styles.dropdownQuestion} onClick={() => handleDropdownClick(faq.id)}>
+                                <span>{faq.question}</span>
+                                {selectedQuestion === faq.id ? <span>&#x25BC;</span> : <span>&#x25B6;</span>}
+                            </div>
+                            {selectedQuestion === faq.id && (
+                                <div className={styles.answer}>{faq.answer}</div>
+                            )}
                         </div>
-                        {selectedQuestion === faq.id && (
-                            <div className={styles.answer}>{faq.answer}</div>
-                        )}
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </>
+        </LandingPageLayout>
     );
 };
 

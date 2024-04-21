@@ -1,10 +1,30 @@
-/*dito ide-define ang layout ng footer*/
+import styles from '/styles/footer.module.css'
+import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer>
-      <p>Mediverse 2024</p>
-    </footer>
+    <>
+      <footer className={styles.footer}>
+        <div className={styles.footerFormat}>
+          <div className={styles.columnSection}>
+            <Link href='/' className={styles.icon}><img src='/MediVerse Logo (with Text).svg' alt='Logo'/></Link>
+            <div>@2024 DYIScoverers - MediVerse</div>
+            <div>All Rights Reserved.</div>
+          </div>
+          <div className={styles.columnSection}>
+            <p>Learn More </p>
+            <Link href='/'>Features</Link>
+            <Link href='/'>FAQs</Link>
+            <Link href='/'>Contact Us</Link>
+          </div>
+          <div className={styles.columnSection}>
+            <p>Legal</p>
+            <Link href='/'>Privacy Policy</Link>
+            <Link href='/'>Terms of Services</Link>
+          </div> 
+        </div>     
+      </footer>
+    </>
   );
 }
  

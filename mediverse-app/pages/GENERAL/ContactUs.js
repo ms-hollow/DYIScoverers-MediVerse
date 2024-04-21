@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import LandingPageHeader from "@/components/landingPageHeader";
+import LandingPageLayout from '@/components/landingPageLayout';
 import styles from '/styles/generalPages.module.css'; 
 import Link from 'next/link';
 
@@ -17,6 +18,7 @@ const ContactUs = () => {
     };
 
     return (
+        <LandingPageLayout>
         <>
             <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
 
@@ -59,6 +61,7 @@ const ContactUs = () => {
                 </div>
             </div>
         </>
+        </LandingPageLayout>
     );
 };
 

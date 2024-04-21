@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '/styles/landingPage.module.css';
+import styles from '/styles/landingPageDummy.module.css';
 import LandingPageHeader from '@/components/landingPageHeader';
 import LandingPageLayout from '@/components/landingPageLayout';
 
@@ -19,7 +19,7 @@ const  LandingPage = () => {
                     <img src='/landingPage banner pic.svg' alt='Landing Page Banner Illustration' className={styles.pageBanner}/>
                 </section>
 
-                <section id='features' className={styles.features}>
+                <section id='features'>
                     <div className={styles.featuresBanner}>
                         <img src='/features banner.svg' alt='Features Banner'/>
                         <div className={styles.bannerInfo}>

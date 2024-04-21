@@ -7,8 +7,8 @@ import LogInPatientHeader from "@/components/logInPatientHeader";
 import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
 import React, { useState } from 'react';
-import web3 from "../../blockchain/web3";
-import mvContract from '../../blockchain/mediverse';
+//import web3 from "../../blockchain/web3";
+//import mvContract from '../../blockchain/mediverse';
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
@@ -69,8 +69,7 @@ export default function Home() {
   };
 
   return (
-    <>
-      <LandingPageLayout> 
+    <>  
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
           <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
@@ -93,7 +92,6 @@ export default function Home() {
           Don't Have Metamask Wallet?{" "}
           <span className={styles.createOneLink} onClick={handleCreateWallet}>Create one.</span> {/* Use span instead of a */}
         </div>
-      </LandingPageLayout>
     </>
   );
 }
