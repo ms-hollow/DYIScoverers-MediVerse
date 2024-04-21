@@ -59,6 +59,7 @@ const Register2Hospital = () => {
         e.preventDefault(); // Prevent default form submission
         console.log('Form submitted:', formData);
         toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
+        router.push('/HOSPITAL/HomeHospital');
         
     };
 

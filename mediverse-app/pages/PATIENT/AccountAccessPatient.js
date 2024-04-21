@@ -105,7 +105,6 @@ const AccountAccessPatient = () => {
                 console.error('Error: Index out of bounds.');
                 return;
             }
-    
             // Extract hospitalAddress from the array
             const hospitalAddress = listOfRequestingHospital[index];
     
@@ -114,11 +113,10 @@ const AccountAccessPatient = () => {
                 console.error('Error: patientAddress is undefined or empty.');
                 return;
             }
-    
             // Call the contract function
             await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress });
             console.log('Permission granted to hospital:', hospitalAddress);
-    
+            toast.success('Permission granted');
             // After granting access, set the grantAccess state to trigger a refresh
             setGrantAccess(prevState => !prevState); // Toggle grantAccess state
         } catch (error) {
@@ -131,8 +129,8 @@ const AccountAccessPatient = () => {
             const hospitalAddress = listOfAuthorizedHospitals[index].hospitalAddress; // Get the hospital address based on the index
             console.log("Revoke Address: ", hospitalAddress);
             await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
-            console.log('Access was removed:', hospitalAddress);
-            toast.info('Access was removed:', hospitalAddress);
+            //console.log('Access was removed:', hospitalAddress);
+            toast.success('Access was removed');
             // After revoking access, set the revokeAccess state to trigger a refresh
             setRevokeAccess(prevState => !prevState); // Toggle revokeAccess state
         } catch (error) {

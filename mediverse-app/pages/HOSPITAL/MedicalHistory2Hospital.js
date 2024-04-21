@@ -18,6 +18,7 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
     const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
@@ -25,6 +26,7 @@ const MedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
+        patientGender: '',
         hospitalName: '',
         physicianName: '',
         diagnosis: {
@@ -83,7 +85,7 @@ const MedicalHistoryHospital = () => {
 
         async function fetchMedicalHistory() {
             try {
-                let patientName, patientAge, patientDob;
+                let patientName, patientAge, patientDob, patientGender;
                 let hospitalName;
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
@@ -108,6 +110,8 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
+                patientGender = patientInfo[2];
+                
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
@@ -311,6 +315,7 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
+                    patientGender,
                     hospitalName,
                     physicianName,
                     diagnosis: {
@@ -379,20 +384,24 @@ const MedicalHistoryHospital = () => {
         <>
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
-                <div className={styles.basicInfoContainer}>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Patient Name</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientName}</p>
+                    <div className={styles.basicInfoContainer}>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Patient Name</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.patientName}</p>
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Age</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.patientAge}</p>
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Birthday</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
+                        </div>
+                        <div className={styles.headingAttrb_formatting}>
+                            <p className={styles.headingAttrb}>Gender</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.patientGender}</p>
+                        </div>
                     </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Age</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientAge}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Birthday</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
-                    </div>
-                </div>
                 </div>   
 
                 <div className={styles.outerContainer}>
@@ -530,16 +539,8 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
-            <button className={styles.submitButton} onClick={toggleButton}>
-                <div className={styles.dropdown}>     
-                    <img src="/edit.svg" alt="Edit Icon"/>
-                    {isOpen && (
-                        <div className={styles.dropdownContent}>
-                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
-                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
-                        </div>
-                    )}
-                </div>
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
+                <img src="/edit.svg" alt="Edit Icon"/>
             </button>
             <ToastWrapper/>
             

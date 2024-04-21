@@ -94,7 +94,7 @@ const Register3Patient = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
-        router.push('/PATIENT/logInPatient');
+        router.push('/PATIENT/HomePatient');
     };
 
    

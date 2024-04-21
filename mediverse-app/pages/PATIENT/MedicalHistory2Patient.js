@@ -20,6 +20,7 @@ const MedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
+        patientGender: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -75,7 +76,7 @@ const MedicalHistoryHospital = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
-                let patientName, patientAge, patientDob;
+                let patientName, patientAge, patientDob, patientGender;
                 
                 if (!patientAddress) {
                     await setAddress();
@@ -91,7 +92,8 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                
+                patientGender = patientInfo[2];
+
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
                 const getPatientMedicalHistory = patientRecords.filter(record => {
@@ -292,6 +294,7 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
+                    patientGender,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
@@ -378,6 +381,10 @@ const MedicalHistoryHospital = () => {
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Birthday</p>   
                         <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
+                    </div>
+                    <div className={styles.headingAttrb_formatting}>
+                        <p className={styles.headingAttrb}>Gender</p>   
+                        <p className={styles.dataFormat}>{medicalHistory.patientGender}</p>
                     </div>
                 </div>
 

@@ -222,6 +222,7 @@ const AccountAccessHospital = () => {
     
             if (hasPending || sentRequestPatients.includes(patientAddr)) {
                 console.log('Hospital already has a pending request for this patient.');
+                toast.error('Hospital already has a pending request for this patient.');
             } else {
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
                 console.log('Access requested to:', patientAddr);

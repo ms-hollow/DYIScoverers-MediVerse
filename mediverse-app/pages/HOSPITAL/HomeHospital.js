@@ -3,28 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from '../../styles/homeHospital.module.css'
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
+import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse"; // ABI
 
-export async function getStaticProps() {
-    const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
-    const jsonData1 = fs.readFileSync(filePath1, 'utf8');
-    const data1 = JSON.parse(jsonData1);
 
-    const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
-    const jsonData2 = fs.readFileSync(filePath2, 'utf8');
-    const data2 = JSON.parse(jsonData2);
+// export async function getStaticProps() {
+//     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
+//     const jsonData1 = fs.readFileSync(filePath1, 'utf8');
+//     const data1 = JSON.parse(jsonData1);
 
-    return {
-        props: {
-            data1, data2
-        }
-    };
-}
+//     const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
+//     const jsonData2 = fs.readFileSync(filePath2, 'utf8');
+//     const data2 = JSON.parse(jsonData2);
 
-const HospitalHome = ({data1, data2}) => {
+//     return {
+//         props: {
+//             data1, data2
+//         }
+//     };
+// }
+
+const HospitalHome = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
@@ -304,13 +309,19 @@ const HospitalHome = ({data1, data2}) => {
 
                         <div className={styles.dataContainer}>
                             {medicalHistory.map(data => (
-                                <Link href="/" key={data.id} className={styles.data}>
-                                    <p className={styles.nameFormat}>{data.patientName}</p>
+                                <div key={data.id} className={styles.data}> <p className={styles.nameFormat}>{data.patientName}</p>
                                     <p>{data.admissionDate}</p>
                                     <p>{data.dischargeDate}</p>
                                     <p>{data.gender}</p>
                                     <p>{data.diagnosis}</p>
-                                </Link>
+                                    </div>
+                            //     <Link href="/" key={data.id} className={styles.data}>
+                            //     <p className={styles.nameFormat}>{data.patientName}</p>
+                            //     <p>{data.admissionDate}</p>
+                            //     <p>{data.dischargeDate}</p>
+                            //     <p>{data.gender}</p>
+                            //     <p>{data.diagnosis}</p>
+                            // </Link>
                             ))}
                         </div>
                     </div>

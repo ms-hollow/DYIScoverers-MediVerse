@@ -19,7 +19,7 @@ const UpdateMedicalHistoryHospital = () => {
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
-    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, creationDate } = router.query;
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -597,7 +597,6 @@ const UpdateMedicalHistoryHospital = () => {
 
     const pushRoute = async (patientAddr, creationDate) => {
         await handleSubmit();
-
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, creationDate }

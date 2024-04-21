@@ -174,7 +174,7 @@ const MedicalHistoryPatient = () => {
     };
 
     const handleAdd = () => {
-        router.push('/HOSPITAL/AddPatient/');
+        router.push('/HOSPITAL/AddMedicalHistory/');
     };
 
     const handleKeyPress = (event) => {
@@ -208,7 +208,7 @@ const MedicalHistoryPatient = () => {
                     ))}
                 </div>
                 <button className={styles.submitButton} onClick={handleAdd}>
-                    <Link href="/HOSPITAL/AddPatient">+</Link>
+                    <Link href="/HOSPITAL/AddMedicalHistory">+</Link>
                 </button>
 
             </div>
