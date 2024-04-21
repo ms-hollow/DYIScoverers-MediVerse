@@ -28,7 +28,7 @@ const FAQs = () => {
     return (
         <LandingPageLayout>
         <>
-            <LandingPageHeader buttonText="CONNECT WALLET" buttonLink= "/PATIENT/logInPatient/"/> 
+            <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
             
             <div className={styles.faqContainer}>
                 <p className={styles.faqText}>FREQUENTLY ASKED QUESTIONS</p>

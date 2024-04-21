@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -6,12 +5,7 @@ import Link from 'next/link';
 import styles from '/styles/landingPage.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
 import LandingPageHeader from '@/components/landingPageHeader';
-=======
-import Link from 'next/link';
-import styles from '/styles/landingPage.module.css';
-import LandingPageHeader from '@/components/landingPageHeader';
 import LandingPageLayout from '@/components/landingPageLayout';
->>>>>>> front-end
 
 const  LandingPage = () => {
     return (
@@ -29,14 +23,6 @@ const  LandingPage = () => {
                     <img src='/landingPage banner pic.svg' alt='Landing Page Banner Illustration' className={styles.pageBanner}/>
                 </section>
 
-<<<<<<< HEAD
-export default function LandingPage() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-      setIsOpen(!isOpen);
-  };
-=======
                 <section id='features' className={styles.features}>
                     <div className={styles.featuresBanner}>
                         <img src='/features banner.svg' alt='Features Banner'/>
@@ -70,7 +56,6 @@ export default function LandingPage() {
                                         <p className={styles.featureDesc}>Patients access, update medical records digitally with lab results, medication tracking, appointment scheduling, and reminders for follow-ups.</p>
                                     </div>
                                 </div>
->>>>>>> front-end
 
                                 <div className={styles.feature}>
                                     <img src='/f2.svg' alt='Feature 2'/>
@@ -102,18 +87,6 @@ export default function LandingPage() {
                                 </div>
                             </div>
 
-<<<<<<< HEAD
-          <div className={styles2.registerDropdown}></div>
-            <div className={styles.button} onClick={toggleMenu}> 
-                Get Started
-                  {isOpen && (
-                      <div className={styles2.registerDropdownContent}>
-                          <Link href="/PATIENT/Register1Patient/">As Patient</Link>
-                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
-                      </div>
-                  )}
-          </div>
-=======
                             <div className={styles.columnFeatureSection}>
                                 <div className={styles.feature}>
                                     <img src='/f5.svg' alt='Feature 5'/>
@@ -123,7 +96,6 @@ export default function LandingPage() {
                                         <p className={styles.featureDesc}>MediVerse secures patient records, making them tamper-proof for trust and reliability.</p>
                                     </div>
                                 </div>
->>>>>>> front-end
 
                                 <div className={styles.feature}>
                                     <img src='/f6.svg' alt='Feature 6'/>
