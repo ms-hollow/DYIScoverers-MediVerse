@@ -71,8 +71,7 @@ export default function Home() {
   };
 
   return (
-    <>
-      <LandingPageLayout> 
+    <>  
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
           <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
@@ -96,7 +95,7 @@ export default function Home() {
           <span className={styles.createOneLink} onClick={handleCreateWallet}>Create one.</span> {/* Use span instead of a */}
         </div>
         <ToastWrapper/>
-      </LandingPageLayout>
+      {/*</LandingPageLayout>*/}
     </>
   );
 }
