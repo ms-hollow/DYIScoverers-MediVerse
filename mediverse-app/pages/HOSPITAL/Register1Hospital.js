@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 // import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const Register1Hospital = () => {
     const router = useRouter();
@@ -30,7 +32,7 @@ const Register1Hospital = () => {
         e.preventDefault(); // Prevent default form submission
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
-            alert('Please agree to the terms before proceeding.');
+            toast.error('Please agree to the terms before proceeding.');
             return; 
         } else {
             const patientList = await mvContract.methods.getPatientList().call();
@@ -117,6 +119,7 @@ const Register1Hospital = () => {
                 <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
 
             </div>
+            <ToastWrapper/>
         </>
         
     );

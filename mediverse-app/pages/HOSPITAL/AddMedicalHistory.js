@@ -1,11 +1,13 @@
-import styles from '../../styles/UpdateMedicalHistory.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import styles from '../../styles/updateMedicalHistory.module.css';
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const addMedicalHistory = () => {
     const router = useRouter();
@@ -123,7 +125,7 @@ const addMedicalHistory = () => {
         let formComplete = true; 
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
-            alert("Diagnosis form fields are incomplete. Please fill them out."); 
+            toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
             formComplete = false;
         } else {
             patientDiagnosis = formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
@@ -132,35 +134,35 @@ const addMedicalHistory = () => {
         if (formData.symptoms.every(symptom => symptom.symptomName && symptom.symptomDuration && symptom.symptomSeverity && symptom.symptomLocation)) {
             concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
         } else if (formData.symptoms.some(symptom => symptom.symptomName || symptom.symptomDuration || symptom.symptomSeverity || symptom.symptomLocation)) {
-            alert("Symptoms form fields are incomplete. Please fill them out.");
+            toast.error("Symptoms form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.treatmentProcedure.every(treatmentProcedure => treatmentProcedure.tp && treatmentProcedure.medTeam && treatmentProcedure.tpDateStarted && treatmentProcedure.tpDuration)) {
             concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
         } else if (formData.treatmentProcedure.some(treatmentProcedure => treatmentProcedure.tp || treatmentProcedure.medTeam || treatmentProcedure.tpDateStarted || treatmentProcedure.tpDuration)) {
-            alert("Treatment/Procedure form fields are incomplete. Please fill them out.");
+            toast.error("Treatment/Procedure form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.test.every(test => test.testType && test.orderingPhysician && test.testDate && test.reviewingPhysician && test.testResult)) {
             concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
         } else if (formData.test.some(test => test.testType || test.orderingPhysician || test.testDate || test.reviewingPhysician || test.testResult)) {
-            alert("Test form fields are incomplete. Please fill them out.");
+            toast.error("Test form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
             concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
         } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
-            alert("Medication form fields are incomplete. Please fill them out.");
+            toast.error("Medication form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
 
         if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate && admission.lengthOfStay)) {
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            alert("Admission is required. Admission form fields are incomplete. Please fill them out.");
+            toast.error("Admission is required. Admission form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
         
@@ -192,12 +194,12 @@ const addMedicalHistory = () => {
                     setIsLoading(false);
                     router.push('/HOSPITAL/PatientRecordsHospital/');
                 } catch (error) {
-                    alert('Patient is not registered.');
+                    toast.error('Patient is not registered.');
                     //console.error('Error sending transaction:', error.message);
                 };
             } else {
                 //console.error('Error sending transaction:', error.message);
-                alert('Diagnosis and Description should be below 100 letters');
+                toast.error('Diagnosis and Description should be below 100 letters');
             }
         }
     };
@@ -302,7 +304,7 @@ const addMedicalHistory = () => {
                                 <input type="date" id="date-started" name="tpDateStarted" placeholder="Date Started" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" onfocus="(this.type='date')" onblur="(this.type='text')" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
@@ -514,7 +516,7 @@ const addMedicalHistory = () => {
     
                 </form>
             </div>
-        
+            <ToastWrapper/>
         </>
         </Layout>
     );

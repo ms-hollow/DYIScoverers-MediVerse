@@ -1,91 +1,156 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '/styles/landingPage.module.css';
-import styles2 from '/styles/landingPageHeader.module.css';
+import styles2 from '/styles/accountIconDropdown.module.css';
 import LandingPageHeader from '@/components/landingPageHeader';
+import LandingPageLayout from '@/components/landingPageLayout';
+
+const  LandingPage = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+    
+    return (
+        <LandingPageLayout>
+        <>
+            <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
+            
+            <div className={styles.container}>
+                <section id='landingPage' className={styles.landingPage}>
+                    <div className={styles.welcomeMessage}>
+                        <p className={styles.slogan}>Your Health, Your Universe, Connected.</p>
+                        <p className={styles.subSlogan}>Secure your medical history, simplify your healthcare – Sign Up for MediVerse now!</p>                        
+                        <div className={styles2.registerDropdown}>
+                            <div className={styles.getStarted} onClick={toggleMenu}> 
+                                Get Started
+                                {isOpen && (
+                                    <div className={styles2.registerDropdownContent}>
+                                        <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+                                        <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <img src='/landingPage banner pic.svg' alt='Landing Page Banner Illustration' className={styles.pageBanner}/>
+                </section>
 
 
-export default function LandingPage() {
-  return (
-    <>
-      <div>
-        <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
-      </div>
-
-      <div className={styles.container}>
-        <div className={styles.paragraph}>
-          <p>Your Health, Your Universe, Connected.</p>
-        </div>
-        <div className={styles.text2}>
-          <p>Secure your medical history, simplify your healthcare – Sign Up for MediVerse now!</p>
-        </div>
-        <div className={styles.absolutePosition1}>
-          <img src="/landingPagePic1.png" alt="Pic 1" className={styles.image} />
-        </div>
-        <div className={styles.absolutePosition2}>
-          <img src="/landingPagePic2.png" alt="Pic 2" className={styles.image} />
-        </div>
-        <div className={styles.text5}>
-          <p>Why Mediverse?</p>
-        </div>
-        <div className={styles.absolutePosition3}>
-          <img src="lineLandingPage.png" alt="Pic 2" className={styles.image} />
-        </div>
-        <div className={styles.feature1}>
-          <img src="Features1.png" alt="Pic 1" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.feature2}>
-          <img src="Features2.png" alt="Pic 2" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.feature3}>
-          <img src="Features3.png" alt="Pic 3" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.feature4}>
-          <img src="Features4.png" alt="Pic 4" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.feature5}>
-          <img src="Features5.png" alt="Pic 5" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.feature6}>
-          <img src="Features6.png" alt="Pic 6" style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className={styles.text6}>
-          <p>Subscribe To Our Newsletter</p>
-        </div>
-        <div className={styles.clickableText}>
-          <p>Get latest news of our Mediverse</p>
-        </div>
-        <div className={styles.container34}>
-        <span className={styles.text7}>For Newsletter</span>
-        <input
-          type="email"
-          placeholder="Enter your email here"
-          className={styles.input}
-        />
-        <button className={styles.button34}>Subscribe</button>
-        </div>
 
 
-        <div className={styles2.button} style={{ position: 'absolute', left: '5px', top: '340px' }}>
-          <Link href="/PATIENT/Register1Patient/">Get Started</Link>
-        </div>
 
-        {/*Text above nong mahabang pic sa gitna */}
-        <div className={styles.textContainer3}>
-          <div className={styles.text3}>1M</div>
-          <div className={styles.text3}>50K</div>
-          <div className={styles.text3}>5K</div>
-        </div>
+                <section id='features' className={styles.features}>
+                    <div className={styles.featuresBanner}>
+                        <img src='/features banner.svg' alt='Features Banner'/>
+                        <div className={styles.bannerInfo}>
+                            <div>
+                                <p className={styles.infoTextLarge}>1M</p>
+                                <p className={styles.infoTextSmall}>Satisfied Patients</p>
+                            </div>
+                            <div>
+                                <p className={styles.infoTextLarge}>50k</p>
+                                <p className={styles.infoTextSmall}>Renowed Doctors</p>
+                            </div>
+                            <div>
+                                <p className={styles.infoTextLarge}>5k</p>
+                                <p className={styles.infoTextSmall}>Progressive Hospitals</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.whyMediverse}>
+                        <div className={styles.question}>
+                            <p>Why Mediverse?</p>
+                            <div></div>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <div className={styles.columnFeatureSection}>
+                                <div className={styles.feature}>
+                                    <img src='/f1.svg' alt='Feature 1'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Digital Medical Record Management.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>Patients access, update medical records digitally with lab results, medication tracking, appointment scheduling, and reminders for follow-ups.</p>
+                                    </div>
+                                </div>
 
-        {/* Text above nong mahabang pic sa gitna*/}
-        <div className={styles.textContainer4}>
-          <div className={styles.text4}>Satisfied Patients</div>
-          <div className={styles.text4}>Renowned Doctors</div>
-          <div className={styles.text4}>Progressive Hospitals</div>
-        </div>
-      </div>
-    </>
-  );
+                                <div className={styles.feature}>
+                                    <img src='/f2.svg' alt='Feature 2'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Security and Privacy.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>MediVerse prioritizes patient data security, offering control and privacy through advanced measures.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.columnFeatureSection}>
+                                <div className={styles.feature}>
+                                    <img src='/f3.svg' alt='Feature 3'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Seamless Record Transfer.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>Patients transfer records between institutions, managing access, reducing administrative burden, ensuring care continuity.</p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.feature}>
+                                    <img src='/f4.svg' alt='Feature 4'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Transparency and Auditability.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>MediVerse provides clear, traceable records, fostering accountability and trust in healthcare transactions.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.columnFeatureSection}>
+                                <div className={styles.feature}>
+                                    <img src='/f5.svg' alt='Feature 5'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Immutable Records.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>MediVerse secures patient records, making them tamper-proof for trust and reliability.</p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.feature}>
+                                    <img src='/f6.svg' alt='Feature 6'/>
+                                    <div className={styles.featureTxtContainer}>
+                                        <p className={styles.featureInfo}>Consent Management & Patient Ownership.</p>
+                                        <div className={styles.lineStyle}></div>
+                                        <p className={styles.featureDesc}>MediVerse empowers patients, giving them control over their data and ensuring privacy through consent management.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section id='subscription' className={styles.subscriptionContainer}>
+                    <p className={styles.subscriptionTextBanner}>Subscribe To Our Newsletter</p>
+                    <p className={styles.subscriptionDesc}>Get latest news of our Mediverse</p>
+                    <div className={styles.forNewsletterContainer}>
+                        <span className={styles.forNewsletterTxt}>For Newsletter</span>
+                        <div className={styles.emailContainer}>
+                            <input
+                                type="email"
+                                placeholder="Enter your email here"
+                                className={styles.emailInput}
+                            />
+                            <button className={styles.subscribeButton}>Subscribe</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </>
+        </LandingPageLayout>
+    );
 }
+ 
+export default LandingPage;

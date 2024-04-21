@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 /**
  * ! CHANGES
@@ -74,7 +76,7 @@ const UpdateMedicalHistoryHospital = () => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     }
 
@@ -585,11 +587,11 @@ const UpdateMedicalHistoryHospital = () => {
                 setIsLoading(false);
                 //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
-                alert('Failed to update medical history record.');
+                toast.error('Failed to update medical history record.');
                 console.error('Error updating medical history:', error);
             };
         } else {
-            alert('Diagnosis and Description should be below 100 letters');
+            toast.error('Diagnosis and Description should be below 100 letters');
         }
     };
 
@@ -1035,6 +1037,7 @@ const UpdateMedicalHistoryHospital = () => {
     
                 </form>
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

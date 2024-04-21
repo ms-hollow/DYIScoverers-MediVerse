@@ -8,6 +8,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
+{/*FOR TOAST NOTIFICATION */}
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 
 const Register3Patient = () => {
@@ -90,8 +93,8 @@ const Register3Patient = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-        alert('User Register Successfully!');
-        router.push('/PATIENT/HomePatient');
+        toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
+        router.push('/PATIENT/logInPatient');
     };
 
    
@@ -177,7 +180,11 @@ const Register3Patient = () => {
                     
                     <button className={styles.submitButton}>REGISTER</button>
                 </form>
+
+                <ToastWrapper/> {/*Lagy to sa dulo ng container, */}
+                
             </div>
+            <ToastWrapper/>
         </>
         
     );

@@ -1,15 +1,12 @@
+import HomeSidebarHeader from "@/components/HomeSidebarHeaderHospital";
+import Image from "next/image";
+import Link from "next/link";
 import styles from '../../styles/homeHospital.module.css'
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import fs from 'fs';
 import path from 'path';
-import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
-import mvContract from '../../blockchain/mediverse';
-
-
-//! HINDI PA TAPOS ANG DISPLAY STATUS
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 export async function getStaticProps() {
     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
@@ -42,7 +39,7 @@ const HospitalHome = ({data1, data2}) => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     };
 
@@ -368,6 +365,7 @@ const HospitalHome = ({data1, data2}) => {
                     </div>
                 </div>
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

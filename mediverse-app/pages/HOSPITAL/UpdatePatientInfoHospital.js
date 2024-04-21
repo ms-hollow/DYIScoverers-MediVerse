@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 //! Hindi na tatanggalin, maglalagay nalang ng parameters
 /**
@@ -63,7 +65,7 @@ const UpdatePatientHOspital = () => {
         const isEmpty = requiredFields.some(field => !formData[field]);
         
         if (isEmpty) {
-            alert('Please fill in all required fields.');
+            toast.error('Please fill in all required fields.');
             return; // Exit early if any required field is empty
         }
 
@@ -223,6 +225,7 @@ const UpdatePatientHOspital = () => {
                     </button>
                 </form>
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

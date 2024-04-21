@@ -1,9 +1,11 @@
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import styles from '../../styles/medicalHistoryHospital.module.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 //TODO: Lagay ng comment for notifcation message
 //TODO: Get patient info and display ito sa history
@@ -73,7 +75,7 @@ const MedicalHistoryHospital = () => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     }
 
@@ -363,7 +365,7 @@ const MedicalHistoryHospital = () => {
 
     const toggleButton = (patientAddr, creationDate) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
-            alert('You cannot edit this record');
+            toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
@@ -373,7 +375,7 @@ const MedicalHistoryHospital = () => {
     };
 
     return ( 
-        <Layout pageName="Medical History">
+        <Layout id='layout' pageName="Medical History">
         <>
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
@@ -528,9 +530,19 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
-                <img src="/edit.svg" alt="Edit Icon"/>
+            <button className={styles.submitButton} onClick={toggleButton}>
+                <div className={styles.dropdown}>     
+                    <img src="/edit.svg" alt="Edit Icon"/>
+                    {isOpen && (
+                        <div className={styles.dropdownContent}>
+                            <Link href="/HOSPITAL/UpdatePatientInfoHospital" className={styles.patInfo_bg}>Patient Information</Link>
+                            <Link href="/HOSPITAL/UpdateMedicalHistoryHospital">Medical History</Link>
+                        </div>
+                    )}
+                </div>
             </button>
+            <ToastWrapper/>
+            
         </>
         </Layout>
      );

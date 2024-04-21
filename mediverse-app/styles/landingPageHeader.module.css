@@ -18,12 +18,12 @@ html.index {
     transition: all .50s ease;
 }
 
-
 .logoContainer {
     display: flex;
     align-items: center;
     width: 217px;
     height: 58.06px;
+    margin: -50;
 }
 
 .logo {
@@ -45,6 +45,10 @@ html.index {
     padding: 0px 0px;
     margin: 0px 60px;
     transition: all .50s ease;
+}
+
+.navbar.open {
+    display: flex; /* Show the navbar when open */
 }
 
 .navbar a:hover {
@@ -75,28 +79,55 @@ html.index {
     background: var(--cyan);
 }
 
-#menuIcon{
+.menuIcon, .closeIcon{
     font-size: 35px;
     color: var(--text-color);
+    position: relative;
     cursor: pointer;
     z-index: 10001;
     display: none;
+    margin-left: 10%;
 }
+
+.menuIconHidden, .closeIconHidden {
+    display: none;
+}
+
+
+.featuresSection {
+    margin-top: 2000px; /* Adjust the value as needed */
+}
+
 
 @media(max-width: 1200px){
     .header{
         padding: 1% 2%;
     }
 
-    .navbar a{
-        padding: 10px 15px;
-        margin: 0px 10px;
+    .menuIcon {
+        display: block;
+        margin-left: 10px;
+    }
+}
+
+@media(max-width: 1000px) {
+    .logoContainer img {
+        width: 80%;
+    }
+
+    .navbar a {
+        font-size: 14px;
+    }
+
+    .button {
+        font-size: 13px;
     }
 }
 
 @media(max-width: 768px) {
+
     .header {
-        padding: 1% 2%; 
+        padding: 1% 2%;
     }
 
     .navbar a {
@@ -107,50 +138,77 @@ html.index {
     .button {
         padding: 8px 16px; 
         font-size: 0.8rem; 
+        margin-left: auto;
+        margin-right: 15px;
     }
 
-    .navbar{
+    .navbar {
         position: absolute;
-        top: 100%;
-        right: -100%;
-        width: 270px;
-        height: 40vh;
-        background-color: var(--cyan);
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-top: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        height: auto;
+        background-color: white;
+        box-shadow: 0px 50px 1000px rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        border-radius: 10px;
-        transition: all .50s ease;
+        text-align: center;
+        z-index: 2000;
     }
+
     .navbar a{
         display: block;
         margin: 12px 0;
         padding: 0px 25px;
         transition: all .50s ease;
         color: #EBEBEB;
+        color: var(--black-color);
+        font-size: 14px;
     }
 
-    .navbar a:hover{
-        color: var(--black-color);
+    .navbar a:hover {
+        color: var(--cyan);
+        font-weight: bold;
+        background-color: rgb(196, 196, 196); /* Highlighted gray background */
         transform: translateY(5px);
     }
+
     .navbar a.active{
         color: var(--black-color);
+        font-weight: bold;
+        background-color: rgb(196, 196, 196); /* Highlighted gray background */
     }
-    
-    .navbar.open{
-        right: 2%;
+
+    .navbar {
+        display: none; /* Hide the navbar by default on small screens */
+    }
+
+    .menuIcon, .closeIcon {
+        display: flex;
+        margin: 0;
+    }
+
+    .menuIconHidden, .closeIconHidden {
+        display: none;
     }
 }
+
 
 @media(max-width: 576px) {
     .header {
         padding: 1% 2%; 
     }
 
-    .button {
-        padding: 6px 12px; 
-        font-size: 0.7rem; 
+    .logo {
+        width: 70%; /* Adjust the logo size for smaller screens */
+    }
+
+    .menuIcon, .closeIcon {
+        margin-right: 10px;
     }
 }
 

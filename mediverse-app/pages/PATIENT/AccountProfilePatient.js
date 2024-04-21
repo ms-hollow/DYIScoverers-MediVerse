@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 const AccountProfilePatient = () => {
     const router = useRouter();
@@ -116,7 +118,7 @@ const AccountProfilePatient = () => {
             setIsLoading(false);
         } catch (error) {
             console.error('Error updating patient details:', error);
-            alert('Error updating patient details.');
+            toast.error('Error updating patient details.');
         }
     }
 
@@ -129,8 +131,8 @@ const AccountProfilePatient = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <div className={styles.formTitle}>Account Information</div>
             <form className={styles.registrationForm} onSubmit={handleEdit}>
+                <div className={styles.formTitle}>Account Information</div>
                 <div className={styles.formContainer}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
@@ -210,6 +212,7 @@ const AccountProfilePatient = () => {
             </button>
             
         </Layout>
+        <ToastWrapper/>
         </>
         
     );

@@ -10,11 +10,14 @@
     "compile": "solcjs --abi --include-path node_modules/ --base-path . blockchain/contracts/MediVerse.sol --output-dir blockchain/build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2",
     "@truffle/hdwallet-provider": "^2.1.15",
     "next": "^14.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "react-toastify": "^10.0.5",
-    "sonner": "^1.4.41"
+    "sonner": "^1.4.41",
+    "web3": "^4.8.0"
   }
 }

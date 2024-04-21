@@ -1,9 +1,11 @@
 import styles from '../../styles/accountAccess.module.css';
-import Layout from '../../components/HomeSidebarHeader.js'
+import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import React, { useState, useEffect  } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 //! Done with the process sa buttons
 //TODO: Needs to update yung table kapag nabigyan na ng access
@@ -27,7 +29,7 @@ const AccountAccessHospital = () => {
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {
-            alert('Error fetching hospital address.');
+            toast.error('Error fetching hospital address.');
         }
     };
 
@@ -224,7 +226,7 @@ const AccountAccessHospital = () => {
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
                 console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
-                alert("Request Sent!");
+                toast.success("Request Sent!");
                 setRequestPermission(true);
                 setSentRequestPatients([...sentRequestPatients, patientAddr]);
             }
@@ -294,8 +296,8 @@ const AccountAccessHospital = () => {
                         </div>
                     </div>
                 )}
-
             </div>
+            <ToastWrapper/>
         </>
         </Layout>
     );

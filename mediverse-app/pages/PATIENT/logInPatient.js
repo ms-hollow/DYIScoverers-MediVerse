@@ -8,6 +8,8 @@ import LandingPageLayout from "@/components/landingPageLayout";
 import styles from '/styles/logInPatientHeader.module.css';
 import React, { useState, useEffect } from 'react';
 import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const router = useRouter(); // Initialize useRouter hook
@@ -43,17 +45,17 @@ export default function Home() {
             const isPatient = isAddressInList(walletAddress, patientList);
             if (isPatient) {
                 console.log("This account belongs to a patient.");
-                alert("You have successfully logged into your account as a patient.");
+                toast.success("You have successfully logged into your account as a patient.");
                 router.push("/PATIENT/HomePatient");
             } else {
                 const isHospital = isAddressInList(walletAddress, hospitalList);
                 if (isHospital) {
                     console.log("This account belongs to a hospital.");
-                    alert("You have successfully logged into your account as a hospital.");
+                    toast.success("You have successfully logged into your account as a hospital.");
                     router.push("/HOSPITAL/HomeHospital");
                 } else {
                     console.log("This address is not registered as a patient or a hospital.");
-                    alert("This address is not registered as a patient or a hospital.");
+                    toast.error("This address is not registered as a patient or a hospital.");
                 }
             }
         } catch (err) {
@@ -62,13 +64,12 @@ export default function Home() {
     } else {
         /* If MetaMask is not installed */
         console.log("Please install MetaMask");
-        alert("Please install MetaMask");
+        toast.error("Please install MetaMask");
     }
   };
 
   return (
-    <>
-      <LandingPageLayout> 
+    <>  
         <LogInPatientHeader />
         <div className={styles.connectMetamaskContainer}>
           <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
@@ -91,7 +92,8 @@ export default function Home() {
           Don't Have Metamask Wallet?{" "}
           <span className={styles.createOneLink} onClick={handleCreateWallet}>Create one.</span> {/* Use span instead of a */}
         </div>
-      </LandingPageLayout>
+        <ToastWrapper/>
+      {/*</LandingPageLayout>*/}
     </>
   );
 }

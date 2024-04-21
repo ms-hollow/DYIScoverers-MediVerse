@@ -1,215 +1,217 @@
 /*----------------------ADD MEDICAL HISTORY------------------*/
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    margin: 8% auto; 
-    padding: 1%; 
-    width: 1122px;
+  display: flex;
+  flex-direction: column;
+  margin: 8% auto; 
+  padding: 1%; 
+  width: 1122px;
 }
 
 .descriptionField {
-    flex: 10; /* Adjust the flex value if needed */
-    margin-right: 20px;
-    border-radius: 3px;
-    height: 100px; /* Adjust the height as needed */
+  flex: 10; /* Adjust the flex value if needed */
+  margin-right: 20px;
+  border-radius: 3px;
+  height: 100px; /* Adjust the height as needed */
 }
-  
+
 .medicalHistoryForm {
-    margin: 0 auto; /* Center the registration form horizontally */
-    width: 100%; /* Ensure the form takes up the full width of the container */
-    padding: 0% 0% 0% 2%; /* Add padding to the left side */
+  margin: 0 auto; 
+  width: 100%; 
+  padding: 0% 0% 0% 2%; 
 }
 
 .formTitle {
-    white-space: nowrap;
-    font-family: 'Raleway';
-    font-size: 16px;
-    font-weight: bold;
-    margin: 2%;
-    margin-left: 5px;
-    margin-top: 50px;
+  white-space: nowrap;
+  font-family: 'Raleway';
+  font-size: 16px;
+  font-weight: bold;
+  margin: 2%;
+  margin-left: 5px;
+  margin-top: 50px;
 }
 
 .formHeader {
-  white-space: nowrap;
-  font-family: 'Roboto Condensed';
-  font-size: 13px;
-  font-weight: bold;
-  margin: 15px 0;
-  color: var(--pale-blue);
+white-space: nowrap;
+font-family: 'Roboto Condensed';
+font-size: 13px;
+font-weight: bold;
+margin: 15px 0;
+color: var(--pale-blue);
 }
 
 .formRowTitle_sANDs {
-  display: grid;
-  grid-template-columns: 125px 237px 237px 230px 224px;
-  padding-left: 35px;
+display: grid;
+grid-template-columns: 125px 237px 237px 230px 224px;
+padding-left: 35px;
 }
 
 .formRowTitle_TP {
-    display: grid;
-    grid-template-columns: 75px 180px 210px 200px 185px 187px;
-    padding-left: 35px;
+  display: grid;
+  grid-template-columns: 75px 180px 210px 200px 185px 187px;
+  padding-left: 35px;
 }
 
 .formRowTitle_test {
-    display: grid;
-    grid-template-columns: 110px 155px 222px 150px 220px 100px;
-    padding-left: 35px;
+  display: grid;
+  grid-template-columns: 110px 155px 222px 150px 220px 100px;
+  padding-left: 35px;
 }
 
 .formRowTitle_medication {
-    display: grid;
-    grid-template-columns: 65px 120px 130px 140px 160px 140px 140px 140px;
-    padding-left: 22px;
+  display: grid;
+  grid-template-columns: 65px 120px 130px 140px 160px 140px 140px 140px;
+  padding-left: 22px;
 }
 
 .formRowTitle_admission {
-    display: grid;
-    grid-template-columns: 125px 225px 235px 230px 224px;
-    padding-left: 35px;
-  }
+  display: grid;
+  grid-template-columns: 125px 225px 235px 230px 224px;
+  padding-left: 35px;
+}
 
 .formRow {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-    margin: 0 3% 15px 1%; 
-    margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  margin: 0 3% 15px 1%; 
+  margin-bottom: 15px;
 }
 
 .formField {
-    flex: 10;
-    margin-right: 5px;
+  flex: 10;
+  margin-right: 5px;
 }
 
 .formField input::placeholder,
 .formField select::placeholder,
 .formField select option[disabled]:nth-child(),
 .formField input[type="date"]::placeholder{
-    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+  font-family: 'Roboto Condensed', sans-serif; 
 }
 
 .formField input,
 .formField select {
-    width: calc(100% - 20px); 
-    height: 46px;
-    padding: 10px; 
-    border: 1px solid rgb(199, 199, 199);
-    border-radius: 5px;
-    font-family: Roboto Condensed;
+  width: calc(100% - 20px); 
+  height: 46px;
+  padding: 10px; 
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 5px;
+  font-family: Roboto Condensed;
 }
 
 .formFieldRow {
-  flex: 5;
+flex: 5;
 }
 
 .formFieldLastCol {
-    flex: 5;
-    margin-right: 3%;
+  flex: 5;
+  margin-right: 3%;
 }
 
 .formFieldLastCol input,
 .formFieldLastCol select {
-    width: 100%; 
-    height: 46px;
-    padding: 10px; 
-    border: 1px solid rgb(199, 199, 199);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    font-family: Roboto Condensed;
+  width: 100%; 
+  height: 46px;
+  padding: 10px; 
+  border: 1px solid rgb(199, 199, 199);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-family: Roboto Condensed;
 }
 
 .formFieldLastCol  input::placeholder,
 .formFieldLastCol  select::placeholder,
 .formFieldLastCol select option[disabled]:nth-child(),
 .formFieldLastCol input[type="date"]::placeholder{
-    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+  font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
 }
 
 .formFieldRow input::placeholder,
 .formFieldRow select::placeholder,
 .formFieldRow select option[disabled]:nth-child(),
 .formFieldRow input[type="date"]::placeholder{
-    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+  font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
 }
 
 .formFieldRow input,
 .formFieldRow select {
-    width: 100%; 
-    height: 46px;
-    padding: 10px; 
-    border: 1px solid rgb(199, 199, 199);
-    border-right: none;
-    font-family: Roboto Condensed;
+  width: 100%; 
+  height: 46px;
+  padding: 10px; 
+  border: 1px solid rgb(199, 199, 199);
+  border-right: none;
+  font-family: Roboto Condensed;
 }
 
 .formFieldNum {
-    flex: 1.5;
+  flex: 1.5;
 }
 
 .formFieldNum  input::placeholder,
 .formFieldNum  select::placeholder,
 .formFieldNum select option[disabled]:nth-child(),
 .formFieldNum input[type="date"]::placeholder{
-    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+  font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
 }
 
 .formFieldNum input,
 .formFieldNum  select {
-    width: 100%; 
-    height: 46px;
-    padding: 10px; 
-    padding-left: 25px;
-    border: 1px solid rgb(199, 199, 199);
-    border-right: none;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    font-family: Roboto Condensed;
-    color: var(--blue);
-    font-weight: bold;
+  width: 100%; 
+  height: 46px;
+  padding: 10px; 
+  padding-left: 25px;
+  border: 1px solid rgb(199, 199, 199);
+  border-right: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-family: Roboto Condensed;
+  color: var(--blue);
+  font-weight: bold;
 }
 
 .formFieldNum_med {
-    flex: 1.5;
+  flex: 1.5;
 }
 
 .formFieldNum_med  input::placeholder,
 .formFieldNum_med  select::placeholder,
 .formFieldNum_med select option[disabled]:nth-child(),
 .formFieldNum_med input[type="date"]::placeholder{
-    font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
+  font-family: 'Roboto Condensed', sans-serif; /* Use Roboto Condensed font family for placeholder text */
 }
 
 .formFieldNum_med input,
 .formFieldNum_med  select {
-    width: 100%; 
-    height: 46px;
-    padding: 10px; 
-    padding-left: 12px;
-    border: 1px solid rgb(199, 199, 199);
-    border-right: none;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    font-family: Roboto Condensed;
-    color: var(--blue);
-    font-weight: bold;
+  width: 100%; 
+  height: 46px;
+  padding: 10px; 
+  padding-left: 12px;
+  border: 1px solid rgb(199, 199, 199);
+  border-right: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-family: Roboto Condensed;
+  color: var(--blue);
+  font-weight: bold;
 }
 
 .submitButton {
-    display: block; 
-    margin: 10px auto; /* Center horizontally with auto margins */
-    padding: 10px 20px;
-    margin-top: 30px;
-    margin-left: auto; /* Move the button to the right */
-    border: none;
-    border-radius: 5px;
-    background-color: var(--blue);
-    color: white;
-    cursor: pointer;
+  display: block; 
+  margin: 10px auto; /* Center horizontally with auto margins */
+  padding: 10px 20px;
+  margin-top: 30px;
+  margin-left: auto; /* Move the button to the right */
+  width: 12%;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .submitButton:hover {
-    background-color: var(--cyan);
+  background-color: var(--cyan);
 }
 
 @keyframes loading {
@@ -236,303 +238,319 @@
 }
 
 .addButton {
-  display: block; 
-  margin: 10px auto; 
-  padding: 10px 20px;
-  margin-top: 30px;
-  margin-left: 1.3%; 
-  border: 2px solid var(--blue);
-  border-radius: 5px;
-  background-color: transparent;
-  color: var(--blue);
-  cursor: pointer;
-  width: 1000px;
-  height: 40px;
-  font-family: 'Raleway';
-  font-weight: bold;
-  justify-content: center;
+display: block; 
+margin: 10px auto; 
+padding: 10px 20px;
+margin-top: 30px;
+margin-left: 1.3%; 
+border: 2px solid var(--blue);
+border-radius: 5px;
+background-color: transparent;
+color: var(--blue);
+cursor: pointer;
+width: 1000px;
+height: 40px;
+font-family: 'Raleway';
+font-weight: bold;
+justify-content: center;
 }
 
 .addButton:hover {
-  border: 2px solid var(--cyan);
-  background-color: white;
-  color: var(--cyan);
+border: 2px solid var(--cyan);
+background-color: white;
+color: var(--cyan);
 }
 
 .backButton {
-    display: block; 
-    float: left; /* Add float property to move it to the left */
-    margin: -50px 18px; /* Adjust margin-top to move it higher */
-    padding: 4px 10px;
-    border: none;
-    border-radius: 5px;
-    color: var(--gray);
-    cursor: pointer;
-    font-weight: bold; 
-    font-size: 1.5rem; 
+  display: block; 
+  float: left; /* Add float property to move it to the left */
+  margin: -50px 18px; /* Adjust margin-top to move it higher */
+  padding: 4px 10px;
+  border: none;
+  border-radius: 5px;
+  color: var(--gray);
+  cursor: pointer;
+  font-weight: bold; 
+  font-size: 1.5rem; 
 }
 
 .backButton:hover {
-    color: var(--cyan);
+  color: var(--cyan);
 }
 
 .backButton:hover {
-    color: var(--cyan);
+  color: var(--cyan);
 }
 
 .table_container {
-    width: 1000px;
-    margin-left: 9px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 25px;
-    margin-bottom: 20px;
+  width: 1000px;
+  margin-left: 9px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 20px;
 }
 
 .sANDs_heading {
-    display: grid;
-    grid-template-columns: 233px 233px 233px 233px;
-    padding-left: 27px;
-    width: 940px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
+  display: grid;
+  grid-template-columns: 233px 233px 233px 233px;
+  padding-left: 27px;
+  width: 940px;
+  height: 25px;
+  font-family: Roboto Condensed;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pale-blue);
+  background-color: var(--light-gray);
 }
 
 .sANDs_heading p{
-    margin: 4px;
+  margin: 4px;
 }
 
 .sANDs_data {
-    display: grid;
-    grid-template-columns: 233px 233px 233px 233px;
-    padding-left: 22px;
-    width: 940px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    align-items: center;
+  display: grid;
+  grid-template-columns: 233px 233px 233px 233px;
+  padding-left: 22px;
+  width: 940px;
+  font-family: Roboto Condensed;
+  font-size: 12px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
 .sANDs_data p{
-    margin: 7px;
+  margin: 7px;
 }
 
 .tp_heading {
-    display: grid;
-    grid-template-columns: 186px 186px 186px 186px 186px;
-    padding-left: 27px;
-    width: 940px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
+  display: grid;
+  grid-template-columns: 186px 186px 186px 186px 186px;
+  padding-left: 27px;
+  width: 940px;
+  height: 25px;
+  font-family: Roboto Condensed;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pale-blue);
+  background-color: var(--light-gray);
 }
 
 .tp_heading p{
-    margin: 4px;
+  margin: 4px;
 }
 
 .tp_data {
-    display: grid;
-    grid-template-columns: 186px 186px 186px 186px 186px;
-    padding-left: 22px;
-    width: 940px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    align-items: center;
+  display: grid;
+  grid-template-columns: 186px 186px 186px 186px 186px;
+  padding-left: 22px;
+  width: 940px;
+  font-family: Roboto Condensed;
+  font-size: 12px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
 .tp_data p{
-    margin: 7px;
+  margin: 7px;
 }
 
 .test_heading {
-    display: grid;
-    grid-template-columns: 186px 150px 150px 186px 186px;
-    padding-left: 26px;
-    width: 940px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
+  display: grid;
+  grid-template-columns: 186px 150px 150px 186px 186px;
+  padding-left: 26px;
+  width: 940px;
+  height: 25px;
+  font-family: Roboto Condensed;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pale-blue);
+  background-color: var(--light-gray);
 }
 
 .test_heading p{
-    margin: 4px;
+  margin: 4px;
 }
 
 .test_data {
-    display: grid;
-    grid-template-columns: 186px 150px 150px 186px 250px;
-    padding-left: 22px;
-    width: 940px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    align-items: center;
+  display: grid;
+  grid-template-columns: 186px 150px 150px 186px 250px;
+  padding-left: 22px;
+  width: 940px;
+  font-family: Roboto Condensed;
+  font-size: 12px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
 .test_data p{
-    margin: 7px;
+  margin: 7px;
 }
 
 .medication_heading {
-    display: grid;
-    grid-template-columns: 170px 154px 180px 140px 140px 140px;
-    padding-left: 26px;
-    width: 940px;
-    height: 25px;
-    font-family: Roboto Condensed;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--pale-blue);
-    background-color: var(--light-gray);
+  display: grid;
+  grid-template-columns: 170px 154px 180px 140px 140px 140px;
+  padding-left: 26px;
+  width: 940px;
+  height: 25px;
+  font-family: Roboto Condensed;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pale-blue);
+  background-color: var(--light-gray);
 }
 
 .medication_heading p{
-    margin: 4px;
+  margin: 4px;
 }
 
 .medication_data {
-    display: grid;
-    grid-template-columns: 170px 154px 180px 140px 140px 140px;
-    padding-left: 22px;
-    width: 940px;
-    font-family: Roboto Condensed;
-    font-size: 12px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-    align-items: center;
+  display: grid;
+  grid-template-columns: 170px 154px 180px 140px 140px 140px;
+  padding-left: 22px;
+  width: 940px;
+  font-family: Roboto Condensed;
+  font-size: 12px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
 .medication_data p{
-    margin: 7px;
+  margin: 7px;
 }
 
 .scrollableTable_container {
-    display: flex;
-    flex-direction: column;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 3px;
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  padding: 3px;
+}
+
+.addButton{
+  width: 93%; /* Adjusted width for responsiveness */
 }
 
  /* ------------------RESPONSIVENESS------------------*/
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 7vw; 
-    }
-    
-    .formField {
-      flex: 1 1 100%; 
-      margin-left: 9%; 
-      margin-bottom: 10px;
-    }
-  
-    .backButton {
-      display: none; /* Hide the backButton on screens smaller than 768px */
-    }
-    
-    .submitButton {
-      width: 48%; /* Make buttons full width on smaller screens */
-      margin-right: 25%; 
-    }
-    
-    .formTitle {
-      margin-bottom: 10px; /* Adjust margin for responsiveness */
-      font-size: 1.2rem; 
-    }
-    
-    .stepsContainer {
-      flex-direction: column; /* Arrange steps vertically on smaller screens */
-      align-items: center; 
-      margin: 5% auto; 
-      margin-bottom: 20%;
-      width: 90%; 
-    }
-    
-    .stepShape {
-      width: 50%; 
-      height: 25px; 
-      font-size: 16px;
-      padding: 0 5px; 
-      margin-left:50%; 
-      margin-bottom: 5px; 
-      border-radius: 90%; 
-    }
-    
-    .stepText {
-      font-size: 12px; 
-      margin-left: 25%; 
-    }
-    
-    .line {
-      width: 90%; 
-      margin-left: 7%;
-    }
+
+ @media (max-width: 480px) {
+  /* Further decrease font sizes for smaller screens */
+  .formTitle {
+      font-size: 100px;
   }
 
-   /* ------------------RESPONSIVENESS------------------*/
-  
-   @media (max-width: 768px) {
-    .container {
-      padding: 7vw; 
-    }
-    
-    .formField {
-      flex: 1 1 100%; 
-      margin-left: 9%; 
-      margin-bottom: 10px;
-    }
-  
-    .backButton {
-      display: none; /* Hide the backButton on screens smaller than 768px */
-    }
-    
-    .submitButton {
-      width: 48%; /* Make buttons full width on smaller screens */
-      margin-right: 25%; 
-    }
-    
-    .formTitle {
-      margin-bottom: 10px; /* Adjust margin for responsiveness */
-      font-size: 1.2rem; 
-    }
-    
-    .stepsContainer {
-      flex-direction: column; /* Arrange steps vertically on smaller screens */
-      align-items: center; 
-      margin: 5% auto; 
-      margin-bottom: 20%;
-      width: 90%; 
-    }
-    
-    .stepShape {
-      width: 50%; 
-      height: 25px; 
-      font-size: 16px;
-      padding: 0 5px; 
-      margin-left:50%; 
-      margin-bottom: 5px; 
-      border-radius: 90%; 
-    }
-    
-    .stepText {
-      font-size: 12px; 
-      margin-left: 25%; 
-    }
-    
-    .line {
-      width: 90%; 
-      margin-left: 7%;
-    }
+  .formRowTitle,
+  .formHeader {
+      font-size: 10px;
   }
+
+  .formField input,
+  .formField select,
+  .formFieldLastCol input,
+  .formFieldRow input,
+  .formFieldRow select,
+  .formFieldNum input {
+      font-size: 8px;
+  }
+
+  .submitButton {
+    width: 50%; 
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+      width: 90%; 
+  }
+
+  .formField,
+  .formFieldLastCol {
+    flex: 1; /* Adjusted to take full width */
+    margin-right: 0;
+  }
+
+  .formTitle {
+      font-size: 9px; /* Decrease font size for smaller screens */
+  }
+
+  .formRowTitle_sANDs,
+  .formRowTitle_TP,
+  .formRowTitle_test,
+  .formRowTitle_medication,
+  .formRowTitle_admission{
+      display: none; /* Hide the headers for smaller screens */
+  }
+
+
+  .formRowTitle
+  .formHeader {
+      display: none; /* Hide the headers for smaller screens */
+  }
+
+  .formRowTitle {
+    display: block; 
+    margin-bottom: 5px; 
+  }
+
+  .formRow {
+    flex-direction: column; 
+    margin-bottom: 20px;
+    border: 1px solid rgb(199, 199, 199); /* Add border to each field */
+    border-radius: 5px; 
+  }
+
+  .formField input,
+  .formField select {
+    width: 100%;
+    height: 46px;
+    padding: 10px;
+    border: 1px solid rgb(199, 199, 199);
+    border-radius: 5px;
+    font-family: Roboto Condensed;
+  }
+
+  .submitButton {
+    width: 30%; 
+    font-size: 12px; 
+  }
+
+  .scrollableTable_container {
+    max-height: 200px; /* Adjusted maximum height for smaller screens */
+  }
+
+    /* Adjust text size for smaller screens */
+  .sANDs_heading p,
+  .sANDs_data p,
+  .tp_heading p,
+  .tp_data p,
+  .test_heading p,
+  .test_data p,
+  .medication_heading p,
+  .medication_data p {
+    font-size: 10px; /* Adjusted font size for smaller screens */
+  }
+
+  /* Adjust container width for smaller screens */
+  .table_container {
+    width: 95%; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px; 
+    padding-right: 10px; 
+    overflow-x: auto;
+  }
+
+
+  
+
+
+
+
+
+
+
+
+
+
+}
+
