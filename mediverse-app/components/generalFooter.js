@@ -13,9 +13,9 @@ const Footer = () => {
           </div>
           <div className={styles.columnSection}>
             <p>Learn More </p>
-            <Link href='/'>Features</Link>
-            <Link href='/'>FAQs</Link>
-            <Link href='/'>Contact Us</Link>
+            <Link href='/#features'>Features</Link>
+            <Link href='/GENERAL/FAQs/'>FAQs</Link>
+            <Link href='/GENERAL/ContactUs'>Contact Us</Link>
           </div>
           <div className={styles.columnSection}>
             <p>Legal</p>

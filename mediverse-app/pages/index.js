@@ -8,6 +8,13 @@ import LandingPageHeader from '@/components/landingPageHeader';
 import LandingPageLayout from '@/components/landingPageLayout';
 
 const  LandingPage = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+    
     return (
         <LandingPageLayout>
         <>
@@ -18,10 +25,24 @@ const  LandingPage = () => {
                     <div className={styles.welcomeMessage}>
                         <p className={styles.slogan}>Your Health, Your Universe, Connected.</p>
                         <p className={styles.subSlogan}>Secure your medical history, simplify your healthcare – Sign Up for MediVerse now!</p>                        
-                        <Link href="/PATIENT/Register1Patient/" className={styles.getStarted}>Get Started</Link>
+                        <div className={styles2.registerDropdown}>
+                            <div className={styles.getStarted} onClick={toggleMenu}> 
+                                Get Started
+                                {isOpen && (
+                                    <div className={styles2.registerDropdownContent}>
+                                        <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+                                        <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                     <img src='/landingPage banner pic.svg' alt='Landing Page Banner Illustration' className={styles.pageBanner}/>
                 </section>
+
+
+
+
 
                 <section id='features' className={styles.features}>
                     <div className={styles.featuresBanner}>
