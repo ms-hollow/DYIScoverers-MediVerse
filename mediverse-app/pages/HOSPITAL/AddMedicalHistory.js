@@ -114,7 +114,7 @@ const addMedicalHistory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
-        console.log('Form submitted:', formData);
+        //console.log('Form submitted:', formData);
         let  patientDiagnosis = '';
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
@@ -179,7 +179,7 @@ const addMedicalHistory = () => {
                 setIsLoading(true);
                 try {
                     const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                    console.log("Account:", accounts[0]);
+                    //("Account:", accounts[0]);
                     const receipt = await mvContract.methods.addMedicalHistory(
                         formData.patientAddress,
                         formData.physician,
@@ -190,7 +190,7 @@ const addMedicalHistory = () => {
                         concatenatedMedication,
                         concatenatedAdmission
                     ).send({ from: accounts[0] });
-                    console.log("Transaction Hash:", receipt.transactionHash);
+                    //console.log("Transaction Hash:", receipt.transactionHash);
                     toast.success('Medical History Successfully Added!');
                     setIsLoading(false);
                     router.push('/HOSPITAL/PatientRecordsHospital/');

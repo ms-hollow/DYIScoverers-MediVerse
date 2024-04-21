@@ -35,7 +35,8 @@ const Register1Patient = () => {
                 console.error(err.message);
             }
         } else {
-            console.log("Please install MetaMask");
+            // console.log("Please install MetaMask");
+            toast.error("Please install MetaMask");
         }
     };
     

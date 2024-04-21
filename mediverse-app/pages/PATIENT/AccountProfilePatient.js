@@ -46,7 +46,7 @@ const AccountProfilePatient = () => {
                 // Call the getPatientInfo function on the smart contract
                 const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); 
                 
-                console.log(patientInfo)
+                //console.log(patientInfo)
                 // Splitting the patient full name and full address to subcategories
                 const patientFullName = patientInfo[0].split('+');
                 const patientFullAddress = patientInfo[7].split('+');
@@ -113,7 +113,7 @@ const AccountProfilePatient = () => {
                 formData.weight,
                 address
             ).send({ from: patientAddress });
-            console.log('Patient details updated successfully');
+            //console.log('Patient details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {

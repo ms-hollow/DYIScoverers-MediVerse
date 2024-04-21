@@ -24,7 +24,7 @@ const HomePatient = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]); 
         } catch (error) {
             toast.error('Error fetching patient address.');
@@ -47,7 +47,7 @@ const HomePatient = () => {
                 setPatientName(patientHolder);
 
                 const patientMedicalHistories = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientMedicalHistories);
+                //console.log(patientMedicalHistories);
                 
                 const parsedMedicalHistory = patientMedicalHistories.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
@@ -65,15 +65,15 @@ const HomePatient = () => {
                         creationDate
                     };
                 });
-                console.log(parsedMedicalHistory);
+                //console.log(parsedMedicalHistory);
 
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[0]);
-                    console.log("Creation Date: ",item.creationDate);
+                    // console.log("Diagnosis:", splitDiagnosis[0]);
+                    // console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    console.log("Admission Date:", splitAdmission[2]);
-                    console.log("Discharge Date:", splitAdmission[3]);
+                    // console.log("Admission Date:", splitAdmission[2]);
+                    // console.log("Discharge Date:", splitAdmission[3]);
                     const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
                     return {
                         diagnosis: splitDiagnosis[0],
@@ -86,16 +86,16 @@ const HomePatient = () => {
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);
-                console.log("Modified", modifiedMedicalHistory);
+                // console.log("Modified", modifiedMedicalHistory);
 
                 const latestMedicalRecord = modifiedMedicalHistory[0];
-                console.log("Latest Medical Record:", latestMedicalRecord);
+                // console.log("Latest Medical Record:", latestMedicalRecord);
 
                 if (latestMedicalRecord && typeof latestMedicalRecord === 'object') {
                     const latestAdd = [latestMedicalRecord.hospitalName, latestMedicalRecord.creationDate];
                     setLatestHistory([latestAdd]);
                 } else {
-                    console.log("No latest medical record found.");
+                    // console.log("No latest medical record found.");
                 }
 
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
@@ -106,7 +106,7 @@ const HomePatient = () => {
                         name: hospitalInfo[0],
                     });
                 }
-                console.log("Requesting Hospitals: ", hospitalsInfo);
+                //console.log("Requesting Hospitals: ", hospitalsInfo);
                 setHospitalNames(hospitalsInfo);
 
             } catch (error) {

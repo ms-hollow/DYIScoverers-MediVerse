@@ -47,13 +47,13 @@ const AddPatient = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-        console.log("Account:", accounts[0]);
-        console.log('Form submitted:', formData);
+        //console.log("Account:", accounts[0]);
+        //console.log('Form submitted:', formData);
        
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
         const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        console.log("name: ", name)
-        console.log("address:", address)
+        //console.log("name: ", name)
+        //console.log("address:", address)
         
         try {
             const receipt = await mvContract.methods.registerPatient(
@@ -67,7 +67,7 @@ const AddPatient = () => {
                 address
             ).send({ from: accounts[0] });
 
-            console.log("Transaction Hash:", receipt.transactionHash);
+            //console.log("Transaction Hash:", receipt.transactionHash);
             // router.push('/PATIENT/Register3Patient/');
             // Transaction successful, you can do further processing here if needed
         } catch (error) {

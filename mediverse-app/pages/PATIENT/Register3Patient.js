@@ -46,7 +46,7 @@ const Register3Patient = () => {
                 // Call the getPatientInfo function on the smart contract
                 const patientInfo = await mvContract.methods.getPatientInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
                 
-                console.log(patientInfo)
+                // console.log(patientInfo)
                 // Splitting the patient full name and full address to subcategories
                 const patientFullName = patientInfo[0].split('+');
                 const patientFullAddress = patientInfo[7].split('+');

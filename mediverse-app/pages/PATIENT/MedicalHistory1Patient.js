@@ -19,7 +19,7 @@ const MedicalHistoryPatient = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]); 
         } catch (error) {
             toast.error('Error fetching patient address.');
@@ -47,10 +47,10 @@ const MedicalHistoryPatient = () => {
                     return;
                 }
 
-                console.log(patientAddress);
+                // console.log(patientAddress);
 
                 const patientMedicalHistories = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientMedicalHistories);
+                //console.log(patientMedicalHistories);
 
                 const parsedMedicalHistory = patientMedicalHistories.map(item => {
                     const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
@@ -72,11 +72,11 @@ const MedicalHistoryPatient = () => {
 
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[0]);
-                    console.log("Creation Date: ",item.creationDate);
+                    // console.log("Diagnosis:", splitDiagnosis[0]);
+                    // console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    console.log("Admission Date:", splitAdmission[2]);
-                    console.log("Discharge Date:", splitAdmission[3]);
+                    // console.log("Admission Date:", splitAdmission[2]);
+                    // console.log("Discharge Date:", splitAdmission[3]);
                     return {
                         hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],
@@ -101,10 +101,10 @@ const MedicalHistoryPatient = () => {
                     const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                 
                     if (results.length > 0) {
-                        console.log("Found:", results);
+                        // console.log("Found:", results);
                         setMedicalHistory(results);
                     } else {
-                        console.log("No matching entry found.");
+                        // console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
                     }
                 }

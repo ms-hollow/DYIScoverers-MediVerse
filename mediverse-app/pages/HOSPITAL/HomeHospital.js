@@ -145,13 +145,12 @@ const HospitalHome = () => {
 
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
 
-                console.log(filteredMedicalHistory);
+                //console.log(filteredMedicalHistory);
 
                 const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
-                console.log(patientAddrAndCreationDate);
+                //console.log(patientAddrAndCreationDate);
 
-
-                console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate));
+                //console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate));
 
                 let listAddress = getLatestListAddress(patientAddrAndCreationDate);
                 let listDiagnosis = getLatestListDiagnosis(patientAddrAndCreationDate);
@@ -163,7 +162,7 @@ const HospitalHome = () => {
                 let p, temp =[]; 
                 for (let i = 0; i < listAddress.length; i++) {
                     p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
-                    console.log(p);
+                    //console.log(p);
                     
                     const obj = {
                         patientName: p[0],
@@ -176,10 +175,8 @@ const HospitalHome = () => {
                     temp.push(obj);
                 }
                 setMedicalHistory(temp);
-                console.log(temp);
+                //console.log(temp);
                 
-                
-
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -259,8 +256,8 @@ const HospitalHome = () => {
                 // Update state with authorized and unauthorized records
                 setAuthorizedList(authorizedRecords);
                 setUnauthorizedList(unauthorizedRecords);
-                console.log(authorizedRecords);
-                console.log(unauthorizedRecords);
+                //console.log(authorizedRecords);
+                //console.log(unauthorizedRecords);
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);

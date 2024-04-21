@@ -45,7 +45,7 @@ const AccountProfileHospital = () => {
                 // Call the getPatientInfo function on the smart contract
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); 
                 setHospitalAddress(accounts[0]);
-                console.log(hospitalInfo)
+                //console.log(hospitalInfo)
                 
 
                 // Set form data with patient info
@@ -78,7 +78,7 @@ const AccountProfileHospital = () => {
                 formData.contactNumber,
                 formData.hospitalAddress
             ).send({ from: hospitalAddress });
-            console.log('Hospital details updated successfully');
+            //console.log('Hospital details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {

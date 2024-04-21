@@ -66,7 +66,7 @@ const MedicalHistoryHospital = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]);
         } catch (error) {
             toast.error('Error fetching hospital address.');
@@ -84,7 +84,7 @@ const MedicalHistoryHospital = () => {
                 }
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientRecords);
+                //console.log(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -99,7 +99,7 @@ const MedicalHistoryHospital = () => {
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                console.log(getPatientMedicalHistory);
+                //console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -120,7 +120,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
                 //* '+' means paghihiwalayin ang concatenated data sa isang array
@@ -184,7 +184,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
                 //! Important para sa pagpopulate ng table. 
@@ -337,7 +337,7 @@ const MedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory)
+                //console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }

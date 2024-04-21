@@ -69,11 +69,11 @@ const MedicalHistoryPatient = () => {
                 
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[0]);
-                    console.log("Creation Date: ",item.creationDate);
+                    //console.log("Diagnosis:", splitDiagnosis[0]);
+                    //console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    console.log("Admission Date:", splitAdmission[2]);
-                    console.log("Discharge Date:", splitAdmission[3]);
+                    //console.log("Admission Date:", splitAdmission[2]);
+                    //console.log("Discharge Date:", splitAdmission[3]);
                     return {
                         hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],

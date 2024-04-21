@@ -41,7 +41,7 @@ const AccountAccessPatient = () => {
                 }
     
                 const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
-                console.log("Authorized Hospitals:", authorizedHospitals);
+                //console.log("Authorized Hospitals:", authorizedHospitals);
     
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 // Filter medical history records to include only those made by the currently logged-in patient
@@ -79,7 +79,7 @@ const AccountAccessPatient = () => {
     
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
                 setRequestingHospital(hospitalRequest);
-                console.log("Pending Request: ", hospitalRequest);  
+                //console.log("Pending Request: ", hospitalRequest);  
     
                 const hospitalsInfo = [];
                 for (const hospitalAddress of hospitalRequest) {
@@ -88,7 +88,7 @@ const AccountAccessPatient = () => {
                         name: hospitalInfo[0],
                     });
                 }
-                console.log("Requesting Hospitals: ", hospitalsInfo);
+                //console.log("Requesting Hospitals: ", hospitalsInfo);
                 setHospitalNames(hospitalsInfo);
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -115,7 +115,7 @@ const AccountAccessPatient = () => {
             }
             // Call the contract function
             await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress });
-            console.log('Permission granted to hospital:', hospitalAddress);
+            //console.log('Permission granted to hospital:', hospitalAddress);
             toast.success('Permission granted');
             // After granting access, set the grantAccess state to trigger a refresh
             setGrantAccess(prevState => !prevState); // Toggle grantAccess state
@@ -127,7 +127,7 @@ const AccountAccessPatient = () => {
     const handleRevokeAccess = async (index) => {
         try {
             const hospitalAddress = listOfAuthorizedHospitals[index].hospitalAddress; // Get the hospital address based on the index
-            console.log("Revoke Address: ", hospitalAddress);
+            //console.log("Revoke Address: ", hospitalAddress);
             await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
             //console.log('Access was removed:', hospitalAddress);
             toast.success('Access was removed');

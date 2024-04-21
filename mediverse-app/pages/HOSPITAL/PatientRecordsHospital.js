@@ -22,7 +22,7 @@ const MedicalHistoryPatient = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); 
         } catch (error) {
             toast.error('Error fetching hospital address.');
@@ -137,10 +137,10 @@ const MedicalHistoryPatient = () => {
                     const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                 
                     if (results.length > 0) {
-                        console.log("Found:", results);
+                        //("Found:", results);
                         setMedicalHistory(results);
                     } else {
-                        console.log("No matching entry found.");
+                        //console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
                     }
                 }
@@ -160,7 +160,7 @@ const MedicalHistoryPatient = () => {
         }
         
         const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
-        console.log("Is hospital authorized?", isAuthorized);
+        //console.log("Is hospital authorized?", isAuthorized);
       
        if (isAuthorized){
             router.push({
@@ -169,7 +169,7 @@ const MedicalHistoryPatient = () => {
             });
        } else {
             toast.error("You don't have permission do view this record.");
-            console.log("You don't have permission do view this record.");
+            //console.log("You don't have permission do view this record.");
        }
     };
 

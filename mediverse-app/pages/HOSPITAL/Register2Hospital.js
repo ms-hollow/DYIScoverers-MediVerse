@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 
 const Register2Hospital = () => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
@@ -36,13 +37,14 @@ const Register2Hospital = () => {
             return; // Exit early if any required field is empty
         }
         
-        console.log('Form submitted:', formData);
-
+        //console.log('Form submitted:', formData);
+        setIsLoading(true);
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
-            console.log("Transaction Hash:", receipt.transactionHash);
+            //console.log("Transaction Hash:", receipt.transactionHash);
+            setIsLoading(false);
             router.push('/HOSPITAL/Register3Hospital/');
         } catch (error) {
             console.error('Error sending transaction:', error.message);
@@ -85,8 +87,10 @@ const Register2Hospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
-
+                    {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                        {isLoading ? 'PROCEEDING...' : 'PROCEED'}
+                    </button>
                 </form>
             </div>
             <ToastWrapper/>

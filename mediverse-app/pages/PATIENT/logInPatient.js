@@ -32,7 +32,7 @@ export default function Home() {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
             const walletAddress = accounts[0];
             setWalletAddress(walletAddress);
-            console.log(walletAddress);
+            //console.log(walletAddress);
 
             const patientList = await mvContract.methods.getPatientList().call();
             setPatientList(patientList);
@@ -44,17 +44,17 @@ export default function Home() {
             // console.log("Hospital List:", hospitalList);
             const isPatient = isAddressInList(walletAddress, patientList);
             if (isPatient) {
-                console.log("This account belongs to a patient.");
+                //console.log("This account belongs to a patient.");
                 toast.success("You have successfully logged into your account as a patient.");
                 router.push("/PATIENT/HomePatient");
             } else {
                 const isHospital = isAddressInList(walletAddress, hospitalList);
                 if (isHospital) {
-                    console.log("This account belongs to a hospital.");
+                    //console.log("This account belongs to a hospital.");
                     toast.success("You have successfully logged into your account as a hospital.");
                     router.push("/HOSPITAL/HomeHospital");
                 } else {
-                    console.log("This address is not registered as a patient or a hospital.");
+                    //console.log("This address is not registered as a patient or a hospital.");
                     toast.error("This address is not registered as a patient or a hospital.");
                 }
             }
@@ -63,7 +63,7 @@ export default function Home() {
         }
     } else {
         /* If MetaMask is not installed */
-        console.log("Please install MetaMask");
+        //console.log("Please install MetaMask");
         toast.error("Please install MetaMask");
     }
   };

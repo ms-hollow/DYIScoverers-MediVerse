@@ -25,7 +25,7 @@ const Register1Hospital = () => {
     const handleSubmit = async (e) => {
 
         if (!walletAddress) {
-            console.log("Please connect MetaMask before proceeding.");
+            //console.log("Please connect MetaMask before proceeding.");
             return;
         }
 
@@ -68,13 +68,14 @@ const Register1Hospital = () => {
                 /* If metamask is installed */
                 const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
                 setWalletAddress(accounts[0]); 
-                console.log(accounts[0]);
+                //console.log(accounts[0]);
             } catch(err) {
                 console.error(err.message);
             }
         } else {
             /* if metamask is not installed */
-            console.log("Please install MetaMask");
+            // console.log("Please install MetaMask");
+            toast.error("Please install MetaMask");
         }
     };
 
