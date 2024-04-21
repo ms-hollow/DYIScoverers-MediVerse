@@ -13,7 +13,6 @@ html.index {
     justify-content: space-between; /* To create space between logo and navbar */
     align-items: center;
     justify-content: space-between;
-    background: var(--bg-color);
     padding: 1% 2%;
     transition: all .50s ease;
 }
