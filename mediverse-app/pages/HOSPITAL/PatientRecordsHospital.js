@@ -1,5 +1,4 @@
 import styles from '../../styles/medicalHistory.module.css';
-import styles1 from '/styles/homeSidebarHeader.module.css';
 import Layout from '../../components/PatientRecordsHeader.js'
 import path from 'path';
 import Link from 'next/link';
@@ -18,7 +17,7 @@ const MedicalHistoryPatient = () => {
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const { searchQuery } = router.query;
-    const [queryEmpty, setQueryEmpty] = useState('');
+    // console.log(searchQuery);
 
     const setAddress = async () => {
         try {
@@ -53,7 +52,7 @@ const MedicalHistoryPatient = () => {
     
                 //* Retrieve the hospital currently logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                hospitalName = hospitalInfo[0]; //* Get the hospital name
+                //hospitalName = hospitalInfo[0]; //* Get the hospital name
     
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
@@ -137,9 +136,8 @@ const MedicalHistoryPatient = () => {
                 } else {
                     const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                     if (results.length > 0) {
-                        //("Found:", results);
+                        // console.log("Found:", results);
                         setMedicalHistory(results);
-                        // setQueryEmpty(searchQueryLower);
                     } else {
                         //console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
@@ -175,12 +173,6 @@ const MedicalHistoryPatient = () => {
 
     const handleAdd = () => {
         router.push('/HOSPITAL/AddMedicalHistory/');
-    };
-
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            
-        }
     };
     
     return (  

@@ -1,5 +1,5 @@
 import styles from '../../styles/medicalHistory.module.css';
-import Layout from '../../components/MedicalHistory1PatientHeader'
+import Layout from '../../components/MedicalHistory1PatientHeader.js'
 import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';

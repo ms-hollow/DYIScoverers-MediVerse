@@ -83,12 +83,12 @@ const HomeSidebarHeader = ({children, pageName}) => {
                     </div> */}
                     
                     <div className={styles.headerButtons}>
-                        <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
+                        {/* <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
                         <div className={`${styles.searchBar}`}> 
                             <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                        <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
+                        <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
                         <AccountDropdown/>
                     </div>   
                 </header>

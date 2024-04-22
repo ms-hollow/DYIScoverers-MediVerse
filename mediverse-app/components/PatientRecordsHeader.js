@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
-import AccountDropdown from '/components/accountIconDropdownHospital.js';
+import AccountDropdown from '/components/accountIconDropdown.js';
 import { useRouter } from 'next/router';
 
 const PatientRecordsHeader = ({children, pageName}) => {
+    
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -81,6 +82,11 @@ const PatientRecordsHeader = ({children, pageName}) => {
         setSearchQuery('');
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
     
     return (
         <>
@@ -92,15 +98,16 @@ const PatientRecordsHeader = ({children, pageName}) => {
                     </div>
 
                     <div className={styles.headerButtons}>
-                        <div className={`${styles.searchBar}`}> 
-                            <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange}/>
-                            <a href="#" onClick={handleSearch} className={styles.searchButton}>
-                                <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
-                            </a>
-                        </div>
-                        {/* <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
-                        <AccountDropdown />
-                    </div>
+                            <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
+                            <div className={`${styles.searchBar}`}> 
+                                <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange}/>
+                                <a onClick={handleSearch}>
+                                    <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
+                                </a>
+                            </div>
+                            {/* <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
+                            <AccountDropdown/>
+                        </div>   
                     
                 </header>
                 
@@ -126,10 +133,15 @@ const PatientRecordsHeader = ({children, pageName}) => {
                     </div>
                 </div>
 
+                <div id='toBlur1' className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
+                        <div id='content'>
+                            {children}
+                        </div>
+                </div>
                 <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
-                    <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
-                    <input type="text" placeholder="Search" className={styles.searchInput} />
-                </div>   
+                    <a onClick={handleSearch}> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                    <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange} onKeyPress={handleKeyPress}/>
+                </div>    
             </div>   
         </>
     );

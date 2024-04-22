@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from '../../styles/homeHospital.module.css'
 import Layout from '../../components/HomeSidebarHeaderHospital'
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';

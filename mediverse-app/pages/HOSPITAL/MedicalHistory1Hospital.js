@@ -53,7 +53,7 @@ const MedicalHistoryPatient = () => {
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
                 //console.log(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
+                //hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 const medicalHistoryString = await mvContract.methods.getMedicalHistory(patientAddr).call();
                 //console.log("Get all medical record of specific patient", medicalHistoryString);
