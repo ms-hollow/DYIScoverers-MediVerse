@@ -3,16 +3,18 @@
     flex-direction: column;
     align-items: center;
     z-index: 1;
+    justify-content: space-between;
     margin-top: -55%;
   }
   
-.landingPage {
+  .landingPage {
     display: flex;
-    flex-direction: row;
+    flex-direction: row; /* Keep elements side-by-side on larger screens */
     margin-top: 120px;
     width: 100%;
-    justify-content: space-between;
-}
+    justify-content: space-between; /* Maintain space between elements */
+    gap: 5%; /* Responsive spacing between elements */
+  }
   
 .pageBanner {
     margin-right: auto;
@@ -180,7 +182,7 @@
 @media screen and (max-width: 1536px){
 
     .pageBanner {
-      width: 40%;
+      width: 40vw;
       margin-top: 5%;
       margin-left: 6%;
     }
@@ -203,7 +205,7 @@
   @media screen and (max-width: 1280px){
   
     .pageBanner {
-      width: 50%;
+      width: 50vw;
       margin-top: -10%;
       margin-left: 5%;
     }
@@ -226,14 +228,13 @@
   
   @media screen and (max-width: 1024px){
     .pageBanner {
-      width: 40%;
-      margin-top: -5%;
+      width: 50vw;
+      margin-top: -10%;
       margin-left: 5%;
     }
   
     .containerText{
       margin-top: -15%;
-      margin-left: 5%;
     }
   
   }
@@ -246,7 +247,7 @@
     }
   
     .pageBanner {
-      width: 70%;
+      width: 70vw;
       margin-top: -90%;
       margin-left: 23%;
     }
@@ -291,7 +292,7 @@
     }
   
     .pageBanner {
-      width: 60%;
+      width: 60vw;
       margin-top: -90%;
       margin-left: 23%;
     }
@@ -336,7 +337,7 @@
     }
   
     .pageBanner {
-      width: 80%;
+      width: 80vw;
       margin-top: -170%;
       margin-left: 20%;
     }
@@ -376,7 +377,7 @@
     }
   
     .pageBanner {
-      width: 90%;
+      width: 90vw;
       margin-top: -140%;
       margin-left: 10%;
     }
