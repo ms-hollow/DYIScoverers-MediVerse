@@ -26,7 +26,7 @@ const HomeSidebarHeaderHospital = ({children, pageName}) => {
     };
 
     const handleSearch = () => {
-        console.log('Search query:', searchQuery);
+        //console.log('Search query:', searchQuery);
         router.push({
             pathname: '/HOSPITAL/PatientRecordsHospital/',
             query: { searchQuery }

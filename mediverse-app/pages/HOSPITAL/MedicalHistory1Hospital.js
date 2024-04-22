@@ -29,6 +29,17 @@ const MedicalHistoryPatient = () => {
         }
     };
 
+    function searchInObject(obj, searchQuery) {
+        // Check if searchQuery is null, undefined, or an empty string
+       if (searchQuery === null || searchQuery === undefined || searchQuery.trim().length === 0) {
+           return; // Exit the function
+       }
+       
+       return Object.values(obj).some(value =>
+           typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase())
+       );
+   };
+
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
@@ -85,8 +96,25 @@ const MedicalHistoryPatient = () => {
                     };
                 });
                 
-                setMedicalHistory(modifiedMedicalHistory);
+                //setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
+                let searchQueryLower;
+                if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+                    searchQueryLower = searchQuery.toLowerCase();
+                }
+                
+                if (!searchQueryLower) {
+                    setMedicalHistory(modifiedMedicalHistory);
+                } else {
+                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    if (results.length > 0) {
+                        //("Found:", results);
+                        setMedicalHistory(results);
+                    } else {
+                        //console.log("No matching entry found.");
+                        toast.warning("No matching entry found.");
+                    }
+                }
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);

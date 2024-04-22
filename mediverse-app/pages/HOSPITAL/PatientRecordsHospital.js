@@ -18,6 +18,7 @@ const MedicalHistoryPatient = () => {
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const { searchQuery } = router.query;
+    const [queryEmpty, setQueryEmpty] = useState('');
 
     const setAddress = async () => {
         try {
@@ -135,16 +136,15 @@ const MedicalHistoryPatient = () => {
                     setMedicalHistory(modifiedMedicalHistory);
                 } else {
                     const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
-                
                     if (results.length > 0) {
                         //("Found:", results);
                         setMedicalHistory(results);
+                        // setQueryEmpty(searchQueryLower);
                     } else {
                         //console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
                     }
                 }
-
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }

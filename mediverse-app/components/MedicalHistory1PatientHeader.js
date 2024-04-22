@@ -3,29 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdown.js';
-import { useRouter } from 'next/router';
 
 const MedicalHistory1PatientHeader = ({children, pageName}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    };
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const router = useRouter();
-
-    const handleChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
-    const handleSearch = () => {
-        console.log('Search query:', searchQuery);
-        router.push({
-            pathname: '/PATIENT/MedicalHistory1Patient/',
-            query: { searchQuery }
-        });
-        setSearchQuery('');
     };
     
     return (
