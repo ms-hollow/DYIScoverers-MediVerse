@@ -125,11 +125,6 @@ const AccountProfilePatient = () => {
         <>
         <Layout pageName = "Account Profile">
 
-            {/*KUHANIN DATA, ILAGAY SA FIELD, THEN READ ONLY.*/}
-            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-            </div>
-
             <form className={styles.registrationForm} onSubmit={handleEdit}>
                 <div className={styles.formTitle}>Account Information</div>
                 <div className={styles.formContainer}>

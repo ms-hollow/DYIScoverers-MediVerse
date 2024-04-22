@@ -93,11 +93,7 @@ const AccountProfileHospital = () => {
 
     return (
         <Layout pageName = "Account Profile">
-        <>
-            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-            </div>
-
+        <>  
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Hospital Details</div>
                 <form className={styles.registrationForm} onSubmit={handleEdit}>
