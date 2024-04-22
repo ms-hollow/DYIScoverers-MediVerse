@@ -185,35 +185,35 @@ const MedicalHistoryPatient = () => {
     
     return (  
         <Layout pageName = "Patient Records">
-        <>
-            <div className={styles.container}>
-                <div className={styles.tableHeading}>
-                    <p>Patient Name</p>
-                    <p>Hospital</p>
-                    <p>Admission Date</p>
-                    <p>Discharge Date</p>
-                    <p>Length of Stay</p>
-                </div>
+            <>
+                <div className={styles.container}>
+                    <div className={styles.tableHeading}>
+                        <p>Patient Name</p>
+                        <p>Hospital</p>
+                        <p>Admission Date</p>
+                        <p>Discharge Date</p>
+                        <p>Length of Stay</p>
+                    </div>
 
-                <div className={styles.dataContainer}>
-                    {medicalHistory.map((record, index) => (
-                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
-                            <p className={styles.diaAttrb}>{record.patientName}</p>
-                            <p>{record.hospitalName}</p>
-                            <p>{record.physician}</p>
-                            <p>{record.admissionDate}</p>
-                            <p>{record.dischargeDate}</p>
-                            <p>{record.stayLength}</p>
-                        </div>
-                    ))}
-                </div>
-                <button className={styles.submitButton} onClick={handleAdd}>
-                    <Link href="/HOSPITAL/AddPatient">+</Link>
-                </button>
+                    <div className={styles.dataContainer}>
+                        {medicalHistory.map((record, index) => (
+                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                                <p className={styles.diaAttrb}>{record.patientName}</p>
+                                <p>{record.hospitalName}</p>
+                                <p>{record.physician}</p>
+                                <p>{record.admissionDate}</p>
+                                <p>{record.dischargeDate}</p>
+                                <p>{record.stayLength}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <button className={styles.submitButton} onClick={handleAdd}>
+                        <Link href="/HOSPITAL/AddPatient">+</Link>
+                    </button>
 
-            </div>
-            <ToastWrapper/>
-        </>
+                </div>
+                <ToastWrapper/>
+            </>
         </Layout>
     );
 }

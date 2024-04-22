@@ -75,35 +75,36 @@ export default function Home() {
         </div>
 
         <div className={styles.container}>
-          
+
           <div className={styles.cryptoWallet}>
-            <img src="/logIn banner picture.svg" alt="cryptoWallet"/>
+              <img src="/logIn banner picture.svg" alt="cryptoWallet"/>
           </div>
-
+          
           <div className= {styles.containerText}>
-            <div className={styles.signInWithWalletText}>
-              SIGN IN WITH YOUR WALLET
-            </div>
+              <div className={styles.signInWithWalletText}>
+                SIGN IN WITH YOUR WALLET
+              </div>
 
-            <div className={styles.signInWithProviderText}>
-              Sign in with one available wallet provider
-            </div>
+              <div className={styles.signInWithProviderText}>
+                Sign in with one available wallet provider
+              </div>
 
-            <div className={styles.connectMetamaskContainer}>
-              <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
-                <div className={styles.metaMaskLogo}>
-                  <Image src="/MetamaskLogo.svg" width={35} height={35} />
-                </div>
-                <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
-              </button>
-            </div>
-        
-            <div className={styles.dontHaveMetamaskText}>
-              Don't Have Metamask Wallet?{" "}
-              <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
-            </div>
+              <div className={styles.connectMetamaskContainer}>
+                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
+                  <div className={styles.metaMaskLogo}>
+                    <Image src="/MetamaskLogo.svg" width={35} height={35} />
+                  </div>
+                  <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
+                </button>
+              </div>
+          
+              <div className={styles.dontHaveMetamaskText}>
+                Don't Have Metamask Wallet?{" "}
+                <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
+              </div>
 
           </div>
+        
         </div>
         <ToastWrapper/>
 

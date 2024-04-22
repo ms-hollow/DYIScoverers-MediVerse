@@ -126,6 +126,12 @@ const PatientRecordsHeader = ({children, pageName}) => {
                     </div>
                 </div>
 
+                <div id='toBlur1' className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
+                    <div id='content'>
+                        {children}
+                    </div>
+                </div>
+
                 <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
                     <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
                     <input type="text" placeholder="Search" className={styles.searchInput} />
