@@ -23,7 +23,7 @@ const LogInPatientHeader = () => {
   return (
     <>
     
-      <header className={`${styles.header} ${isOpen ? styles.open : ''}`}>
+      <header className={`${styles.loginHeader} ${isOpen ? styles.open : ''}`}>
         <Link href='/' className={styles.logoContainer}>
           <img src="/MediVerse Logo (with Text).svg" alt="Logo" />
         </Link>
@@ -41,7 +41,7 @@ const LogInPatientHeader = () => {
                   {isRegisterOpen && (
                       <div className={styles2.registerDropdownContent2}>
                           <Link href="/PATIENT/Register1Patient/">As Patient</Link>
-                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>    
                       </div>
                   )}
         </div>
