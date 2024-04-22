@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import styles from '/styles/logInPatientHeader.module.css';
+
 import React, { useState } from 'react';
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
@@ -67,49 +68,35 @@ export default function Home() {
   };
 
   return (
-    <>  
-        <LogInPatientHeader />
+    <>
+      <LogInPatientHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
+      
+      <div className= {styles.background}><img src="/Vector 1577.svg"/></div>
 
-        <div className= {styles.vector1577}>
-          <img src="/Vector 1577.svg"/>
-        </div>
+      <div className={styles.container}>
+        <div className={styles.landingPage}>
 
-        <div className={styles.container}>
+          <img src='/logIn banner picture.svg' alt='Login Page Banner Illustration' className={styles.pageBanner}/>
 
-          <div className={styles.cryptoWallet}>
-              <img src="/logIn banner picture.svg" alt="cryptoWallet"/>
-          </div>
-          
           <div className= {styles.containerText}>
-              <div className={styles.signInWithWalletText}>
-                SIGN IN WITH YOUR WALLET
-              </div>
-
-              <div className={styles.signInWithProviderText}>
-                Sign in with one available wallet provider
-              </div>
-
-              <div className={styles.connectMetamaskContainer}>
-                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
-                  <div className={styles.metaMaskLogo}>
-                    <Image src="/MetamaskLogo.svg" width={35} height={35} />
-                  </div>
-                  <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
-                </button>
-              </div>
+            <div className={styles.signInWithWalletText}>SIGN IN WITH YOUR WALLET</div>
+            <div className={styles.signInWithProviderText}>Sign in with one available wallet provider</div>
+            <div className={styles.connectMetamaskContainer}>
+              <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
+                <div className={styles.metaMaskLogo}><Image src="/MetamaskLogo.svg" width={35} height={35} /></div>
+                <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
+              </button>
+            </div>
           
-              <div className={styles.dontHaveMetamaskText}>
-                Don't Have Metamask Wallet?{" "}
-                <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
-              </div>
+            <div className={styles.dontHaveMetamaskText}>Don't Have Metamask Wallet?{" "}
+              <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
+            </div>
 
           </div>
-        
+              
         </div>
-        <ToastWrapper/>
-
-
-      {/*</LandingPageLayout>*/}
-    </>
+      </div>
+   </>
   );
 }
+

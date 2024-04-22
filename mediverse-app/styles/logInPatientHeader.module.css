@@ -1,14 +1,24 @@
-/* --------------FOR HEADER/NAVBAR-------------- */
-html.index {
-    scroll-behavior: smooth; /* Enable smooth scrolling for the entire page */
-}
-
 .container {
     display: flex;
-    margin-top: -45%;
-    margin-left: 10%
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    margin-top: -55%;
   }
-
+  
+.landingPage {
+    display: flex;
+    flex-direction: row;
+    margin-top: 120px;
+    width: 100%;
+    justify-content: space-between;
+}
+  
+.pageBanner {
+    margin-right: auto;
+    margin-bottom: auto;
+}
+  
 .containerText {
     display: flex;
     flex-direction: column;
@@ -17,10 +27,11 @@ html.index {
     height: 100vh; /* Set container height to full viewport height */
     white-space: nowrap;
     z-index: 1;
-    text-align: center;
+    margin-bottom: auto;
+    margin-right: auto;
 }
   
-.vector1577 {
+.background {
     display: flex;
     width: 100vw; /* Set width to cover the entire viewport */
     height: 100vh; /* Set height to cover the entire viewport */
@@ -29,10 +40,10 @@ html.index {
 }
 
 .cryptoWallet {
-    max-width: 100%; /* Ensure the image doesn't exceed its container */
-    height: auto; /* Maintain aspect ratio */
-    z-index: 1;
-    margin-right: 10%;
+    z-index: 0;
+    margin-top: -45%;
+    max-width: 100%;
+    z-index: -1;
 }
 
 .connectMetamaskContainer { 
@@ -74,6 +85,7 @@ html.index {
 }
 
 .signInWithWalletText {
+    position: relative;
     display: flex;
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: bold;
@@ -85,6 +97,7 @@ html.index {
 
 .dontHaveMetamaskText,
 .signInWithProviderText {
+    position: relative;
     display: flex;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
@@ -100,6 +113,7 @@ html.index {
 .createOneLink:hover {
     text-decoration: underline;
 }
+
 .logoContainer {
     display: flex;
     align-items: center;
@@ -163,118 +177,241 @@ html.index {
 }
 
 
-/* Adjust styles for smaller screens */
-@media (max-width: 767px) {
+@media screen and (max-width: 1536px){
 
-    .vector1577 {
-        display: none;
+    .pageBanner {
+      width: 40%;
+      margin-top: 5%;
+      margin-left: 6%;
     }
-
-    .container {
-        overflow-x: hidden;
-        background: linear-gradient(to bottom right, #effafe, #bae8fa); /* Adjust gradient direction */
-        flex-direction: column;
-        height: 100vh; /* Set container height to full viewport height */
-        margin: 0 auto; /* Center horizontally */
+  
+    .containerText{
+      margin-left: -10%;
     }
-
-    .cryptoWallet {
-        margin-top: 80%; /* Adjust margin for positioning */
-        margin-left: 0; /* Reset margin left */
-        max-width: 100% auto;
-        width: 5%;
-    }
-
-    .containerText {
-        height: 100vh; /* Set container height to full viewport height */
-        margin: 0 auto; /* Center horizontally */
-        max-width: 80%; /* Limit width for better readability */
-        padding: 20px; /* Add padding for spacing */
-        margin-top: -270%;
-    }
-
-    .signInWithWalletText {
-        top: auto; /* Remove top positioning */
-        font-size: 5vw;
-        margin-bottom: 10%; /* Add margin for spacing */
-    }
-
-    .signInWithProviderText {
-        top: auto; /* Remove top positioning */
-        font-size: 4vw;
-        margin-bottom: 10px; /* Add margin for spacing */
-    }
-
-    .dontHaveMetamaskText {
-        top: auto; /* Remove top positioning */
-        font-size: 4vw; 
-    }
-
-    .connectWalletContainer {
-        max-width: 40%;
-        padding: 5%;
-    }
-    
-    .connectMetamaskButton {
-        padding: 2% 20% 2% 5%;
-        font-size: 4vw;
-        margin-left: -10%;
-    }
-
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-
-    .container{
-        justify-content: flex-end; /* Align to the right side */
-        flex-direction: column;
-        margin-left: 50%;
-        margin-top: -100%;
-    }
-    
-    .containerText {
-        margin-top: -300%;
-        margin-bottom: 20%;
-    }
-      
-    .vector1577 {
-        max-width: 100%;
-        justify-content: flex-end; /* Align to the right side */
-        margin-left: 50%;
-    }
-    
-    .cryptoWallet {
-        max-width: 10%; /* Ensure the image doesn't exceed its container */
-        margin-top: 45%;
-    }
-    
-    .connectMetamaskContainer { 
-        padding: 1%; /* Adjust padding for responsiveness */
-        border-radius: 3px;
-        margin-right: 10%;
-      }
-    
-    .connectMetamaskButton {
-        border-radius: 200px;
-        margin-left: -10%
-    }
-      
-    .connectMetamaskText {
-        font-size: 4vw;
-        padding-right: 10px; /* Adjusted padding for smaller screens */
-    }
-      
-    
-    .signInWithWalletText {
-        font-size: 5vw;
-    }
-    
+  
     .dontHaveMetamaskText,
-    .signInWithProviderText {
-        font-size: 5vw;
+    .signInWithProviderText{
+      font-size: 1.2vw;
     }
-
-}
-
-
-
+  
+    .signInWithWalletText{
+      font-size: 2.2vw;
+    }
+  
+  }
+    
+  @media screen and (max-width: 1280px){
+  
+    .pageBanner {
+      width: 50%;
+      margin-top: -10%;
+      margin-left: 5%;
+    }
+  
+    .containerText{
+      margin-top: -15%;
+      margin-left: -10%;
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 1.5vw;
+    }
+  
+    .signInWithWalletText{
+      font-size: 3vw;
+    }
+  
+  }
+  
+  @media screen and (max-width: 1024px){
+    .pageBanner {
+      width: 40%;
+      margin-top: -5%;
+      margin-left: 5%;
+    }
+  
+    .containerText{
+      margin-top: -15%;
+      margin-left: 5%;
+    }
+  
+  }
+  
+  @media screen and (max-width: 820px){
+    .landingPage {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .pageBanner {
+      width: 70%;
+      margin-top: -90%;
+      margin-left: 23%;
+    }
+  
+    .containerText{
+      margin-top: -50%;
+      margin-right: -4%
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 3vw;
+    
+    }
+  
+    .signInWithWalletText{
+      font-size: 5vw;
+    }
+  
+    .connectMetamaskContainer { 
+      padding: 1%; /* Adjust padding for responsiveness */
+      border-radius: 3px;
+      margin-right: 10%;
+    }
+  
+    .connectMetamaskText {
+      font-size: 3vw;
+  }
+    
+    .connectMetamaskButton {
+      margin-left: -10%;
+      padding: 2;
+      padding: 3% 20% 3% 10%; /* Adjusted padding for smaller screens */
+    }
+  }
+  
+  @media screen and (max-width: 768px){
+    .landingPage {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .pageBanner {
+      width: 60%;
+      margin-top: -90%;
+      margin-left: 23%;
+    }
+  
+    .containerText{
+      margin-top: -40%;
+      margin-right: -4%
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 3vw;
+    
+    }
+  
+    .signInWithWalletText{
+      font-size: 5vw;
+    }
+  
+    .connectMetamaskContainer { 
+      padding: 1%; /* Adjust padding for responsiveness */
+      border-radius: 3px;
+      margin-right: 10%;
+    }
+  
+    .connectMetamaskText {
+      font-size: 3vw;
+  }
+    
+    .connectMetamaskButton {
+      margin-left: -10%;
+      padding: 2;
+      padding: 3% 20% 3% 10%; /* Adjusted padding for smaller screens */
+    }
+  }
+  
+  @media screen and (max-width: 475px) {
+    .landingPage {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .pageBanner {
+      width: 80%;
+      margin-top: -170%;
+      margin-left: 20%;
+    }
+  
+    .containerText{
+      margin-top: -70%;
+      margin-left: 0%
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 4vw;
+    
+    }
+  
+    .signInWithWalletText{
+      font-size: 6vw;
+    }
+  
+    .connectMetamaskContainer { 
+      padding: 1%; /* Adjust padding for responsiveness */
+      border-radius: 3px;
+      margin-right: 10%;
+    }
+    
+    .connectMetamaskButton {
+      margin-left: -10%;
+    }
+  
+  }
+  
+  @media screen and (max-width: 376px) {
+    .landingPage {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .pageBanner {
+      width: 90%;
+      margin-top: -140%;
+      margin-left: 10%;
+    }
+  
+    .containerText{
+      margin-top: -60%;
+      margin-right: -4%
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 4vw;
+    }
+  
+    .signInWithWalletText{
+      font-size: 6vw;
+    }
+  
+    .connectMetamaskContainer { 
+      padding: 1%; /* Adjust padding for responsiveness */
+      border-radius: 2px;
+      margin-right: 10%;
+    }
+    
+    .connectMetamaskButton {
+      margin-right: -10%;
+    }
+  
+    .connectMetamaskText{
+      font-size: 3vw;
+    }
+  
+  }
+  
+  
+  
+  
+  
