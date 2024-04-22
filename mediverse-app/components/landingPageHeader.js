@@ -33,13 +33,13 @@ const LandingPageHeader = ({ buttonText, buttonLink}) => {
           <Link href={String(buttonLink)}> {buttonText}</Link>
         </div>
 
-            <div className={isOpen ? styles.menuIconHidden : styles.menuIcon} onClick={toggleNavbar}>
-                <img src="/burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
-            </div>
+        <div className={isOpen ? styles.menuIconHidden : styles.menuIcon} onClick={toggleNavbar}>
+            <img src="/burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
+        </div>
 
-            <div id='close' className={isOpen ? styles.closeIcon : styles.closeIconHidden} onClick={toggleNavbar}>
-                <img src="/close icon.svg" style={{ width: '27px', height: '27px' }} alt="Close" />
-            </div>
+        <div id='close' className={isOpen ? styles.closeIcon : styles.closeIconHidden} onClick={toggleNavbar}>
+            <img src="/close icon.svg" style={{ width: '27px', height: '27px' }} alt="Close" />
+        </div>
         
 
       </header>

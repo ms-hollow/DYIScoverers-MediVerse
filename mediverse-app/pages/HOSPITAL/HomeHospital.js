@@ -1,12 +1,11 @@
-import HomeSidebarHeader from "@/components/HomeSidebarHeaderHospital";
 import Image from "next/image";
 import Link from "next/link";
 import styles from '../../styles/homeHospital.module.css'
-import Layout from '../../components/HomeSidebarHeaderHospital.js'
-// import fs from 'fs';
+import Layout from '../../components/HomeSidebarHeaderHospital'
+import fs from 'fs';
 import path from 'path';
-import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
 import web3 from "../../blockchain/web3";

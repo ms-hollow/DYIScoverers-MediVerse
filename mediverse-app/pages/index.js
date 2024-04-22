@@ -16,7 +16,6 @@ const  LandingPage = () => {
     };
     
     return (
-        <LandingPageLayout>
         <>
             <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
             
@@ -149,7 +148,6 @@ const  LandingPage = () => {
                 </section>
             </div>
         </>
-        </LandingPageLayout>
     );
 }
  

@@ -3,51 +3,51 @@ html.index {
     scroll-behavior: smooth; /* Enable smooth scrolling for the entire page */
 }
 
-.header{
-    position: fixed;
-    width: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1004;
-    display: flex;
-    justify-content: space-between; /* To create space between logo and navbar */
-    align-items: center;
-    justify-content: space-between;
-    background: var(--bg-color);
-    padding: 1% 2%;
-    transition: all .50s ease;
-}
-.vector1577 {
-    position: absolute;
-    left: 498px; 
-    top: -41px; 
-    width: 1094px; 
-    height: 822px; 
-    z-index: -1; 
+.container {
+    max-width: 100%; 
+    margin: 0 auto; 
+    padding: 0 20px;
   }
-  .cryptoWallet {
-    position: absolute;
-    left: 74px; 
-    top: 45px; 
-    width: 646px; 
-    height: 609px; 
-    z-index: 1004;
+
+.containerText {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center items vertically */
+    height: 100vh; /* Set container height to full viewport height */
+    margin-top: -45%;
+    margin-left: 40%;
+    white-space: nowrap;
+    z-index: 1;
+}
+  
+.vector1577 {
+    display: flex;
+    width: 100vw; /* Set width to cover the entire viewport */
+    height: 100vh; /* Set height to cover the entire viewport */
+    z-index: -1; /* Ensure the background is behind other content */
+    justify-content: flex-end; /* Align to the right side */
 }
 
-.connectMetamaskContainer {
-    position: absolute;
-    top: 300px;
-    left: 803px;
-    width: 403px;
-    height: 265px;
-    z-index: 1006;
+.cryptoWallet {
+    z-index: 0;
+    margin-top: -45%;
+    max-width: 20%;
+    z-index: -1;
+}
+
+.connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    margin-right: 10%;
   }
   
 .connectMetamaskButton {
     display: flex;
     align-items: center;
-    padding: 1% 12% 1% 5%;
-    margin: 10% auto;
+    padding: 1% 20% 1% 10%; /* Adjusted padding for smaller screens */
+    margin: 10% auto; /* Adjusted margin for smaller screens */
     border-radius: 20px;
     background-color: #FFFFFF;
     color: #000000;
@@ -55,59 +55,45 @@ html.index {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-
-    
-   
-  }
+}
   
-  .connectMetamaskText{
+.connectMetamaskText {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
     white-space: nowrap;
     color: #a9a8a8;
     font-size: 12px;
-    padding-right: 20px;
-  }
+    padding-right: 10px; /* Adjusted padding for smaller screens */
+}
   
-  .connectMetamaskButton:hover {
+.connectMetamaskButton:hover {
     background-color: #EFEFEF;
-  }
+}
   
-  .metaMaskLogo {
+.metaMaskLogo {
     margin-right: 15%;
-  }
-  .signInWithWalletText {
-    position: absolute;
-    top: 280px; 
-    left: 875px; 
+}
+
+.signInWithWalletText {
+    position: relative;
+    display: flex;
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     color: #0A0045;
     z-index: 1007;
     letter-spacing: 1px;
 }
 
+.dontHaveMetamaskText,
 .signInWithProviderText {
-    position: absolute;
-    top: 310px; 
-    left: 875px; 
+    position: relative;
+    display: flex;
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     color: #0A0045;
     z-index: 1007; 
-}
-
-.dontHaveMetamaskText {
-    position: absolute;
-    top: 400px;
-    left: 890px;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 14px;
-    color: #0A0045;
-    z-index: 1007;
-    
 }
 
 .createOneLink {
@@ -179,192 +165,223 @@ html.index {
     z-index: 10001;
     display: none;
 }
-  @media (max-width: 768px) {
-    .connectMetamaskContainer {
-      top: 30%; /* Adjust as needed */
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .connectMetamaskContainer {
-      top: 40%; /* Adjust as needed */
-    }
-  }
-  
-  @media (max-width: 400px) {
-    .connectMetamaskContainer {
-      top: 50%; /* Adjust as needed */
-    }
-  }
-@media(max-width: 1200px){
-    .header{
-        padding: 1% 2%;
+@media (max-width: 475px) {
+    .cryptoWallet {
+        width: 100%;
+        height: auto;
+        margin-top: 100%;
+        margin-left: 0;
     }
 
-    .navbar a{
-        padding: 10px 15px;
-        margin: 0px 10px;
-    }
-}
-
-@media(max-width: 768px) {
-    .header {
-        padding: 1% 2%; 
-    }
-
-    .navbar a {
-        font-size: 1rem; 
-        margin: 0px 10px;
-    }
-
-    .button {
-        padding: 8px 16px; 
-        font-size: 0.8rem; 
-    }
-
-    .navbar{
-        position: absolute;
-        top: 100%;
-        right: -100%;
-        width: 270px;
-        height: 40vh;
-        background-color: var(--cyan);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        border-radius: 10px;
-        transition: all .50s ease;
-    }
-    .navbar a{
-        display: block;
-        margin: 12px 0;
-        padding: 0px 25px;
-        transition: all .50s ease;
-        color: #EBEBEB;
-    }
-
-    .navbar a:hover{
-        color: var(--black-color);
-        transform: translateY(5px);
-    }
-    .navbar a.active{
-        color: var(--black-color);
-    }
-    
-    .navbar.open{
-        right: 2%;
-    }
-}
-
-@media(max-width: 576px) {
-    .header {
-        padding: 1% 2%; 
-    }
-
-    .button {
-        padding: 6px 12px; 
-        font-size: 0.7rem; 
-    }
-}
-
-@media(max-width: 400px){
-    .header{
-        padding: 1% 1%;
-    }
-
-    .navbar a{
-        padding: 8px 12px;
-        margin: 0px 5px;
-    }
-    .button {
-        padding: 6px 10px;
-    }
-}
-
-@media(max-width: 320px){
-    .header{
-        padding: 1% 0.5%;
-    }
-
-    .navbar a{
-        padding: 6px 10px;
-        margin: 0px 3px;
-        font-size: 0.8rem;
-    }
-    .button {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-    }
-}
-@media (max-width: 1200px) {
-    .signInWithWalletText,
-    .signInWithProviderText,
-    .dontHaveMetamaskText {
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 992px) {
     .signInWithWalletText {
-        font-size: 18px;
+        font-size: 20px;
+        margin-bottom: 10%;
     }
-    
+
     .signInWithProviderText {
-        font-size: 15px;
-    }
-    
-    .dontHaveMetamaskText {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 768px) {
-    .signInWithWalletText {
-        top: 25%;
         font-size: 16px;
-    }
-
-    .signInWithProviderText {
-        top: 30%;
-        font-size: 14px;
+        margin-bottom: 10px;
     }
 
     .dontHaveMetamaskText {
-        top: 35%;
-        font-size: 12px;
+        font-size: 16px;
+        margin-top: 10%;
+    }
+
+    .connectWalletContainer {
+        max-width: 50%;
+    }
+
+    .connectMetamaskButton {
+        padding: 2% 15% 2% 5%;
+        font-size: 0.9rem;
+        margin-left: -15%;
+    }
+
+    .containerText {
+        padding: 10px;
     }
 }
 
-@media (max-width: 576px) {
+@media (min-width: 476px) and (max-width: 640px) {
+    .cryptoWallet {
+        /* Adjustments */
+        max-width: 60%;
+        margin-top: 90%;
+    }
+
     .signInWithWalletText {
-        font-size: 14px;
+        /* Adjustments */
+        font-size: 22px;
+        margin-bottom: 8%;
     }
 
     .signInWithProviderText {
-        font-size: 12px;
+        /* Adjustments */
+        font-size: 18px;
+        margin-bottom: 8px;
     }
 
     .dontHaveMetamaskText {
-        font-size: 10px;
+        /* Adjustments */
+        font-size: 18px;
+        margin-top: 8%;
+    }
+
+    .connectWalletContainer {
+        /* Adjustments */
+        max-width: 60%;
+        margin: 10% auto;
+        padding: 4%;
+    }
+
+    .connectMetamaskButton {
+        /* Adjustments */
+        padding: 2% 15% 2% 5%;
+        font-size: 1rem;
+        margin-left: -15%;
+    }
+
+    .containerText {
+        /* Adjustments */
+        padding: 15px;
     }
 }
 
-@media (max-width: 375px) { /* iPhone SE width */
+
+/* Adjust styles for smaller screens */
+@media (max-width: 768px) {
+
+    .vector1577 {
+        display: none;
+    }
+
+    .cryptoWallet {
+        width: 100%; /* Adjust the width for smaller screens */
+        height: auto; /* Maintain aspect ratio */
+        margin-top: 80%; /* Adjust margin for positioning */
+        margin-left: 0; /* Reset margin left */
+    }
+
     .signInWithWalletText {
-        top: 20%;
-        font-size: 12px;
+        top: auto; /* Remove top positioning */
+        font-size: 20px;
+        margin-bottom: 10%; /* Add margin for spacing */
     }
 
     .signInWithProviderText {
-        top: 25%;
-        font-size: 10px;
+        top: auto; /* Remove top positioning */
+        font-size: 16px;
+        margin-bottom: 10px; /* Add margin for spacing */
     }
 
     .dontHaveMetamaskText {
-        top: 30%;
-        font-size: 8px;
+        top: auto; /* Remove top positioning */
+        font-size: 16px; 
+    }
+
+    .connectWalletContainer {
+        max-width: 40%;
+        padding: 5%;
+      }
+    
+    .connectMetamaskButton {
+        padding: 2% 20% 2% 5%;
+        font-size: 1rem;
+        margin-left: -10%;
+    }
+
+    .containerText {
+        height: 100vh; /* Set container height to full viewport height */
+        margin: 0 auto; /* Center horizontally */
+        max-width: 80%; /* Limit width for better readability */
+        padding: 20px; /* Add padding for spacing */
+        margin-top: -300%;
+    }
+
+    .container {
+        overflow-x: hidden;
+        background: linear-gradient(to bottom right, #effafe, #bae8fa); /* Adjust gradient direction */
+        height: 100vh; /* Set container height to full viewport height */
+        margin: 0 auto; /* Center horizontally */
     }
 }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cryptoWallet {
+        max-width: 80%;
+        margin-top: 60%;
+    }
+
+    .signInWithWalletText {
+        font-size: 24px;
+        margin-bottom: 6%;
+    }
+
+    .signInWithProviderText {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .dontHaveMetamaskText {
+        font-size: 20px;
+        margin-top: 6%;
+    }
+
+    .connectWalletContainer {
+        max-width: 30%;
+        padding: 3%;
+    }
+
+    .connectMetamaskButton {
+        padding: 1.5% 18% 1.5% 4%;
+        font-size: 1.1rem;
+        margin-left: -8%;
+    }
+
+    .containerText {
+        padding: 25px;
+        margin-top: -200%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .cryptoWallet {
+        max-width: 70%;
+        margin-top: 50%;
+    }
+
+    .signInWithWalletText {
+        font-size: 28px;
+        margin-bottom: 4%;
+    }
+
+    .signInWithProviderText {
+        font-size: 22px;
+        margin-bottom: 4px;
+    }
+
+    .dontHaveMetamaskText {
+        font-size: 22px;
+        margin-top: 4%;
+    }
+
+    .connectWalletContainer {
+        max-width: 25%;
+        padding: 2%;
+    }
+
+    .connectMetamaskButton {
+        padding: 1% 16% 1% 3%;
+        font-size: 1.2rem;
+        margin-left: -6%;
+    }
+
+    .containerText {
+        padding: 30px;
+        margin-top: -150%;
+    }
+}
+
+
+
