@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 
 const AddPatient = () => {
     const [formData, setFormData] = useState({ 
+        patientAddress: '',
         firstName: '', 
         middleName: '', 
         lastName: '',
@@ -57,6 +58,7 @@ const AddPatient = () => {
         
         try {
             const receipt = await mvContract.methods.registerPatient(
+                formData.patientAddress,
                 name,
                 formData.age,
                 formData.gender,
@@ -87,6 +89,13 @@ const AddPatient = () => {
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
+                        </div>
+                    </div>
+
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
                             <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} />
