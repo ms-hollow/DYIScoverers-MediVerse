@@ -167,7 +167,7 @@ const AccountAccessHospital = () => {
                     }
         
                     const isAuthorized = await isHospitalAuthorized(patientAddress, hospitalAddress);
-                    console.log("Is hospital authorized?", isAuthorized);
+                    //console.log("Is hospital authorized?", isAuthorized);
         
                     if (!isAuthorized) {
                         const patientInfo = await mvContract.methods.getPatientInfo(item.patientAddr).call();
@@ -206,7 +206,7 @@ const AccountAccessHospital = () => {
                 const modifiedMedicalHistory = await Promise.all(modifiedMedicalHistoryPromises);
                 const unauthorizedMedicalHistory = modifiedMedicalHistory.filter(record => record && record.unauthorized);
                 setUnauthorizedList(unauthorizedMedicalHistory.filter(record => record !== null));
-                console.log("Unauthorized Medical History:", unauthorizedMedicalHistory);
+                //console.log("Unauthorized Medical History:", unauthorizedMedicalHistory);
                 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -221,10 +221,11 @@ const AccountAccessHospital = () => {
             const hasPending = pendingRequests.includes(hospitalAddress);
     
             if (hasPending || sentRequestPatients.includes(patientAddr)) {
-                console.log('Hospital already has a pending request for this patient.');
+                //console.log('Hospital already has a pending request for this patient.');
+                toast.error('Hospital has a pending patient request.');
             } else {
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
-                console.log('Access requested to:', patientAddr);
+                //console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
                 toast.success("Request Sent!");
                 setRequestPermission(true);
@@ -232,13 +233,14 @@ const AccountAccessHospital = () => {
             }
         } catch (error) {
             console.error('Error requesting access:', error);
-            console.log('Error requesting access');
+            //console.log('Error requesting access');
         }
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
+        
         router.push({
-            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, creationDate }
         });
     }
@@ -254,8 +256,8 @@ const AccountAccessHospital = () => {
     };
 
     return ( 
-        <Layout pageName="Account Access">
         <>
+        <Layout pageName="Account Access">
             <div className={styles.container}>
                 <div className={styles.pageNavigator}>
                     <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Account Access</button>
@@ -297,9 +299,9 @@ const AccountAccessHospital = () => {
                     </div>
                 )}
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

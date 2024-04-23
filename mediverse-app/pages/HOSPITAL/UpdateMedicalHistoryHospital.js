@@ -7,19 +7,13 @@ import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
 
-/**
- * ! CHANGES
- * * Added loading animation kapag gagawa ng transaction. Sa button lang din nakalagay, if possible palagyan ng test na "Please wait it may take a while eme"
- * ? After niya mag-edit, babalik ulit sa may MedicalHistory2Hospital
- */
-
 const UpdateMedicalHistoryHospital = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
-    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, creationDate } = router.query;
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -105,7 +99,7 @@ const UpdateMedicalHistoryHospital = () => {
                 setcurrentMedicalHistory(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
-                console.log(patientInfo);
+                //console.log(patientInfo);
                 const patientNameHolder = patientInfo[0].split('+');
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
@@ -116,7 +110,7 @@ const UpdateMedicalHistoryHospital = () => {
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                console.log(getPatientMedicalHistory);
+                //console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -201,7 +195,7 @@ const UpdateMedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
                 //! Important para sa pagpopulate ng table. 
@@ -354,7 +348,7 @@ const UpdateMedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                console.log("Set Med His: ", medicalHistory)
+                //console.log("Set Med His: ", medicalHistory)
 
                 setFormData({
                     physician: medicalHistory.physicianName || '',
@@ -367,7 +361,7 @@ const UpdateMedicalHistoryHospital = () => {
                     medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
                     admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
                 });
-                console.log(medicalHistory)
+                //console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -491,8 +485,8 @@ const UpdateMedicalHistoryHospital = () => {
 
     const handleSubmit = async (e) => {
 
-        console.log('Form submitted:', formData);
-        console.log('current', currentMedicalHistory);
+        //console.log('Form submitted:', formData);
+        //console.log('current', currentMedicalHistory);
     
         let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
     
@@ -570,7 +564,7 @@ const UpdateMedicalHistoryHospital = () => {
             setIsLoading(true);
             try {
                 const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                console.log("Account:", accounts[0]);
+                //console.log("Account:", accounts[0]);
     
                 const receipt = await mvContract.methods.editMedicalHistory(
                     newPatientAddr,
@@ -583,7 +577,7 @@ const UpdateMedicalHistoryHospital = () => {
                     updatedAdmission
                 ).send({ from: accounts[0] });
                 
-                console.log("Transaction Hash:", receipt.transactionHash);
+                //console.log("Transaction Hash:", receipt.transactionHash);
                 setIsLoading(false);
                 //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
@@ -597,7 +591,6 @@ const UpdateMedicalHistoryHospital = () => {
 
     const pushRoute = async (patientAddr, creationDate) => {
         await handleSubmit();
-
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, creationDate }
@@ -608,9 +601,9 @@ const UpdateMedicalHistoryHospital = () => {
         window.history.back(); 
     };
 
-    return (  
+    return (
+        <> 
         <Layout pageName = "Update Medical History">
-        <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
 
@@ -1037,9 +1030,9 @@ const UpdateMedicalHistoryHospital = () => {
     
                 </form>
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
 

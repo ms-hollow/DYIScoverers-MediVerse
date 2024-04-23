@@ -45,7 +45,7 @@ const AccountProfileHospital = () => {
                 // Call the getPatientInfo function on the smart contract
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); 
                 setHospitalAddress(accounts[0]);
-                console.log(hospitalInfo)
+                //console.log(hospitalInfo)
                 
 
                 // Set form data with patient info
@@ -78,7 +78,7 @@ const AccountProfileHospital = () => {
                 formData.contactNumber,
                 formData.hospitalAddress
             ).send({ from: hospitalAddress });
-            console.log('Hospital details updated successfully');
+            //console.log('Hospital details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {
@@ -92,12 +92,8 @@ const AccountProfileHospital = () => {
     };
 
     return (
-        <Layout pageName = "Account Profile">
         <>
-            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-            </div>
-
+        <Layout pageName = "Account Profile">  
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Hospital Details</div>
                 <form className={styles.registrationForm} onSubmit={handleEdit}>
@@ -126,9 +122,9 @@ const AccountProfileHospital = () => {
                 </form>
             </div>
 
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
         
     );
 };

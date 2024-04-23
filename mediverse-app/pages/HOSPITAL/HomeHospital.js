@@ -2,30 +2,33 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from '../../styles/homeHospital.module.css'
 import Layout from '../../components/HomeSidebarHeaderHospital'
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
+import web3 from "../../blockchain/web3";
+import mvContract from "../../blockchain/mediverse"; // ABI
 
-export async function getStaticProps() {
-    const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
-    const jsonData1 = fs.readFileSync(filePath1, 'utf8');
-    const data1 = JSON.parse(jsonData1);
 
-    const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
-    const jsonData2 = fs.readFileSync(filePath2, 'utf8');
-    const data2 = JSON.parse(jsonData2);
+// export async function getStaticProps() {
+//     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
+//     const jsonData1 = fs.readFileSync(filePath1, 'utf8');
+//     const data1 = JSON.parse(jsonData1);
 
-    return {
-        props: {
-            data1, data2
-        }
-    };
-}
+//     const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
+//     const jsonData2 = fs.readFileSync(filePath2, 'utf8');
+//     const data2 = JSON.parse(jsonData2);
 
-const HospitalHome = ({data1, data2}) => {
+//     return {
+//         props: {
+//             data1, data2
+//         }
+//     };
+// }
+
+const HospitalHome = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
@@ -141,13 +144,12 @@ const HospitalHome = ({data1, data2}) => {
 
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
 
-                console.log(filteredMedicalHistory);
+                //console.log(filteredMedicalHistory);
 
                 const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
-                console.log(patientAddrAndCreationDate);
+                //console.log(patientAddrAndCreationDate);
 
-
-                console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate));
+                //console.log("Latest three dates:", getLatestCreationDate(patientAddrAndCreationDate));
 
                 let listAddress = getLatestListAddress(patientAddrAndCreationDate);
                 let listDiagnosis = getLatestListDiagnosis(patientAddrAndCreationDate);
@@ -159,7 +161,7 @@ const HospitalHome = ({data1, data2}) => {
                 let p, temp =[]; 
                 for (let i = 0; i < listAddress.length; i++) {
                     p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
-                    console.log(p);
+                    //console.log(p);
                     
                     const obj = {
                         patientName: p[0],
@@ -172,10 +174,8 @@ const HospitalHome = ({data1, data2}) => {
                     temp.push(obj);
                 }
                 setMedicalHistory(temp);
-                console.log(temp);
+                //console.log(temp);
                 
-                
-
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -255,8 +255,8 @@ const HospitalHome = ({data1, data2}) => {
                 // Update state with authorized and unauthorized records
                 setAuthorizedList(authorizedRecords);
                 setUnauthorizedList(unauthorizedRecords);
-                console.log(authorizedRecords);
-                console.log(unauthorizedRecords);
+                //console.log(authorizedRecords);
+                //console.log(unauthorizedRecords);
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -267,8 +267,8 @@ const HospitalHome = ({data1, data2}) => {
     }, [hospitalAddress]);
 
     return (  
-        <Layout pageName="Home">
         <>
+        <Layout pageName="Home">
             <div className={styles.mainContainer}>
                 <div className={styles.banner}>
                     <img src='/imageHome.svg' alt='Image Banner'/>
@@ -305,13 +305,19 @@ const HospitalHome = ({data1, data2}) => {
 
                         <div className={styles.dataContainer}>
                             {medicalHistory.map(data => (
-                                <Link href="/" key={data.id} className={styles.data}>
-                                    <p className={styles.nameFormat}>{data.patientName}</p>
+                                <div key={data.id} className={styles.data}> <p className={styles.nameFormat}>{data.patientName}</p>
                                     <p>{data.admissionDate}</p>
                                     <p>{data.dischargeDate}</p>
                                     <p>{data.gender}</p>
                                     <p>{data.diagnosis}</p>
-                                </Link>
+                                    </div>
+                            //     <Link href="/" key={data.id} className={styles.data}>
+                            //     <p className={styles.nameFormat}>{data.patientName}</p>
+                            //     <p>{data.admissionDate}</p>
+                            //     <p>{data.dischargeDate}</p>
+                            //     <p>{data.gender}</p>
+                            //     <p>{data.diagnosis}</p>
+                            // </Link>
                             ))}
                         </div>
                     </div>
@@ -366,9 +372,10 @@ const HospitalHome = ({data1, data2}) => {
                     </div>
                 </div>
             </div>
-            <ToastWrapper/>
-        </>
+            
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

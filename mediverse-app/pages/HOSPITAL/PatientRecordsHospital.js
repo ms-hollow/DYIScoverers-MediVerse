@@ -1,5 +1,4 @@
 import styles from '../../styles/medicalHistory.module.css';
-import styles1 from '/styles/homeSidebarHeader.module.css';
 import Layout from '../../components/PatientRecordsHeader.js'
 import path from 'path';
 import Link from 'next/link';
@@ -18,11 +17,12 @@ const MedicalHistoryPatient = () => {
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const { searchQuery } = router.query;
+    // console.log(searchQuery);
 
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); 
         } catch (error) {
             toast.error('Error fetching hospital address.');
@@ -52,7 +52,7 @@ const MedicalHistoryPatient = () => {
     
                 //* Retrieve the hospital currently logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                hospitalName = hospitalInfo[0]; //* Get the hospital name
+                //hospitalName = hospitalInfo[0]; //* Get the hospital name
     
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
@@ -135,16 +135,14 @@ const MedicalHistoryPatient = () => {
                     setMedicalHistory(modifiedMedicalHistory);
                 } else {
                     const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
-                
                     if (results.length > 0) {
-                        console.log("Found:", results);
+                        // console.log("Found:", results);
                         setMedicalHistory(results);
                     } else {
-                        console.log("No matching entry found.");
+                        //console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
                     }
                 }
-
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -160,7 +158,7 @@ const MedicalHistoryPatient = () => {
         }
         
         const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
-        console.log("Is hospital authorized?", isAuthorized);
+        //console.log("Is hospital authorized?", isAuthorized);
       
        if (isAuthorized){
             router.push({
@@ -169,23 +167,18 @@ const MedicalHistoryPatient = () => {
             });
        } else {
             toast.error("You don't have permission do view this record.");
-            console.log("You don't have permission do view this record.");
+            //console.log("You don't have permission do view this record.");
        }
     };
 
     const handleAdd = () => {
-        router.push('/HOSPITAL/AddPatient/');
-    };
-
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            
-        }
+        router.push('/HOSPITAL/AddMedicalHistory/');
     };
     
-    return (  
+    return (
+        <>  
         <Layout pageName = "Patient Records">
-            <>
+            
                 <div className={styles.container}>
                     <div className={styles.tableHeading}>
                         <p>Patient Name</p>
@@ -195,26 +188,26 @@ const MedicalHistoryPatient = () => {
                         <p>Length of Stay</p>
                     </div>
 
-                    <div className={styles.dataContainer}>
-                        {medicalHistory.map((record, index) => (
-                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
-                                <p className={styles.diaAttrb}>{record.patientName}</p>
-                                <p>{record.hospitalName}</p>
-                                <p>{record.physician}</p>
-                                <p>{record.admissionDate}</p>
-                                <p>{record.dischargeDate}</p>
-                                <p>{record.stayLength}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <button className={styles.submitButton} onClick={handleAdd}>
-                        <Link href="/HOSPITAL/AddPatient">+</Link>
-                    </button>
+                <div className={styles.dataContainer}>
+                    {medicalHistory.map((record, index) => (
+                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                            <p className={styles.diaAttrb}>{record.patientName}</p>
+                            <p>{record.hospitalName}</p>
+                            <p>{record.physician}</p>
+                            <p>{record.admissionDate}</p>
+                            <p>{record.dischargeDate}</p>
+                            <p>{record.stayLength}</p>
+                        </div>
+                    ))}
+                </div>
+                <button className={styles.submitButton} onClick={handleAdd}>
+                    <Link href="/HOSPITAL/AddMedicalHistory">+</Link>
+                </button>
 
                 </div>
-                <ToastWrapper/>
-            </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

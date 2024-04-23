@@ -3,12 +3,19 @@ import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-//import web3 from "../../blockchain/web3";
-//import mvContract from '../../blockchain/mediverse';
-
+import web3 from "../../blockchain/web3";
+import mvContract from '../../blockchain/mediverse';
+import ToastWrapper from "@/components/ToastWrapper";
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const AddPatient = () => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
     const [formData, setFormData] = useState({ 
+        patientAddress: '',
         firstName: '', 
         middleName: '', 
         lastName: '',
@@ -46,17 +53,25 @@ const AddPatient = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
+        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+        const isEmpty = requiredFields.some(field => !formData[field]);
+
+        if (isEmpty) {
+            toast.error('Please fill in all required fields.');
+            return; // Exit early if any required field is empty
+        }
         const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-        console.log("Account:", accounts[0]);
-        console.log('Form submitted:', formData);
+        // console.log("Account:", accounts[0]);
+        // console.log('Form submitted:', formData);
        
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
         const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        console.log("name: ", name)
-        console.log("address:", address)
-        
+        //console.log("name: ", name)
+        //console.log("address:", address)
+        setIsLoading(true);
         try {
-            const receipt = await mvContract.methods.registerPatient(
+            const receipt = await mvContract.methods.addPatient(
+                formData.patientAddress,
                 name,
                 formData.age,
                 formData.gender,
@@ -66,10 +81,9 @@ const AddPatient = () => {
                 formData.weight,
                 address
             ).send({ from: accounts[0] });
-
-            console.log("Transaction Hash:", receipt.transactionHash);
-            // router.push('/PATIENT/Register3Patient/');
-            // Transaction successful, you can do further processing here if needed
+            toast.success('Successfully Registered!');
+            setIsLoading(false);
+            router.push('/HOSPITAL/HomeHospital');
         } catch (error) {
             console.error('Error sending transaction:', error.message);
         }
@@ -81,12 +95,19 @@ const AddPatient = () => {
     };
     
     return (  
-        <Layout pageName = "Add Patient">
         <>
+        <Layout pageName = "Add Patient">
         
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
+
+                    <div className={styles.formRow}>
+                        <div className={styles.formField}>
+                            <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
+                        </div>
+                    </div>
+
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
                             <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} />
@@ -146,13 +167,18 @@ const AddPatient = () => {
                         </div>
                     </div>
 
-                    <button className={styles.submitButton}>
+                    {/* <button className={styles.submitButton}>
                         <Link href="/HOSPITAL/AddMedicalHistory/">Add Patient</Link>
+                    </button> */}
+
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                        {isLoading ? 'Adding...' : 'Add Patient'}
                     </button>
                 </form>
             </div>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

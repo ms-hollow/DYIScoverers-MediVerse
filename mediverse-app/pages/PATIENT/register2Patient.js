@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 
 const Register2Patient = () => {
     const router = useRouter();
-    
+    const [isLoading, setIsLoading] = useState(false);
+
     const [formData, setFormData] = useState({ 
         /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
         firstName: '', 
@@ -61,16 +62,16 @@ const Register2Patient = () => {
             return; // Exit early if any required field is empty
         }
         
-        console.log('Form submitted:', formData);
+        //console.log('Form submitted:', formData);
         // Concatenate the address fields
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
         const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        console.log("name: ", name)
-        console.log("address:", address)
-
+        // console.log("name: ", name)
+        // console.log("address:", address)
+        setIsLoading(true);
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            // console.log("Account:", accounts[0]);
             const receipt = await mvContract.methods.registerPatient(
                 name,
                 formData.age,
@@ -82,7 +83,8 @@ const Register2Patient = () => {
                 address
             ).send({ from: accounts[0] });
 
-            console.log("Transaction Hash:", receipt.transactionHash);
+            // console.log("Transaction Hash:", receipt.transactionHash);
+            setIsLoading(false);
             router.push('/PATIENT/Register3Patient/');
             // Transaction successful, you can do further processing here if needed
         } catch (error) {
@@ -171,7 +173,10 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                    {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                        {isLoading ? 'PROCEEDING...' : 'PROCEED'}
+                    </button>
                 </form>
             </div>
             <ToastWrapper/>

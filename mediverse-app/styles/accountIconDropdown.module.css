@@ -117,3 +117,40 @@
     background-color: #f1f1f1;
     border-radius: 5px;
 }
+
+@media screen and (max-width: 1660px){ 
+    .accountIcon {
+        margin-right: 20px;
+    }
+}
+
+
+@media screen and (max-width: 930px){ 
+    .accountIcon {
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 875px) {
+    .accountIcon {
+        margin-right: 40px;
+    }
+}
+
+@media screen and (max-width: 757px) {
+    .accountIcon {
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .accountIcon {
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .accountIcon {
+        margin-right: 50px;
+    }
+}

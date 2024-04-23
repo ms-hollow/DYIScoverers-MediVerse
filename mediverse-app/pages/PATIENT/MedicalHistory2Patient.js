@@ -20,6 +20,7 @@ const MedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
+        patientGender: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -65,7 +66,7 @@ const MedicalHistoryHospital = () => {
     const setAddress = async () => {
         try {
             const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            console.log("Account:", accounts[0]);
+            //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]);
         } catch (error) {
             toast.error('Error fetching hospital address.');
@@ -75,7 +76,7 @@ const MedicalHistoryHospital = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
-                let patientName, patientAge, patientDob;
+                let patientName, patientAge, patientDob, patientGender;
                 
                 if (!patientAddress) {
                     await setAddress();
@@ -83,7 +84,7 @@ const MedicalHistoryHospital = () => {
                 }
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientRecords);
+                //console.log(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -91,13 +92,14 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                
+                patientGender = patientInfo[2];
+
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                console.log(getPatientMedicalHistory);
+                //console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -118,7 +120,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
                 //* '+' means paghihiwalayin ang concatenated data sa isang array
@@ -182,7 +184,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
                 //! Important para sa pagpopulate ng table. 
@@ -292,6 +294,7 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
+                    patientGender,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
@@ -334,7 +337,7 @@ const MedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory)
+                //console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -361,8 +364,8 @@ const MedicalHistoryHospital = () => {
     // }
 
     return ( 
-        <Layout pageName="Medical History">
         <>
+        <Layout pageName="Medical History">
             {medicalHistory && (
             <div className={styles.container}>      
                 <div className={styles.reserveSpace}></div>
@@ -378,6 +381,10 @@ const MedicalHistoryHospital = () => {
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Birthday</p>   
                         <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
+                    </div>
+                    <div className={styles.headingAttrb_formatting}>
+                        <p className={styles.headingAttrb}>Gender</p>   
+                        <p className={styles.dataFormat}>{medicalHistory.patientGender}</p>
                     </div>
                 </div>
 
@@ -526,9 +533,9 @@ const MedicalHistoryHospital = () => {
                 </div>      
             </div>
             )}
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
      );
 }
  

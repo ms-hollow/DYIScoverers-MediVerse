@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
-import AccountDropdown from '/components/accountIconDropdown.js';
+import AccountDropdown from '/components/accountIconDropdownHospital.js';
 
 const HomeSidebarHeader = ({children, pageName}) => {
 
@@ -72,14 +72,23 @@ const HomeSidebarHeader = ({children, pageName}) => {
                     <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
                         {pageName}
                     </div>
-                    
-                    <div className={styles.headerButtons}>
-                        <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
+
+                    {/* <div className={styles.headerButtons}>
                         <div className={`${styles.searchBar}`}> 
                             <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
                             <input type="text" placeholder="Search" className={styles.searchInput} />
                         </div>
-                        <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a>
+                        <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification"/> </a>
+                        <AccountDropdown />
+                    </div> */}
+                    
+                    <div className={styles.headerButtons}>
+                        {/* <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
+                        <div className={`${styles.searchBar}`}> 
+                            <a href="/destination-url"> <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} /> </a>
+                            <input type="text" placeholder="Search" className={styles.searchInput} />
+                        </div>
+                        <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
                         <AccountDropdown/>
                     </div>   
                 </header>

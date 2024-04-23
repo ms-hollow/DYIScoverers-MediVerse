@@ -26,7 +26,7 @@
     font-family: Roboto Condensed;
     font-size: 17px;
     font-weight: normal;
-    color: var(--blue);
+    color: var(--navy-blue);
     line-height: 1.8;
 }
 
@@ -34,7 +34,7 @@
     font-family: Raleway;
     font-size: 21px;
     font-weight: bold;
-    color: var(--blue);
+    color: var(--navy-blue);
 }
 
 .columnSection div {

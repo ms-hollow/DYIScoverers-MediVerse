@@ -29,6 +29,17 @@ const MedicalHistoryPatient = () => {
         }
     };
 
+    function searchInObject(obj, searchQuery) {
+        // Check if searchQuery is null, undefined, or an empty string
+       if (searchQuery === null || searchQuery === undefined || searchQuery.trim().length === 0) {
+           return; // Exit the function
+       }
+       
+       return Object.values(obj).some(value =>
+           typeof value === "string" && value.toLowerCase().includes(searchQuery.toLowerCase())
+       );
+   };
+
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
@@ -42,7 +53,7 @@ const MedicalHistoryPatient = () => {
                 //* Retrieve muna ang hospital na currently naka logged in
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
                 //console.log(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
+                //hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 const medicalHistoryString = await mvContract.methods.getMedicalHistory(patientAddr).call();
                 //console.log("Get all medical record of specific patient", medicalHistoryString);
@@ -69,11 +80,11 @@ const MedicalHistoryPatient = () => {
                 
                 const modifiedMedicalHistory = parsedMedicalHistory.map(item => {
                     const splitDiagnosis = item.diagnosis.split('+');
-                    console.log("Diagnosis:", splitDiagnosis[0]);
-                    console.log("Creation Date: ",item.creationDate);
+                    //console.log("Diagnosis:", splitDiagnosis[0]);
+                    //console.log("Creation Date: ",item.creationDate);
                     const splitAdmission = item.admission.split('+');
-                    console.log("Admission Date:", splitAdmission[2]);
-                    console.log("Discharge Date:", splitAdmission[3]);
+                    //console.log("Admission Date:", splitAdmission[2]);
+                    //console.log("Discharge Date:", splitAdmission[3]);
                     return {
                         hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],
@@ -85,8 +96,25 @@ const MedicalHistoryPatient = () => {
                     };
                 });
                 
-                setMedicalHistory(modifiedMedicalHistory);
+                //setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
+                let searchQueryLower;
+                if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
+                    searchQueryLower = searchQuery.toLowerCase();
+                }
+                
+                if (!searchQueryLower) {
+                    setMedicalHistory(modifiedMedicalHistory);
+                } else {
+                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    if (results.length > 0) {
+                        //("Found:", results);
+                        setMedicalHistory(results);
+                    } else {
+                        //console.log("No matching entry found.");
+                        toast.warning("No matching entry found.");
+                    }
+                }
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
@@ -104,6 +132,7 @@ const MedicalHistoryPatient = () => {
     };
 
     return (
+        <>
         <Layout pageName="Medical History">
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
@@ -126,9 +155,10 @@ const MedicalHistoryPatient = () => {
                     ))}
                 </div>
             </div>
-            <ToastWrapper/>
 
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 };
  

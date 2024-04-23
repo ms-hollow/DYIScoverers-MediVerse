@@ -3,9 +3,9 @@ import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -17,28 +17,19 @@ const Register1Hospital = () => {
     const [hospitalList, setHospitalList] = useState([]);
     const [isPatient, setIsPatient] = useState(false);
     const [isHospital, setIsHospital] = useState(false);
+    
 
     const isAddressInList = (address, list) => {
         return list.some(item => item.toLowerCase() === address.toLowerCase());
     };
 
-    const connectMetaMask = async () => {
-        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-            try{
-                /* If metamask is installed */
-                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-                setWalletAddress(accounts[0]); 
-                console.log(accounts[0]);
-            } catch(err) {
-                console.error(err.message);
-            }
-        } else {
-            /* if metamask is not installed */
-            console.log("Please install MetaMask");
-        }
-    };
-
     const handleSubmit = async (e) => {
+
+        if (!walletAddress) {
+            toast.error("MetaMask is not connected yet. Please connect MetaMask.");
+            return;
+        }
+
         e.preventDefault(); // Prevent default form submission
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         if (!agreeCheckbox.checked) {
@@ -54,14 +45,14 @@ const Register1Hospital = () => {
             const isPatient = isAddressInList(walletAddress, patientList);
             if (isPatient) {
                 setIsPatient(true);
-                alert('This account is already registered as a patient.');
+                toast.error('This account is already registered as a patient.');
                 return;
             }
         
             const isHospital = isAddressInList(walletAddress, hospitalList);
             if (isHospital) {
                 setIsHospital(true);
-                alert('This account is already registered as a hospital.');
+                toast.error('This account is already registered as a hospital.');
                 return;
             }
         
@@ -69,6 +60,24 @@ const Register1Hospital = () => {
                 router.push('/HOSPITAL/Register2Hospital/');
                 return;
             }
+        }
+    };
+
+    const connectMetaMask = async () => {
+        if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+            try{
+                /* If metamask is installed */
+                const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+                setWalletAddress(accounts[0]); 
+                toast.success("Connected with MetaMask");
+                //console.log(accounts[0]);
+            } catch(err) {
+                console.error(err.message);
+            }
+        } else {
+            /* if metamask is not installed */
+            // console.log("Please install MetaMask");
+            toast.error("Please install MetaMask");
         }
     };
 
@@ -111,7 +120,7 @@ const Register1Hospital = () => {
                 </p>
 
                 <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
-                
+
             </div>
             <ToastWrapper/>
         </>

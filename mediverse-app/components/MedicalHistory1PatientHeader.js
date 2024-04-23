@@ -5,6 +5,7 @@ import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdown.js';
 import { useRouter } from 'next/router';
 
+
 const MedicalHistory1PatientHeader = ({children, pageName}) => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -83,57 +84,64 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
         setSearchQuery('');
     };
     
+    const handleKeyPress = (event) => {
+        if (event.key === '13') {
+            handleSearch();
+        }
+    };
+
     return (
         <>
-            <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
-                <header id='toBlur' className={styles.header}>   
-                    <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
-                        {pageName}
-                    </div>
-
-                    <div className={styles.headerButtons}>
-                        <div className={`${styles.searchBar}`}> 
-                            <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange}/>
-                            <a href="#" onClick={handleSearch} className={styles.searchButton}>
-                                <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
-                            </a>
+           <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+                    <header id='toBlur' className={styles.header}>   
+                        <div className={`${styles.categoryName} ${isSidebarOpen ? styles.contentShifted : ''}`}>
+                            {pageName}
                         </div>
-                        {/* <a href="/HOSPITAL/NotificationHospital/"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
-                        <AccountDropdown />
-                    </div>   
-                </header>
-                
-                <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>
-                    <div className={styles.triangle}></div> {/* Add the triangle directly inside the .sidebarMenuBtn */}
-                    <img className={styles.hamburger} src='/hamburger.svg' alt='hamburger menu'/>
-                </div>
+                        
+                        <div className={styles.headerButtons}>
+                            <div onClick={toggleSearchClick}><img src='/Search Icon.svg' alt='search' className={styles.search}/></div>
+                            <div className={`${styles.searchBar}`}> 
+                                <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange} onKeyPress={handleKeyPress}/>
+                                <a onClick={handleSearch}>
+                                    <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
+                                </a>
+                            </div>
+                            {/* <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
+                            <AccountDropdown/>
+                        </div>   
+                    </header>
+
+                    <div className={`${styles.sidebarMenuBtn} ${isSidebarOpen ? styles.menuOpen : ''}`} onClick={toggleSidebar}>
+                        <div className={styles.triangle}></div> {/* Add the triangle directly inside the .sidebarMenuBtn */}
+                        <img className={styles.hamburger} src='/hamburger.svg' alt='hamburger menu'/>
+                    </div>
                     
-                <div className={styles.sidebar}>
-                    <div className={styles.top}>
-                        <div className={styles.sidebarLogo}>                     
-                            <Image src="/MediVerse Logo (with Text).svg" alt="Logo" width={217} height={58.06} className={styles.logo} />
+                    <div className={styles.sidebar}>
+                        <div className={styles.top}>
+                            <div className={styles.sidebarLogo}>                     
+                                <Image src="/MediVerse Logo (with Text).svg" alt="Logo" width={217} height={58.06} className={styles.logo} />
+                            </div>
+                        </div>
+
+                        <div className={styles.menuItems}>
+                            <ul>
+                                <li><a href="/PATIENT/HomePatient/">Home</a></li>
+                                <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
+                                <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
+                            </ul>
                         </div>
                     </div>
 
-                    <div className={styles.menuItems}>
-                        <ul>
-                            <li><a href="/PATIENT/HomePatient//">Home</a></li>
-                            <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
-                            <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
-                        </ul>
+                    <div id='toBlur1' className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
+                        <div id='content'>
+                            {children}
+                        </div>
                     </div>
-                </div>
 
-                <div id='toBlur1' className={`${styles.contentContainer} ${isSidebarOpen ? styles.contentAdjusted : ''}`}>
-                    <div id='content'>
-                        {children}
-                    </div>
-                </div>
-
-                <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
-                    <a href="/destination-url"> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
-                    <input type="text" placeholder="Search" className={styles.searchInput} />
-                </div>   
+                    <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
+                        <a onClick={handleSearch}> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                        <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange} onKeyPress={handleKeyPress}/>
+                    </div>   
             </div>   
         </>
     );

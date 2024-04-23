@@ -35,31 +35,27 @@ const Register2Hospital = () => {
                 // Call the getPatientInfo function on the smart contract
                 const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
                 
-                console.log(hospitalInfo)
+                //console.log(hospitalInfo)
                 
-
                 // Set form data with patient info
                 setFormData({
                     ...formData,
                     hospitalName: hospitalInfo[0], 
                     contactNumber: hospitalInfo[1], 
                     hospitalAddress: hospitalInfo[2]
-                });
-
-                
+                });  
             } catch (error) {
                 console.error('Error retrieving patient information:', error);
             }
         }
-
         fetchPatientInfo();
     }, []); // Empty dependency array to run only once when component mounts
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-        console.log('Form submitted:', formData);
+        //('Form submitted:', formData);
         toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
-        
+        router.push('/HOSPITAL/HomeHospital');
     };
 
     const goBack = () => {
@@ -100,7 +96,7 @@ const Register2Hospital = () => {
                     <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
 
                 </form>
-                <ToastWrapper/>
+
             </div>
             <ToastWrapper/>
         </>
