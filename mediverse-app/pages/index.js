@@ -24,16 +24,16 @@ const  LandingPage = () => {
                     <div className={styles.welcomeMessage}>
                         <p className={styles.slogan}>Your Health, Your Universe, Connected.</p>
                         <p className={styles.subSlogan}>Secure your medical history, simplify your healthcare – Sign Up for MediVerse now!</p>                        
-                        <div className={styles2.registerDropdown}>
+                        <div className={styles.registerDropdown}>
                             <div className={styles.getStarted} onClick={toggleMenu}> 
                                 Get Started
-                                {isOpen && (
-                                    <div className={styles2.registerDropdownContent}>
-                                        <Link href="/PATIENT/Register1Patient/">As Patient</Link>
-                                        <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
-                                    </div>
-                                )}
                             </div>
+                            {isOpen && (
+                                <div className={styles.registerDropdownContent}>
+                                    <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+                                    <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <img src='/landingPage banner pic.svg' alt='Landing Page Banner Illustration' className={styles.pageBanner}/>

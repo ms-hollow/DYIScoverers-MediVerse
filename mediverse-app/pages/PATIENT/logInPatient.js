@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <>
       <div className= {styles.background}><img src="/Vector 1577.svg"/></div>
-      <LogInPatientHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
+      <LogInPatientHeader/>
 
         <div className={styles.container}>
           <img src='/logIn banner picture.svg' alt='Login Page Banner Illustration' className={styles.pageBanner}/>

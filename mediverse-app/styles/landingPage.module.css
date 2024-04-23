@@ -281,6 +281,40 @@
   background-color: #22D3D8;
 }
 
+/**---------------------GetStartedDropdown--------------------------*/
+
+.registerDropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registerDropdownContent {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Raleway';
+  font-weight: 600;
+  font-size: 16px;
+  width: 207px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 5px;
+  padding: 9.5px 0px;;
+  transition: all 0.3s ease;
+  color: black; 
+  align-items: center;
+}
+
+.registerDropdown a {
+  display: flex;
+  align-items: center;
+}
+
+.registerDropdownContent a:hover {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1246px){
 
   .welcomeMessage {
@@ -440,6 +474,16 @@
     height: 10%;
     width: 400px;
   }
+
+  .registerDropdown{
+    align-items: center;
+  }
+
+  .registerDropdownContent{
+    font-size: 10px;
+    width: 90px;
+  }
+
 }
 
 @media screen and (max-width: 623px) {
@@ -535,6 +579,7 @@
   .emailInput {
     width: 350px;
   }
+
 }
 
 @media screen and (max-width: 484px) {
