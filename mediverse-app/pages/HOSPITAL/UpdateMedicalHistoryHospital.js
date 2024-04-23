@@ -601,9 +601,9 @@ const UpdateMedicalHistoryHospital = () => {
         window.history.back(); 
     };
 
-    return (  
+    return (
+        <> 
         <Layout pageName = "Update Medical History">
-        <>
         <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
 
@@ -1030,9 +1030,9 @@ const UpdateMedicalHistoryHospital = () => {
     
                 </form>
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
 

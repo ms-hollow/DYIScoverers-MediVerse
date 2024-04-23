@@ -124,6 +124,7 @@ const MedicalHistoryPatient = () => {
     };
 
     return (
+        <>
         <Layout pageName="Medical History">
             <div className={styles.container}>
                 <div className={styles.tableHeading}>
@@ -156,8 +157,9 @@ const MedicalHistoryPatient = () => {
                 </div>
             </div>
         
-        <ToastWrapper/>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

@@ -364,8 +364,8 @@ const MedicalHistoryHospital = () => {
     // }
 
     return ( 
-        <Layout pageName="Medical History">
         <>
+        <Layout pageName="Medical History">
             {medicalHistory && (
             <div className={styles.container}>      
                 <div className={styles.reserveSpace}></div>
@@ -533,9 +533,9 @@ const MedicalHistoryHospital = () => {
                 </div>      
             </div>
             )}
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
      );
 }
  

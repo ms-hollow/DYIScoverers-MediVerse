@@ -124,8 +124,9 @@ const HomePatient = () => {
     };
 
     return ( 
-        <Layout pageName="Home">
         <>
+        <Layout pageName="Home">
+        
             <div className={styles.container}>
 
             <div className={styles.notifContainer}>
@@ -185,9 +186,9 @@ const HomePatient = () => {
                 </div>
 
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
      );
 }
  

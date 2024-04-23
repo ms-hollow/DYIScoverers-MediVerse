@@ -267,8 +267,8 @@ const HospitalHome = () => {
     }, [hospitalAddress]);
 
     return (  
-        <Layout pageName="Home">
         <>
+        <Layout pageName="Home">
             <div className={styles.mainContainer}>
                 <div className={styles.banner}>
                     <img src='/imageHome.svg' alt='Image Banner'/>
@@ -372,9 +372,10 @@ const HospitalHome = () => {
                     </div>
                 </div>
             </div>
-            <ToastWrapper/>
-        </>
+            
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

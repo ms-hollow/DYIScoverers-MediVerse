@@ -154,9 +154,10 @@ const UpdatePatientHOspital = () => {
         return <div>Loading...</div>;
     }
     
-    return (  
+    return (
+        <>  
         <Layout pageName = "Update Patient Information">
-        <>
+        
         
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Patient Information</div>
@@ -225,9 +226,9 @@ const UpdatePatientHOspital = () => {
                     </button>
                 </form>
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

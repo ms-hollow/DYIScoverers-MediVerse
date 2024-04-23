@@ -92,8 +92,8 @@ const AccountProfileHospital = () => {
     };
 
     return (
-        <Layout pageName = "Account Profile">
-        <>  
+        <>
+        <Layout pageName = "Account Profile">  
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Hospital Details</div>
                 <form className={styles.registrationForm} onSubmit={handleEdit}>
@@ -122,9 +122,9 @@ const AccountProfileHospital = () => {
                 </form>
             </div>
 
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
         
     );
 };

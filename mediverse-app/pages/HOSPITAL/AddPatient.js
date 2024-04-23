@@ -95,8 +95,8 @@ const AddPatient = () => {
     };
     
     return (  
-        <Layout pageName = "Add Patient">
         <>
+        <Layout pageName = "Add Patient">
         
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Patient Information</div>
@@ -176,9 +176,9 @@ const AddPatient = () => {
                     </button>
                 </form>
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

@@ -209,10 +209,10 @@ const addMedicalHistory = () => {
         window.history.back(); 
     };
 
-    return (  
+    return ( 
+        <> 
         <Layout pageName = "Add Medical History">
-        <>
-        <div className={styles.formContainer}>
+            <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
                     <div className={styles.formTitle}>Patient Address</div>
                         <div className={styles.formRow}>
@@ -517,9 +517,9 @@ const addMedicalHistory = () => {
     
                 </form>
             </div>
-            <ToastWrapper/>
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
 

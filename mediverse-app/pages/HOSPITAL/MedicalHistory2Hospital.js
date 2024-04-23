@@ -380,8 +380,8 @@ const MedicalHistoryHospital = () => {
     };
 
     return ( 
-        <Layout id='layout' pageName="Medical History">
         <>
+        <Layout id='layout' pageName="Medical History">
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
                     <div className={styles.basicInfoContainer}>
@@ -542,10 +542,10 @@ const MedicalHistoryHospital = () => {
             <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
-            <ToastWrapper/>
-            
-        </>
+
         </Layout>
+        <ToastWrapper/>  
+        </>
      );
 }
  

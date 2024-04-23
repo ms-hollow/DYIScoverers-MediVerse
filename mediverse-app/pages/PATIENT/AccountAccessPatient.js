@@ -149,8 +149,9 @@ const AccountAccessPatient = () => {
     };
 
     return ( 
-        <Layout pageName="Account Access">
+
         <>
+        <Layout pageName="Account Access">
             <div className={styles.container}>
                 <div className={styles.pageNavigator}>
                     <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Authorized Hospitals</button>
@@ -196,10 +197,9 @@ const AccountAccessPatient = () => {
                 )}
                 
             </div>
-            <ToastWrapper/>
-            
-        </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  

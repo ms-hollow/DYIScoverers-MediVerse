@@ -175,9 +175,10 @@ const MedicalHistoryPatient = () => {
         router.push('/HOSPITAL/AddMedicalHistory/');
     };
     
-    return (  
+    return (
+        <>  
         <Layout pageName = "Patient Records">
-            <>
+            
                 <div className={styles.container}>
                     <div className={styles.tableHeading}>
                         <p>Patient Name</p>
@@ -204,9 +205,9 @@ const MedicalHistoryPatient = () => {
                 </button>
 
                 </div>
-                <ToastWrapper/>
-            </>
         </Layout>
+        <ToastWrapper/>
+        </>
     );
 }
  
