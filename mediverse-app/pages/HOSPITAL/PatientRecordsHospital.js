@@ -177,15 +177,15 @@ const MedicalHistoryPatient = () => {
     
     return (  
         <Layout pageName = "Patient Records">
-        <>
-            <div className={styles.container}>
-                <div className={styles.tableHeading}>
-                    <p>Patient Name</p>
-                    <p>Hospital</p>
-                    <p>Admission Date</p>
-                    <p>Discharge Date</p>
-                    <p>Length of Stay</p>
-                </div>
+            <>
+                <div className={styles.container}>
+                    <div className={styles.tableHeading}>
+                        <p>Patient Name</p>
+                        <p>Hospital</p>
+                        <p>Admission Date</p>
+                        <p>Discharge Date</p>
+                        <p>Length of Stay</p>
+                    </div>
 
                 <div className={styles.dataContainer}>
                     {medicalHistory.map((record, index) => (
@@ -203,9 +203,9 @@ const MedicalHistoryPatient = () => {
                     <Link href="/HOSPITAL/AddMedicalHistory">+</Link>
                 </button>
 
-            </div>
-            <ToastWrapper/>
-        </>
+                </div>
+                <ToastWrapper/>
+            </>
         </Layout>
     );
 }

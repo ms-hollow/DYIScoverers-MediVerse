@@ -71,16 +71,17 @@
 }
 
 .editButton {
-    display: block; 
-    margin: 0 auto; /* Center the button horizontally */
-    padding: 10px 20px;
-    margin-top: 30px;
-    margin-bottom: 3%;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--blue);
-    color: white;
-    cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Center the button horizontally */
+  padding: 10px 20px;
+  margin-top: 30px;
+  margin-bottom: 3%;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+  width: 30%;
 }
 
 .editButton:hover {
@@ -111,46 +112,308 @@
   
   /* ------------------RESPONSIVENESS------------------*/
 
-@media (max-width: 768px) {
-  .container {
-    padding: 7vw; 
-    position: relative; /* Set position to relative */
-    margin-top: 50%
+  @media (max-width: 475px) {
+    .formContainer {
+      max-width: 95%;
+      margin: 5% auto;
+      padding: 3%;
+      padding-left: 5%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 16px;
+      margin-top: 20%;
+    }
+  
+    .formField {
+      flex: 1 1 100%;
+      margin-bottom: 15px;
+    }
+  
+    .formLabel {
+      font-size: 12px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+    }
+  
+    .editButton {
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 5%;
+    }
+  
+    .backButton {
+      display: none;
+    }
   }
   
-  .formField {
-    flex: 1 1 100%; 
-    margin-left: 9%; 
-    margin-bottom: 10px;
-  }
-
-  .backButton {
-    display: none; /* Hide the backButton on screens smaller than 768px */
+  @media (min-width: 476px) and (max-width: 640px) {
+    .formContainer {
+      max-width: 90%;
+      margin: 4% auto;
+      padding: 2.5%;
+      padding-left: 4%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 16px;
+      margin-top: 15%;
+    }
+  
+    .formField {
+      flex: 1 1 48%;
+      margin-bottom: 12px;
+    }
+  
+    .formLabel {
+      font-size: 13px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: 100%;
+      height: 42px;
+      font-size: 14px;
+    }
+  
+    .editButton {
+      font-size: 14px;
+      margin-top: 25px;
+      margin-bottom: 4%;
+    }
+  
+    .backButton {
+      margin-top: -7%;
+      margin-left: 3%;
+      font-size: 1.3rem;
+    }
   }
   
-  .submitButton {
-    width: 48%; /* Make buttons full width on smaller screens */
-    margin-right: 25%; 
+  @media (min-width: 641px) and (max-width: 768px) {
+    .formContainer {
+      max-width: 85%;
+      margin: 3% auto;
+      padding: 2%;
+      padding-left: 3%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 17px;
+      margin-top: 13%;
+    }
+  
+    .formField {
+      flex: 1 1 30%;
+      margin-bottom: 10px;
+    }
+  
+    .formLabel {
+      font-size: 14px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: 100%;
+      height: 44px;
+      font-size: 14px;
+    }
+  
+    .editButton {
+      font-size: 15px;
+      margin-top: 30px;
+      margin-bottom: 3%;
+      width: 25%;
+    }
+  
+    .backButton {
+      margin-top: -8%;
+      margin-left: 2%;
+      font-size: 1.4rem;
+    }
   }
   
-  .formTitle {
-    margin-bottom: 10px; /* Adjust margin for responsiveness */
-    margin-top: 20%;
-    font-size: 1.2rem; 
-  }
-
-  .formTitle2 {
-    margin-bottom: 10px; /* Adjust margin for responsiveness */
-    margin-top: 10%;
-    font-size: 1.2rem; 
-  }
-
-  .editButton {
-    margin-top: 10px; /* Adjust margin-top for the button */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .formContainer {
+      max-width: 80%;
+      margin: 2% auto;
+      padding: 2%;
+      padding-left: 3%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 18px;
+      margin-top: 13%;
+    }
+  
+    .formField {
+      flex: 1 1 24%;
+      margin-bottom: 10px;
+    }
+  
+    .formLabel {
+      font-size: 14px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: calc(100% - 15px);
+      height: 46px;
+      font-size: 14px;
+    }
+  
+    .editButton {
+      font-size: 16px;
+      margin-top: 35px;
+      margin-bottom: 2%;
+      width: 20%;
+    }
+  
+    .backButton {
+      margin-top: -9%;
+      margin-left: 2%;
+      font-size: 1.5rem;
+    }
   }
   
-}
-
-
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .formContainer {
+      max-width: 75%;
+      margin: 2% auto;
+      padding: 2%;
+      padding-left: 3%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 18px;
+      margin-top: 12%;
+    }
+  
+    .formField {
+      flex: 1 1 19%;
+      margin-bottom: 10px;
+    }
+  
+    .formLabel {
+      font-size: 14px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: calc(100% - 18px);
+      height: 48px;
+      font-size: 14px;
+    }
+  
+    .editButton {
+      font-size: 16px;
+      margin-top: 40px;
+      margin-bottom: 2%;
+      width: 20%;
+    }
+  
+    .backButton {
+      margin-top: -9%;
+      margin-left: 2%;
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (min-width: 1281px) and (max-width: 1536px) {
+    .formContainer {
+      max-width: 70%;
+      margin: 2% auto;
+      padding: 2%;
+      padding-left: 3%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 19px;
+      margin-top: 10%;
+    }
+  
+    .formField {
+      flex: 1 1 19%;
+      margin-bottom: 10px;
+    }
+  
+    .formLabel {
+      font-size: 15px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: calc(100% - 20px);
+      height: 50px;
+      font-size: 15px;
+    }
+  
+    .editButton {
+      font-size: 17px;
+      margin-top: 45px;
+      margin-bottom: 2%;
+      width: 20%;
+    }
+  
+    .backButton {
+      margin-top: -9%;
+      margin-left: 2%;
+      font-size: 1.7rem;
+    }
+  }
+  
+  @media (min-width: 1537px) {
+    .formContainer {
+      max-width: 65%;
+      margin: 2% auto;
+      padding: 2%;
+      padding-left: 3%;
+    }
+  
+    .formTitle,
+    .formTitle2 {
+      font-size: 20px;
+      margin-top: 8%;
+    }
+  
+    .formField {
+      flex: 1 1 19%;
+      margin-bottom: 10px;
+    }
+  
+    .formLabel {
+      font-size: 15px;
+    }
+  
+    .formField input,
+    .formField select {
+      width: calc(100% - 22px);
+      height: 52px;
+      font-size: 15px;
+    }
+  
+    .editButton {
+      width: 28%;
+      font-size: 17px;
+      margin-top: 50px;
+      margin-bottom: 2%;
+    }
+  
+    .backButton {
+      margin-top: -9%;
+      margin-left: 2%;
+      font-size: 1.8rem;
+    }
+  }
 
 
