@@ -202,6 +202,32 @@ contract MediVerse {
         revert("Medical history record not found for the specified hospital");
     }
 
+    function addPatient(
+        address _patientAddr,
+        string memory _name,
+        string memory _age,
+        string memory _gender,
+        string memory _dateOfBirth,
+        string memory _height,
+        string memory _weight,
+        string memory _contactNum,
+        string memory _address
+    ) public {
+        require(!isRegistered[_patientAddr], "Patient already registered");
+        Patient storage patient = patients[_patientAddr];
+        patient.name = _name;
+        patient.age = _age;
+        patient.gender = _gender;
+        patient.dateOfBirth = _dateOfBirth;
+        patient.height = _height;
+        patient.weight = _weight;
+        patient.contactNum = _contactNum;
+        patient.addr = _address;
+        patient.creationDate = block.timestamp;
+        patientList.push(_patientAddr);
+        isRegistered[_patientAddr] = true;
+    }
+
     function getMedicalHistory(address _patientAddr) public view returns (MedicalHistory[] memory) {
         return medicalHistories[_patientAddr];
     }

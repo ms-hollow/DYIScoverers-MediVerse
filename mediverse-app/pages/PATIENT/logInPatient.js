@@ -3,11 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router"; // Import useRouter hook
 import LogInPatientHeader from "@/components/logInPatientHeader";
 import styles from '/styles/logInPatientHeader.module.css';
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> front-end-pau
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
