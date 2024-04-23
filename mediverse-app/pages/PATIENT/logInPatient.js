@@ -65,17 +65,15 @@ export default function Home() {
         console.log("Please install MetaMask");
         toast.error("Please install MetaMask");
     }
+
   };
 
   return (
     <>
-      <LogInPatientHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
-      
       <div className= {styles.background}><img src="/Vector 1577.svg"/></div>
+      <LogInPatientHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
 
-      <div className={styles.container}>
-        <div className={styles.landingPage}>
-
+        <div className={styles.container}>
           <img src='/logIn banner picture.svg' alt='Login Page Banner Illustration' className={styles.pageBanner}/>
 
           <div className= {styles.containerText}>
@@ -93,9 +91,8 @@ export default function Home() {
             </div>
 
           </div>
-              
+    
         </div>
-      </div>
    </>
   );
 }
