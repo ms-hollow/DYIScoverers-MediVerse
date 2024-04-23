@@ -147,21 +147,8 @@
     margin-bottom: 3px;
 }
 
-.data_reqAccess1 {
-    display: grid;
-    grid-template-columns: 480px 280px 280px;
-    font-size: 12px;
-    font-family: Roboto Condensed;
-    border-radius: 8px;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    width: 1122px;
-    padding-left: 175px;
-    align-items: center;
-    margin-bottom: 3px;
-}
-
 .data button,
-.data_reqAccess button, .data_reqAccess1 button{
+.data_reqAccess button{
     display: flex;
     font-size: 12px;
     font-family: Roboto Condensed;

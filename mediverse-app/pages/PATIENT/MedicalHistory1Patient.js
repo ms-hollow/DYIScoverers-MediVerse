@@ -103,6 +103,7 @@ const MedicalHistoryPatient = () => {
                     if (results.length > 0) {
                         // console.log("Found:", results);
                         setMedicalHistory(results);
+                        toast.info(searchQueryLower);
                     } else {
                         // console.log("No matching entry found.");
                         toast.warning("No matching entry found.");
