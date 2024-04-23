@@ -578,6 +578,7 @@ const UpdateMedicalHistoryHospital = () => {
                 ).send({ from: accounts[0] });
                 
                 //console.log("Transaction Hash:", receipt.transactionHash);
+                toast.success('Medical History is successfully updated!');
                 setIsLoading(false);
                 //router.push('/HOSPITAL/PatientRecordsHospital/');
             } catch (error) {
