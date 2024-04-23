@@ -17,6 +17,7 @@ const Register1Patient = () => {
     const [hospitalList, setHospitalList] = useState([]);
     const [isPatient, setIsPatient] = useState(false);
     const [isHospital, setIsHospital] = useState(false);
+    const [isConnected, setIsConnected] = useState(false);
 
     const isAddressInList = (address, list) => {
         return list.some(item => item.toLowerCase() === address.toLowerCase());
@@ -28,9 +29,10 @@ const Register1Patient = () => {
             try {
                 /* If MetaMask is installed */
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                const walletAddress = accounts[0];
-                setWalletAddress(walletAddress);
-    
+                //const walletAddress = accounts[0];
+                setWalletAddress(accounts[0]);
+                setIsConnected(true);
+                toast.success("Connected with MetaMask");
             } catch (err) {
                 console.error(err.message);
             }
@@ -43,7 +45,12 @@ const Register1Patient = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const agreeCheckbox = document.getElementById('agreeCheckbox');
-      
+        
+        if (!walletAddress) {
+            toast.error("MetaMask is not connected yet. Please connect MetaMask.");
+            return;
+        }
+
         if (!agreeCheckbox.checked) {
           toast.error('Please agree to the terms before proceeding.');
           return;
