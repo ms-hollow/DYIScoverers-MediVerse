@@ -179,14 +179,14 @@ const AccountAccessPatient = () => {
                     </div>
                 ) : (
                     <div className={styles.tableContainer}>
-                        <div className={styles.tableHeading_reqAccess}>
+                        <div className={styles.tableHeading_reqAccess1}>
                             <p>Hospital Name</p>
                             <p>Account Access</p>
                         </div>
 
                         <div className={styles.dataContainer}>
                             {listOfHospitalNames.map((hospital, index) => (
-                                <div key={index} className={styles.data_reqAccess}>
+                                <div key={index} className={styles.data_reqAccess1}>
                                     <p>{hospital.name}</p>
                                     <button onClick={() => handleGrantAccess(index)}>Grant Access</button>
                                 </div>

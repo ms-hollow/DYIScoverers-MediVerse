@@ -238,8 +238,9 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
+        
         router.push({
-            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, creationDate }
         });
     }
