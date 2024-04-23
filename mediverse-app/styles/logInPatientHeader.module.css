@@ -182,31 +182,6 @@
     z-index: 10001;
     display: none;
 }
-
-
-@media screen and (max-width: 1536px){
-
-
-    .pageBanner {
-      width: 40vw;
-      margin-top: 5%;
-      margin-left: 6%;
-    }
-  
-    .containerText{
-      margin-left: -10%;
-    }
-  
-    .dontHaveMetamaskText,
-    .signInWithProviderText{
-      font-size: 1.2vw;
-    }
-  
-    .signInWithWalletText{
-      font-size: 2.2vw;
-    }
-  
-  }
     
   @media screen and (max-width: 1280px){
   
@@ -417,6 +392,48 @@
       font-size: 3vw;
     }
   
+  }
+
+  @media screen and (max-width: 280px) {
+    .landingPage {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .pageBanner {
+      width: 90vw;
+      margin-top: -190%;
+      margin-left: 10%;
+    }
+  
+    .containerText{
+      margin-top: -80%;
+      margin-right: -4%
+    }
+  
+    .dontHaveMetamaskText,
+    .signInWithProviderText{
+      font-size: 4vw;
+    }
+  
+    .signInWithWalletText{
+      font-size: 6vw;
+    }
+  
+    .connectMetamaskContainer { 
+      padding: 1%; /* Adjust padding for responsiveness */
+      border-radius: 2px;
+      margin-right: 10%;
+    }
+    
+    .connectMetamaskButton {
+      margin-right: -10%;
+    }
+  
+    .connectMetamaskText{
+      font-size: 3vw;
+    }
   }
   
   
