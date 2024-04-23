@@ -76,20 +76,16 @@ const  LoginPatientDummy = () => {
         <>
             <LogInPatientHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
             
+            <div className= {styles.background}><img src="/Vector 1577.svg"/></div>
+
             <div className={styles.container}>
-                <section id='landingPage' className={styles.landingPage}>
+                <div className={styles.landingPage}>
 
                     <img src='/logIn banner picture.svg' alt='Login Page Banner Illustration' className={styles.pageBanner}/>
 
                     <div className= {styles.containerText}>
-                        <div className={styles.signInWithWalletText}>
-                            SIGN IN WITH YOUR WALLET
-                        </div>
-
-                        <div className={styles.signInWithProviderText}>
-                            Sign in with one available wallet provider
-                        </div>
-
+                        <div className={styles.signInWithWalletText}>SIGN IN WITH YOUR WALLET</div>
+                        <div className={styles.signInWithProviderText}>Sign in with one available wallet provider</div>
                         <div className={styles.connectMetamaskContainer}>
                             <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                                 <div className={styles.metaMaskLogo}>
@@ -99,28 +95,13 @@ const  LoginPatientDummy = () => {
                             </button>
                         </div>
                     
-                        <div className={styles.dontHaveMetamaskText}>
-                            Don't Have Metamask Wallet?{" "}
+                        <div className={styles.dontHaveMetamaskText}>Don't Have Metamask Wallet?{" "}
                             <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
                         </div>
 
                     </div>
-                        
-                <div className={styles2.registerDropdown}>
-                    <div className={styles.getStarted} onClick={toggleMenu}> 
-                        Get Started
-                        {isOpen && (
-                            <div className={styles2.registerDropdownContent}>
-                                <Link href="/PATIENT/Register1Patient/">As Patient</Link>
-                                <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
-                            </div>
-                        )}
-                    </div>
+                    
                 </div>
-                    
-                    
-
-                </section>
             </div>
         </>
     );

@@ -5,6 +5,8 @@
     z-index: 1;
     justify-content: space-between;
     margin-top: -55%;
+    max-width: 100vw; /* Add this line */
+    max-height: 100vh; /* Add this line */
   }
   
   .landingPage {
@@ -19,6 +21,8 @@
 .pageBanner {
     margin-right: auto;
     margin-bottom: auto;
+    max-width: 100%; /* Add this line */
+    max-height: 100%; /* Add this line */
 }
   
 .containerText {
@@ -27,7 +31,6 @@
     align-items: center;
     justify-content: center; /* Center items vertically */
     height: 100vh; /* Set container height to full viewport height */
-    white-space: nowrap;
     z-index: 1;
     margin-bottom: auto;
     margin-right: auto;
@@ -39,6 +42,8 @@
     height: 100vh; /* Set height to cover the entire viewport */
     z-index: -1; /* Ensure the background is behind other content */
     justify-content: flex-end; /* Align to the right side */
+    max-width: 100vw; /* Add this line */
+    max-height: 100vh; /* Add this line */
 }
 
 .cryptoWallet {
@@ -181,6 +186,7 @@
 
 @media screen and (max-width: 1536px){
 
+
     .pageBanner {
       width: 40vw;
       margin-top: 5%;
@@ -285,6 +291,7 @@
   }
   
   @media screen and (max-width: 768px){
+
     .landingPage {
       flex-direction: column;
       align-items: center;

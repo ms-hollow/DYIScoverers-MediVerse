@@ -2,32 +2,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
+    margin-top: -55%;
   }
   
-  .landingPage {
+.landingPage {
     display: flex;
     flex-direction: row;
     margin-top: 120px;
     width: 100%;
     justify-content: space-between;
-  }
+}
   
-  .pageBanner {
-    margin-right: 100px auto;
-  }
+.pageBanner {
+    margin-right: auto;
+    margin-bottom: auto;
+}
   
-  .containerText {
+.containerText {
     display: flex;
-    position: relative;
     flex-direction: column;
     align-items: center;
     justify-content: center; /* Center items vertically */
     height: 100vh; /* Set container height to full viewport height */
     white-space: nowrap;
     z-index: 1;
+    margin-bottom: auto;
+    margin-right: auto;
 }
   
-.vector1577 {
+.background {
     display: flex;
     width: 100vw; /* Set width to cover the entire viewport */
     height: 100vh; /* Set height to cover the entire viewport */
@@ -109,368 +113,242 @@
 .createOneLink:hover {
     text-decoration: underline;
 }
-.logoContainer {
-    display: flex;
-    align-items: center;
+
+
+@media screen and (max-width: 1536px){
+
+  .pageBanner {
+    width: 40%;
+    margin-top: 5%;
+    margin-left: 6%;
+  }
+
+  .containerText{
+    margin-left: -10%;
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 1.2vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 2.2vw;
+  }
+
+}
+  
+@media screen and (max-width: 1280px){
+
+  .pageBanner {
+    width: 50%;
+    margin-top: -10%;
+    margin-left: 5%;
+  }
+
+  .containerText{
+    margin-top: -15%;
+    margin-left: -10%;
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 1.5vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 3vw;
+  }
+
 }
 
-.logo {
-    width: 80%; 
-    height: auto;
+@media screen and (max-width: 1024px){
+  .pageBanner {
+    width: 40%;
+    margin-top: -5%;
+    margin-left: 5%;
+  }
+
+  .containerText{
+    margin-top: -15%;
+    margin-left: 5%;
+  }
+
+}
+
+@media screen and (max-width: 820px){
+  .landingPage {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pageBanner {
+    width: 70%;
+    margin-top: -90%;
+    margin-left: 23%;
+  }
+
+  .containerText{
+    margin-top: -50%;
+    margin-right: -4%
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 3vw;
+  
+  }
+
+  .signInWithWalletText{
+    font-size: 5vw;
+  }
+
+  .connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    margin-right: 10%;
+  }
+
+  .connectMetamaskText {
+    font-size: 3vw;
 }
   
-  @media screen and (max-width: 1246px){
+  .connectMetamaskButton {
+    margin-left: -10%;
+    padding: 2;
+    padding: 3% 20% 3% 10%; /* Adjusted padding for smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px){
+  .landingPage {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pageBanner {
+    width: 60%;
+    margin-top: -90%;
+    margin-left: 23%;
+  }
+
+  .containerText{
+    margin-top: -40%;
+    margin-right: -4%
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 3vw;
   
-    .welcomeMessage {
-      justify-content: center;
-    }
+  }
+
+  .signInWithWalletText{
+    font-size: 5vw;
+  }
+
+  .connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    margin-right: 10%;
+  }
+
+  .connectMetamaskText {
+    font-size: 3vw;
+}
   
-    .pageBanner {
-      margin-right: 61px;
-      width: 40%;
-    }
+  .connectMetamaskButton {
+    margin-left: -10%;
+    padding: 2;
+    padding: 3% 20% 3% 10%; /* Adjusted padding for smaller screens */
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .landingPage {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pageBanner {
+    width: 80%;
+    margin-top: -170%;
+    margin-left: 20%;
+  }
+
+  .containerText{
+    margin-top: -70%;
+    margin-left: 0%
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 4vw;
   
-    .featuresItem {
-      transform: scale(0.8);
-      width: 100%;
-      margin: 0 auto;
-    }
-  
-    .subscriptionContainer{
-      margin-top: 30px;
-    }
-  
-    .emailInput {
-      width: 800px;
-    }
+  }
+
+  .signInWithWalletText{
+    font-size: 6vw;
+  }
+
+  .connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    margin-right: 10%;
   }
   
-  @media screen and (max-width: 1010px){
-    .slogan {
-      font-size: 30px;
-    }
-  
-    .subSlogan {
-      font-size: 15px;
-    }
-  
-    .getStarted {
-      width: 150px;
-      padding: 14px 30px 14px 30px;
-      font-size: 15px;
-    }
-  
-    .pageBanner {
-      width: 40%;
-    }
-  
-    .infoTextLarge {
-      font-size: 40px;
-    }
-  
-    .infoTextSmall{
-        font-size: 13px;
-    }
-  
-    .question p{
-      font-size: 30px;
-    }
-  
-    .featuresItem {
-      flex-direction: column;
-      height: 1100px;
-      width: 90%;
-      margin-top: -60px;
-    }
-  
-    .columnFeatureSection {
-      flex-direction: row;
-      height: auto;
-      width: 100%;
-    }
-  
-    .subscriptionTextBanner {
-      font-size: 30px;
-      margin-top: -40px;
-    }
-  
-    .subscriptionDesc {
-      font-size: 16px;
-    }
-  
-    .forNewsletterTxt {
-      font-size: 17px;
-    }
-  
-    .emailInput, .emailInput::placeholder{
-      font-size: 12px;
-    }
-  
-    .emailInput {
-      width: 600px;
-      height: 10%;
-    }
-  
-    .subscribeButton {
-      font-size: 12px;
-      padding: 10px 30px;
-    }
+  .connectMetamaskButton {
+    margin-left: -10%;
+  }
+
+}
+
+@media screen and (max-width: 376px) {
+  .landingPage {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pageBanner {
+    width: 90%;
+    margin-top: -140%;
+    margin-left: 10%;
+  }
+
+  .containerText{
+    margin-top: -60%;
+    margin-right: -4%
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 4vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 6vw;
+  }
+
+  .connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 2px;
+    margin-right: 10%;
   }
   
-  @media screen and (max-width: 743px) {
-  
-    .slogan {
-      font-size: 27px;
-    }
-  
-    .subSlogan {
-      font-size: 14px;
-    }
-  
-    .getStarted {
-      width: 105px;
-      padding: 12px 20px 12px 20px;
-      font-size: 12px;
-    }
-  
-    .question p{
-      font-size: 26px;
-    }
-  
-    .featuresItem{
-      width: 100%;
-    }
-  
-    .feature {
-      width: 300px;
-    }
-      
-    .feature img{
-      width: 100%;
-    }
-  
-    .featureTxtContainer {
-      width: 90%;
-      height: 60%;
-    }
-  
-    .subscriptionContainer {
-      margin-top: -10px;
-    }
-  
-    .subscriptionTextBanner {
-      font-size: 26px;
-    }
-  
-    .subscriptionDesc {
-      font-size: 14px;
-    }
-  
-    .forNewsletterTxt {
-      font-size: 15px;
-    }
-  
-    .emailInput, .emailInput::placeholder{
-      font-size: 11px;
-    }
-  
-    .emailInput {
-      height: 10%;
-      width: 400px;
-    }
+  .connectMetamaskButton {
+    margin-right: -10%;
   }
-  
-  @media screen and (max-width: 623px) {
-  
-    .welcomeMessage {
-      margin-left: 30px;
-    }
-  
-    .pageBanner {
-      margin-right: 40px;
-      width: 45%;
-    }
-  
-    .slogan {
-      font-size: 24px;
-    }
-  
-    .subSlogan {
-      font-size: 12px;
-    }
-  
-    .getStarted {
-      width: 84px;
-      padding: 10px 15px 10px 15px;
-      font-size: 10px;
-    }
-  
-    .infoTextLarge {
-      font-size: 30px;
-    }
-  
-    .infoTextSmall{
-        font-size: 11px;
-    }
-  
-    .question p{
-      font-size: 20px;
-    }
-  
-    .featuresItem {
-      height: 950px;
-    }
-    
-    .feature {
-      width: 230px;
-      height: 290px;
-    }
-      
-    .feature img{
-      width: 100%;
-    }
-  
-    .featureTxtContainer {
-      width: 90%;
-      height: 86%;
-    }
-    
-    .lineStyle {
-      width: 80%;
-    }
-  
-    .featureInfo {
-      height: auto;
-    }
-  
-    .subscriptionContainer {
-      margin-top: -10px;
-    }
-  
-    .subscriptionTextBanner {
-      font-size: 26px;
-    }
-  
-    .subscriptionDesc {
-      font-size: 14px;
-    }
-  
-    .forNewsletterTxt {
-      font-size: 15px;
-    }
-  
-    .emailInput, .emailInput::placeholder{
-      font-size: 11px;
-    }
-  
-    .forNewsletterContainer {
-      padding-top: 30px;
-      padding-bottom: 40px;
-      padding-right: 30px;
-      padding-left: 30px;
-    }
-  
-    .emailInput {
-      width: 350px;
-    }
+
+  .connectMetamaskText{
+    font-size: 3vw;
   }
-  
-  @media screen and (max-width: 484px) {
-    .landingPage {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .welcomeMessage {
-      align-items: center;
-      width: 80%;
-      margin: 0 auto;
-      margin-bottom: 20px;
-    }
-  
-    .pageBanner {
-      width: 60%;
-    }
-  
-    .question P {
-      font-size: 17px;
-    }
-  
-    .infoTextLarge {
-      font-size: 20px;
-    }
-  
-    .infoTextSmall {
-      font-size: 10px;
-    }
-  
-    .features {
-      margin-top: -20px;
-    }
-  
-    .featuresItem {
-      height: 800px;
-    }
-  
-    .feature {
-      width: 180px;
-      height: 250px;
-    }
-  
-    .featureInfo {
-      font-size: 15px;
-    }
-  
-    .featureDesc {
-      font-size: 12px;
-    }
-  
-    .subscriptionContainer{
-      margin-top: 30px;
-    }
-  
-    .subscriptionTextBanner {
-      font-size: 20px;
-    }
-  
-    .subscriptionDesc {
-      font-size: 13px;
-    }
-  
-    .forNewsletterTxt {
-      font-size: 13px;
-    }
-  
-    .emailInput {
-      font-size: 10px;
-      width: 290px;
-    }
-  
-    .emailInput::placeholder {
-      font-size: 10px;
-    }
-  
-    .subscribeButton {
-      font-size: 10px;
-    }
-  }
-  
-  @media screen and (max-width: 398px){
-    .bannerInfo {
-      width: 90%;
-    }
-  
-    .featuresItem {
-      height: 850px;
-    }
-    
-    .feature {
-      width: 170px;
-    }
-    
-    .emailInput {
-      padding-left: 10px;
-      width: 250px;
-    }
-  }
+
+}
+
+
+
+
