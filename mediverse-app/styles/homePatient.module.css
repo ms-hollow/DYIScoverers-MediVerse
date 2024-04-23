@@ -214,15 +214,15 @@
     .notifTypeFormat{
         width: auto;
         font-size: 13px;
-        padding-left: 5px;
-        margin-bottom: 0px;
+        padding-left: 8px;
+        margin-bottom: 10px;
     }
 
     .desFormat {
         font-size: 12px;
         width: 590px;
         margin-top: 0px;
-        padding-left: 5px;
+        padding-left: 0px;
     }
 
     .timeStampFormat {
@@ -292,7 +292,9 @@
 
     .notifTypeFormat{
         width: auto;
-        font-size: 11px;
+        font-size: 9px;
+        padding-left: 8px;
+        margin-bottom: 8px;
     }
 
     .desFormat {
@@ -401,8 +403,8 @@
 
     .notifTypeFormat{
         width: 250px;
-        margin-bottom: 0px;
-        padding-left: 0px;
+        margin-bottom: 5px;
+        padding-left: 5px;
     }
 
     .desFormat {
@@ -443,5 +445,24 @@
 
     .desFormat {
         width: 210px;
+    }
+
+    .notifTypeFormat{
+        width: 250px;
+        margin-bottom: 8px;
+        padding-left: 8px;
+        font-size: 8px
+    }
+
+    .desFormat {
+        width: 310px;
+        margin-top: 8px;
+        padding-right: 70px;
+    }
+
+    .typedes{
+        margin-left: 5px;
+        flex-direction: column;
+        align-items: baseline;
     }
 }
