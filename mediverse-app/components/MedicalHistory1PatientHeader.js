@@ -103,7 +103,7 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
                             <div className={`${styles.searchBar}`}> 
                                 <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange} onKeyPress={handleKeyPress}/>
                                 <a onClick={handleSearch}>
-                                    <img src="/Search icon.svg" alt="Search" className={styles.searchIcon} />
+                                    <img src="/Search Icon.svg" alt="Search" className={styles.searchIcon} />
                                 </a>
                             </div>
                             {/* <a href="/destination-url"> <img src="/Notifications.svg" alt="Notification" className={styles.logo} /> </a> */}
