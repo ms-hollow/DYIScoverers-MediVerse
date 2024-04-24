@@ -387,15 +387,15 @@ const MedicalHistoryHospital = () => {
                     <div className={styles.basicInfoContainer}>
                         <div className={styles.patientName}>
                             <p className={styles.headingAttrb}>Patient Name</p>  
-                            <p className={styles.dataFormat}>{data.basicInfo.name}</p> 
+                            <p className={styles.dataFormat}>{medicalHistory.patientName}</p> 
                         </div>
                         <div className={styles.patientAge}>
                             <p className={styles.headingAttrb}>Age</p>  
-                            <p className={styles.dataFormat}>{data.basicInfo.age}</p> 
+                            <p className={styles.dataFormat}>{medicalHistory.patientAge}</p> 
                         </div>
                         <div className={styles.patientBday}>
                             <p className={styles.headingAttrb}>Birthday</p>  
-                            <p className={styles.dataFormat}>{data.basicInfo.birthday}</p> 
+                            <p className={styles.dataFormat}>{medicalHistory.patientDob}</p> 
                         </div>
                         <div className={styles.doctor}>
                             <p className={styles.headingAttrb}>Doctor Consulted</p>   
