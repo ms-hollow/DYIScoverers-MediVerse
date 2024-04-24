@@ -9,69 +9,85 @@
 }
 
 .basicInfoContainer {
-    display: flex;
+    display: grid;
     background-color: white;
     width: 1137px;
-    height: 95px;
+    height: 160px;
     border-radius: 10px;
     box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
-    align-items: center;
+    grid-template-columns: 284px 200px 240px 400px;
+    grid-template-rows: 80px 80px;
+    z-index: 1100;
+    padding-top: 10px;
     position: sticky;
     margin: 0 auto;
-    top: 145px;
+    top: 140px;
     left: 0;
     right: 0;
-    z-index: 1100;
 }
 
 .outerContainer {
     position: sticky;
-    top: 120px;
+    top: 133px;
     display: flex;
     background-color: white;
-    height: 150px;
+    height: 220px;
     width: 1145px;
     z-index: 1000;
+}
+
+.patientName {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    padding-top: 17px;
+    padding-left: 25px;
+}
+
+.patientAge {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    padding-top: 17px;
+    padding-left: 25px;
+}
+
+.patientBday {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    padding-top: 17px;
+    padding-left: 25px;
+}
+
+.description {
+    grid-column: 4/5;
+    grid-row: 1/3;
+    padding-top: 17px;
+    padding-left: 25px;
+}
+
+.doctor {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    padding-left: 25px;
+}
+
+.dateDiagnosis {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    padding-left: 25px;
+}
+
+.diagnosis {
+    grid-column: 3/4;
+    grid-row: 2/3;
+    padding-left: 25px;
 }
 
 .headingAttrb {
     font-size: 14px;
     font-family: Roboto Condensed;
     color: #C9C9C9;
-}
-
-.headingAttrb_formatting {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 70px;
-    border-right: 1px solid #E3E3E3; 
-    margin-left: 50px;  
-}
-
-.headingAttrb_formatting p {
-    margin: 3px;
-}
-
-.headingAttrb_des {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    height: 70px;
-    margin-left: 50px;  
-    padding-right: 50px;
-}
-
-.headingAttrb_des p {
-    margin: 3px;
-}
-
-.des {
-    font-size: 14px;
-    font-family: Roboto Condensed;
-    color: var(--navy-blue);
-    width: 392px;
-    overflow-y: auto;
+    margin-top: 0px;
+    margin-bottom: 7px;
 }
 
 .dataFormat {
@@ -79,12 +95,7 @@
     font-family: Roboto Condensed;
     font-weight: 500;
     color: var(--navy-blue);
-}
-
-.doctorTypeFormat {
-    font-size: 12px;
-    font-family: Roboto Condensed;
-    color: var(--navy-blue);
+    margin: 0;
 }
 
 .dataFormat_diag {
@@ -92,12 +103,17 @@
     font-family: Roboto Condensed;
     font-weight: 500;
     color: var(--cyan);
+    margin: 0;
 }
 
-.dataFormat_des {
+.des {
     font-size: 14px;
     font-family: Roboto Condensed;
     color: var(--navy-blue);
+    height: 85px;
+    width: 372px;
+    margin: 0;
+    overflow-y: auto;
 }
 
 .table_container {
@@ -320,11 +336,25 @@
     .container {
         margin-top: 195px;
     }
+
+    .basicInfoContainer {
+        top: 155px;
+    }
 }
 
 @media screen and (max-width: 1701px) {
     .container {
         margin-top: 140px;
+    }
+
+    .container {
+        margin-top: 133px;
+    }
+}
+
+@media screen and (max-width: 1537px) {
+    .basicInfoContainer {
+        top: 140px;
     }
 }
 
@@ -336,6 +366,14 @@
 
     .basicInfoContainer, .table_container {
        width: 1000px;
+    }
+
+    .basicInfoContainer {
+        grid-template-columns: 250px 166px 206px 366px;
+    }
+
+    .des {
+        width: 335px;
     }
 
     .headingAttrb_formatting, .headingAttrb_des {
@@ -367,6 +405,14 @@
 
     .basicInfoContainer, .table_container {
        width: 900px;
+    }
+
+    .basicInfoContainer {
+        grid-template-columns: 225px 141px 181px 341px;
+    }
+
+    .des {
+        width: 310px;
     }
 
     .headingAttrb_formatting, .headingAttrb_des {
@@ -420,7 +466,20 @@
 
     .basicInfoContainer, .table_container {
        width: 800px;
-       top: 115px;
+    }
+
+    .outerContainer {
+        margin-top: -30px;
+        height: 250px;
+    }
+
+    .basicInfoContainer {
+        grid-template-columns: 200px 135px 160px 300px;
+        top: 140px;
+    }
+
+    .des {
+        width: 265px;
     }
 
     .outerContainer {
@@ -444,10 +503,25 @@
     }
 }
 
+@media screen and (max-width: 1216px){   
+    .outerContainer {
+        margin-top: -60px;
+        top: 70px;
+    }
+
+    .basicInfoContainer {
+        top: 125px;
+    }
+ }
+
 @media screen and (max-width: 1182px){   
    .submitButton {
         right: 110px;
    }
+
+   .basicInfoContainer {
+        top: 125px;
+    }
 }
 
 @media screen and (max-width: 1115px) {
@@ -462,32 +536,22 @@
         width: 710px;
     }
 
-    .container {
-        margin-top: 65px;
-    }
-
-    .outerContainer {
-        top: 70px;
-    }
-
-    .basicInfoContainer {
-        top: 100px
-    }
-
     .basicInfoContainer, .table_container {
        width: 700px;
     }
 
-    .headingAttrb_formatting {
-        width: 133px;
+    .outerContainer {
+        margin-top: -80px;
+        top: 50px;
     }
 
-    .headingAttrb_des {
-        width: 300px;
+    .basicInfoContainer {
+        grid-template-columns: 175px 135px 160px 230px;
+        top: 110px;
     }
 
     .des {
-        width: 290px;
+        width: 195px;
     }
 
     .headingAttrb_formatting, .headingAttrb_des {
@@ -517,6 +581,17 @@
     }
 }
 
+@media screen and (max-width: 875px) {
+    .outerContainer {
+        margin-top: -110px;
+        top: 20px;
+    }
+
+    .basicInfoContainer {
+        top: 80px;
+    }
+}
+
 @media screen and (max-width: 849px) {
 
     .container, .outerContainer{
@@ -527,20 +602,22 @@
        width: 600px;
     }
 
-    .headingAttrb_formatting {
-        width: 116px;
+    .basicInfoContainer {
+        grid-template-columns: 150px 150px 150px 150px;
     }
 
-    .headingAttrb_des {
-        width: 250px;
+    .patientName, .patientAge, .patientBday,
+    .doctor, .dateDiagnosis, .diagnosis, .description {
+        padding-left: 12px;
     }
 
-    .dataFormat, .dataFormat_diag {
-        padding-right: 5px;
+    .patientName, .patientAge, .patientBday, .description {
+        padding-top: 10px;
     }
 
     .des {
-        width: 240px;
+        width: 130px;
+        height: 110px;
     }
 
     .headingAttrb, .des, .sANDs_heading, .treatment_heading,
@@ -584,12 +661,12 @@
        width: 500px;
     }
 
-    .headingAttrb_des {
-        width: 200px;
+    .basicInfoContainer {
+        grid-template-columns: 125px 100px 110px 160px;
     }
 
     .des {
-        width: 190px;
+        width: 140px;
     }
 
     .dataFormat, .dataFormat_diag, .table_title {
@@ -615,44 +692,41 @@
 
 @media screen and (max-width: 545px) {
     .container, .outerContainer {
-        width: 360px;
+        width: 365px;
     }
-    
+
     .outerContainer{
         position: relative;
+        margin: -50px;
         top: 0;
+        height: 320px;
     }
 
     .basicInfoContainer {
         position: relative;
-        flex-wrap: wrap;
+        top: 5px;
         width: 350px;
-        height: 150px;
-        align-content: center;
-        top: 10px;
-    }
-    
-    .headingAttrb_formatting {
-        width: 106px;
-        border: none;   
+        height: 280px;
+        grid-template-columns: 116px 116px 116px;
+        grid-template-rows: 80px 60px 125px;
     }
 
-    .headingAttrb_des{
-        width: 330px;
-        margin-top: -20px;
+    .description {
+        grid-column: 1/4;
+        grid-row: 3/4;
     }
 
     .des {
         width: 320px;
+        height: 90px;
     }
 
     .scrollable_container{
-        margin-top: 40px;
+        margin-top: 49px;
     }
 
     .table_container {
-        width: 350px;
-        
+        width: 350px; 
     }
 
     .sANDs_data, .treatment_data, .test_data, .medication_data {
@@ -676,29 +750,16 @@
 @media screen and (max-width: 390px) {
     .container{
         transform: scale(0.9);
-        margin-top: 20px;
+        margin-top: 65px;
         margin-bottom: -40px;
     }
 }
 
 @media screen and (max-width: 358px) {
     .container{
-        transform: translateX(-5%) scale(0.7);
-        margin-top: -80px;
+        transform: translateX(-2%) scale(0.8);
+        margin-top: 10px;
         margin-bottom: -140px;
     }
 }
-
-@media screen and (max-width: 310px) {
-    .container{
-        transform: translateX(-7%) scale(0.7);
-    }
-}
-
-@media screen and (max-width: 294px) {
-    .container{
-        transform: translateX(-10%) scale(0.7);
-    }
-}
-
 

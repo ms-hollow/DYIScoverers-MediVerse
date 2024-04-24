@@ -82,8 +82,21 @@
     line-height: 0;
 }
 
+.container{
+    margin-top: 175px;
+} 
+
+.tableHeading {
+    top: 135px;
+}
 
 
+@media screen and (max-width: 1701px) {
+    .container{
+        margin-top: 130px;
+    }
+    
+}
 
 @media screen and (max-width: 1660px){ 
     .tableHeading{
@@ -99,7 +112,7 @@
     .tableHeading{
         grid-template-columns: 220px 240px 150px 130px 90px;
         width: 1000px;
-        top: 115px;
+        top: 120px;
     }
 
     .data{
@@ -115,12 +128,13 @@
 @media screen and (max-width: 1355px){   
     .container{
         width: 900px;
-        margin-top: 90px;
+        margin-top: 120px;
     }
+
     .tableHeading{
         width: 850px;
         grid-template-columns: 190px 210px 130px 120px 90px;
-        top: 105px
+        top: 120px
     }
     
     .data{
@@ -130,6 +144,12 @@
 
     .submitButton {
         right: 0px;
+    }
+}
+
+@media screen and (max-width: 1217px) {
+    .tableHeading {
+        top: 110px;
     }
 }
 
