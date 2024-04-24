@@ -46,21 +46,32 @@ const MedicalHistoryHospital = () => {
             <div id='container' className={styles.container}>   
                 <div className={styles.outerContainer}>
                     <div className={styles.basicInfoContainer}>
-                        <div className={styles.headingAttrb_formatting}>
+                        <div className={styles.patientName}>
+                            <p className={styles.headingAttrb}>Patient Name</p>  
+                            <p className={styles.dataFormat}>{data.basicInfo.name}</p> 
+                        </div>
+                        <div className={styles.patientAge}>
+                            <p className={styles.headingAttrb}>Age</p>  
+                            <p className={styles.dataFormat}>{data.basicInfo.age}</p> 
+                        </div>
+                        <div className={styles.patientBday}>
+                            <p className={styles.headingAttrb}>Birthday</p>  
+                            <p className={styles.dataFormat}>{data.basicInfo.birthday}</p> 
+                        </div>
+                        <div className={styles.doctor}>
                             <p className={styles.headingAttrb}>Doctor Consulted</p>   
                             <p className={styles.dataFormat}>{data.basicInfo.doctor}</p>
-                            <p className={styles.doctorTypeFormat}>{data.basicInfo.doctorType}</p>
                         </div>
-                        <div className={styles.headingAttrb_formatting}>
+                        <div className={styles.dateDiagnosis}>
                             <p className={styles.headingAttrb}>Date of Diagnosis</p>  
                             <p className={styles.dataFormat}>{data.basicInfo.dateDiagnosis}</p> 
                         </div>
-                        <div className={styles.headingAttrb_formatting}>
+                        <div className={styles.diagnosis}>
                             <p className={styles.headingAttrb}>Diagnosis</p>   
                             <p className={styles.dataFormat_diag}>{data.basicInfo.diagnosis}</p> 
                         </div>
-                        <div className={styles.headingAttrb_des}>
-                            <p className={styles.headingAttrb}>Description</p>   
+                        <div className={styles.description}>
+                            <p className={styles.headingAttrb}>Diagnosis Description</p>   
                             <p className={styles.des}>{data.basicInfo.description}</p> 
                         </div>
                     </div>

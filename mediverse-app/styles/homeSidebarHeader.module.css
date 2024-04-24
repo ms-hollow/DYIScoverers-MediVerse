@@ -11,6 +11,7 @@
     background: var(--bg-color);
     padding: 3% 2%;
     transition: all .50s ease;
+    height: 136px;
 }
 
 .sidebarContainer {
@@ -325,6 +326,7 @@
 @media screen and (max-width: 1216px) {
     .header{
         padding-left: 60px;
+        height: auto;
     }
     .categoryName{
         font-size: 15px;
