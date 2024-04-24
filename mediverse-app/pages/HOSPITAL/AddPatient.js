@@ -70,7 +70,7 @@ const AddPatient = () => {
         //console.log("address:", address)
         setIsLoading(true);
         try {
-            const receipt = await mvContract.methods.addPatient(
+            const receipt = await mvContract.methods.registerPatient(
                 formData.patientAddress,
                 name,
                 formData.age,
@@ -102,11 +102,11 @@ const AddPatient = () => {
                 <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
 
-                    <div className={styles.formRow}>
+                    {/* <div className={styles.formRow}>
                         <div className={styles.formField}>
                             <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>

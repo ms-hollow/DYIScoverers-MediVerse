@@ -73,14 +73,16 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider({
         privateKeys: private_keys,
-        providerOrUrl: 'https://sepolia.infura.io/v3/ba7390d6d72340dda62d7e63700bded8',
+        providerOrUrl: 'https://sepolia.infura.io/v3/e1e60ac355c7431fa8f20fe0e9482324',
         numberOfAddresses: 1
       }),
       network_id: 11155111,       // Ropsten's id
       gas: 5500000,        // Ropsten has a lower block limit than mainnet
       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      networkCheckTimeout: 1000000,
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+      
     },
 
     // Useful for private networks
