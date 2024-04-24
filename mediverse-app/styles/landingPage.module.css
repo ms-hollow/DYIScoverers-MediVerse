@@ -286,7 +286,6 @@
 .registerDropdown {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .registerDropdownContent {
@@ -411,6 +410,11 @@
     font-size: 12px;
     padding: 10px 30px;
   }
+
+  .registerDropdownContent{
+    font-size: 10px;
+    width: 150px;
+  }
 }
 
 @media screen and (max-width: 743px) {
@@ -475,13 +479,9 @@
     width: 400px;
   }
 
-  .registerDropdown{
-    align-items: center;
-  }
-
   .registerDropdownContent{
     font-size: 10px;
-    width: 90px;
+    width: 85px;
   }
 
 }
@@ -661,6 +661,7 @@
   .subscribeButton {
     font-size: 10px;
   }
+
 }
 
 @media screen and (max-width: 398px){
