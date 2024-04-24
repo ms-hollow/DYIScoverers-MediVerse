@@ -140,7 +140,7 @@ const PatientRecordsHeader = ({children, pageName}) => {
                 </div>
                 
                 <div id='searchOpen' className={`${styles.searchBarResponsive}`}> 
-                    <a onClick={handleSearch}> <img src="/Search icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
+                    <a onClick={handleSearch}> <img src="/Search Icon.png" alt="Search" width={15} height={15} className={styles.searchIcon} /> </a>
                     <input type="text" placeholder="Search" className={styles.searchInput} value={searchQuery} onChange={handleChange} onKeyPress={handleKeyPress}/>
                 </div>    
             </div>   
