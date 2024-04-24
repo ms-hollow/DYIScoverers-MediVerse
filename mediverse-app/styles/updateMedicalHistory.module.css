@@ -498,7 +498,6 @@ color: var(--cyan);
       display: none; /* Hide the headers for smaller screens */
   }
 
-
   .formRowTitle
   .formHeader {
       display: none; /* Hide the headers for smaller screens */

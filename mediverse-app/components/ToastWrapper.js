@@ -6,7 +6,7 @@ const ToastWrapper = () => {
   return (
     <ToastContainer
       position="top-center"
-      autoClose={1500}
+      autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
