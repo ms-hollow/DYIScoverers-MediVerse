@@ -167,39 +167,6 @@
 }
 
 
-@media screen and (max-width: 475px) {
-
-
-  .container {
-    flex-direction: column;
-  }
-
-  .pageBanner {
-    margin-top: 20%;
-    margin-left: 5%;
-    width: 80vw;
-  }
-
-  .dontHaveMetamaskText,
-  .signInWithProviderText{
-    font-size: 4vw;
-  }
-
-  .signInWithWalletText{
-    font-size: 6vw;
-  }
-
-  .connectMetamaskContainer { 
-    padding: 1%; /* Adjust padding for responsiveness */
-    border-radius: 3px;
-    margin-right: 10%;
-  }
-  
-  .connectMetamaskButton {
-    margin-left: -10%;
-  }
-}
-
 @media screen and (max-width: 376px) {
   .container {
     flex-direction: column;
@@ -235,7 +202,39 @@
 
 }
 
-@media screen and (min-width: 481px) and (max-width: 768px){
+@media screen and (max-width: 475px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .pageBanner {
+    margin-top: 20%;
+    margin-left: 5%;
+    width: 80vw;
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 4vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 6vw;
+  }
+
+  .connectMetamaskContainer { 
+    padding: 1%; /* Adjust padding for responsiveness */
+    border-radius: 3px;
+    margin-right: 10%;
+  }
+  
+  .connectMetamaskButton {
+    margin-left: -10%;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 769px){
 
   .container {
     flex-direction: column;
@@ -244,7 +243,7 @@
   .pageBanner {
     margin-top: 10%;
     margin-left: 5%;
-    width: 80vw;
+    width: 60vw;
   }
 
   .dontHaveMetamaskText,
@@ -253,7 +252,7 @@
   }
 
   .signInWithWalletText{
-    font-size: 5vw;
+    font-size: 4.5vw;
   }
 
   .connectMetamaskContainer { 
@@ -321,9 +320,18 @@
     text-align: center;
     margin-top: 10%;
   }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 1.5vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 2.5vw;
+  }
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1200px){
+@media screen and (min-width: 1025px) and (max-width: 1419px){
 
   .container {
     flex-direction: row;
@@ -334,13 +342,38 @@
     margin-top: 10%;
   }
 
+  .containerText{
+    text-align: center;
+    margin-top: 10%;
+  }
+
   .dontHaveMetamaskText,
   .signInWithProviderText{
-    font-size: 1.5vw;
+    font-size: 1.3vw;
   }
 
   .signInWithWalletText{
-    font-size: 3vw;
+    font-size: 2vw;
+  }
+}
+
+@media screen and (min-width: 1420px) and (max-width: 1585px){
+
+  .container {
+    flex-direction: row;
+  }
+
+  .pageBanner {
+    width: 40vw;
+  }
+
+  .dontHaveMetamaskText,
+  .signInWithProviderText{
+    font-size: 1.3vw;
+  }
+
+  .signInWithWalletText{
+    font-size: 2vw;
   }
 }
 

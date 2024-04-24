@@ -98,8 +98,10 @@ const Register1Hospital = () => {
             />
 
             <div className={styles.connectWalletContainer}>
-                <div className={styles.formTitle}>Connect Wallet</div>
-                <button className={styles.backButton} onClick={goBack}>←</button>
+                <div className={styles.formTitle}>
+                    <button className={styles.backButton} onClick={goBack}>←</button>
+                    Connect Wallet
+                </div>
                 <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
                     <div className={styles.metaMaskLogo}>
                         <Image src="/MetamaskLogo.svg" width={35} height={35} />

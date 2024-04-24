@@ -180,7 +180,7 @@ const AccountAccessPatient = () => {
                     </div>
                 ) : (
                     <div className={styles.tableContainer}>
-                        <div className={styles.tableHeading_reqAccess1}>
+                        <div className={styles.tableHeading_reqAccess}>
                             <p>Hospital Name</p>
                             <p>Account Access</p>
                         </div>
@@ -195,7 +195,7 @@ const AccountAccessPatient = () => {
                         </div>
                     </div>
                 )}
-                
+      
             </div>
         </Layout>
         <ToastWrapper/>

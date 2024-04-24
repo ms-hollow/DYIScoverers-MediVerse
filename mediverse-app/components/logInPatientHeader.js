@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import styles2 from '/styles/accountIconDropdown.module.css';
 import styles from '/styles/landingPageHeader.module.css';
 
 const LogInPatientHeader = () => {
@@ -35,15 +34,14 @@ const LogInPatientHeader = () => {
           <li><a href="/GENERAL/FAQs/" onClick={toggleNavbar}>FAQS</a></li>
         </ul>
 
-        <div className={styles2.registerDropdown2}></div>
-            <div className={styles.button} onClick={toggleMenu}> 
-                REGISTER
-                  {isRegisterOpen && (
-                      <div className={styles2.registerDropdownContent2}>
-                          <Link href="/PATIENT/Register1Patient/">As Patient</Link>
-                          <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>    
-                      </div>
-                  )}
+        <div className={styles.registerDropdown}>
+          <div className={styles.button} onClick={toggleMenu}>  REGISTER </div>
+          {isRegisterOpen && (
+            <div className={styles.registerDropdownContent}>
+              <Link href="/PATIENT/Register1Patient/">As Patient</Link>
+              <Link href="/HOSPITAL/Register1Hospital/">As Hospital</Link>
+            </div>
+          )}
         </div>
 
         <div className={isOpen ? styles.menuIconHidden : styles.menuIcon} onClick={toggleNavbar}>

@@ -117,11 +117,10 @@ const Register3Patient = () => {
 
             <div className={styles.formContainer}>
 
-                <div className={styles.formTitle}>Confirmation</div>
-
-                <button className={styles.backButton} onClick={goBack}>
-                    ←
-                </button>
+                <div className={styles.formTitle}>
+                    <button className={styles.backButton} onClick={goBack}>←</button>
+                    Confirmation
+                </div>
 
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>

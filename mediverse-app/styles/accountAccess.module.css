@@ -199,7 +199,7 @@
 
 @media screen and (max-width: 1452px) {
     .container {
-        margin-top: 130px;
+        margin-top: 135px;
     }
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess, 

@@ -69,8 +69,10 @@ const Register2Hospital = () => {
             />
 
             <div className={styles.formContainer}>
-                <button className={styles.backButton} onClick={goBack}>←</button>
-                <div className={styles.formTitle}>Hospital Details</div>
+                <div className={styles.formTitle}>
+                    <button className={styles.backButton} onClick={goBack}>←</button>
+                    Hospital Details
+                </div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>

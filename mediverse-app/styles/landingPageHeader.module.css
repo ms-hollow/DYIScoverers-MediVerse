@@ -112,6 +112,41 @@ html.index {
     margin-top: 2000px; /* Adjust the value as needed */
 }
 
+  /**---------------------REGISTER BUTTON SA LOG IN PAGE--------------------------*/
+
+.registerDropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 40px;
+  }
+  
+  .registerDropdownContent {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Raleway';
+    font-weight: 600;
+    font-size: 16px;
+    width: 126px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border-radius: 5px;
+    padding: 9.5px 0px;;
+    transition: all 0.3s ease;
+    color: black; 
+    align-items: center;
+  }
+  
+  .registerDropdown a {
+    display: flex;
+    align-items: center;
+  }
+  
+  .registerDropdownContent a:hover {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+  }
 
 @media(max-width: 1200px){
     .header{
@@ -209,6 +244,13 @@ html.index {
     .menuIconHidden, .closeIconHidden {
         display: none;
     }
+
+    .registerDropdownContent{
+        font-size: 10px;
+        width: 85%;
+        margin-right: 14%;
+      }
+
 }
 
 
