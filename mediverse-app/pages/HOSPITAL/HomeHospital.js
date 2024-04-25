@@ -141,7 +141,6 @@ const HospitalHome = () => {
                 for (let i = 0; i < listAddress.length; i++) {
                     p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
                     //console.log(p);
-                    
                     const obj = {
                         patientName: p[0],
                         admissionDate: p[1],

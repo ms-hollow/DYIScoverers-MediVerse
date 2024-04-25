@@ -127,6 +127,55 @@ const MedicalHistoryHospital = () => {
                     const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
+
+                    if (diagnosis.includes('~')) {
+                        diagnosis = diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
+                        //console.log(item.diagnosis); 
+                    } else {
+                        diagnosis = [diagnosis.split('+')];
+                        //console.log(item.diagnosis); 
+                    }
+
+                    if (signsAndSymptoms.includes('~')) {
+                        signsAndSymptoms = signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
+                        //console.log(item.signsAndSymptoms); 
+                    } else {
+                        signsAndSymptoms = [signsAndSymptoms.split('+')];
+                        //console.log(item.signsAndSymptoms); 
+                    }
+
+                    if (treatmentProcedure.includes('~')) {
+                        treatmentProcedure = treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
+                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                    } else {
+                        treatmentProcedure = [treatmentProcedure.split('+')];
+                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                    }
+
+                    if (tests.includes('~')) {
+                        tests = tests.split('~').map(tests => tests.split('+'));
+                        //console.log(item.tests); 
+                    } else {
+                        tests = [tests.split('+')];
+                        //console.log(item.tests); 
+                    }
+
+                    if (medications.includes('~')) {
+                        medications= medications.split('~').map(medications => medications.split('+'));
+                        //console.log(item.medications); 
+                    } else {
+                        medications = [medications.split('+')];
+                        //console.log(item.medications); 
+                    }
+
+                    if (admission.includes('~')) {
+                        admission = admission.split('~').map(admission => admission.split('+'));
+                        //console.log(item.admission); 
+                    } else {
+                        admission = [admission.split('+')];
+                        //console.log(item.admission); 
+                    }
+
                     return {
                         patientAddr: patientAddr,
                         hospitalAddr,
@@ -137,74 +186,73 @@ const MedicalHistoryHospital = () => {
                         tests,
                         medications,
                         admission,
+                        patientAddr,
                         creationDate
                     };
                     
                 });
-                //console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
-                //* Split ang mga data. '/' means paghihiwalay ang array kapag marami nilagay si hospital
-                //* '+' means paghihiwalayin ang concatenated data sa isang array
-                const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
-                    if (item.diagnosis.includes('~')) {
-                        item.diagnosis = item.diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
-                        //console.log(item.diagnosis); 
-                    } else {
-                        item.diagnosis = [item.diagnosis.split('+')];
-                        //console.log(item.diagnosis); 
-                    }
+                // const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
+                //     if (item.diagnosis.includes('~')) {
+                //         item.diagnosis = item.diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
+                //         //console.log(item.diagnosis); 
+                //     } else {
+                //         item.diagnosis = [item.diagnosis.split('+')];
+                //         //console.log(item.diagnosis); 
+                //     }
 
-                    if (item.signsAndSymptoms.includes('~')) {
-                        item.signsAndSymptoms = item.signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
-                        //console.log(item.signsAndSymptoms); 
-                    } else {
-                        item.signsAndSymptoms = [item.signsAndSymptoms.split('+')];
-                        //console.log(item.signsAndSymptoms); 
-                    }
+                //     if (item.signsAndSymptoms.includes('~')) {
+                //         item.signsAndSymptoms = item.signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
+                //         //console.log(item.signsAndSymptoms); 
+                //     } else {
+                //         item.signsAndSymptoms = [item.signsAndSymptoms.split('+')];
+                //         //console.log(item.signsAndSymptoms); 
+                //     }
 
-                    if (item.treatmentProcedure.includes('~')) {
-                        item.treatmentProcedure = item.treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
-                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
-                    } else {
-                        item.treatmentProcedure = [item.treatmentProcedure.split('+')];
-                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
-                    }
+                //     if (item.treatmentProcedure.includes('~')) {
+                //         item.treatmentProcedure = item.treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
+                //         //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                //     } else {
+                //         item.treatmentProcedure = [item.treatmentProcedure.split('+')];
+                //         //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                //     }
 
-                    if (item.tests.includes('~')) {
-                        item.tests = item.tests.split('~').map(tests => tests.split('+'));
-                        //console.log(item.tests); 
-                    } else {
-                        item.tests = [item.tests.split('+')];
-                        //console.log(item.tests); 
-                    }
+                //     if (item.tests.includes('~')) {
+                //         item.tests = item.tests.split('~').map(tests => tests.split('+'));
+                //         //console.log(item.tests); 
+                //     } else {
+                //         item.tests = [item.tests.split('+')];
+                //         //console.log(item.tests); 
+                //     }
 
-                    if (item.medications.includes('~')) {
-                        item.medications= item.medications.split('~').map(medications => medications.split('+'));
-                        //console.log(item.medications); 
-                    } else {
-                        item.medications = [item.medications.split('+')];
-                        //console.log(item.medications); 
-                    }
+                //     if (item.medications.includes('~')) {
+                //         item.medications= item.medications.split('~').map(medications => medications.split('+'));
+                //         //console.log(item.medications); 
+                //     } else {
+                //         item.medications = [item.medications.split('+')];
+                //         //console.log(item.medications); 
+                //     }
 
-                    if (item.admission.includes('~')) {
-                        item.admission = item.admission.split('~').map(admission => admission.split('+'));
-                        //console.log(item.admission); 
-                    } else {
-                        item.admission = [item.admission.split('+')];
-                        //console.log(item.admission); 
-                    }
-                    return {
-                        diagnosis: item.diagnosis,
-                        signsAndSymptoms: item.signsAndSymptoms,
-                        treatmentProcedure: item.treatmentProcedure,
-                        tests: item.tests,
-                        medications: item.medications,
-                        admission: item.admission,
-                        patientAddr: item.patientAddr,
-                        creationDate: item.creationDate
-                    };
+                //     if (item.admission.includes('~')) {
+                //         item.admission = item.admission.split('~').map(admission => admission.split('+'));
+                //         //console.log(item.admission); 
+                //     } else {
+                //         item.admission = [item.admission.split('+')];
+                //         //console.log(item.admission); 
+                //     }
+                //     return {
+                //         diagnosis: item.diagnosis,
+                //         signsAndSymptoms: item.signsAndSymptoms,
+                //         treatmentProcedure: item.treatmentProcedure,
+                //         tests: item.tests,
+                //         medications: item.medications,
+                //         admission: item.admission,
+                //         patientAddr: item.patientAddr,
+                //         creationDate: item.creationDate
+                //     };
                     
-                });
+                // });
                 //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
