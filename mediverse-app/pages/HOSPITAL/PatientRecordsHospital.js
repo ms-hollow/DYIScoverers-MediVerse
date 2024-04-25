@@ -52,7 +52,7 @@ const MedicalHistoryPatient = () => {
 
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                console.log(medicalHistoryString);
+                // console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const { patientAddr, hospitalAddr, admission, creationDate } = item;
@@ -102,7 +102,7 @@ const MedicalHistoryPatient = () => {
                 });
     
                 setMedicalHistory(modifiedMedicalHistory);
-                console.log(modifiedMedicalHistory);
+                // console.log(modifiedMedicalHistory);
                 
                 let searchQueryLower;
                 if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {

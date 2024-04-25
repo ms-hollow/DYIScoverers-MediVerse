@@ -74,7 +74,7 @@ const HomePatient = () => {
                     const splitAdmission = item.admission.split('+');
                     // console.log("Admission Date:", splitAdmission[2]);
                     // console.log("Discharge Date:", splitAdmission[3]);
-                    const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
+                    // const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
                     return {
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
@@ -82,7 +82,7 @@ const HomePatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate: formattedDate
+                        creationDate
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);
@@ -148,14 +148,14 @@ const HomePatient = () => {
                                 {/* <img className={styles.icon} src={notif_requestAccess.svg.icon} alt="Icon" /> */}
                                 <p className={styles.notifTypeFormat}>Hospital Request: </p>
                                 <p className={styles.desFormat}>{hospital.name} sends a request to access your medical history.</p>
-                                <p className={styles.timeStampFormat}>{hospital.timeStamp}</p>
+                                {/* <p className={styles.timeStampFormat}>{hospital.timeStamp}</p> */}
                             </div>
                         ))}
                        {latestHistory.map((record, index) => (
                             <div className={styles.notifDataContainer} key={index}>
                                 <p className={styles.notifTypeFormat}>New Medical Record Added: </p>
                                 <p className={styles.desFormat}>{record[0]} added new medical history.</p> 
-                                <p className={styles.timeStampFormat}>{record[1]}</p>
+                                {/* <p className={styles.timeStampFormat}>{record[1]}</p> */}
                             </div>
                         ))}
                     </div>

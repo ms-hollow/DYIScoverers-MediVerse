@@ -108,12 +108,18 @@ const HospitalHome = () => {
                 console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const { patientAddr, hospitalAddr, diagnosis, admission, creationDate } = item;
+                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     patientAddress = patientAddr;
                     const creationDateInt = parseInt(creationDate);
                     return {
+                        patientAddr,
                         hospitalAddr,
+                        physician,
                         diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
                         admission,
                         creationDate: creationDateInt
                     };
@@ -148,7 +154,6 @@ const HospitalHome = () => {
                         gender: p[3],
                         diagnosis: p[4]
                     };
-
                     temp.push(obj);
                 }
                 setMedicalHistory(temp);
