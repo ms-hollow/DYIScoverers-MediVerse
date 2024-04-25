@@ -5,7 +5,7 @@ import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-// import web3 from "../../blockchain/web3";
+import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from '@/components/ToastWrapper';
 
@@ -23,7 +23,7 @@ const HomePatient = () => {
 
     const setAddress = async () => {
         try {
-            const accounts = await provider.getAccounts();
+            const accounts = await web3.eth.getAccounts();
             //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]); 
         } catch (error) {

@@ -3,8 +3,7 @@ import Layout from '../../components/HomeSidebarHeader.js'
 // import fs from 'fs';
 import path from 'path';
 import React, { useState, useEffect } from 'react';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -25,7 +24,7 @@ const AccountAccessPatient = () => {
 
     const setAddress = async () => {
         try {
-            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]); 
         } catch (error) {

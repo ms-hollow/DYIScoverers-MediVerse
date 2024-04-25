@@ -4,8 +4,7 @@ import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import styles from '../../styles/accountProfileHospital.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -40,7 +39,7 @@ const AccountProfileHospital = () => {
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract
-                const accounts = await provider.getAccounts();
+                const accounts = await web3.eth.getAccounts();
     
                 //console.log("Account:", accounts[0]);
                 // Call the getPatientInfo function on the smart contract

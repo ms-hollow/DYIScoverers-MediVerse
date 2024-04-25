@@ -4,8 +4,7 @@ import styles from '../../styles/accountProfilePatient.module.css'; /** "../" me
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -39,7 +38,7 @@ const AccountProfilePatient = () => {
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract
-                const accounts = await provider.getAccounts();
+                const accounts = await web3.eth.getAccounts();
                 setPatientAddress(accounts[0]);
                 //console.log("Account:", accounts[0]);
     

@@ -3,8 +3,7 @@ import RegistrationProcess from "@/components/RegistrationProcess";
 import styles from '../../styles/registerHospital.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 import { useRouter } from 'next/router';
 {/*FOR TOAST NOTIFICATION */}
@@ -29,7 +28,7 @@ const Register2Hospital = () => {
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract
-                const accounts = await provider.getAccounts();
+                const accounts = await web3.eth.getAccounts();
     
                 //console.log("Account:", accounts[0]);
     

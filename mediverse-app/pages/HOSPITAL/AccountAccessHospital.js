@@ -2,8 +2,7 @@ import styles from '../../styles/accountAccess.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import React, { useState, useEffect  } from 'react';
 import { useRouter } from 'next/router';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -26,7 +25,7 @@ const AccountAccessHospital = () => {
 
     const setAddress = async () => {
         try {
-            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {

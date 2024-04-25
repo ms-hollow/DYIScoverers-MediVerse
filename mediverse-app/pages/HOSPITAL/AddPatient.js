@@ -3,8 +3,7 @@ import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
 import React, { useState } from 'react';
-// import web3 from "../../blockchain/web3";
-import provider from '../../blockchain/ethers';
+import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -61,7 +60,7 @@ const AddPatient = () => {
             toast.error('Please fill in all required fields.');
             return; // Exit early if any required field is empty
         }
-        const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
+        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
         // console.log("Account:", accounts[0]);
         // console.log('Form submitted:', formData);
        
