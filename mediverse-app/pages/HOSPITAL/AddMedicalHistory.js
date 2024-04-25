@@ -114,7 +114,7 @@ const addMedicalHistory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
-        //console.log('Form submitted:', formData);
+        console.log('Form submitted:', formData);
         let  patientDiagnosis = '';
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
