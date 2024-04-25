@@ -50,7 +50,7 @@ const HomePatient = () => {
                 //console.log(patientMedicalHistories);
                 
                 const parsedMedicalHistory = patientMedicalHistories.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     hospitalAddress = hospitalAddr;
                     return {
                         patientAddr,
