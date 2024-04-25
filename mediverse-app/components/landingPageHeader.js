@@ -24,9 +24,13 @@ const LandingPageHeader = ({ buttonText, buttonLink}) => {
 
         {/* Navbar links */}
         <ul id='navbar' className={`${styles.navbar} ${isOpen ? styles.open : ''}`}>
+          <li><Link href='/' className={styles.logoNavBar}>
+            <img src="/MediVerse Logo (with Text).svg" alt="Logo" />
+          </Link></li>
           <li><a href="/#features" onClick={toggleNavbar}>FEATURES</a></li>
           <li><a href="/GENERAL/ContactUs" onClick={toggleNavbar}>CONTACT US</a></li>
           <li><a href="/GENERAL/FAQs/" onClick={toggleNavbar}>FAQS</a></li>
+          <li><p className={styles.closeTxt} onClick={toggleNavbar}>CLOSE</p></li>
         </ul>
 
         {/* Log in button and menu icon */}
@@ -35,15 +39,9 @@ const LandingPageHeader = ({ buttonText, buttonLink}) => {
         </div>
 
         
-            <div className={isOpen ? styles.menuIconHidden : styles.menuIcon} onClick={toggleNavbar}>
-                <img src="/burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
-            </div>
-
-            <div id='close' className={isOpen ? styles.closeIcon : styles.closeIconHidden} onClick={toggleNavbar}>
-                <img src="/close icon.svg" style={{ width: '27px', height: '27px' }} alt="Close" />
-            </div>
-        
-
+        <div className={isOpen ? styles.menuIconHidden : styles.menuIcon} onClick={toggleNavbar}>
+          <img src="/burger-menu-icon.svg" style={{ width: '30px', height: '30px' }} alt="Menu" />
+        </div>
       </header>
     </>
   );
