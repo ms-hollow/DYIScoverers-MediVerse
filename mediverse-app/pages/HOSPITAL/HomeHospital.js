@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
+
 const HospitalHome = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
@@ -101,7 +102,7 @@ const HospitalHome = () => {
                     await setAddress();
                     return;
                 }
-
+                
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 
