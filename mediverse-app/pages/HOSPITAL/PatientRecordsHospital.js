@@ -90,8 +90,6 @@ const MedicalHistoryPatient = () => {
                         creationDate: item.creationDate
                     };
                 });
-
-                console.log(modifiedMedicalHistory);
     
                 // Fetch patient names for each medical record
                 const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
@@ -102,8 +100,8 @@ const MedicalHistoryPatient = () => {
                     modifiedMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 });
     
-
                 setMedicalHistory(modifiedMedicalHistory);
+                console.log(modifiedMedicalHistory);
                 
                 let searchQueryLower;
                 if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
