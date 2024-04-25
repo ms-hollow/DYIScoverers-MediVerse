@@ -111,11 +111,9 @@ const HospitalHome = () => {
                     const { patientAddr, hospitalAddr, diagnosis, creationDate } = item;
                     patientAddress = patientAddr;
                     const creationDateInt = parseInt(creationDate);
-                    const patientDiagnosis = diagnosis;
-                    const hAddr = hospitalAddr;
                     return {
-                        hospitalAddr: hAddr,
-                        diagnosis: patientDiagnosis,
+                        hospitalAddr,
+                        diagnosis,
                         creationDate: creationDateInt
                     };
                 });
