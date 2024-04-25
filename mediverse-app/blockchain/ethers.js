@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'; // Correct import
+import ethers from 'ethers';
 
 let provider;
 
