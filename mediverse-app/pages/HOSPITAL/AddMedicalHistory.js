@@ -193,7 +193,7 @@ const addMedicalHistory = () => {
                     //console.log("Transaction Hash:", receipt.transactionHash);
                     toast.success('Medical History Successfully Added!');
                     setIsLoading(false);
-                    router.push('/HOSPITAL/PatientRecordsHospital/');
+                    // router.push('/HOSPITAL/PatientRecordsHospital/');
                 } catch (error) {
                     toast.error('Patient is not registered.');
                     //console.error('Error sending transaction:', error.message);
