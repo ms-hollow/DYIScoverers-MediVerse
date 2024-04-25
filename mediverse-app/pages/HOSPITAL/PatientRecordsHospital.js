@@ -44,32 +44,20 @@ const MedicalHistoryPatient = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
-                let hospitalName;
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
                     await setAddress();
                     return;
                 }
-    
-                //* Retrieve the hospital currently logged in
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                //hospitalName = hospitalInfo[0]; //* Get the hospital name
-    
+
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const [patientAddr, admission, creationDate] = item;
                     return {
                         patientAddr,
-                        hospitalAddr,
-                        physician,
-                        diagnosis,
-                        signsAndSymptoms,
-                        treatmentProcedure,
-                        tests,
-                        medications,
                         admission,
                         creationDate
                     };
@@ -95,7 +83,6 @@ const MedicalHistoryPatient = () => {
                     return {
                         patientAddr: item.patientAddr,
                         patientName: "", // Fetch patient name here
-                        physician: item.physician,
                         hospitalName: splitAdmission[1],
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
@@ -103,6 +90,8 @@ const MedicalHistoryPatient = () => {
                         creationDate: item.creationDate
                     };
                 });
+
+                console.log(modifiedMedicalHistory);
     
                 // Fetch patient names for each medical record
                 const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
@@ -115,18 +104,6 @@ const MedicalHistoryPatient = () => {
     
 
                 setMedicalHistory(modifiedMedicalHistory);
-
-                // const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
-
-                // if (results.length > 0) {
-                //     console.log("Found:", results);
-                //     setMedicalHistory(results);    
-                // } else if (searchQuery.trim() === '') {
-                //     setMedicalHistory(modifiedMedicalHistory);      
-                // } else {
-                //     console.log("No matching entry found.");
-                //     alert("No matching entry found.");
-                // }
                 
                 let searchQueryLower;
                 if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {

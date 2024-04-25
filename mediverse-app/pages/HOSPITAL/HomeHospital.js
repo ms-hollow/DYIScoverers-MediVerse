@@ -108,29 +108,17 @@ const HospitalHome = () => {
                 console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const [patientAddr, creationDate] = item;
                     patientAddress = patientAddr;
                     const creationDateInt = parseInt(creationDate);
                     return {
-                        patientAddr,
-                        hospitalAddr,
-                        physician,
-                        diagnosis,
-                        signsAndSymptoms,
-                        treatmentProcedure,
-                        tests,
-                        medications,
-                        admission,
                         creationDate: creationDateInt
                     };
                 });
 
                 console.log('parsed medical history', parsedMedicalHistory);
-
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
-
                 console.log(filteredMedicalHistory);
-
                 const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
                 //console.log(patientAddrAndCreationDate);
 
