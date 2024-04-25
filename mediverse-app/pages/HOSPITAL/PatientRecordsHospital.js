@@ -56,10 +56,13 @@ const MedicalHistoryPatient = () => {
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const { patientAddr, admission, creationDate } = item;
+                    const pAddr = patientAddr;
+                    const admssn = admission;
+                    const cDate = creationDate;
                     return {
-                        patientAddr,
-                        admission,
-                        creationDate
+                        patientAddr: pAddr,
+                        admission: admssn,
+                        creationDate: cDate
                     };
                 });
     
