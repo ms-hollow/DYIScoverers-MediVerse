@@ -8,25 +8,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
+import provider from '../../blockchain/ethers';
 import mvContract from "../../blockchain/mediverse"; // ABI
-
-
-// export async function getStaticProps() {
-//     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
-//     const jsonData1 = fs.readFileSync(filePath1, 'utf8');
-//     const data1 = JSON.parse(jsonData1);
-
-//     const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
-//     const jsonData2 = fs.readFileSync(filePath2, 'utf8');
-//     const data2 = JSON.parse(jsonData2);
-
-//     return {
-//         props: {
-//             data1, data2
-//         }
-//     };
-// }
 
 const HospitalHome = () => {
     const router = useRouter();
@@ -39,7 +23,7 @@ const HospitalHome = () => {
     // Function to set the hospital address
     const setAddress = async () => {
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {

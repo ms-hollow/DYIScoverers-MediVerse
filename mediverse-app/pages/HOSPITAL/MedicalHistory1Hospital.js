@@ -5,7 +5,8 @@ import path from 'path';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
+import provider from '../../blockchain/ethers';
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -21,7 +22,7 @@ const MedicalHistoryPatient = () => {
     // Function to set the hospital address
     const setAddress = async () => {
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             setHospitalAddress(accounts[0]); // Set the hospital address
         } catch (error) {

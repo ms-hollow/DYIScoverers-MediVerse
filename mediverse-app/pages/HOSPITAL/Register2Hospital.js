@@ -4,7 +4,8 @@ import styles from '../../styles/registerHospital.module.css'; /** "../" means, 
 import Link from "next/link";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
+import provider from '../../blockchain/ethers';
 import mvContract from "../../blockchain/mediverse";
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
@@ -40,7 +41,7 @@ const Register2Hospital = () => {
         //console.log('Form submitted:', formData);
         setIsLoading(true);
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
             //console.log("Transaction Hash:", receipt.transactionHash);

@@ -2,7 +2,8 @@ import Layout from '../../components/HomeSidebarHeader.js'
 import styles from '../../styles/medicalHistoryHospital.module.css';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+// import web3 from "../../blockchain/web3";
+import provider from '../../blockchain/ethers';
 import mvContract from '../../blockchain/mediverse';
 
 import ToastWrapper from "@/components/ToastWrapper";
@@ -65,7 +66,7 @@ const MedicalHistoryHospital = () => {
 
     const setAddress = async () => {
         try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            const accounts = await provider.getAccounts(); // Get the accounts from MetaMask
             //console.log("Account:", accounts[0]);
             setPatientAddress(accounts[0]);
         } catch (error) {
