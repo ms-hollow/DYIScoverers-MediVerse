@@ -124,60 +124,50 @@ const MedicalHistoryHospital = () => {
                 
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis: diag, signsAndSymptoms: symptoms, treatmentProcedure: treatment, tests: testList, medications: meds, admission: adm, creationDate} = item;
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
-
-                    if (diagnosis.includes('~')) {
-                        diagnosis = diagnosis.split('~').map(diagnosis => diagnosis.split('+'));
-                        //console.log(item.diagnosis); 
+                
+                    let diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission;
+                
+                    if (diag.includes('~')) {
+                        diagnosis = diag.split('~').map(diagnosis => diagnosis.split('+'));
                     } else {
-                        diagnosis = [diagnosis.split('+')];
-                        //console.log(item.diagnosis); 
+                        diagnosis = [diag.split('+')];
                     }
-
-                    if (signsAndSymptoms.includes('~')) {
-                        signsAndSymptoms = signsAndSymptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
-                        //console.log(item.signsAndSymptoms); 
+                
+                    if (symptoms.includes('~')) {
+                        signsAndSymptoms = symptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
                     } else {
-                        signsAndSymptoms = [signsAndSymptoms.split('+')];
-                        //console.log(item.signsAndSymptoms); 
+                        signsAndSymptoms = [symptoms.split('+')];
                     }
-
-                    if (treatmentProcedure.includes('~')) {
-                        treatmentProcedure = treatmentProcedure.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
-                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                
+                    if (treatment.includes('~')) {
+                        treatmentProcedure = treatment.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
                     } else {
-                        treatmentProcedure = [treatmentProcedure.split('+')];
-                        //console.log(item.treatmentProcedure); // Use item.signsAndSymptoms here
+                        treatmentProcedure = [treatment.split('+')];
                     }
-
-                    if (tests.includes('~')) {
-                        tests = tests.split('~').map(tests => tests.split('+'));
-                        //console.log(item.tests); 
+                
+                    if (testList.includes('~')) {
+                        tests = testList.split('~').map(tests => tests.split('+'));
                     } else {
-                        tests = [tests.split('+')];
-                        //console.log(item.tests); 
+                        tests = [testList.split('+')];
                     }
-
-                    if (medications.includes('~')) {
-                        medications= medications.split('~').map(medications => medications.split('+'));
-                        //console.log(item.medications); 
+                
+                    if (meds.includes('~')) {
+                        medications = meds.split('~').map(medications => medications.split('+'));
                     } else {
-                        medications = [medications.split('+')];
-                        //console.log(item.medications); 
+                        medications = [meds.split('+')];
                     }
-
-                    if (admission.includes('~')) {
-                        admission = admission.split('~').map(admission => admission.split('+'));
-                        //console.log(item.admission); 
+                
+                    if (adm.includes('~')) {
+                        admission = adm.split('~').map(admission => admission.split('+'));
                     } else {
-                        admission = [admission.split('+')];
-                        //console.log(item.admission); 
+                        admission = [adm.split('+')];
                     }
-
+                
                     return {
-                        patientAddr: patientAddr,
+                        patientAddr,
                         hospitalAddr,
                         physician,
                         diagnosis,
@@ -188,8 +178,7 @@ const MedicalHistoryHospital = () => {
                         admission,
                         patientAddr,
                         creationDate
-                    };
-                    
+                    };                    
                 });
                 console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
