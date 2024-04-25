@@ -5,7 +5,7 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
 /**
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
-const mvContract = new web3.eth.Contract(ContractABI, "0x627429c58F781AdFD9804D8eFfA5A07e46D974a5"); // for network
+const mvContract = new web3.eth.Contract(ContractABI, "0xe475599C0D109CA71afC0BEe3B78CBfB2ff01991"); // for network
 //const mvContract = new web3.eth.Contract(ContractABI, "0x9Da81dF7A09028519c266173000A3339a896A62a"); //for development
 
 /**
@@ -32,28 +32,28 @@ export default mvContract
 
 //    Replacing 'MediVerse'
 //    ---------------------
-//    > transaction hash:    0xa6508fdeb5a9d9fc2b8ff1f820fab75ae40a2ab052919951dbf8e12276e1fe30
-//    > Blocks: 1            Seconds: 8
-//    > contract address:    0x627429c58F781AdFD9804D8eFfA5A07e46D974a5
-//    > block number:        5772407
-//    > block timestamp:     1714023924
+//    > transaction hash:    0xfad91378639d9a6435cc0836bc45911b405ad6b564f3bbab4d90c07c6cfaf40a
+//    > Blocks: 0            Seconds: 8
+//    > contract address:    0xe475599C0D109CA71afC0BEe3B78CBfB2ff01991
+//    > block number:        5774147
+//    > block timestamp:     1714044948
 //    > account:             0x0074F4724FeB0B8b98A629335831E3429Afb0a93
-//    > balance:             2.298911521558155231
+//    > balance:             1.390148396196333849
 //    > gas used:            4897010 (0x4ab8f2)
-//    > gas price:           2.500000079 gwei
+//    > gas price:           6.425133455 gwei
 //    > value sent:          0 ETH
-//    > total cost:          0.01224252538686379 ETH
+//    > total cost:          0.03146394278046955 ETH
 
 //    Pausing for 2 confirmations...
 
 //    -------------------------------
-//    > confirmation number: 1 (block: 5772408)
-//    > confirmation number: 2 (block: 5772409)
+//    > confirmation number: 1 (block: 5774148)
+//    > confirmation number: 2 (block: 5774149)
 //    > Saving artifacts
 //    -------------------------------------
-//    > Total cost:     0.01224252538686379 ETH
+//    > Total cost:     0.03146394278046955 ETH
 
 // Summary
 // =======
 // > Total deployments:   1
-// > Final cost:          0.01224252538686379 ETH
+// > Final cost:          0.03146394278046955 ETH

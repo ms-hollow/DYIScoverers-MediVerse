@@ -194,10 +194,9 @@ const MedicalHistoryPatient = () => {
                         <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
                             <p className={styles.diaAttrb}>{record.patientName}</p>
                             <p>{record.hospitalName}</p>
-                            <p>{record.physician}</p>
                             <p>{record.admissionDate}</p>
                             <p>{record.dischargeDate}</p>
-                            <p>{record.stayLength}</p>
+                            <p>{record.lengthOfStay}</p>
                         </div>
                     ))}
                 </div>

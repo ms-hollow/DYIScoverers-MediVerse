@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
-import AccountDropdown from '/components/accountIconDropdown.js';
+import AccountDropdown from '/components/accountIconDropdownHospital.js';
 import { useRouter } from 'next/router';
 
 const PatientRecordsHeader = ({children, pageName}) => {
