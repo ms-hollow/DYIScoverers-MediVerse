@@ -55,7 +55,7 @@ const MedicalHistoryPatient = () => {
                 console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, admission, creationDate] = item;
+                    const { patientAddr, admission, creationDate } = item;
                     return {
                         patientAddr,
                         admission,

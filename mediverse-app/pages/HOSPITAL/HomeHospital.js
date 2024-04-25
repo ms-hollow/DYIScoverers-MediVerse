@@ -108,7 +108,7 @@ const HospitalHome = () => {
                 console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, creationDate] = item;
+                    const { patientAddr, creationDate } = item;
                     patientAddress = patientAddr;
                     const creationDateInt = parseInt(creationDate);
                     return {
