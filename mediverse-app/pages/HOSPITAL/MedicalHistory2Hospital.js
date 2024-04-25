@@ -203,7 +203,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 const diagnosisNames = [];
                 const dateOfDiagnoses = [];
