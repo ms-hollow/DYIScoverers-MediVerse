@@ -10,7 +10,7 @@ if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
     web3 = new Web3(window.web3.currentProvider);
 } else {
     // Non-dapp browsers or when MetaMask is not available
-    const provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/e1e60ac355c7431fa8f20fe0e9482324');
+    const provider = new Web3.providers.HttpProvider('https://eth-sepolia.g.alchemy.com/v2/rmGdl7bXf8ZITQxpNjpKc_9RrOnC0wYU');
     web3 = new Web3(provider);
 }
 

@@ -73,7 +73,7 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider({
         privateKeys: private_keys,
-        providerOrUrl: 'https://sepolia.infura.io/v3/e1e60ac355c7431fa8f20fe0e9482324',
+        providerOrUrl: 'https://eth-sepolia.g.alchemy.com/v2/rmGdl7bXf8ZITQxpNjpKc_9RrOnC0wYU',
         numberOfAddresses: 1
       }),
       network_id: 11155111,       // Ropsten's id
