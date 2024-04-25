@@ -59,7 +59,7 @@ const MedicalHistoryPatient = () => {
                 console.log("Get all medical record of specific patient", medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     return {
                         patientAddr,
                         hospitalAddr,
