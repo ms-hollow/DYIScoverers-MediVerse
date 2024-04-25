@@ -419,8 +419,8 @@
   }
   
   @media (min-width: 476px) and (max-width: 768px) {
-    .container {
-      padding: 7vw; 
+    .formContainer {
+      padding: 2vw; 
     }
     
     .formField {
@@ -477,7 +477,7 @@
     .formContainer {
       max-width: 70%;
       margin: 10% auto;
-      padding: 7vw;
+      padding: 2vw;
     }
   
     .backButton {
@@ -490,7 +490,7 @@
     .formContainer {
       max-width: 65%;
       margin: 6% auto;
-      padding: 7vw;
+      padding: 2vw;
     }
   
     .backButton {

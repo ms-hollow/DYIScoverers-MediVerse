@@ -169,6 +169,7 @@ flex: 5;
   font-weight: bold;
 }
 
+.formFieldNum,
 .formFieldNum_med {
   flex: 1.5;
 }
@@ -207,7 +208,6 @@ flex: 5;
   background-color: var(--blue);
   color: white;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 .addMedicalHistoryButton {
@@ -222,7 +222,6 @@ flex: 5;
   background-color: var(--blue);
   color: white;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 .addMedicalHistoryButton:hover,
@@ -450,11 +449,11 @@ color: var(--cyan);
 
  @media (max-width: 480px) {
   /* Further decrease font sizes for smaller screens */
+
   .formTitle {
       font-size: 100px;
   }
 
-  .formRowTitle,
   .formHeader {
       font-size: 10px;
   }
@@ -468,14 +467,19 @@ color: var(--cyan);
       font-size: 8px;
   }
 
-  .addMedicalHistoryButton
   .submitButton {
-    width: 50%; 
+    width: 60%; 
     font-size: 10px;
   }
+
+  .addButton {
+    font-size: 10px;
+  }
+
 }
 
 @media (max-width: 768px) {
+
   .formContainer {
       width: 90%; 
   }
@@ -490,22 +494,13 @@ color: var(--cyan);
       font-size: 9px; /* Decrease font size for smaller screens */
   }
 
+  .formHeader, 
   .formRowTitle_sANDs,
   .formRowTitle_TP,
   .formRowTitle_test,
   .formRowTitle_medication,
   .formRowTitle_admission{
       display: none; /* Hide the headers for smaller screens */
-  }
-
-  .formRowTitle
-  .formHeader {
-      display: none; /* Hide the headers for smaller screens */
-  }
-
-  .formRowTitle {
-    display: block; 
-    margin-bottom: 5px; 
   }
 
   .formRow {
@@ -560,7 +555,5 @@ color: var(--cyan);
     padding-right: 10px; 
     overflow-x: auto;
   }
-
-
 }
 
