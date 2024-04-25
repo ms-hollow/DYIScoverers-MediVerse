@@ -113,7 +113,7 @@ const MedicalHistoryPatient = () => {
                 });
     
 
-                //setMedicalHistory(modifiedMedicalHistory);
+                setMedicalHistory(modifiedMedicalHistory);
 
                 // const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQuery.toLowerCase()));
 

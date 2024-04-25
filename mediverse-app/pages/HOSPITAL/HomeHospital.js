@@ -124,11 +124,11 @@ const HospitalHome = () => {
                     };
                 });
 
-                //console.log(parsedMedicalHistory);
+                console.log(parsedMedicalHistory);
 
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
 
-                //console.log(filteredMedicalHistory);
+                console.log(filteredMedicalHistory);
 
                 const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
                 //console.log(patientAddrAndCreationDate);
