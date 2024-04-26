@@ -4,7 +4,7 @@ import styles from '../../styles/register.module.css'; /** "../" means, lalabas 
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
@@ -33,6 +33,9 @@ const Register2Patient = () => {
         region: ''
     });
 
+    const dobInputRef = useRef(null);
+    const [dobValue, setDobValue] = useState('');
+
     const handleChange = (e) => {
         if (e.target.name === 'gender') {
             setFormData({
@@ -40,9 +43,10 @@ const Register2Patient = () => {
                 gender: e.target.value,
             });
         } else if (e.target.name === 'dob') {
+            setDobValue(e.target.value); // Update dobValue with the selected date
             setFormData({
-                ...formData,
-                dob: e.target.value,
+              ...formData,
+              dob: e.target.value,
             });
         } else {
             setFormData({
@@ -51,6 +55,19 @@ const Register2Patient = () => {
             });
         }
     };
+
+    const handleDobFocus = () => {
+        if (dobInputRef.current) {
+            dobInputRef.current.type = 'date';
+        }
+    };
+
+    const handleDobBlur = () => {
+        if (dobInputRef.current) {
+            dobInputRef.current.type = dobValue ? 'date' : 'text';
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -141,7 +158,7 @@ const Register2Patient = () => {
                             </select>
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="birth-date" name="dob" placeholder="Date of Birth" required onChange={handleChange} />
+                            <input type="text" id="birth-date" name="dob" placeholder="Date of Birth" required ref={dobInputRef} onChange={handleChange} onFocus={handleDobFocus} onBlur={handleDobBlur} value={dobValue}/>
                         </div>
                     </div>
 
