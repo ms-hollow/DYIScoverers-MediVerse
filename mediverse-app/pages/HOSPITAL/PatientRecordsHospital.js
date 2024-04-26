@@ -141,7 +141,7 @@ const MedicalHistoryPatient = () => {
         // console.log(creationDate);
        if (isAuthorized){
             console.log(creationDate);
-            const id = creationDate.getTime();;
+            const id = parseInt(creationDate);
             router.push({
                 pathname: '/HOSPITAL/MedicalHistory1Hospital/',
                 query: { patientAddr, id }

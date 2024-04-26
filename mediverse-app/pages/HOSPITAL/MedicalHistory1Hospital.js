@@ -126,7 +126,7 @@ const MedicalHistoryPatient = () => {
 
     const clickRow = (patientAddr, creationDate) => {
         console.log(creationDate);
-        const id = creationDate.getTime();
+        const id = parseInt(creationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, id }
