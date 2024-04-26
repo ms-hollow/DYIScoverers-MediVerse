@@ -197,7 +197,6 @@ const UpdateMedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    patientGender,
                     hospitalName,
                     physicianName,
                     diagnosis: {
@@ -508,13 +507,7 @@ const UpdateMedicalHistoryHospital = () => {
         const updatedTest = concatenatedTest ? `${newTest}~${concatenatedTest}` : newTest;
         const updatedMedication = concatenatedMedication ? `${newMedications}~${concatenatedMedication}` : newMedications;
         const updatedAdmission = concatenatedAdmission ? `${newAdmission}~${concatenatedAdmission}` : newAdmission;
-        
-        // console.log(patientDiagnosis);
-        // console.log(updatedSymptoms);
-        // console.log(updatedTP);
-        // console.log(updatedTest);
-        // console.log(updatedMedication);
-        // console.log(updatedAdmission);
+    
         
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {
@@ -575,7 +568,7 @@ const UpdateMedicalHistoryHospital = () => {
                             <input type="text" id="patient-Age" name="patientAge" value={medicalHistory.patientAge} placeholder="Age" required onChange={handleChange}readOnly/>
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="patient-dob" name="patientDob"  value={medicalHistory.patientDob} placeholder="Gender" required onChange={handleChange} readOnly/>
+                            <input type="text" id="patient-dob" name="patientDob"  value={medicalHistory.patientDob} placeholder="Gender" required onChange={handleChange} readOnly/>
                         </div>
                     </div>
             
