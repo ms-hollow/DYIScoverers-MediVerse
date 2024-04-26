@@ -552,12 +552,12 @@ const UpdateMedicalHistoryHospital = () => {
         const updatedMedication = concatenatedMedication ? `${newMedications}~${concatenatedMedication}` : newMedications;
         const updatedAdmission = concatenatedAdmission ? `${newAdmission}~${concatenatedAdmission}` : newAdmission;
         
-        // console.log(patientDiagnosis);
-        // console.log(updatedSymptoms);
-        // console.log(updatedTP);
-        // console.log(updatedTest);
-        // console.log(updatedMedication);
-        // console.log(updatedAdmission);
+        console.log(patientDiagnosis);
+        console.log(updatedSymptoms);
+        console.log(updatedTP);
+        console.log(updatedTest);
+        console.log(updatedMedication);
+        console.log(updatedAdmission);
         
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {
