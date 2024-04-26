@@ -214,7 +214,7 @@ const addMedicalHistory = () => {
         <Layout pageName = "Add Medical History">
             <div className={styles.formContainer}>
                 <form className={styles.medicalHistoryForm} onSubmit={handleSubmit}>   
-                    <div className={styles.formTitle}>Patient Address</div>
+                    <div className={styles.formTitle}>Patient MetaMask Address</div>
                         <div className={styles.formRow}>
                             <div className={styles.formField}>
                                 <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />

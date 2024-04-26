@@ -107,7 +107,7 @@ const UpdateMedicalHistoryHospital = () => {
                 
                 
                 const getPatientMedicalHistory = patientRecords.filter(record => {
-                    const creationDateConverted = item.creationDate.toString();
+                    const creationDateConverted = record.creationDate.toString();
                     return creationDateConverted === creationDateString;
                 });
                 //console.log(getPatientMedicalHistory);
