@@ -142,7 +142,7 @@ const MedicalHistoryPatient = () => {
        if (isAuthorized){
             router.push({
                 pathname: '/HOSPITAL/MedicalHistory1Hospital/',
-                query: { patientAddr }
+                query: { patientAddr, creationDate }
             });
        } else {
             toast.error("You don't have permission do view this record.");

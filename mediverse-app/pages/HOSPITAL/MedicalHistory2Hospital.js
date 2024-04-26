@@ -19,8 +19,11 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const { patientAddr, id } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
+    console.log(creationDate);
+
+    const id = parseInt(creationDate);
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
         patientName: '',
