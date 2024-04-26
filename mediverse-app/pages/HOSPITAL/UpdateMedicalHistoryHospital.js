@@ -301,7 +301,6 @@ const UpdateMedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    patientGender,
                     hospitalName,
                     physicianName,
                     diagnosis: {
