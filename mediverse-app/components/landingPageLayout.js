@@ -8,7 +8,7 @@ import LandingPageHeader from "./landingPageHeader";
 const LandingPageLayout = ({ children }) => {
   return (
     <div className="content">
-      <LandingPageHeader />
+      <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient"/>
         {children}
       <Footer />
     </div>
