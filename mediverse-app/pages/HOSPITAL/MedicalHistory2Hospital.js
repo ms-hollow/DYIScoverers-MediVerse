@@ -349,6 +349,58 @@ const MedicalHistoryHospital = () => {
                         lengthsOfStay: lengthOfStay
                     }
                 };
+
+                modifiedPatientMedicalHistory.forEach(item => {
+                    // Push diagnosis information
+                    item.diagnosis.names.forEach(diagnosis => medicalHistory.diagnosis.names.push(diagnosis.diagnosisName));
+                    item.diagnosis.dates.forEach(diagnosis => medicalHistory.diagnosis.dates.push(diagnosis.dateOfDiagnosis));
+                    item.diagnosis.descriptions.forEach(diagnosis => medicalHistory.diagnosis.descriptions.push(diagnosis.diagnosisDescription));
+                
+                    // Push symptoms information
+                    item.signsAndSymptoms.forEach(symptom => {
+                        medicalHistory.symptoms.names.push(symptom.symptomName);
+                        medicalHistory.symptoms.duration.push(symptom.duration);
+                        medicalHistory.symptoms.severity.push(symptom.severity);
+                        medicalHistory.symptoms.location.push(symptom.location);
+                    });
+                
+                    // Push treatment procedure information
+                    item.treatmentProcedure.forEach(procedure => {
+                        medicalHistory.treatmentProcedure.names.push(procedure.name);
+                        medicalHistory.treatmentProcedure.medicalProviders.push(procedure.medicalProvider);
+                        medicalHistory.treatmentProcedure.dateStarted.push(procedure.dateStarted);
+                        medicalHistory.treatmentProcedure.dateEnd.push(procedure.dateEnd);
+                        medicalHistory.treatmentProcedure.duration.push(procedure.duration);
+                    });
+                
+                    // Push tests information
+                    item.tests.forEach(test => {
+                        medicalHistory.tests.types.push(test.type);
+                        medicalHistory.tests.orderingPhysicians.push(test.orderingPhysician);
+                        medicalHistory.tests.dates.push(test.date);
+                        medicalHistory.tests.reviewingPhysicians.push(test.reviewingPhysician);
+                        medicalHistory.tests.results.push(test.result);
+                    });
+                
+                    // Push medications information
+                    item.medications.forEach(medication => {
+                        medicalHistory.medications.names.push(medication.name);
+                        medicalHistory.medications.prescriptionDates.push(medication.date);
+                        medicalHistory.medications.prescribingPhysicians.push(medication.physician);
+                        medicalHistory.medications.frequencies.push(medication.frequency);
+                        medicalHistory.medications.durations.push(medication.duration);
+                        medicalHistory.medications.endDates.push(medication.endDate);
+                    });
+                
+                    // Push admissions information
+                    item.admission.forEach(admission => {
+                        medicalHistory.admissions.hospitalNames.push(admission.hospitalName);
+                        medicalHistory.admissions.admissionDates.push(admission.admissionDate);
+                        medicalHistory.admissions.dischargeDates.push(admission.dischargeDate);
+                        medicalHistory.admissions.lengthsOfStay.push(admission.stayLength);
+                    });
+                });
+
                 setMedicalHistory(medicalHistory);
                 console.log(medicalHistory)
             } catch (error) {
