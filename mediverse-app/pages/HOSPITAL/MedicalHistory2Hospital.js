@@ -301,54 +301,56 @@ const MedicalHistoryHospital = () => {
                         });
                     }
                 });
+
+                const medicalHistory = modifiedPatientMedicalHistory;
             
-                const medicalHistory = {
-                    patientName,
-                    patientAge,
-                    patientDob,
-                    patientGender,
-                    hospitalName,
-                    physicianName,
-                    diagnosis: {
-                        names: modifiedPatientMedicalHistory.diagnosis.diagnosisNames,
-                        dates: modifiedPatientMedicalHistory.diagnosis.dateOfDiagnoses,
-                        descriptions: modifiedPatientMedicalHistory.diagnosis.diagnosisDescriptions
-                    },
-                    symptoms: {
-                        names: modifiedPatientMedicalHistory.signsAndSymptoms.symptomNames,
-                        duration: modifiedPatientMedicalHistory.signsAndSymptoms.symptomDuration,
-                        severity: modifiedPatientMedicalHistory.signsAndSymptoms.symptomSeverity,
-                        location: modifiedPatientMedicalHistory.signsAndSymptoms.symptomLocation
-                    },
-                    treatmentProcedure: {
-                        names: modifiedPatientMedicalHistory.treatmentProcedure.tpName,
-                        medicalProviders: modifiedPatientMedicalHistory.treatmentProcedure.tpMedicalProvider,
-                        dateStarted: modifiedPatientMedicalHistory.treatmentProcedure.tpDateStarted,
-                        dateEnd: modifiedPatientMedicalHistory.treatmentProcedure.tpDateEnd,
-                        duration: modifiedPatientMedicalHistory.treatmentProcedure.tpDuration
-                    },
-                    tests: {
-                        types: modifiedPatientMedicalHistory.tests.testType,
-                        orderingPhysicians: modifiedPatientMedicalHistory.tests.testOrderingPhysician,
-                        dates: modifiedPatientMedicalHistory.tests.testDate,
-                        reviewingPhysicians: modifiedPatientMedicalHistory.tests.testReviewingPhysician,
-                        results: modifiedPatientMedicalHistory.tests.testResult
-                    },
-                    medications: {
-                        names: modifiedPatientMedicalHistory.medications.medicationName,
-                        prescriptionDates: modifiedPatientMedicalHistory.medications.prescriptionDate,
-                        prescribingPhysicians: modifiedPatientMedicalHistory.medications.prescribingPhysician,
-                        frequencies: modifiedPatientMedicalHistory.medications.medicationFrequency,
-                        durations:modifiedPatientMedicalHistory.medications. medicationDuration,
-                        endDates: modifiedPatientMedicalHistory.medications.medicationEndDate
-                    },
-                    admissions: {
-                        hospitalNames: modifiedPatientMedicalHistory.admission.admissionHospitalName,
-                        admissionDates: modifiedPatientMedicalHistory.admission.aadmissionDate,
-                        dischargeDates: modifiedPatientMedicalHistory.admission.adischargeDate,
-                        lengthsOfStay: modifiedPatientMedicalHistory.admission.lengthOfStay
-                    }
-                };
+                // const medicalHistory = {
+                //     patientName,
+                //     patientAge,
+                //     patientDob,
+                //     patientGender,
+                //     hospitalName,
+                //     physicianName,
+                //     diagnosis: {
+                //         names: diagnosisNames,
+                //         dates: dateOfDiagnoses,
+                //         descriptions: diagnosisDescriptions
+                //     },
+                //     symptoms: {
+                //         names: symptomNames,
+                //         duration: symptomDuration,
+                //         severity: symptomSeverity,
+                //         location: symptomLocation
+                //     },
+                //     treatmentProcedure: {
+                //         names: tpName,
+                //         medicalProviders: tpMedicalProvider,
+                //         dateStarted: tpDateStarted,
+                //         dateEnd: tpDateEnd,
+                //         duration: tpDuration
+                //     },
+                //     tests: {
+                //         types: testType,
+                //         orderingPhysicians: testOrderingPhysician,
+                //         dates: testDate,
+                //         reviewingPhysicians: testReviewingPhysician,
+                //         results: testResult
+                //     },
+                //     medications: {
+                //         names: medicationName,
+                //         prescriptionDates: prescriptionDate,
+                //         prescribingPhysicians: prescribingPhysician,
+                //         frequencies: medicationFrequency,
+                //         durations: medicationDuration,
+                //         endDates: medicationEndDate
+                //     },
+                //     admissions: {
+                //         hospitalNames: admissionHospitalName,
+                //         admissionDates: aadmissionDate,
+                //         dischargeDates: adischargeDate,
+                //         lengthsOfStay: lengthOfStay
+                //     }
+                // };
 
                 setMedicalHistory(medicalHistory);
                 console.log(medicalHistory)
