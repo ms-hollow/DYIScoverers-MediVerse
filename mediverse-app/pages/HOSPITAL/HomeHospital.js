@@ -232,7 +232,9 @@ const HospitalHome = () => {
                 const processedMedicalHistoryData = await Promise.all(processedMedicalHistory);
 
                 const sortedMedicalHistory = processedMedicalHistoryData.sort((a, b) => {
-                    return new Date(b.creationDate) - new Date(a.creationDate);
+                    const dateA = parseInt(a.creationDate);
+                    const dateB = parseInt(b.creationDate);
+                    return dateB - dateA;
                 });
     
                 // Separate authorized and unauthorized records
