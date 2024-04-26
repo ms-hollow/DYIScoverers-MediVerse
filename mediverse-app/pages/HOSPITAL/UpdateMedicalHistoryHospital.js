@@ -549,9 +549,10 @@ const UpdateMedicalHistoryHospital = () => {
 
     const pushRoute = async (patientAddr, creationDate) => {
         await handleSubmit();
+        const creationDateString = creationDate.toString();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
+            query: { patientAddr, creationDateString }
         });
     };
 
@@ -982,7 +983,7 @@ const UpdateMedicalHistoryHospital = () => {
                     {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDate)} disabled={isLoading}> 
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDateString)} disabled={isLoading}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
