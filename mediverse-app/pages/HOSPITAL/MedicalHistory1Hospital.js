@@ -124,10 +124,10 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const clickRow = ( creationDate ) => {
+    const clickRow = (patientAddr, creationDate) => {
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { creationDate }
+            query: { patientAddr, creationDate }
         });
     };
 
@@ -145,7 +145,7 @@ const MedicalHistoryPatient = () => {
 
                 <div className={styles.dataContainer}>
                     {medicalHistory.map((record, index) => (
-                        <div className={styles.data} key={index} onClick={() => clickRow(record.creationDate)}>
+                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
                             <p className={styles.diaAttrb}>{record.diagnosis}</p>
                             <p>{record.hospitalName}</p>
                             <p>{record.physician}</p>
