@@ -16,8 +16,8 @@ const MedicalHistoryPatient = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
     const [hospitalAddress, setHospitalAddress] = useState('');
-    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
-    
+    const { patientAddr, creationDateString } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    console.log(creationDateString);
     // Function to set the hospital address
     const setAddress = async () => {
         try {

@@ -362,6 +362,7 @@ const MedicalHistoryHospital = () => {
     }, [hospitalAddress]);
 
     const toggleButton = (patientAddr, creationDateString) => {
+        console.log(creationDateString);
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
