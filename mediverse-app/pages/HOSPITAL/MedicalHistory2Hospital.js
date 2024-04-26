@@ -115,8 +115,9 @@ const MedicalHistoryHospital = () => {
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateConverted = parseInt(item.creationDate);
-                    return creationDateConverted === id;
+                    const creationDateString = item.creationDate.toString();
+                    const idString = id.toString();
+                    return creationDateString === idString;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     physicianName = physician;
