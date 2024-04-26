@@ -285,7 +285,7 @@ const HospitalHome = () => {
                 <div className={styles.bottomHalf_container}>
                     <div className={styles.recentPatients_container}>
                         <div className={styles.title}>
-                            <p>Recent Patiens</p>
+                            <p>Recent Patients</p>
                             <Link href="/HOSPITAL/PatientRecordsHospital">
                                 <p>View All &gt;</p>
                             </Link>

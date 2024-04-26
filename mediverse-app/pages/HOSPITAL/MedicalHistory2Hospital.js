@@ -124,7 +124,7 @@ const MedicalHistoryHospital = () => {
                     return {
                         patientAddr,
                         hospitalAddr,
-                        physicianName: physician,
+                        physicianName,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,

@@ -74,8 +74,8 @@ const HomePatient = () => {
                     const splitAdmission = item.admission.split('+');
                     // console.log("Admission Date:", splitAdmission[2]);
                     // console.log("Discharge Date:", splitAdmission[3]);
-                    const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
-                    const creationDateInt = parseInt(formattedDate);
+                    const creationDateBigInt = BigInt(item.creationDate);
+                    const formattedDate = new Date(Number(creationDateBigInt) * 1000).toLocaleDateString();
                     return {
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,
@@ -83,7 +83,7 @@ const HomePatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate: creationDateInt
+                        creationDate: formattedDate
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);

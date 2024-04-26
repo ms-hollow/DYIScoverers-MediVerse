@@ -105,7 +105,7 @@ const MedicalHistoryHospital = () => {
                     return {
                         patientAddr,
                         hospitalAddr,
-                        physicianName: physician,
+                        physicianName,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,
@@ -186,7 +186,6 @@ const MedicalHistoryHospital = () => {
                     patientAge,
                     patientDob,
                     patientGender,
-                    hospitalName,
                     physicianName,
                     diagnosis: {
                         names: [],
@@ -291,7 +290,7 @@ const MedicalHistoryHospital = () => {
                         });
                     }
                 });
-                
+
                 setMedicalHistory(medicalHistory);
                 //console.log(medicalHistory)
             } catch (error) {
