@@ -591,7 +591,7 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const pushRoute = async (patientAddr, creationDateString) => {
+    const pushRoute = async () => {
         await handleSubmit();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
@@ -1026,7 +1026,7 @@ const UpdateMedicalHistoryHospital = () => {
                     {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDateString)} disabled={isLoading}> 
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={pushRoute} disabled={isLoading}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
