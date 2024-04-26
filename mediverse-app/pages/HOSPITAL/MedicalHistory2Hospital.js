@@ -301,8 +301,7 @@ const MedicalHistoryHospital = () => {
                         });
                     }
                 });
-                setMedicalHistory(modifiedPatientMedicalHistory);
-                
+            
                 const medicalHistory = {
                     patientName,
                     patientAge,
@@ -311,48 +310,48 @@ const MedicalHistoryHospital = () => {
                     hospitalName,
                     physicianName,
                     diagnosis: {
-                        names: diagnosisNames,
-                        dates: dateOfDiagnoses,
-                        descriptions: diagnosisDescriptions
+                        names: modifiedPatientMedicalHistory.diagnosis.diagnosisNames,
+                        dates: modifiedPatientMedicalHistory.diagnosis.dateOfDiagnoses,
+                        descriptions: modifiedPatientMedicalHistory.diagnosis.diagnosisDescriptions
                     },
                     symptoms: {
-                        names: symptomNames,
-                        duration: symptomDuration,
-                        severity: symptomSeverity,
-                        location: symptomLocation
+                        names: modifiedPatientMedicalHistory.signsAndSymptoms.symptomNames,
+                        duration: modifiedPatientMedicalHistory.signsAndSymptoms.symptomDuration,
+                        severity: modifiedPatientMedicalHistory.signsAndSymptoms.symptomSeverity,
+                        location: modifiedPatientMedicalHistory.signsAndSymptoms.symptomLocation
                     },
                     treatmentProcedure: {
-                        names: tpName,
-                        medicalProviders: tpMedicalProvider,
-                        dateStarted: tpDateStarted,
-                        dateEnd: tpDateEnd,
-                        duration: tpDuration
+                        names: modifiedPatientMedicalHistory.treatmentProcedure.tpName,
+                        medicalProviders: modifiedPatientMedicalHistory.treatmentProcedure.tpMedicalProvider,
+                        dateStarted: modifiedPatientMedicalHistory.treatmentProcedure.tpDateStarted,
+                        dateEnd: modifiedPatientMedicalHistory.treatmentProcedure.tpDateEnd,
+                        duration: modifiedPatientMedicalHistory.treatmentProcedure.tpDuration
                     },
                     tests: {
-                        types: testType,
-                        orderingPhysicians: testOrderingPhysician,
-                        dates: testDate,
-                        reviewingPhysicians: testReviewingPhysician,
-                        results: testResult
+                        types: modifiedPatientMedicalHistory.tests.testType,
+                        orderingPhysicians: modifiedPatientMedicalHistory.tests.testOrderingPhysician,
+                        dates: modifiedPatientMedicalHistory.tests.testDate,
+                        reviewingPhysicians: modifiedPatientMedicalHistory.tests.testReviewingPhysician,
+                        results: modifiedPatientMedicalHistory.tests.testResult
                     },
                     medications: {
-                        names: medicationName,
-                        prescriptionDates: prescriptionDate,
-                        prescribingPhysicians: prescribingPhysician,
-                        frequencies: medicationFrequency,
-                        durations: medicationDuration,
-                        endDates: medicationEndDate
+                        names: modifiedPatientMedicalHistory.medications.medicationName,
+                        prescriptionDates: modifiedPatientMedicalHistory.medications.prescriptionDate,
+                        prescribingPhysicians: modifiedPatientMedicalHistory.medications.prescribingPhysician,
+                        frequencies: modifiedPatientMedicalHistory.medications.medicationFrequency,
+                        durations:modifiedPatientMedicalHistory.medications. medicationDuration,
+                        endDates: modifiedPatientMedicalHistory.medications.medicationEndDate
                     },
                     admissions: {
-                        hospitalNames: admissionHospitalName,
-                        admissionDates: aadmissionDate,
-                        dischargeDates: adischargeDate,
-                        lengthsOfStay: lengthOfStay
+                        hospitalNames: modifiedPatientMedicalHistory.admission.admissionHospitalName,
+                        admissionDates: modifiedPatientMedicalHistory.admission.aadmissionDate,
+                        dischargeDates: modifiedPatientMedicalHistory.admission.adischargeDate,
+                        lengthsOfStay: modifiedPatientMedicalHistory.admission.lengthOfStay
                     }
                 };
 
-                // setMedicalHistory(medicalHistory);
-                // console.log(medicalHistory)
+                setMedicalHistory(medicalHistory);
+                console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
