@@ -114,75 +114,73 @@ const MedicalHistoryHospital = () => {
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
-                const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
-                
-                const getCreationDate = patientRecords.filter(entry => [entry.creationDate]);
-                console.log("creation Date: ", getCreationDate);
+             
+                const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.creationDate === creationDate);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
-                // const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                //     console.log("Items: ", item)
-                //     const {patientAddr, hospitalAddr, physician, diag, symptoms, treatment, testList, meds, adm, creationDate} = item;
-                //     physicianName = physician;
-                //     sethospitalAddrInHistory(hospitalAddr);
+                const parsedPatientMedicalHistory = filteredMedicalHistory.map(item => {
+                    console.log("Items: ", item)
+                    const {patientAddr, hospitalAddr, physician, diag, symptoms, treatment, testList, meds, adm, creationDate} = item;
+                    physicianName = physician;
+                    sethospitalAddrInHistory(hospitalAddr);
 
-                //     console.log(physician);
-                //     console.log(diag);
+                    console.log(physician);
+                    console.log(diag);
 
-                //     let diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission;
+                    let diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission;
 
-                //     if (diag.includes('~')) {
-                //         diagnosis = diag.split('~').map(diagnosis => diagnosis.split('+'));
-                //     } else {
-                //         diagnosis = [diag.split('+')];
-                //     }
+                    if (diag.includes('~')) {
+                        diagnosis = diag.split('~').map(diagnosis => diagnosis.split('+'));
+                    } else {
+                        diagnosis = [diag.split('+')];
+                    }
 
-                //     if (symptoms.includes('~')) {
-                //         signsAndSymptoms = symptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
-                //     } else {
-                //         signsAndSymptoms = [symptoms.split('+')];
-                //     }
+                    if (symptoms.includes('~')) {
+                        signsAndSymptoms = symptoms.split('~').map(signsAndSymptoms => signsAndSymptoms.split('+'));
+                    } else {
+                        signsAndSymptoms = [symptoms.split('+')];
+                    }
 
-                //     if (treatment.includes('~')) {
-                //         treatmentProcedure = treatment.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
-                //     } else {
-                //         treatmentProcedure = [treatment.split('+')];
-                //     }
+                    if (treatment.includes('~')) {
+                        treatmentProcedure = treatment.split('~').map(treatmentProcedure => treatmentProcedure.split('+'));
+                    } else {
+                        treatmentProcedure = [treatment.split('+')];
+                    }
 
-                //     if (testList.includes('~')) {
-                //         tests = testList.split('~').map(tests => tests.split('+'));
-                //     } else {
-                //         tests = [testList.split('+')];
-                //     }
+                    if (testList.includes('~')) {
+                        tests = testList.split('~').map(tests => tests.split('+'));
+                    } else {
+                        tests = [testList.split('+')];
+                    }
 
-                //     if (meds.includes('~')) {
-                //         medications = meds.split('~').map(medications => medications.split('+'));
-                //     } else {
-                //         medications = [meds.split('+')];
-                //     }
+                    if (meds.includes('~')) {
+                        medications = meds.split('~').map(medications => medications.split('+'));
+                    } else {
+                        medications = [meds.split('+')];
+                    }
 
-                //     if (adm.includes('~')) {
-                //         admission = adm.split('~').map(admission => admission.split('+'));
-                //     } else {
-                //         admission = [adm.split('+')];
-                //     }
+                    if (adm.includes('~')) {
+                        admission = adm.split('~').map(admission => admission.split('+'));
+                    } else {
+                        admission = [adm.split('+')];
+                    }
                     
-                //     return {
-                //         patientAddr: patientAddr,
-                //         hospitalAddr,
-                //         physician: physicianName,
-                //         diagnosis,
-                //         signsAndSymptoms,
-                //         treatmentProcedure,
-                //         tests,
-                //         medications,
-                //         admission,
-                //         creationDate
-                //     };
+                    return {
+                        patientAddr: patientAddr,
+                        hospitalAddr,
+                        physician: physicianName,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
                     
-                // });
-                // console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                });
+                console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 // const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
                 //     if (item.diagnosis.includes('~')) {
@@ -283,120 +281,120 @@ const MedicalHistoryHospital = () => {
                 //? Purose nito? Diba sa isang variable for example, signAndSymptoms, kapag nag add ka ng maraming data mahirap i-populate
                 //? 'yon sa table and hindi rin siya directly kasi meron silang kanya kanyang lugar na pagdidisplayan
 
-                // parsedPatientMedicalHistory.forEach(item => {
-                //     if (Array.isArray(item.diagnosis)) {
-                //         item.diagnosis.forEach(array => {
-                //             const {diagnosisName, dateOfDiagnosis, diagnosisDescription} = array;
-                //             diagnosisNames.push(diagnosisName);
-                //             dateOfDiagnoses.push(dateOfDiagnosis);
-                //             diagnosisDescriptions.push(diagnosisDescription);
-                //         });
-                //     }
+                parsedPatientMedicalHistory.forEach(item => {
+                    if (Array.isArray(item.diagnosis)) {
+                        item.diagnosis.forEach(array => {
+                            const {diagnosisName, dateOfDiagnosis, diagnosisDescription} = array;
+                            diagnosisNames.push(diagnosisName);
+                            dateOfDiagnoses.push(dateOfDiagnosis);
+                            diagnosisDescriptions.push(diagnosisDescription);
+                        });
+                    }
                 
-                //     if (Array.isArray(item.signsAndSymptoms)) {
-                //         item.signsAndSymptoms.forEach(array => {
-                //             const {_, symptomName, duration, severity, location} = array;
-                //             symptomNames.push(symptomName);
-                //             symptomDuration.push(duration);
-                //             symptomSeverity.push(severity);
-                //             symptomLocation.push(location);
-                //         });
-                //     }
+                    if (Array.isArray(item.signsAndSymptoms)) {
+                        item.signsAndSymptoms.forEach(array => {
+                            const {_, symptomName, duration, severity, location} = array;
+                            symptomNames.push(symptomName);
+                            symptomDuration.push(duration);
+                            symptomSeverity.push(severity);
+                            symptomLocation.push(location);
+                        });
+                    }
 
-                //     if (Array.isArray(item.treatmentProcedure)) {
-                //         item.treatmentProcedure.forEach(array => {
-                //             const {_, name, medicalProvider, dateStarted, dateEnd, duration} = array;
-                //             tpName.push(name);
-                //             tpMedicalProvider.push(medicalProvider);
-                //             tpDateStarted.push(dateStarted);
-                //             tpDateEnd.push(dateEnd);
-                //             tpDuration.push(duration);
-                //         });
-                //     }
+                    if (Array.isArray(item.treatmentProcedure)) {
+                        item.treatmentProcedure.forEach(array => {
+                            const {_, name, medicalProvider, dateStarted, dateEnd, duration} = array;
+                            tpName.push(name);
+                            tpMedicalProvider.push(medicalProvider);
+                            tpDateStarted.push(dateStarted);
+                            tpDateEnd.push(dateEnd);
+                            tpDuration.push(duration);
+                        });
+                    }
                 
-                //     if (Array.isArray(item.tests)) {
-                //         item.tests.forEach(array => {
-                //             const {_, type, orderingPhysician, date, reviewingPhysician, result} = array;
-                //             testType.push(type);
-                //             testOrderingPhysician.push(orderingPhysician);
-                //             testDate.push(date);
-                //             testReviewingPhysician.push(reviewingPhysician);
-                //             testResult.push(result);
-                //         });
-                //     }
+                    if (Array.isArray(item.tests)) {
+                        item.tests.forEach(array => {
+                            const {_, type, orderingPhysician, date, reviewingPhysician, result} = array;
+                            testType.push(type);
+                            testOrderingPhysician.push(orderingPhysician);
+                            testDate.push(date);
+                            testReviewingPhysician.push(reviewingPhysician);
+                            testResult.push(result);
+                        });
+                    }
                 
-                //     if (Array.isArray(item.medications)) {
-                //         item.medications.forEach(array => {
-                //             const {_, name, date, physician, frequency, duration, endDate} = array;
-                //             medicationName.push(name);
-                //             prescriptionDate.push(date);
-                //             prescribingPhysician.push(physician);
-                //             medicationFrequency.push(frequency);
-                //             medicationDuration.push(duration);
-                //             medicationEndDate.push(endDate);
-                //         });
-                //     }
+                    if (Array.isArray(item.medications)) {
+                        item.medications.forEach(array => {
+                            const {_, name, date, physician, frequency, duration, endDate} = array;
+                            medicationName.push(name);
+                            prescriptionDate.push(date);
+                            prescribingPhysician.push(physician);
+                            medicationFrequency.push(frequency);
+                            medicationDuration.push(duration);
+                            medicationEndDate.push(endDate);
+                        });
+                    }
                 
-                //     if (Array.isArray(item.admission)) {
-                //         item.admission.forEach(array => {
-                //             const {_, hospitalName, admissionDate, dischargeDate, stayLength} = array;
-                //             admissionHospitalName.push(hospitalName);
-                //             aadmissionDate.push(admissionDate);
-                //             adischargeDate.push(dischargeDate);
-                //             lengthOfStay.push(stayLength);
-                //         });
-                //     }
-                // });
+                    if (Array.isArray(item.admission)) {
+                        item.admission.forEach(array => {
+                            const {_, hospitalName, admissionDate, dischargeDate, stayLength} = array;
+                            admissionHospitalName.push(hospitalName);
+                            aadmissionDate.push(admissionDate);
+                            adischargeDate.push(dischargeDate);
+                            lengthOfStay.push(stayLength);
+                        });
+                    }
+                });
 
-                // const medicalHistory = {
-                //     patientName,
-                //     patientAge,
-                //     patientDob,
-                //     patientGender,
-                //     hospitalName,
-                //     physicianName,
-                //     diagnosis: {
-                //         names: diagnosisNames,
-                //         dates: dateOfDiagnoses,
-                //         descriptions: diagnosisDescriptions
-                //     },
-                //     symptoms: {
-                //         names: symptomNames,
-                //         duration: symptomDuration,
-                //         severity: symptomSeverity,
-                //         location: symptomLocation
-                //     },
-                //     treatmentProcedure: {
-                //         names: tpName,
-                //         medicalProviders: tpMedicalProvider,
-                //         dateStarted: tpDateStarted,
-                //         dateEnd: tpDateEnd,
-                //         duration: tpDuration
-                //     },
-                //     tests: {
-                //         types: testType,
-                //         orderingPhysicians: testOrderingPhysician,
-                //         dates: testDate,
-                //         reviewingPhysicians: testReviewingPhysician,
-                //         results: testResult
-                //     },
-                //     medications: {
-                //         names: medicationName,
-                //         prescriptionDates: prescriptionDate,
-                //         prescribingPhysicians: prescribingPhysician,
-                //         frequencies: medicationFrequency,
-                //         durations: medicationDuration,
-                //         endDates: medicationEndDate
-                //     },
-                //     admissions: {
-                //         hospitalNames: admissionHospitalName,
-                //         admissionDates: aadmissionDate,
-                //         dischargeDates: adischargeDate,
-                //         lengthsOfStay: lengthOfStay
-                //     }
-                // };
-                // setMedicalHistory(medicalHistory);
-                // console.log(medicalHistory)
+                const medicalHistory = {
+                    patientName,
+                    patientAge,
+                    patientDob,
+                    patientGender,
+                    hospitalName,
+                    physicianName,
+                    diagnosis: {
+                        names: diagnosisNames,
+                        dates: dateOfDiagnoses,
+                        descriptions: diagnosisDescriptions
+                    },
+                    symptoms: {
+                        names: symptomNames,
+                        duration: symptomDuration,
+                        severity: symptomSeverity,
+                        location: symptomLocation
+                    },
+                    treatmentProcedure: {
+                        names: tpName,
+                        medicalProviders: tpMedicalProvider,
+                        dateStarted: tpDateStarted,
+                        dateEnd: tpDateEnd,
+                        duration: tpDuration
+                    },
+                    tests: {
+                        types: testType,
+                        orderingPhysicians: testOrderingPhysician,
+                        dates: testDate,
+                        reviewingPhysicians: testReviewingPhysician,
+                        results: testResult
+                    },
+                    medications: {
+                        names: medicationName,
+                        prescriptionDates: prescriptionDate,
+                        prescribingPhysicians: prescribingPhysician,
+                        frequencies: medicationFrequency,
+                        durations: medicationDuration,
+                        endDates: medicationEndDate
+                    },
+                    admissions: {
+                        hospitalNames: admissionHospitalName,
+                        admissionDates: aadmissionDate,
+                        dischargeDates: adischargeDate,
+                        lengthsOfStay: lengthOfStay
+                    }
+                };
+                setMedicalHistory(medicalHistory);
+                console.log(medicalHistory)
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
