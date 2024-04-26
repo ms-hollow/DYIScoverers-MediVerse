@@ -238,10 +238,10 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
-        
+        const creationDateString = creationDate.toString();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
+            query: { patientAddr, creationDateString }
         });
     }
 

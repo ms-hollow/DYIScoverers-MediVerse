@@ -494,7 +494,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>      
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDateString)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
 

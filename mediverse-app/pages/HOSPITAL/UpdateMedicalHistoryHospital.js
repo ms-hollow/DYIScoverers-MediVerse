@@ -980,9 +980,6 @@ const UpdateMedicalHistoryHospital = () => {
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
 
-                    {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
-                    </button> */}
-
                     <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDateString)} disabled={isLoading}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
