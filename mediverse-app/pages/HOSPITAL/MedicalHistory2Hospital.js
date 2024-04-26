@@ -19,7 +19,7 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const { patientAddr, creationDateString } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -115,8 +115,8 @@ const MedicalHistoryHospital = () => {
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateConverted = item.creationDate.toString();
-                    return creationDateConverted === creationDateString;
+                    // const creationDateConverted = parseInt(item.creationDate);
+                    return item.creationDate === creationDate;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     physicianName = physician;
@@ -361,14 +361,14 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDateString) => {
-        console.log(creationDateString);
+    const toggleButton = (patientAddr, creationDate) => {
+        console.log(creationDate);
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-                query: { patientAddr, creationDateString }
+                query: { patientAddr, creationDate }
             });
         }
     };
