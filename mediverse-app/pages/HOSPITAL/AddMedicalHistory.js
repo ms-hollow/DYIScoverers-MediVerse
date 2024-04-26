@@ -2,12 +2,13 @@ import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
 import path from 'path';
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
+
 
 const addMedicalHistory = () => {
     const router = useRouter();
@@ -251,7 +252,7 @@ const addMedicalHistory = () => {
 
                     {formData.symptoms.map((symptom, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="no-symptom"  name="noSymptom" value={symptom.noSymptom} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -292,7 +293,7 @@ const addMedicalHistory = () => {
                     
                     {formData.treatmentProcedure.map((treatmentProcedure, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noTP"  name="noTP" value={treatmentProcedure.noTP} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -329,7 +330,7 @@ const addMedicalHistory = () => {
         
                     {formData.test.map((test, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="no-test"  name="noTest" value={test.noTest} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -446,7 +447,7 @@ const addMedicalHistory = () => {
                     
                     {formData.medication.map((medication, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noMedication"  name="noMedication" value={medication.noMedication} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -488,7 +489,7 @@ const addMedicalHistory = () => {
                     
                     {formData.admission.map((admission, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
