@@ -82,7 +82,7 @@ const HomePatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate
+                        creationDate: item.creationDate
                     };
                 });
                 setMedicalHistory(modifiedMedicalHistory);

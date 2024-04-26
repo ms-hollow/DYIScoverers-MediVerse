@@ -124,6 +124,7 @@ const MedicalHistoryHospital = () => {
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
                     const {patientAddr, hospitalAddr, physician, diag, symptoms, treatment, testList, meds, adm, creationDate} = item;
+                    
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
 
@@ -168,18 +169,18 @@ const MedicalHistoryHospital = () => {
                     return {
                         patientAddr: patientAddr,
                         hospitalAddr,
-                        physician,
-                        diagnosis: diag,
-                        signsAndSymptoms: symptoms,
-                        treatmentProcedure: treatment,
-                        tests: testList,
-                        medications: meds,
-                        admission: adm,
+                        physician: physicianName,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
                         creationDate
                     };
                     
                 });
-                // console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 // const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
                 //     if (item.diagnosis.includes('~')) {
