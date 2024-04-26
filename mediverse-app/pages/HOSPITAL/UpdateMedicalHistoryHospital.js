@@ -105,18 +105,22 @@ const UpdateMedicalHistoryHospital = () => {
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
                 
-                let physicianName;
-                //* Get yung data sa array na nag equal sa may creationDate
-                const parsedPatientMedicalHistory = patientRecords.filter(item => {
+                
+                const getPatientMedicalHistory = patientRecords.filter(record => {
                     const creationDateConverted = item.creationDate.toString();
                     return creationDateConverted === creationDateString;
-                }).map(item => {
-                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
+                });
+                //console.log(getPatientMedicalHistory);
+
+                let physicianName;
+                //* Get yung data sa array na nag equal sa may creationDate
+                const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     return {
-                        patientAddr,
+                        patientAddr: patientAddr,
                         hospitalAddr,
-                        physicianName: physician,
+                        physician,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,
@@ -344,9 +348,7 @@ const UpdateMedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-
-                setMedicalHistory(medicalHistory);
-                console.log("Set Med His: ", medicalHistory)
+                //console.log("Set Med His: ", medicalHistory)
 
                 setFormData({
                     physician: medicalHistory.physicianName || '',
@@ -487,11 +489,11 @@ const UpdateMedicalHistoryHospital = () => {
         //console.log('current', currentMedicalHistory);
     
         let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
-        newPhysician = formData.physician;
-
+    
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
-            const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+            const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
             newPatientAddr = patientAddr;
+            newPhysician = physician;
             newDiagnosis = diagnosis;
             newSymptoms = signsAndSymptoms;
             newTP = treatmentProcedure;
@@ -512,6 +514,7 @@ const UpdateMedicalHistoryHospital = () => {
             };
         });
         
+
         const concatenatedSymptoms = (
             (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
             `${formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~')}` :
@@ -548,6 +551,13 @@ const UpdateMedicalHistoryHospital = () => {
         const updatedTest = concatenatedTest ? `${newTest}~${concatenatedTest}` : newTest;
         const updatedMedication = concatenatedMedication ? `${newMedications}~${concatenatedMedication}` : newMedications;
         const updatedAdmission = concatenatedAdmission ? `${newAdmission}~${concatenatedAdmission}` : newAdmission;
+        
+        // console.log(patientDiagnosis);
+        // console.log(updatedSymptoms);
+        // console.log(updatedTP);
+        // console.log(updatedTest);
+        // console.log(updatedMedication);
+        // console.log(updatedAdmission);
         
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {
@@ -608,7 +618,7 @@ const UpdateMedicalHistoryHospital = () => {
                             <input type="text" id="patient-Age" name="patientAge" value={medicalHistory.patientAge} placeholder="Age" required onChange={handleChange}readOnly/>
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="patient-dob" name="patientDob"  value={medicalHistory.patientDob} placeholder="Gender" required onChange={handleChange} readOnly/>
+                            <input type="date" id="patient-dob" name="patientDob"  value={medicalHistory.patientDob} placeholder="Gender" required onChange={handleChange} readOnly/>
                         </div>
                     </div>
             
@@ -1012,6 +1022,9 @@ const UpdateMedicalHistoryHospital = () => {
                     ))}
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
+
+                    {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
+                    </button> */}
 
                     <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDateString)} disabled={isLoading}> 
                         {isLoading ? 'Updating...' : 'Update'}
