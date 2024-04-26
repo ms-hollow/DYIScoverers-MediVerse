@@ -245,7 +245,6 @@ const HospitalHome = () => {
                 console.error('Error fetching medical history:', error);
             }
         }
-    
         getStatus();
     }, [hospitalAddress]);
 
