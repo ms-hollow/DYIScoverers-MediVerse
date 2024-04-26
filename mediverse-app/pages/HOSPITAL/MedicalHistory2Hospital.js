@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                // console.log("Initial: ",patientRecords);
+                console.log("Initial: ",patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -299,8 +299,6 @@ const MedicalHistoryHospital = () => {
                             medicalHistory.medications.endDates.push(medication[5]);
                         });
                     }
-                
-
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(admission => {
                             medicalHistory.admissions.hospitalNames.push(admission[0]);

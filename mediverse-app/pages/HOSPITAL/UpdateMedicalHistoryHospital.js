@@ -304,7 +304,7 @@ const UpdateMedicalHistoryHospital = () => {
                 });
 
                 setMedicalHistory(medicalHistory);
-                //console.log("Set Med His: ", medicalHistory)
+                console.log("Set Med His: ", medicalHistory)
 
                 setFormData({
                     physician: medicalHistory.physicianName || '',
