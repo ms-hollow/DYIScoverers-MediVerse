@@ -516,7 +516,6 @@ const UpdateMedicalHistoryHospital = () => {
             };
         });
         
-
         const concatenatedSymptoms = (
             (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
             `${formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~')}` :
@@ -592,13 +591,12 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const pushRoute = async (patientAddr, creationDate) => {
+    const pushRoute = async (patientAddr, creationDateString) => {
         await handleSubmit();
-        const creationDateString = creationDate.toString();
-        // router.push({
-        //     pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-        //     query: { patientAddr, creationDateString }
-        // });
+        router.push({
+            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+            query: { patientAddr, creationDateString }
+        });
     };
 
     const goBack = () => {

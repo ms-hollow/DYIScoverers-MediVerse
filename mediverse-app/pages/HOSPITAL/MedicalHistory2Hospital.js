@@ -361,11 +361,10 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDate) => {
+    const toggleButton = (patientAddr, creationDateString) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
-            const creationDateString = creationDate.toString();
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
                 query: { patientAddr, creationDateString }
