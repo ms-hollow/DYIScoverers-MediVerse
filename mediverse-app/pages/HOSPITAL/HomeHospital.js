@@ -230,14 +230,25 @@ const HospitalHome = () => {
     
                 // Wait for all promises to resolve
                 const processedMedicalHistoryData = await Promise.all(processedMedicalHistory);
+
+                const sortedMedicalHistory = processedMedicalHistoryData.sort((a, b) => {
+                    return new Date(b.creationDate) - new Date(a.creationDate);
+                });
     
                 // Separate authorized and unauthorized records
-                const authorizedRecords = processedMedicalHistoryData.filter(record => record.authorized);
-                const unauthorizedRecords = processedMedicalHistoryData.filter(record => record.unauthorized);
+                // const authorizedRecords = processedMedicalHistoryData.filter(record => record.authorized);
+                // const unauthorizedRecords = processedMedicalHistoryData.filter(record => record.unauthorized);
+
+                const authorizedRecords = sortedMedicalHistory.filter(record => record.authorized);
+                const unauthorizedRecords = sortedMedicalHistory.filter(record => record.unauthorized);
+
+                setAuthorizedList(authorizedRecords.slice(0, 4));
+                setUnauthorizedList(unauthorizedRecords.slice(0, 4));
     
                 // Update state with authorized and unauthorized records
-                setAuthorizedList(authorizedRecords);
-                setUnauthorizedList(unauthorizedRecords);
+                // setAuthorizedList(authorizedRecords);
+                // setUnauthorizedList(unauthorizedRecords);
+                
                 //console.log(authorizedRecords);
                 //console.log(unauthorizedRecords);
 

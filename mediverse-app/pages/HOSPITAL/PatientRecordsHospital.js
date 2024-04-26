@@ -138,7 +138,7 @@ const MedicalHistoryPatient = () => {
         
         const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
         //console.log("Is hospital authorized?", isAuthorized);
-        console.log(creationDate);
+        // console.log(creationDate);
        if (isAuthorized){
             const creationDateString = creationDate.toString();
             router.push({

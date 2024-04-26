@@ -56,7 +56,7 @@ const MedicalHistoryPatient = () => {
                 //hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 const medicalHistoryString = await mvContract.methods.getMedicalHistory(patientAddr).call();
-                console.log("Get all medical record of specific patient", medicalHistoryString);
+                // console.log("Get all medical record of specific patient", medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
@@ -125,8 +125,8 @@ const MedicalHistoryPatient = () => {
     }, [hospitalAddress]);
 
     const clickRow = (patientAddr, creationDate) => {
-        console.log(patientAddr);
-        console.log(creationDate);
+        // console.log(patientAddr);
+        // console.log(creationDate);
         const creationDateString = creationDate.toString();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',

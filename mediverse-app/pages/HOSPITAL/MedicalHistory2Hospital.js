@@ -135,7 +135,7 @@ const MedicalHistoryHospital = () => {
                     };
                 });
                 
-                console.log("Patient Medical History:", parsedPatientMedicalHistory);
+                // console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
                     if (item.diagnosis.includes('~')) {
@@ -197,7 +197,7 @@ const MedicalHistoryHospital = () => {
                     };
                     
                 });
-                console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
+                // console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
                 const medicalHistory = {
                     patientName,
@@ -311,7 +311,7 @@ const MedicalHistoryHospital = () => {
                     }
                 });
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory);
+                // console.log(medicalHistory);
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
