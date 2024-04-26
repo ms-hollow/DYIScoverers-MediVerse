@@ -79,10 +79,9 @@ const AccountAccessPatient = ({data}) => {
 
                         <div className={styles.dataContainer}>
                             {data.map(data => (
-                                <div key={data.id} className={styles.data_reqAccess}>
+                                <div key={data.id} className={styles.data_reqAccess_patient}>
                                     <p>{data.hospitalName}</p>
                                     <button onClick={handleAcceptAccessClick}>Accept</button>
-                                    <button onClick={handleDeclineAccessClick}>Decline</button>
                                 </div>
                             ))}
                         </div>
