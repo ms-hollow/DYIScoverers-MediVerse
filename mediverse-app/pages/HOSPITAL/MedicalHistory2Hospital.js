@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log(patientRecords);
+                console.log("Initial: ",patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -114,9 +114,7 @@ const MedicalHistoryHospital = () => {
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {
-                    return record[9] === creationDate;
-                });
+                const getPatientMedicalHistory = patientRecords.filter(record => {return record.creationDate === creationDate;});
                 console.log(getPatientMedicalHistory);
 
                 let physicianName;
