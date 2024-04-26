@@ -514,8 +514,6 @@ const UpdateMedicalHistoryHospital = () => {
                 creationDate
             };
         });
-
-        setCurrent(parsedCurrentMedicalHistory);
         
         const concatenatedSymptoms = (
             (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
