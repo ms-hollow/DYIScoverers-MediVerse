@@ -13,8 +13,8 @@ const UpdateMedicalHistoryHospital = () => {
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
-    const { patientAddr, creationDatex } = router.query;
-    console.log(creationDatex);
+    const { patientAddr, id } = router.query;
+    console.log(id);
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -107,8 +107,9 @@ const UpdateMedicalHistoryHospital = () => {
                 
                 
                 const getPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateConverted = bigInt(item.creationDate);
-                    return creationDateConverted === creationDatex;
+                    const creationDateBigInt = BigInt(item.creationDate);
+                    const creationDateConverted = new Date(Number(creationDateBigInt) * 1000).toLocaleDateString();
+                    return creationDateConverted === id;
                 });
                 //console.log(getPatientMedicalHistory);
 
@@ -596,7 +597,7 @@ const UpdateMedicalHistoryHospital = () => {
         await handleSubmit();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDatex }
+            query: { patientAddr, id }
         });
     };
 

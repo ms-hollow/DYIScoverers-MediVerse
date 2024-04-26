@@ -19,7 +19,7 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const { patientAddr, creationDatex } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, id } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -115,8 +115,9 @@ const MedicalHistoryHospital = () => {
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateConverted = BigInt(item.creationDate);
-                    return creationDateConverted === creationDatex;
+                    const creationDateBigInt = BigInt(item.creationDate);
+                    const creationDateConverted = new Date(Number(creationDateBigInt) * 1000).toLocaleDateString();
+                    return creationDateConverted === id;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     physicianName = physician;
@@ -361,14 +362,14 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDatex) => {
+    const toggleButton = (patientAddr, id) => {
         console.log(creationDatex);
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-                query: { patientAddr, creationDatex }
+                query: { patientAddr, id }
             });
         }
     };
@@ -535,7 +536,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>      
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDateString)}> 
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, id)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
 

@@ -141,10 +141,11 @@ const MedicalHistoryPatient = () => {
         // console.log(creationDate);
        if (isAuthorized){
             console.log(creationDate);
-            const modifiedCreationDate = BigInt(creationDate);
+            const creationDateBigInt = BigInt(creationDate);
+            const formattedDate = new Date(Number(creationDateBigInt) * 1000).toLocaleDateString();
             router.push({
                 pathname: '/HOSPITAL/MedicalHistory1Hospital/',
-                query: { patientAddr, modifiedCreationDate }
+                query: { patientAddr, formattedDate }
             });
        } else {
             toast.error("You don't have permission do view this record.");
