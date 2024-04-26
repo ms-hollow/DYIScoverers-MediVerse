@@ -114,11 +114,17 @@ const MedicalHistoryHospital = () => {
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {return record.creationDate === creationDate;});
-                console.log(getPatientMedicalHistory);
+                // const getPatientMedicalHistory = patientRecords.filter(record => {return record.creationDate === creationDate;});
+                // console.log(getPatientMedicalHistory);
+
+                const creationDates = patientRecords.map(record => record.creationDate);
+                console.log(creationDates);
+                const getPatientMedicalHistory = patientRecords.filter((record, index) => {
+                    // Compare each creation date with the target creation date
+                    return creationDates[index] === creationDate;
+                });
 
                 let physicianName;
-                console.log('Data source:', getPatientMedicalHistory);
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
                     console.log("Items: ", item)
