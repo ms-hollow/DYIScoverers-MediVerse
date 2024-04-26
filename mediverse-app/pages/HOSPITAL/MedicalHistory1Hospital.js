@@ -92,7 +92,7 @@ const MedicalHistoryPatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate
+                        creationDate: item.creationDate
                     };
                 });
                 
@@ -126,7 +126,8 @@ const MedicalHistoryPatient = () => {
 
     const clickRow = (patientAddr, creationDate, index) => {
         const selectedMedicalHistory = medicalHistory[index];
-        console.log(selectedMedicalHistory);
+        const selectedCreationDate = selectedMedicalHistory.creationDate;
+        const id = parseInt(selectedCreationDate);
         // router.push({
         //     pathname: '/HOSPITAL/MedicalHistory2Hospital/',
         //     query: { patientAddr, creationDate }
