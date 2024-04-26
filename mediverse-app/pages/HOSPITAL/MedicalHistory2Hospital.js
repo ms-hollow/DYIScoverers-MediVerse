@@ -120,10 +120,10 @@ const MedicalHistoryHospital = () => {
                 //console.log(getPatientMedicalHistory);
 
                 let physicianName;
-                
+                console.log('Data source:', getPatientMedicalHistory);
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    console.log("Items: ",item)
+                    console.log("Items: ", item)
                     const {patientAddr, hospitalAddr, physician, diag, symptoms, treatment, testList, meds, adm, creationDate} = item;
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
