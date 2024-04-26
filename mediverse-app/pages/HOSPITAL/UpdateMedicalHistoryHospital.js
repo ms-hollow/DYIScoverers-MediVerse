@@ -13,7 +13,7 @@ const UpdateMedicalHistoryHospital = () => {
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
-    const { patientAddr, creationDate } = router.query;
+    const { patientAddr, creationDateString } = router.query;
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -197,156 +197,117 @@ const UpdateMedicalHistoryHospital = () => {
                 });
                 //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
-                //* Array kung saan i-store ang mga pinaghiwalay hiwalay na data
-                //! Important para sa pagpopulate ng table. 
-                const diagnosisNames = [];
-                const dateOfDiagnoses = [];
-                const diagnosisDescriptions = [];
-
-                const symptomNames = []; 
-                const symptomDuration = []; 
-                const symptomSeverity = []; 
-                const symptomLocation = [];
-
-                const tpName = []; 
-                const tpMedicalProvider = []; 
-                const tpDateStarted = []; 
-                const tpDateEnd = []; 
-                const tpDuration = [];
-
-                const testType = []; 
-                const testOrderingPhysician = []; 
-                const testDate = []; 
-                const testReviewingPhysician = []; 
-                const testResult = [];
-
-                const medicationName = []; 
-                const prescriptionDate = []; 
-                const prescribingPhysician = []; 
-                const medicationFrequency = []; 
-                const medicationDuration = []; 
-                const medicationEndDate = [];
-
-                const admissionHospitalName = [];  
-                const aadmissionDate = []; 
-                const adischargeDate = []; 
-                const lengthOfStay = [];
+                const medicalHistory = {
+                    patientName,
+                    patientAge,
+                    patientDob,
+                    patientGender,
+                    hospitalName,
+                    physicianName,
+                    diagnosis: {
+                        names: [],
+                        dates: [],
+                        descriptions: []
+                    },
+                    symptoms: {
+                        names: [],
+                        duration: [],
+                        severity: [],
+                        location: []
+                    },
+                    treatmentProcedure: {
+                        names: [],
+                        medicalProviders: [],
+                        dateStarted: [],
+                        dateEnd: [],
+                        duration: []
+                    },
+                    tests: {
+                        types: [],
+                        orderingPhysicians: [],
+                        dates: [],
+                        reviewingPhysicians: [],
+                        results: []
+                    },
+                    medications: {
+                        names: [],
+                        prescriptionDates: [],
+                        prescribingPhysicians: [],
+                        frequencies: [],
+                        durations: [],
+                        endDates: []
+                    },
+                    admissions: {
+                        hospitalNames: [],
+                        admissionDates: [],
+                        dischargeDates: [],
+                        lengthsOfStay: []
+                    }
+                };
 
                 //* Ang ginagawa nito ay hinihiwalay hiwalay niya ang laman ng array then s-store niya sa kanya kanyang variable
                 //? Purose nito? Diba sa isang variable for example, signAndSymptoms, kapag nag add ka ng maraming data mahirap i-populate
                 //? 'yon sa table and hindi rin siya directly kasi meron silang kanya kanyang lugar na pagdidisplayan
                 modifiedPatientMedicalHistory.forEach(item => {
-                    
                     if (Array.isArray(item.diagnosis)) {
-                        item.diagnosis.forEach(array => {
-                            const [diagnosisName, dateOfDiagnosis, diagnosisDescription] = array;
-                            diagnosisNames.push(diagnosisName);
-                            dateOfDiagnoses.push(dateOfDiagnosis);
-                            diagnosisDescriptions.push(diagnosisDescription);
+                        item.diagnosis.forEach(diagnosis => {
+                            medicalHistory.diagnosis.names.push(diagnosis[0]);
+                            medicalHistory.diagnosis.dates.push(diagnosis[1]);
+                            medicalHistory.diagnosis.descriptions.push(diagnosis[2]);
                         });
                     }
                 
                     if (Array.isArray(item.signsAndSymptoms)) {
-                        item.signsAndSymptoms.forEach(array => {
-                            const [_, symptomName, duration, severity, location] = array;
-                            symptomNames.push(symptomName);
-                            symptomDuration.push(duration);
-                            symptomSeverity.push(severity);
-                            symptomLocation.push(location);
+                        item.signsAndSymptoms.forEach(symptom => {
+                            medicalHistory.symptoms.names.push(symptom[0]);
+                            medicalHistory.symptoms.duration.push(symptom[1]);
+                            medicalHistory.symptoms.severity.push(symptom[2]);
+                            medicalHistory.symptoms.location.push(symptom[3]);
                         });
                     }
 
                     if (Array.isArray(item.treatmentProcedure)) {
-                        item.treatmentProcedure.forEach(array => {
-                            const [_, name, medicalProvider, dateStarted, dateEnd, duration] = array;
-                            tpName.push(name);
-                            tpMedicalProvider.push(medicalProvider);
-                            tpDateStarted.push(dateStarted);
-                            tpDateEnd.push(dateEnd);
-                            tpDuration.push(duration);
+                        item.treatmentProcedure.forEach(procedure => {
+                            medicalHistory.treatmentProcedure.names.push(procedure[0]);
+                            medicalHistory.treatmentProcedure.medicalProviders.push(procedure[1]);
+                            medicalHistory.treatmentProcedure.dateStarted.push(procedure[2]);
+                            medicalHistory.treatmentProcedure.dateEnd.push(procedure[3]);
+                            medicalHistory.treatmentProcedure.duration.push(procedure[4]);
                         });
                     }
                 
                     if (Array.isArray(item.tests)) {
-                        item.tests.forEach(array => {
-                            const [_, type, orderingPhysician, date, reviewingPhysician, result] = array;
-                            testType.push(type);
-                            testOrderingPhysician.push(orderingPhysician);
-                            testDate.push(date);
-                            testReviewingPhysician.push(reviewingPhysician);
-                            testResult.push(result);
+                        item.tests.forEach(test => {
+                            medicalHistory.tests.types.push(test[0]);
+                            medicalHistory.tests.orderingPhysicians.push(test[1]);
+                            medicalHistory.tests.dates.push(test[2]);
+                            medicalHistory.tests.reviewingPhysicians.push(test[3]);
+                            medicalHistory.tests.results.push(test[4]);
                         });
                     }
                 
                     if (Array.isArray(item.medications)) {
-                        item.medications.forEach(array => {
-                            const [_, name, date, physician, frequency, duration, endDate] = array;
-                            medicationName.push(name);
-                            prescriptionDate.push(date);
-                            prescribingPhysician.push(physician);
-                            medicationFrequency.push(frequency);
-                            medicationDuration.push(duration);
-                            medicationEndDate.push(endDate);
+                        item.medications.forEach(medication => {
+                            medicalHistory.medications.names.push(medication[0]);
+                            medicalHistory.medications.prescriptionDates.push(medication[1]);
+                            medicalHistory.medications.prescribingPhysicians.push(medication[2]);
+                            medicalHistory.medications.frequencies.push(medication[3]);
+                            medicalHistory.medications.durations.push(medication[4]);
+                            medicalHistory.medications.endDates.push(medication[5]);
                         });
                     }
                 
+
                     if (Array.isArray(item.admission)) {
-                        item.admission.forEach(array => {
-                            const [_, hospitalName, admissionDate, dischargeDate, stayLength] = array;
-                            admissionHospitalName.push(hospitalName);
-                            aadmissionDate.push(admissionDate);
-                            adischargeDate.push(dischargeDate);
-                            lengthOfStay.push(stayLength);
+                        item.admission.forEach(admission => {
+                            medicalHistory.admissions.hospitalNames.push(admission[0]);
+                            medicalHistory.admissions.admissionDates.push(admission[1]);
+                            medicalHistory.admissions.dischargeDates.push(admission[2]);
+                            medicalHistory.admissions.lengthsOfStay.push(admission[3]);
                         });
                     }
                 });
 
-                const medicalHistory = {
-                    patientName,
-                    patientAge,
-                    patientDob,
-                    hospitalName,
-                    physicianName,
-                    diagnosis: {
-                        names: diagnosisNames,
-                        dates: dateOfDiagnoses,
-                        descriptions: diagnosisDescriptions
-                    },
-                    symptoms: {
-                        names: symptomNames,
-                        duration: symptomDuration,
-                        severity: symptomSeverity,
-                        location: symptomLocation
-                    },
-                    treatmentProcedure: {
-                        names: tpName,
-                        medicalProviders: tpMedicalProvider,
-                        dateStarted: tpDateStarted,
-                        dateEnd: tpDateEnd,
-                        duration: tpDuration
-                    },
-                    tests: {
-                        types: testType,
-                        orderingPhysicians: testOrderingPhysician,
-                        dates: testDate,
-                        reviewingPhysicians: testReviewingPhysician,
-                        results: testResult
-                    },
-                    medications: {
-                        names: medicationName,
-                        prescriptionDates: prescriptionDate,
-                        prescribingPhysicians: prescribingPhysician,
-                        frequencies: medicationFrequency,
-                        durations: medicationDuration,
-                        endDates: medicationEndDate
-                    },
-                    admissions: {
-                        hospitalNames: admissionHospitalName,
-                        admissionDates: aadmissionDate,
-                        dischargeDates: adischargeDate,
-                        lengthsOfStay: lengthOfStay
-                    }
-                };
                 setMedicalHistory(medicalHistory);
                 //console.log("Set Med His: ", medicalHistory)
 

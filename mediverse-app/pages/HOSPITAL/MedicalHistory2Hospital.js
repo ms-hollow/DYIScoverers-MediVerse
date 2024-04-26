@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log("Initial: ",patientRecords);
+                // console.log("Initial: ",patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -126,7 +126,7 @@ const MedicalHistoryHospital = () => {
                     return {
                         patientAddr,
                         hospitalAddr,
-                        physician,
+                        physicianName: physician,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,
@@ -327,9 +327,10 @@ const MedicalHistoryHospital = () => {
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
+            const creationDateString = creationDate.toString();
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-                query: { patientAddr, creationDate }
+                query: { patientAddr, creationDateString }
             });
         }
     };
