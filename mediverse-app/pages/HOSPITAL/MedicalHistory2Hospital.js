@@ -200,39 +200,6 @@ const MedicalHistoryHospital = () => {
                 });
                 console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
-                const diagnosisNames = [];
-                const dateOfDiagnoses = [];
-                const diagnosisDescriptions = [];
-
-                const symptomNames = []; 
-                const symptomDuration = []; 
-                const symptomSeverity = []; 
-                const symptomLocation = [];
-
-                const tpName = []; 
-                const tpMedicalProvider = []; 
-                const tpDateStarted = []; 
-                const tpDateEnd = []; 
-                const tpDuration = [];
-
-                const testType = []; 
-                const testOrderingPhysician = []; 
-                const testDate = []; 
-                const testReviewingPhysician = []; 
-                const testResult = [];
-
-                const medicationName = []; 
-                const prescriptionDate = []; 
-                const prescribingPhysician = []; 
-                const medicationFrequency = []; 
-                const medicationDuration = []; 
-                const medicationEndDate = [];
-
-                const admissionHospitalName = [];  
-                const aadmissionDate = []; 
-                const adischargeDate = []; 
-                const lengthOfStay = [];
-
                 const medicalHistory = {
                     patientName,
                     patientAge,
@@ -288,64 +255,65 @@ const MedicalHistoryHospital = () => {
                 modifiedPatientMedicalHistory.forEach(item => {
                     if (Array.isArray(item.diagnosis)) {
                         item.diagnosis.forEach(diagnosis => {
-                            medicalHistory.diagnosis.names.push(diagnosis.diagnosisName);
-                            medicalHistory.diagnosis.dates.push(diagnosis.dateOfDiagnosis);
-                            medicalHistory.diagnosis.descriptions.push(diagnosis.diagnosisDescription);
+                            medicalHistory.diagnosis.names.push(diagnosis[0]);
+                            medicalHistory.diagnosis.dates.push(diagnosis[1]);
+                            medicalHistory.diagnosis.descriptions.push(diagnosis[2]);
                         });
                     }
                 
                     if (Array.isArray(item.signsAndSymptoms)) {
                         item.signsAndSymptoms.forEach(symptom => {
-                            medicalHistory.symptoms.names.push(symptom.symptomName);
-                            medicalHistory.symptoms.duration.push(symptom.duration);
-                            medicalHistory.symptoms.severity.push(symptom.severity);
-                            medicalHistory.symptoms.location.push(symptom.location);
+                            medicalHistory.symptoms.names.push(symptom[0]);
+                            medicalHistory.symptoms.duration.push(symptom[1]);
+                            medicalHistory.symptoms.severity.push(symptom[2]);
+                            medicalHistory.symptoms.location.push(symptom[3]);
                         });
                     }
 
                     if (Array.isArray(item.treatmentProcedure)) {
                         item.treatmentProcedure.forEach(procedure => {
-                            medicalHistory.treatmentProcedure.names.push(procedure.name);
-                            medicalHistory.treatmentProcedure.medicalProviders.push(procedure.medicalProvider);
-                            medicalHistory.treatmentProcedure.dateStarted.push(procedure.dateStarted);
-                            medicalHistory.treatmentProcedure.dateEnd.push(procedure.dateEnd);
-                            medicalHistory.treatmentProcedure.duration.push(procedure.duration);
+                            medicalHistory.treatmentProcedure.names.push(procedure[0]);
+                            medicalHistory.treatmentProcedure.medicalProviders.push(procedure[1]);
+                            medicalHistory.treatmentProcedure.dateStarted.push(procedure[2]);
+                            medicalHistory.treatmentProcedure.dateEnd.push(procedure[3]);
+                            medicalHistory.treatmentProcedure.duration.push(procedure[4]);
                         });
                     }
                 
                     if (Array.isArray(item.tests)) {
                         item.tests.forEach(test => {
-                            medicalHistory.tests.types.push(test.type);
-                            medicalHistory.tests.orderingPhysicians.push(test.orderingPhysician);
-                            medicalHistory.tests.dates.push(test.date);
-                            medicalHistory.tests.reviewingPhysicians.push(test.reviewingPhysician);
-                            medicalHistory.tests.results.push(test.result);
+                            medicalHistory.tests.types.push(test[0]);
+                            medicalHistory.tests.orderingPhysicians.push(test[1]);
+                            medicalHistory.tests.dates.push(test[2]);
+                            medicalHistory.tests.reviewingPhysicians.push(test[3]);
+                            medicalHistory.tests.results.push(test[4]);
                         });
                     }
                 
                     if (Array.isArray(item.medications)) {
                         item.medications.forEach(medication => {
-                            medicalHistory.medications.names.push(medication.name);
-                            medicalHistory.medications.prescriptionDates.push(medication.date);
-                            medicalHistory.medications.prescribingPhysicians.push(medication.physician);
-                            medicalHistory.medications.frequencies.push(medication.frequency);
-                            medicalHistory.medications.durations.push(medication.duration);
-                            medicalHistory.medications.endDates.push(medication.endDate);
+                            medicalHistory.medications.names.push(medication[0]);
+                            medicalHistory.medications.prescriptionDates.push(medication[1]);
+                            medicalHistory.medications.prescribingPhysicians.push(medication[2]);
+                            medicalHistory.medications.frequencies.push(medication[3]);
+                            medicalHistory.medications.durations.push(medication[4]);
+                            medicalHistory.medications.endDates.push(medication[5]);
                         });
                     }
                 
+
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(admission => {
-                            medicalHistory.admissions.hospitalNames.push(admission.hospitalName);
-                            medicalHistory.admissions.admissionDates.push(admission.admissionDate);
-                            medicalHistory.admissions.dischargeDates.push(admission.dischargeDate);
-                            medicalHistory.admissions.lengthsOfStay.push(admission.stayLength);
+                            medicalHistory.admissions.hospitalNames.push(admission[0]);
+                            medicalHistory.admissions.admissionDates.push(admission[1]);
+                            medicalHistory.admissions.dischargeDates.push(admission[2]);
+                            medicalHistory.admissions.lengthsOfStay.push(admission[3]);
                         });
                     }
                 });
-
                 setMedicalHistory(medicalHistory);
-                console.log(medicalHistory)
+                console.log(medicalHistory);
+
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
