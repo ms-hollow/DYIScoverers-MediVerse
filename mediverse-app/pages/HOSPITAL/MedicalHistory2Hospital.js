@@ -116,13 +116,14 @@ const MedicalHistoryHospital = () => {
                 //* using creation date as key para masearch
              
                 const filteredMedicalHistory = patientRecords.filter(item => item.creationDate === creationDate);
-                console.log("filtered", filteredMedicalHistory)
+                console.log("Filtered medical history:", filteredMedicalHistory);
+        
                 const filteredMedicalHistory1 = patientRecords.filter(item => item[9] === creationDate);
-                console.log("filtered1", filteredMedicalHistory1)
+                console.log("Filtered medical history:", filteredMedicalHistory1);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
-                const parsedPatientMedicalHistory = filteredMedicalHistory.map(item => {
+                const parsedPatientMedicalHistory = patientRecords.map(item => {
                     console.log("Items: ", item)
                     const {patientAddr, hospitalAddr, physician, diag, symptoms, treatment, testList, meds, adm, creationDate} = item;
                     physicianName = physician;
