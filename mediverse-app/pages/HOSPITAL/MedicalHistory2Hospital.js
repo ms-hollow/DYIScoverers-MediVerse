@@ -117,26 +117,26 @@ const MedicalHistoryHospital = () => {
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
-                const parsedPatientMedicalHistory = patientRecords.map(item => {
-                    console.log("Items: ", item)
-                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
-                    physicianName = physician;
-                    sethospitalAddrInHistory(hospitalAddr);
-                    if (item.creationDate === creationDate) {
-                        return {
-                            patientAddr: patientAddr,
-                            hospitalAddr,
-                            physician: physicianName,
-                            diagnosis,
-                            signsAndSymptoms,
-                            treatmentProcedure,
-                            tests,
-                            medications,
-                            admission,
-                            creationDate
-                        };
-                    }
+                const parsedPatientMedicalHistory = patientRecords.filter(item => {
+                    const { creationDate } = item;
+                    console.log(item);
+                    return item.creationDate === creationDate;
+                }).map(item => {
+                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
+                    return {
+                        patientAddr,
+                        hospitalAddr,
+                        physician,
+                        diagnosis,
+                        signsAndSymptoms,
+                        treatmentProcedure,
+                        tests,
+                        medications,
+                        admission,
+                        creationDate
+                    };
                 });
+                
                 console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
