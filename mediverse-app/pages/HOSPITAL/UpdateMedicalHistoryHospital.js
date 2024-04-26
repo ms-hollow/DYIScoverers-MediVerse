@@ -483,7 +483,7 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
 
         //console.log('Form submitted:', formData);
         //console.log('current', currentMedicalHistory);
@@ -491,6 +491,8 @@ const UpdateMedicalHistoryHospital = () => {
         let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
     
         newPhysician = formData.physician;
+        console.log(newPhysician)
+
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
             const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
             newPatientAddr = patientAddr;
@@ -593,10 +595,10 @@ const UpdateMedicalHistoryHospital = () => {
     const pushRoute = async (patientAddr, creationDate) => {
         await handleSubmit();
         const creationDateString = creationDate.toString();
-        router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDateString }
-        });
+        // router.push({
+        //     pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+        //     query: { patientAddr, creationDateString }
+        // });
     };
 
     const goBack = () => {
