@@ -105,22 +105,18 @@ const UpdateMedicalHistoryHospital = () => {
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
                 
-                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
-                //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {
-                    return record[9] === creationDate;
-                });
-                //console.log(getPatientMedicalHistory);
-
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
-                const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+                const parsedPatientMedicalHistory = patientRecords.filter(item => {
+                    const creationDateConverted = item.creationDate.toString();
+                    return creationDateConverted === creationDateString;
+                }).map(item => {
+                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     physicianName = physician;
                     return {
-                        patientAddr: patientAddr,
+                        patientAddr,
                         hospitalAddr,
-                        physician,
+                        physicianName: physician,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,

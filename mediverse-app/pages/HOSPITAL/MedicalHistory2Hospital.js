@@ -110,10 +110,7 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                patientGender = patientInfo[2];
-                
-                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
-                //* using creation date as key para masearch
+                patientGender = patientInfo[2];   
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
