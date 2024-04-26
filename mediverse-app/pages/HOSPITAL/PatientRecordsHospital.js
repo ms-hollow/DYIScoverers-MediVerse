@@ -138,7 +138,7 @@ const MedicalHistoryPatient = () => {
         
         const isAuthorized = await isHospitalAuthorized(patientAddr, hospitalAddress);
         //console.log("Is hospital authorized?", isAuthorized);
-      
+        console.log(creationDate);
        if (isAuthorized){
             router.push({
                 pathname: '/HOSPITAL/MedicalHistory1Hospital/',
