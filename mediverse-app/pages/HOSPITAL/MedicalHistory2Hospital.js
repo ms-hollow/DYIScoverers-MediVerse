@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                console.log("Initial: ",patientRecords);
+                // console.log("Initial: ",patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -116,8 +116,6 @@ const MedicalHistoryHospital = () => {
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = patientRecords.filter(item => {
                     const creationDateConverted = parseInt(item.creationDate);
-                    console.log("parse Int", creationDateConverted)
-                    console.log("id", id);
                     return creationDateConverted === id;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
