@@ -117,6 +117,7 @@ const MedicalHistoryHospital = () => {
                 const parsedPatientMedicalHistory = patientRecords.filter(item => {
                     const creationDateConverted = parseInt(item.creationDate);
                     console.log("parse Int", creationDateConverted)
+                    console.log("id", id);
                     return creationDateConverted === id;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
