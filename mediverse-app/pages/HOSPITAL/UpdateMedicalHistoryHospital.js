@@ -487,17 +487,20 @@ const UpdateMedicalHistoryHospital = () => {
     const handleSubmit = async () => {
 
         //console.log('Form submitted:', formData);
-        //console.log('current', currentMedicalHistory);
+        console.log('current', currentMedicalHistory);
     
-        let newPhysician;
+        let newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission;
     
         newPhysician = formData.physician;
         console.log(newPhysician)
 
-        const [current, setCurrent] = useState([]);
-
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
             const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+            currentSymptoms = signsAndSymptoms;
+            currentTreatment = treatmentProcedure;
+            currentTests = tests;
+            currentMeds = medications;
+            currentAdmission = admission;
             return {
                 patientAddr,
                 hospitalAddr,
@@ -545,11 +548,11 @@ const UpdateMedicalHistoryHospital = () => {
         );
         
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
-        const updatedSymptoms = concatenatedSymptoms ? `${current.signsAndSymptoms}~${concatenatedSymptoms}` : current.signsAndSymptoms;
-        const updatedTP = concatenatedTreatmentProcedure ? `${current.treatmentProcedure}~${concatenatedTreatmentProcedure}` : current.treatmentProcedure;
-        const updatedTest = concatenatedTest ? `${current.tests}~${concatenatedTest}` : current.tests;
-        const updatedMedication = concatenatedMedication ? `${current.medications}~${concatenatedMedication}` : current.medications;
-        const updatedAdmission = concatenatedAdmission ? `${current.admission}~${concatenatedAdmission}` : current.admission;
+        const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
+        const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
+        const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
+        const updatedMedication = concatenatedMedication ? `${currentMeds}~${concatenatedMedication}` : currentMeds;
+        const updatedAdmission = concatenatedAdmission ? `${currentAdmission}~${concatenatedAdmission}` : currentAdmission;
         
         console.log(patientDiagnosis);
         console.log(updatedSymptoms);
@@ -566,7 +569,6 @@ const UpdateMedicalHistoryHospital = () => {
                 //console.log("Account:", accounts[0]);
     
                 const receipt = await mvContract.methods.editMedicalHistory(
-                    newPatientAddr,
                     newPhysician,
                     patientDiagnosis,
                     updatedSymptoms,
