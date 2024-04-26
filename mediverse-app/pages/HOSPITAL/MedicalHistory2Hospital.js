@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                //console.log(patientRecords);
+                console.log(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -117,7 +117,7 @@ const MedicalHistoryHospital = () => {
                 const getPatientMedicalHistory = patientRecords.filter(record => {
                     return record[9] === creationDate;
                 });
-                //console.log(getPatientMedicalHistory);
+                console.log(getPatientMedicalHistory);
 
                 let physicianName;
                 console.log('Data source:', getPatientMedicalHistory);
