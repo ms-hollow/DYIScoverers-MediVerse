@@ -201,6 +201,7 @@ const HospitalHome = () => {
                     await setAddress();
                     return;
                 }
+    
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
     
                 // Filter medical records to include only those made by the specific hospital
@@ -230,30 +231,29 @@ const HospitalHome = () => {
     
                 // Wait for all promises to resolve
                 const processedMedicalHistoryData = await Promise.all(processedMedicalHistory);
-
-                const sortedMedicalHistory = processedMedicalHistoryData.sort((a, b) => {
+    
+                const uniquePatients = {};
+                const uniqueMedicalHistory = [];
+    
+                processedMedicalHistoryData.forEach(item => {
+                    if (!uniquePatients[item.patientAddr]) {
+                        uniquePatients[item.patientAddr] = true;
+                        uniqueMedicalHistory.push(item);
+                    }
+                });
+    
+                const sortedMedicalHistory = uniqueMedicalHistory.sort((a, b) => {
                     const dateA = parseInt(a.creationDate);
                     const dateB = parseInt(b.creationDate);
                     return dateB - dateA;
                 });
     
-                // Separate authorized and unauthorized records
-                // const authorizedRecords = processedMedicalHistoryData.filter(record => record.authorized);
-                // const unauthorizedRecords = processedMedicalHistoryData.filter(record => record.unauthorized);
-
                 const authorizedRecords = sortedMedicalHistory.filter(record => record.authorized);
                 const unauthorizedRecords = sortedMedicalHistory.filter(record => record.unauthorized);
-
+    
                 setAuthorizedList(authorizedRecords.slice(0, 4));
                 setUnauthorizedList(unauthorizedRecords.slice(0, 4));
     
-                // Update state with authorized and unauthorized records
-                // setAuthorizedList(authorizedRecords);
-                // setUnauthorizedList(unauthorizedRecords);
-                
-                //console.log(authorizedRecords);
-                //console.log(unauthorizedRecords);
-
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }

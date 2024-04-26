@@ -311,7 +311,7 @@ const MedicalHistoryHospital = () => {
                     }
                 });
                 setMedicalHistory(medicalHistory);
-                // console.log(medicalHistory);
+                console.log(medicalHistory);
 
             } catch (error) {
                 console.error('Error fetching medical history:', error);
