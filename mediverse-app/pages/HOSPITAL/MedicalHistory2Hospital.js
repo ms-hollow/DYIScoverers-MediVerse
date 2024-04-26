@@ -120,6 +120,7 @@ const MedicalHistoryHospital = () => {
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     physicianName = physician;
+                    sethospitalAddrInHistory(hospitalAddr);
                     return {
                         patientAddr,
                         hospitalAddr,
