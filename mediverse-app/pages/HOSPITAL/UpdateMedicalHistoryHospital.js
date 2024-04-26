@@ -439,13 +439,10 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
-
-        //console.log('Form submitted:', formData);
-        //console.log('current', currentMedicalHistory);
+    const handleSubmit = async () => {
     
         let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
-    
+
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
             const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
             newPatientAddr = patientAddr;
