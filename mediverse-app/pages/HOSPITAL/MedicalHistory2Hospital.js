@@ -187,6 +187,7 @@ const MedicalHistoryHospital = () => {
                         //console.log(item.admission); 
                     }
                     return {
+                        physiciaName: item.physician,
                         diagnosis: item.diagnosis,
                         signsAndSymptoms: item.signsAndSymptoms,
                         treatmentProcedure: item.treatmentProcedure,
