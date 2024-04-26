@@ -490,10 +490,10 @@ const UpdateMedicalHistoryHospital = () => {
     
         let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
     
+        newPhysician = formData.physician;
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
-            const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+            const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
             newPatientAddr = patientAddr;
-            newPhysician = physician;
             newDiagnosis = diagnosis;
             newSymptoms = signsAndSymptoms;
             newTP = treatmentProcedure;
