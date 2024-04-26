@@ -361,11 +361,10 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDate) => {
+    const toggleButton = (patientAddr, creationDateString) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
-            const creationDateString = creationDate.toString();
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
                 query: { patientAddr, creationDateString }
@@ -535,7 +534,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>      
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(medicalHistory.patientAddr, medicalHistory.creationDateString)}> 
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDateString)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
 
