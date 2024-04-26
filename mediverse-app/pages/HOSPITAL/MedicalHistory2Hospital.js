@@ -19,11 +19,8 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, id } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
-    console.log(creationDate);
-
-    const id = parseInt(creationDate);
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
         patientName: '',
@@ -366,13 +363,13 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDate) => {
+    const toggleButton = (patientAddr, id) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-                query: { patientAddr, creationDate }
+                query: { patientAddr, id }
             });
         }
     };
