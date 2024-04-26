@@ -20,7 +20,6 @@ const MedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
-        patientGender: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -76,7 +75,7 @@ const MedicalHistoryHospital = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
-                let patientName, patientAge, patientDob, patientGender;
+                let patientName, patientAge, patientDob;
                 
                 if (!patientAddress) {
                     await setAddress();
@@ -92,7 +91,6 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                patientGender = patientInfo[2];
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
@@ -185,7 +183,6 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    patientGender,
                     physicianName,
                     diagnosis: {
                         names: [],
@@ -336,10 +333,6 @@ const MedicalHistoryHospital = () => {
                     <div className={styles.headingAttrb_formatting}>
                         <p className={styles.headingAttrb}>Birthday</p>   
                         <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Gender</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientGender}</p>
                     </div>
                 </div>
 
