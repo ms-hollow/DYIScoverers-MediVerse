@@ -122,6 +122,7 @@ const MedicalHistoryHospital = () => {
                     return creationDateConverted === creationDateString;
                 }).map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
+                    physicianName = physician;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -187,7 +188,6 @@ const MedicalHistoryHospital = () => {
                         //console.log(item.admission); 
                     }
                     return {
-                        physiciaName: item.physician,
                         diagnosis: item.diagnosis,
                         signsAndSymptoms: item.signsAndSymptoms,
                         treatmentProcedure: item.treatmentProcedure,
