@@ -489,13 +489,14 @@ const UpdateMedicalHistoryHospital = () => {
         //console.log('Form submitted:', formData);
         console.log('current', currentMedicalHistory);
     
-        let newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission;
+        let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission;
     
         newPhysician = formData.physician;
         console.log(newPhysician)
 
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
             const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+            currentPatientAddr = patientAddr;
             currentSymptoms = signsAndSymptoms;
             currentTreatment = treatmentProcedure;
             currentTests = tests;
@@ -567,6 +568,7 @@ const UpdateMedicalHistoryHospital = () => {
                 //console.log("Account:", accounts[0]);
     
                 const receipt = await mvContract.methods.editMedicalHistory(
+                    currentPatientAddr,
                     newPhysician,
                     patientDiagnosis,
                     updatedSymptoms,
