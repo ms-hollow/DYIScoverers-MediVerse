@@ -166,12 +166,12 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
         
-        console.log('Patient Consultation:', patientDiagnosis);
-        console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        console.log('Concatenated Test:', concatenatedTest);
-        console.log('Concatenated Medication:', concatenatedMedication);
-        console.log('Concatenated Admission:', concatenatedAdmission);
+        // console.log('Patient Consultation:', patientDiagnosis);
+        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
+        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
+        // console.log('Concatenated Test:', concatenatedTest);
+        // console.log('Concatenated Medication:', concatenatedMedication);
+        // console.log('Concatenated Admission:', concatenatedAdmission);
 
         if (formComplete) {
             // * need below 100 ung length ng diagnosis at description
@@ -193,7 +193,7 @@ const addMedicalHistory = () => {
                     //console.log("Transaction Hash:", receipt.transactionHash);
                     toast.success('Medical History Successfully Added!');
                     setIsLoading(false);
-                    // router.push('/HOSPITAL/PatientRecordsHospital/');
+                    router.push('/HOSPITAL/PatientRecordsHospital/');
                 } catch (error) {
                     toast.error('Patient is not registered.');
                     //console.error('Error sending transaction:', error.message);
