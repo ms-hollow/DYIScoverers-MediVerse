@@ -85,7 +85,6 @@ const MedicalHistoryPatient = () => {
                     const splitAdmission = item.admission.split('+');
                     //console.log("Admission Date:", splitAdmission[2]);
                     //console.log("Discharge Date:", splitAdmission[3]);
-                    const creationDateInt = parseInt(item.creationDate);
                     return {
                         hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],
@@ -93,7 +92,7 @@ const MedicalHistoryPatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate: creationDateInt
+                        creationDate: item.creationDate
                     };
                 });
                 
@@ -128,7 +127,7 @@ const MedicalHistoryPatient = () => {
     const clickRow = (patientAddr, index) => {
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
-        const id = parseInt(selectedCreationDate);
+        const id = selectedCreationDate.toString();
         console.log(selectedMedicalHistory);
         console.log(id);
         router.push({

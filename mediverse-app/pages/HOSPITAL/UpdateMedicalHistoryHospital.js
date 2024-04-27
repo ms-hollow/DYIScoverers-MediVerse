@@ -105,9 +105,8 @@ const UpdateMedicalHistoryHospital = () => {
                 patientDob = patientInfo[3];
                 
                 const getPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateString = BigInt(item.creationDate);
-                    const idString = BigInt(id);
-                    return creationDateString === idString;
+                    const creationDateString = item.creationDate.toString()
+                    return creationDateString === id;
                 });
                 //console.log(getPatientMedicalHistory);
 
