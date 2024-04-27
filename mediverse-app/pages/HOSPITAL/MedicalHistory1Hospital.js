@@ -127,7 +127,7 @@ const MedicalHistoryPatient = () => {
     const clickRow = (patientAddr, index) => {
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
-        const id = selectedCreationDate.toString() + 'n';
+        const id = parseInt(selectedCreationDate);
         console.log(selectedMedicalHistory);
         console.log(id);
         router.push({

@@ -105,9 +105,8 @@ const UpdateMedicalHistoryHospital = () => {
                 patientDob = patientInfo[3];
                 
                 const getPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateString = item.creationDate.toString() + 'n';
-                    const idString = id;
-                    return creationDateString === idString;
+                    const creationDateString = parseInt(item.creationDate);
+                    return creationDateString === id;
                 });
                 //console.log(getPatientMedicalHistory);
 
@@ -570,6 +569,7 @@ const UpdateMedicalHistoryHospital = () => {
     
                 const receipt = await mvContract.methods.editMedicalHistory(
                     currentPatientAddr,
+                    currentCreationDate,
                     newPhysician,
                     patientDiagnosis,
                     updatedSymptoms,

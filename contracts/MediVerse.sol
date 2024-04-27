@@ -176,6 +176,7 @@ contract MediVerse {
 
     function editMedicalHistory(
         address _patientAddr,
+        uint creationDate,
         string memory _physician,
         string memory _diagnosis,
         string memory _signsAndSymptoms,
@@ -185,17 +186,16 @@ contract MediVerse {
         string memory _admission
     ) public {
         MedicalHistory[] storage history = medicalHistories[_patientAddr];
-
         require(history.length > 0, "No medical history records found for the patient");
         for (uint i = 0; i < history.length; i++) {
-            if (history[i].hospitalAddr == msg.sender) {
+            if (history[i].creationDate == creationDate && history[i].hospitalAddr == msg.sender) {
                 history[i].physician = _physician;
                 history[i].diagnosis = _diagnosis;
                 history[i].signsAndSymptoms = _signsAndSymptoms;
                 history[i].treatmentProcedure = _treatmentProcedure;
                 history[i].tests = _tests;
                 history[i].medications = _medications;
-                history[i].admission = _admission;
+                history[i].admission = _admission; 
                 return; 
             }
         }
