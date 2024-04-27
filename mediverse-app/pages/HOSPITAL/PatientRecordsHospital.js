@@ -101,7 +101,7 @@ const MedicalHistoryPatient = () => {
                         creationDate: item.creationDate
                     };
                 });
-    
+                modifiedMedicalHistory.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
                 // Fetch patient names for each medical record
                 const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
                 const patientInfoPromises = patientAddresses.map(address => mvContract.methods.getPatientInfo(address).call());

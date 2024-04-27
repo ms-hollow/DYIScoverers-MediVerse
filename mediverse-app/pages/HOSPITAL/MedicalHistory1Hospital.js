@@ -96,6 +96,7 @@ const MedicalHistoryPatient = () => {
                     };
                 });
                 
+                modifiedMedicalHistory.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
                 //setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
                 let searchQueryLower;
