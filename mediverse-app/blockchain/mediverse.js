@@ -8,7 +8,7 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
  * * Tanggalin lang yung comment if gagamitin ang network and gawin comment yung hindi gagamitin
 */
 
-const mvContract = new web3.eth.Contract(ContractABI, "0xe475599C0D109CA71afC0BEe3B78CBfB2ff01991"); // for network
+const mvContract = new web3.eth.Contract(ContractABI, "0xBaA0567B01484aacD820e371bC09ac52BdcF0EC3"); // for network
 //const mvContract = new web3.eth.Contract(ContractABI, "0x9Da81dF7A09028519c266173000A3339a896A62a"); //for development
 
 /**
@@ -23,6 +23,7 @@ const mvContract = new web3.eth.Contract(ContractABI, "0xe475599C0D109CA71afC0BE
 export default mvContract
 
 
+
 // Starting migrations...
 // ======================
 // > Network name:    'sepolia'
@@ -35,28 +36,28 @@ export default mvContract
 
 //    Replacing 'MediVerse'
 //    ---------------------
-//    > transaction hash:    0xfad91378639d9a6435cc0836bc45911b405ad6b564f3bbab4d90c07c6cfaf40a
-//    > Blocks: 0            Seconds: 8
-//    > contract address:    0xe475599C0D109CA71afC0BEe3B78CBfB2ff01991
-//    > block number:        5774147
-//    > block timestamp:     1714044948
+//    > transaction hash:    0xf9976fb24f3f6fa37e6351671d8086c9d9041dafa6f42064df9f128053133501
+//    > Blocks: 2            Seconds: 25
+//    > contract address:    0xBaA0567B01484aacD820e371bC09ac52BdcF0EC3
+//    > block number:        5786883
+//    > block timestamp:     1714200168
 //    > account:             0x0074F4724FeB0B8b98A629335831E3429Afb0a93
-//    > balance:             1.390148396196333849
-//    > gas used:            4897010 (0x4ab8f2)
-//    > gas price:           6.425133455 gwei
+//    > balance:             1.337686348454697771
+//    > gas used:            4994229 (0x4c34b5)
+//    > gas price:           10.447017584 gwei
 //    > value sent:          0 ETH
-//    > total cost:          0.03146394278046955 ETH
+//    > total cost:          0.052174798181522736 ETH
 
 //    Pausing for 2 confirmations...
 
 //    -------------------------------
-//    > confirmation number: 1 (block: 5774148)
-//    > confirmation number: 2 (block: 5774149)
+//    > confirmation number: 1 (block: 5786884)
+//    > confirmation number: 2 (block: 5786885)
 //    > Saving artifacts
 //    -------------------------------------
-//    > Total cost:     0.03146394278046955 ETH
+//    > Total cost:     0.052174798181522736 ETH
 
 // Summary
 // =======
 // > Total deployments:   1
-// > Final cost:          0.03146394278046955 ETH
+// > Final cost:          0.052174798181522736 ETH
