@@ -195,25 +195,10 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
-            // Iterate over each admission entry in the form data
-            formData.admission.forEach(admission => {
-                const admissionDate = new Date(admission.admissionDate);
-                const dischargeDate = new Date(admission.dischargeDate);
-                
-                if (dischargeDate >= admissionDate) {
-                    // Calculate length of stay
-                    const lengthOfStayInMs = dischargeDate - admissionDate; 
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
-                    admission.lengthOfStay = lengthOfStayInDays; 
-                } else {
-                    admission.lengthOfStay = 1;
-                }
-            });
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate && admission.lengthOfStay)) {
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            // If hospital name, admission date, or discharge date are not provided, display error message
-            toast.error("Admission is required. Please fill out the hospital name, admission date, and discharge date.");
+            toast.error("Admission is required. Please fill them out.");
             formComplete = false;
         }
 
@@ -552,7 +537,7 @@ const addMedicalHistory = () => {
                                 <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
+                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                         </div>
                     ))}
