@@ -59,7 +59,7 @@ const MedicalHistoryPatient = () => {
                 //console.log("Get all medical record of specific patient", medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -124,10 +124,13 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const clickRow = (patientAddr, creationDate) => {
+    const clickRow = (patientAddr, index) => {
+        const selectedMedicalHistory = medicalHistory[index];
+        const selectedCreationDate = selectedMedicalHistory.creationDate;
+        const id = parseInt(selectedCreationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
+            query: { patientAddr, id }
         });
     };
 
@@ -145,7 +148,7 @@ const MedicalHistoryPatient = () => {
 
                 <div className={styles.dataContainer}>
                     {medicalHistory.map((record, index) => (
-                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                        <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, index)}>
                             <p className={styles.diaAttrb}>{record.diagnosis}</p>
                             <p>{record.hospitalName}</p>
                             <p>{record.physician}</p>

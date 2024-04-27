@@ -44,7 +44,7 @@ const AccountAccessHospital = () => {
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -129,7 +129,7 @@ const AccountAccessHospital = () => {
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     return {
                         patientAddr,
                         hospitalAddr,
@@ -238,10 +238,10 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
-        
+        const id = parseInt(creationDate);
         router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
+            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
+            query: { patientAddr, id }
         });
     }
 

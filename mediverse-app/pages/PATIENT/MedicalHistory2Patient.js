@@ -12,7 +12,7 @@ const MedicalHistoryHospital = () => {
 
     const [patientAddress, setPatientAddress] = useState('');
     const router = useRouter();
-    const { patientAddr, creationDate } = router.query;
+    const { patientAddr, id } = router.query;
     // console.log('Patient Address:', patientAddr); 
     // console.log('Creation Date:', creationDate);
     
@@ -20,7 +20,6 @@ const MedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
-        patientGender: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -76,7 +75,7 @@ const MedicalHistoryHospital = () => {
     useEffect(() => {
         async function fetchMedicalHistory() {
             try {
-                let patientName, patientAge, patientDob, patientGender;
+                let patientName, patientAge, patientDob;
                 
                 if (!patientAddress) {
                     await setAddress();
@@ -92,19 +91,19 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                patientGender = patientInfo[2];
 
-                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
-                //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {
-                    return record[9] === creationDate;
+                const getPatientMedicalHistory = patientRecords.filter(item => {
+                    const creationDateString = parseInt(item.creationDate);
+                    const idString = parseInt(id);
+                    return creationDateString === idString;
                 });
-                //console.log(getPatientMedicalHistory);
+
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
+
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     return {
                         patientAddr: patientAddr,
@@ -118,7 +117,6 @@ const MedicalHistoryHospital = () => {
                         admission,
                         creationDate
                     };
-                    
                 });
                 //console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
@@ -247,7 +245,7 @@ const MedicalHistoryHospital = () => {
 
                     if (Array.isArray(item.treatmentProcedure)) {
                         item.treatmentProcedure.forEach(array => {
-                            const [name, medicalProvider, dateStarted, dateEnd, duration] = array;
+                            const [_, name, medicalProvider, dateStarted, dateEnd, duration] = array;
                             tpName.push(name);
                             tpMedicalProvider.push(medicalProvider);
                             tpDateStarted.push(dateStarted);
@@ -258,7 +256,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.tests)) {
                         item.tests.forEach(array => {
-                            const [type, orderingPhysician, date, reviewingPhysician, result] = array;
+                            const [_, type, orderingPhysician, date, reviewingPhysician, result] = array;
                             testType.push(type);
                             testOrderingPhysician.push(orderingPhysician);
                             testDate.push(date);
@@ -269,7 +267,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.medications)) {
                         item.medications.forEach(array => {
-                            const [name, date, physician, frequency, duration, endDate] = array;
+                            const [_, name, date, physician, frequency, duration, endDate] = array;
                             medicationName.push(name);
                             prescriptionDate.push(date);
                             prescribingPhysician.push(physician);
@@ -281,7 +279,7 @@ const MedicalHistoryHospital = () => {
                 
                     if (Array.isArray(item.admission)) {
                         item.admission.forEach(array => {
-                            const [hospitalName, admissionDate, dischargeDate, stayLength] = array;
+                            const [_, hospitalName, admissionDate, dischargeDate, stayLength] = array;
                             admissionHospitalName.push(hospitalName);
                             aadmissionDate.push(admissionDate);
                             adischargeDate.push(dischargeDate);
@@ -294,7 +292,6 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    patientGender,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
@@ -337,7 +334,8 @@ const MedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                //console.log(medicalHistory)
+                //console.log(medicalHistory);
+
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
@@ -346,64 +344,40 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [patientAddress]);
 
-    // const [data, setData] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const res = await fetch('/placeHolder/dummyData_MedicalHistory_Hospital.json');
-    //         const json = await res.json();
-    //         const item = json.find(item => item.id === 1); // Filter data for ID 1
-    //         setData(item);
-    //     };
-
-    //     fetchData();
-    // }, []);
-
-    // if (!data) {
-    //     return <div>Loading...</div>;
-    // }
-
     return ( 
         <>
-        <Layout pageName="Medical History">
-            {medicalHistory && (
-            <div className={styles.container}>      
-                <div className={styles.reserveSpace}></div>
-                <div className={styles.basicInfoContainer}>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Patient Name</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientName}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Age</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientAge}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Birthday</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientDob}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Gender</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.patientGender}</p>
-                    </div>
-                </div>
-
-                <div className={styles.basicInfoContainer}>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Doctor Consulted</p>   
-                        <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Date of Diagnosis</p>  
-                        <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_formatting}>
-                        <p className={styles.headingAttrb}>Diagnosis</p>   
-                        <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
-                    </div>
-                    <div className={styles.headingAttrb_des}>
-                        <p className={styles.headingAttrb}>Description</p>   
-                        <p className={styles.dataFormat_des}>{medicalHistory.diagnosis.descriptions}</p> 
+        <Layout id='layout' pageName="Medical History">
+            <div id='container' className={styles.container}>   
+                <div className={styles.outerContainer}>
+                    <div className={styles.basicInfoContainer}>
+                        <div className={styles.patientName}>
+                            <p className={styles.headingAttrb}>Patient Name</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.patientName}</p> 
+                        </div>
+                        <div className={styles.patientAge}>
+                            <p className={styles.headingAttrb}>Age</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.patientAge}</p> 
+                        </div>
+                        <div className={styles.patientBday}>
+                            <p className={styles.headingAttrb}>Birthday</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.patientDob}</p> 
+                        </div>
+                        <div className={styles.doctor}>
+                            <p className={styles.headingAttrb}>Doctor Consulted</p>   
+                            <p className={styles.dataFormat}>{medicalHistory.physicianName}</p>
+                        </div>
+                        <div className={styles.dateDiagnosis}>
+                            <p className={styles.headingAttrb}>Date of Diagnosis</p>  
+                            <p className={styles.dataFormat}>{medicalHistory.diagnosis.dates}</p> 
+                        </div>
+                        <div className={styles.diagnosis}>
+                            <p className={styles.headingAttrb}>Diagnosis</p>   
+                            <p className={styles.dataFormat_diag}>{medicalHistory.diagnosis.names}</p> 
+                        </div>
+                        <div className={styles.description}>
+                            <p className={styles.headingAttrb}>Diagnosis Description</p>   
+                            <p className={styles.des}>{medicalHistory.diagnosis.descriptions}</p> 
+                        </div>
                     </div>
                 </div>
 
@@ -532,7 +506,6 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>      
             </div>
-            )}
         </Layout>
         <ToastWrapper/>
         </>

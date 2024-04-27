@@ -41,45 +41,35 @@ const AccountAccessPatient = () => {
                 }
     
                 const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddress).call();
-                //console.log("Authorized Hospitals:", authorizedHospitals);
     
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                // Filter medical history records to include only those made by the currently logged-in patient
-                const filteredMedicalHistory = medicalHistoryString.filter(item => item.patientAddr === patientAddress);
-                //console.log("Filtered Medical History:", filteredMedicalHistory);
     
                 const firstMedicalRecords = {};
-                filteredMedicalHistory.forEach(item => {
-                    if (!firstMedicalRecords[item.patientAddr]) {
-                        firstMedicalRecords[item.patientAddr] = [];
+                const uniqueMedicalRecords = [];
+    
+                medicalHistoryString.forEach(item => {
+                    // Check if the hospital address is authorized
+                    if (authorizedHospitals.includes(item.hospitalAddr)) {
+                        if (!firstMedicalRecords[item.hospitalAddr]) {
+                            // Include the first record from each hospital
+                            firstMedicalRecords[item.hospitalAddr] = true;
+                            const splitDiagnosis = item.diagnosis.split('+');
+                            const splitAdmission = item.admission.split('+');
+                            uniqueMedicalRecords.push({
+                                physician: item.physician,
+                                hospitalAddress: item.hospitalAddr,
+                                dateOfConsultation: splitDiagnosis[1],
+                                hospitalName: splitAdmission[1],
+                                lengthOfStay: splitAdmission[4],
+                            });
+                        }
                     }
-                    firstMedicalRecords[item.patientAddr].push(item);
                 });
     
-                const uniqueMedicalRecords = Object.values(firstMedicalRecords);
-    
-                const modifiedList = uniqueMedicalRecords.map(medicalRecords => {
-                    return medicalRecords.map(item => {
-                        const splitDiagnosis = item.diagnosis.split('+');
-                        const splitAdmission = item.admission.split('+');
-                        return {
-                            physician: item.physician,
-                            hospitalAddress: item.hospitalAddr,
-                            dateOfConsultation: splitDiagnosis[1],
-                            hospitalName: splitAdmission[1],
-                            lengthOfStay: splitAdmission[4],
-                        };
-                    });
-                }).flat();
-    
-                // Filter out hospitals that are not in the authorized list
-                const authorizedModifiedList = modifiedList.filter(item => authorizedHospitals.includes(item.hospitalAddress));
-                setAuthorizedHospitals(authorizedModifiedList);
-                //console.log("Authorized Hospitals: ", authorizedModifiedList);
+                setAuthorizedHospitals(uniqueMedicalRecords);
     
                 const hospitalRequest = await mvContract.methods.getPendingRequests(patientAddress).call();
                 setRequestingHospital(hospitalRequest);
-                //console.log("Pending Request: ", hospitalRequest);  
     
                 const hospitalsInfo = [];
                 for (const hospitalAddress of hospitalRequest) {
@@ -88,7 +78,6 @@ const AccountAccessPatient = () => {
                         name: hospitalInfo[0],
                     });
                 }
-                //console.log("Requesting Hospitals: ", hospitalsInfo);
                 setHospitalNames(hospitalsInfo);
             } catch (error) {
                 console.error('Error fetching medical history:', error);

@@ -19,7 +19,7 @@ const MedicalHistoryHospital = () => {
     const [hospitalAddrInHistory, sethospitalAddrInHistory] = useState('');
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
-    const { patientAddr, creationDate } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
+    const { patientAddr, id } = router.query; //* kunin yung data ng pinindot na row sa may MedicalHistory1Hospital
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -115,8 +115,10 @@ const MedicalHistoryHospital = () => {
                 
                 //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
                 //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {
-                    return record[9] === creationDate;
+                const getPatientMedicalHistory = patientRecords.filter(item => {
+                    const creationDateString = parseInt(item.creationDate);
+                    const idString = parseInt(id);
+                    return creationDateString === idString;
                 });
                 //console.log(getPatientMedicalHistory);
 
@@ -124,7 +126,7 @@ const MedicalHistoryHospital = () => {
                 
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
                     return {
@@ -368,13 +370,13 @@ const MedicalHistoryHospital = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
-    const toggleButton = (patientAddr, creationDate) => {
+    const toggleButton = (patientAddr, id) => {
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {
             router.push({
                 pathname: '/HOSPITAL/UpdateMedicalHistoryHospital/',
-                query: { patientAddr, creationDate }
+                query: { patientAddr, id }
             });
         }
     };
@@ -541,7 +543,7 @@ const MedicalHistoryHospital = () => {
                     </div>
                 </div>      
             </div>
-            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, creationDate)}> 
+            <button className={styles.submitButton} onClick={() => toggleButton(patientAddr, id)}> 
                 <img src="/edit.svg" alt="Edit Icon"/>
             </button>
 

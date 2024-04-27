@@ -50,7 +50,7 @@ const HomePatient = () => {
                 //console.log(patientMedicalHistories);
                 
                 const parsedMedicalHistory = patientMedicalHistories.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     hospitalAddress = hospitalAddr;
                     return {
                         patientAddr,
@@ -74,7 +74,8 @@ const HomePatient = () => {
                     const splitAdmission = item.admission.split('+');
                     // console.log("Admission Date:", splitAdmission[2]);
                     // console.log("Discharge Date:", splitAdmission[3]);
-                    const formattedDate = new Date(item.creationDate * 1000).toLocaleDateString();
+                    const creationDateBigInt = BigInt(item.creationDate);
+                    const formattedDate = new Date(Number(creationDateBigInt) * 1000).toLocaleDateString();
                     return {
                         diagnosis: splitDiagnosis[0],
                         physician: item.physician,

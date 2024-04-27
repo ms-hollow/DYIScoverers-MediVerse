@@ -13,7 +13,7 @@ const UpdateMedicalHistoryHospital = () => {
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
     const router = useRouter();
-    const { patientAddr, creationDate } = router.query;
+    const { patientAddr, id } = router.query;
 
     //? Itong const sa baba, nag lagay ako nito para ma-access sa frontend ang data.
     const [medicalHistory, setMedicalHistory] = useState({
@@ -96,7 +96,6 @@ const UpdateMedicalHistoryHospital = () => {
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
                 //console.log(patientRecords);
-                setcurrentMedicalHistory(patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
@@ -105,17 +104,19 @@ const UpdateMedicalHistoryHospital = () => {
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
                 
-                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
-                //* using creation date as key para masearch
-                const getPatientMedicalHistory = patientRecords.filter(record => {
-                    return record[9] === creationDate;
+                const getPatientMedicalHistory = patientRecords.filter(item => {
+                    const creationDateString = parseInt(item.creationDate);
+                    const idString = parseInt(id);
+                    return creationDateString === idString;
                 });
                 //console.log(getPatientMedicalHistory);
+
+                setcurrentMedicalHistory(getPatientMedicalHistory);
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
                 const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
-                    const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     return {
                         patientAddr: patientAddr,
@@ -483,23 +484,25 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
 
         //console.log('Form submitted:', formData);
         //console.log('current', currentMedicalHistory);
     
-        let newPatientAddr, newPhysician, newDiagnosis, newSymptoms, newTP, newTest, newMedications, newAdmission;
+        let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission, currentCreationDate;
     
+        newPhysician = formData.physician;
+       // console.log(newPhysician)
+
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
-            const [patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate] = item;
-            newPatientAddr = patientAddr;
-            newPhysician = physician;
-            newDiagnosis = diagnosis;
-            newSymptoms = signsAndSymptoms;
-            newTP = treatmentProcedure;
-            newTest = tests;
-            newMedications = medications;
-            newAdmission = admission;
+            const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+            currentPatientAddr = patientAddr;
+            currentSymptoms = signsAndSymptoms;
+            currentTreatment = treatmentProcedure;
+            currentTests = tests;
+            currentMeds = medications;
+            currentAdmission = admission;
+            currentCreationDate = creationDate;
             return {
                 patientAddr,
                 hospitalAddr,
@@ -514,7 +517,6 @@ const UpdateMedicalHistoryHospital = () => {
             };
         });
         
-
         const concatenatedSymptoms = (
             (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
             `${formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~')}` :
@@ -546,11 +548,11 @@ const UpdateMedicalHistoryHospital = () => {
         );
         
         const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
-        const updatedSymptoms = concatenatedSymptoms ? `${newSymptoms}~${concatenatedSymptoms}` : newSymptoms;
-        const updatedTP = concatenatedTreatmentProcedure ? `${newTP}~${concatenatedTreatmentProcedure}` : newTP;
-        const updatedTest = concatenatedTest ? `${newTest}~${concatenatedTest}` : newTest;
-        const updatedMedication = concatenatedMedication ? `${newMedications}~${concatenatedMedication}` : newMedications;
-        const updatedAdmission = concatenatedAdmission ? `${newAdmission}~${concatenatedAdmission}` : newAdmission;
+        const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
+        const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
+        const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
+        const updatedMedication = concatenatedMedication ? `${currentMeds}~${concatenatedMedication}` : currentMeds;
+        const updatedAdmission = concatenatedAdmission ? `${currentAdmission}~${concatenatedAdmission}` : currentAdmission;
         
         // console.log(patientDiagnosis);
         // console.log(updatedSymptoms);
@@ -567,14 +569,16 @@ const UpdateMedicalHistoryHospital = () => {
                 //console.log("Account:", accounts[0]);
     
                 const receipt = await mvContract.methods.editMedicalHistory(
-                    newPatientAddr,
+                    currentPatientAddr,
+                    currentCreationDate,
                     newPhysician,
                     patientDiagnosis,
                     updatedSymptoms,
                     updatedTP,
                     updatedTest,
                     updatedMedication,
-                    updatedAdmission
+                    updatedAdmission,
+                    currentCreationDate
                 ).send({ from: accounts[0] });
                 
                 //console.log("Transaction Hash:", receipt.transactionHash);
@@ -590,11 +594,11 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const pushRoute = async (patientAddr, creationDate) => {
+    const pushRoute = async (patientAddr, id) => {
         await handleSubmit();
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDate }
+            query: { patientAddr, id }
         });
     };
 
@@ -1025,7 +1029,7 @@ const UpdateMedicalHistoryHospital = () => {
                     {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute (patientAddr, creationDate)} disabled={isLoading}> 
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute(patientAddr, id)}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
