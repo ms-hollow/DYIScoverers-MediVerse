@@ -195,19 +195,31 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate)) {
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
+            // Iterate over each admission entry in the form data
+            formData.admission.forEach(admission => {
+                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+        
+                if (admission.dischargeDate) {
+                    // If discharge date is provided, calculate length of stay
+                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                    const lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                } else {
+                    // If discharge date is not provided, display error message
+                    toast.error("Admission form fields are incomplete. Please fill them out.");
+                    formComplete = false;
+                }
+            });
+        
+            // Concatenate admission data
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            toast.error("Admission is required, except for the discharge date and length of stay. Please fill them out.");
+            // If hospital name and admission date are not provided, display error message
+            toast.error("Admission is required. Please fill out the hospital name and admission date.");
             formComplete = false;
         }
-        
-        // console.log('Patient Consultation:', patientDiagnosis);
-        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        // console.log('Concatenated Test:', concatenatedTest);
-        // console.log('Concatenated Medication:', concatenatedMedication);
-        // console.log('Concatenated Admission:', concatenatedAdmission);
 
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
@@ -544,7 +556,7 @@ const addMedicalHistory = () => {
                                 <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                         </div>
                     ))}
