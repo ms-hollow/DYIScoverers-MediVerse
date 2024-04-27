@@ -292,7 +292,6 @@ const MedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    hospitalName,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
