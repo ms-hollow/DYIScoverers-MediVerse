@@ -175,10 +175,10 @@ const AccountAccessPatient = () => {
                         </div>
 
                         <div className={styles.dataContainer}>
-                            {data.map(data => (
-                                <div key={data.id} className={styles.data_reqAccess_patient}>
-                                    <p>{data.hospitalName}</p>
-                                    <button onClick={handleAcceptAccessClick}>Accept</button>
+                            {listOfHospitalNames.map((hospital, index) => (
+                                <div key={index} className={styles.data_reqAccess_patient}>
+                                    <p>{hospital.name}</p>
+                                    <button onClick={() => handleGrantAccess(index)}>Grant Access</button>
                                 </div>
                             ))}
                         </div>
