@@ -102,7 +102,7 @@ const MedicalHistoryHospital = () => {
                 patientAddress = patientAddr;
 
                 const patientRecords = await mvContract.methods.getMedicalHistory(patientAddress).call();
-                // console.log("Initial: ",patientRecords);
+                console.log("Initial: ",patientRecords);
                 
                 const patientInfo = await mvContract.methods.getPatientInfo(patientAddress).call();
                 //console.log(patientInfo);
