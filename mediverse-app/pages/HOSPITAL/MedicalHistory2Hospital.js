@@ -140,7 +140,6 @@ const MedicalHistoryHospital = () => {
                     };
                 });
 
-                
                 // console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
                 const modifiedPatientMedicalHistory = parsedPatientMedicalHistory.map(item => {
