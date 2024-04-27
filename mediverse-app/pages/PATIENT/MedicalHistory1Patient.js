@@ -117,11 +117,13 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [patientAddress, searchQuery]);
 
-    const clickRow = (patientAddr, creationDate) => {
-        const creationDateString = creationDate.toString();
+    const clickRow = (patientAddr, index) => {
+        const selectedMedicalHistory = medicalHistory[index];
+        const selectedCreationDate = selectedMedicalHistory.creationDate;
+        const id = parseInt(selectedCreationDate);
         router.push({
             pathname: '/PATIENT/MedicalHistory2Patient/',
-            query: { patientAddr, creationDateString }
+            query: { patientAddr, id }
         });
     };
 
@@ -147,7 +149,7 @@ const MedicalHistoryPatient = () => {
                                 <p>Admission Date</p>
                                 <p>Discharge Date</p>
                             </div>
-                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, index)}>
                                 <p className={styles.diaAttrb}>{record.diagnosis}</p>
                                 <p>{record.hospitalName}</p>
                                 <p>{record.physician}</p>

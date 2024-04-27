@@ -487,12 +487,12 @@ const UpdateMedicalHistoryHospital = () => {
     const handleSubmit = async () => {
 
         //console.log('Form submitted:', formData);
-        console.log('current', currentMedicalHistory);
+        //console.log('current', currentMedicalHistory);
     
         let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission, currentCreationDate;
     
         newPhysician = formData.physician;
-        console.log(newPhysician)
+       // console.log(newPhysician)
 
         const parsedCurrentMedicalHistory = currentMedicalHistory.map(item => {
             const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
@@ -554,12 +554,12 @@ const UpdateMedicalHistoryHospital = () => {
         const updatedMedication = concatenatedMedication ? `${currentMeds}~${concatenatedMedication}` : currentMeds;
         const updatedAdmission = concatenatedAdmission ? `${currentAdmission}~${concatenatedAdmission}` : currentAdmission;
         
-        console.log(patientDiagnosis);
-        console.log(updatedSymptoms);
-        console.log(updatedTP);
-        console.log(updatedTest);
-        console.log(updatedMedication);
-        console.log(updatedAdmission);
+        // console.log(patientDiagnosis);
+        // console.log(updatedSymptoms);
+        // console.log(updatedTP);
+        // console.log(updatedTest);
+        // console.log(updatedMedication);
+        // console.log(updatedAdmission);
         
         // * need below 100 ung length ng diagnosis at description
         if (formData.diagnosis.length < 100 && formData.description.length < 100) {

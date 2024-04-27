@@ -240,7 +240,7 @@ const AccountAccessHospital = () => {
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
         const id = parseInt(creationDate);
         router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+            pathname: '/HOSPITAL/MedicalHistory1Hospital/',
             query: { patientAddr, id }
         });
     }

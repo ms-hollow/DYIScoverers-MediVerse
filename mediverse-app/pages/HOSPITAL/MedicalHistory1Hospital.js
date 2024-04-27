@@ -128,8 +128,6 @@ const MedicalHistoryPatient = () => {
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
         const id = parseInt(selectedCreationDate);
-        // console.log(selectedMedicalHistory);
-        // console.log(id);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, id }
