@@ -84,8 +84,8 @@ export default function Home() {
               </button>
             </div>
           
-            <div className={styles.dontHaveMetamaskText}>Don't Have Metamask Wallet?{" "}
-              <span className={styles.createOneLink} onClick={handleCreateWallet}> &nbsp; Create one.</span> {/* Use span instead of a */}
+            <div className={styles.dontHaveMetamaskText}>Don't Have Metamask Wallet? &nbsp;{" "}
+              <span className={styles.createOneLink} onClick={handleCreateWallet}> Create one.</span> {/* Use span instead of a */}
             </div>
           </div>
         </div>

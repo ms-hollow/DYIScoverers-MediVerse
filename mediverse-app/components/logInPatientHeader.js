@@ -35,7 +35,7 @@ const LogInPatientHeader = () => {
         </ul>
 
         <div className={styles.registerDropdown}>
-          <div className={styles.button} onClick={toggleMenu}>  REGISTER </div>
+          <div className={styles.button} onClick={toggleMenu}> REGISTER </div>
           {isRegisterOpen && (
             <div className={styles.registerDropdownContent}>
               <Link href="/PATIENT/Register1Patient/">As Patient</Link>

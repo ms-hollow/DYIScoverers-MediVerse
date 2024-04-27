@@ -189,62 +189,6 @@
     color: var(--cyan);
 }
 
- /* ------------------RESPONSIVENESS------------------*/
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 7vw; 
-    }
-    
-    .formField {
-      flex: 1 1 100%; 
-      margin-left: 9%; 
-      margin-bottom: 10px;
-    }
-  
-    .backButton {
-      display: none; /* Hide the backButton on screens smaller than 768px */
-    }
-    
-    .submitButton {
-      width: 48%; /* Make buttons full width on smaller screens */
-      margin-right: 25%; 
-    }
-    
-    .formTitle {
-      margin-bottom: 10px; /* Adjust margin for responsiveness */
-      font-size: 1.2rem; 
-    }
-    
-    .stepsContainer {
-      flex-direction: column; /* Arrange steps vertically on smaller screens */
-      align-items: center; 
-      margin: 5% auto; 
-      margin-bottom: 20%;
-      width: 90%; 
-    }
-    
-    .stepShape {
-      width: 50%; 
-      height: 25px; 
-      font-size: 16px;
-      padding: 0 5px; 
-      margin-left:50%; 
-      margin-bottom: 5px; 
-      border-radius: 90%; 
-    }
-    
-    .stepText {
-      font-size: 12px; 
-      margin-left: 25%; 
-    }
-    
-    .line {
-      width: 90%; 
-      margin-left: 7%;
-    }
-  }
-
    /* ------------------RESPONSIVENESS------------------*/
   
    @media (max-width: 768px) {
@@ -257,10 +201,6 @@
       margin-left: 9%; 
       margin-bottom: 10px;
     }
-  
-    .backButton {
-      display: none; /* Hide the backButton on screens smaller than 768px */
-    }
     
     .submitButton {
       width: 48%; /* Make buttons full width on smaller screens */
@@ -271,32 +211,6 @@
       margin-bottom: 10px; /* Adjust margin for responsiveness */
       font-size: 1.2rem; 
     }
-    
-    .stepsContainer {
-      flex-direction: column; /* Arrange steps vertically on smaller screens */
-      align-items: center; 
-      margin: 5% auto; 
-      margin-bottom: 20%;
-      width: 90%; 
-    }
-    
-    .stepShape {
-      width: 50%; 
-      height: 25px; 
-      font-size: 16px;
-      padding: 0 5px; 
-      margin-left:50%; 
-      margin-bottom: 5px; 
-      border-radius: 90%; 
-    }
-    
-    .stepText {
-      font-size: 12px; 
-      margin-left: 25%; 
-    }
-    
-    .line {
-      width: 90%; 
-      margin-left: 7%;
-    }
+  
+
   }

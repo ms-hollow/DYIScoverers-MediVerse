@@ -677,7 +677,7 @@ const UpdateMedicalHistoryHospital = () => {
 
                     {formData.symptoms.map((symptom, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="no-symptom"  name="noSymptom" value={symptom.noSymptom} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -741,7 +741,7 @@ const UpdateMedicalHistoryHospital = () => {
                     
                     {formData.treatmentProcedure.map((treatmentProcedure, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noTP"  name="noTP" value={treatmentProcedure.noTP} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -801,7 +801,7 @@ const UpdateMedicalHistoryHospital = () => {
         
                     {formData.test.map((test, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="no-test"  name="noTest" value={test.noTest} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
@@ -1006,7 +1006,7 @@ const UpdateMedicalHistoryHospital = () => {
                     
                     {formData.admission.map((admission, index) => (
                         <div className={styles.formRow} key={index}>
-                            <div className={styles.formFieldNum}>
+                            <div className={styles.formFieldNum_med}>
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>

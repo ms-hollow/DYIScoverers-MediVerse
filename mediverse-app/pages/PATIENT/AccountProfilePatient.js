@@ -125,7 +125,7 @@ const AccountProfilePatient = () => {
         <>
         <Layout pageName = "Account Profile">
 
-            <form className={styles.registrationForm} onSubmit={handleEdit}>
+            <form className={styles.accountForm} onSubmit={handleEdit}>
                 <div className={styles.formTitle}>Account Information</div>
                 <div className={styles.formContainer}>
                     <div className={styles.formRow}>
