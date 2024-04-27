@@ -85,6 +85,7 @@ const MedicalHistoryPatient = () => {
                     const splitAdmission = item.admission.split('+');
                     //console.log("Admission Date:", splitAdmission[2]);
                     //console.log("Discharge Date:", splitAdmission[3]);
+                    const creationDateInt = parseInt(item.creationDate);
                     return {
                         hospitalName: splitAdmission[1],
                         diagnosis: splitDiagnosis[0],
@@ -92,7 +93,7 @@ const MedicalHistoryPatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         patientAddr: item.patientAddr,
-                        creationDate: item.creationDate
+                        creationDate: creationDateInt
                     };
                 });
                 

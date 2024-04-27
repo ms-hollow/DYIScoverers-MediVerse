@@ -81,6 +81,7 @@ const MedicalHistoryPatient = () => {
                 // Process each medical record to format it as needed
                 const modifiedMedicalHistory = uniqueMedicalRecords.map(item => {
                     const splitAdmission = item.admission.split('+');
+                    const creationDateInt = parseInt(item.creationDate);
                     return {
                         patientAddr: item.patientAddr,
                         patientName: "", // Fetch patient name here
@@ -88,7 +89,7 @@ const MedicalHistoryPatient = () => {
                         admissionDate: splitAdmission[2],
                         dischargeDate: splitAdmission[3],
                         lengthOfStay: splitAdmission[4],
-                        creationDate: item.creationDate
+                        creationDate: creationDateInt
                     };
                 });
     
