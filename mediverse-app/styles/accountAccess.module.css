@@ -48,7 +48,7 @@
     align-items: center;
     width: 1122px;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .tableHeading{
@@ -111,17 +111,19 @@
     margin: 0 auto;
 }
 
-.tableHeading_reqAccess1{
+.data_reqAccess_patient {
     display: grid;
     grid-template-columns: 600px 280px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: Roboto Condensed;
-    font-weight: 500;
-    color: var(--pale-blue);
+    border-radius: 8px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     width: 1122px;
     padding-left: 50px;
-    margin: 0 auto;
+    align-items: center;
+    margin-bottom: 3px;
 }
+
 
 .tableHeading_reqAccess_hospital{
     display: grid;
@@ -148,7 +150,8 @@
 }
 
 .data button,
-.data_reqAccess button{
+.data_reqAccess button,
+.data_reqAccess_patient button {
     display: flex;
     font-size: 12px;
     font-family: Roboto Condensed;
@@ -160,7 +163,8 @@
 }
 
 .data button:hover,
-.data_reqAccess button:hover {
+.data_reqAccess button:hover,
+.data_reqAccess_patient button:hover {
     font-weight: 500;
 }
 
@@ -181,9 +185,10 @@
 
 @media screen and (max-width: 2491px) {
     .container {
-        margin-top: 200px;
+        margin-top: 150px;
     }
 }
+
 
 @media screen and (max-width: 1661px) {
     .container {
@@ -203,7 +208,7 @@
     }
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess, 
-    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess {
+    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess_patient  {
         width: 860px;
     }
 
@@ -211,7 +216,7 @@
         grid-template-columns: 320px 300px 200px;
     }
 
-    .tableHeading_reqAccess_hospital{
+    .tableHeading_reqAccess_hospital {
         grid-template-columns: 320px 300px;
     }
 
@@ -219,7 +224,7 @@
         grid-template-columns: 215px 215px 215px 200px;
     }
 
-    .tableHeading_reqAccess {
+    .tableHeading_reqAccess, .data_reqAccess_patient {
         grid-template-columns: 430px 100px;
     }
 }
@@ -230,7 +235,7 @@
     }
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess,
-    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess {
+    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess_patient {
         width: 700px;
     }
 
@@ -246,7 +251,7 @@
         grid-template-columns: 175px 175px 175px 175px;
     }
 
-    .tableHeading_reqAccess {
+    .tableHeading_reqAccess, .data_reqAccess_patient {
         grid-template-columns: 340px 350px;
     }
 }
@@ -258,7 +263,7 @@
     }
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess,
-    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess {
+    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess_patient {
         width: 600px;
     }
 
@@ -275,12 +280,12 @@
         padding-left: 40px;
     }
 
-    .tableHeading_reqAccess{
+    .tableHeading_reqAccess, .data_reqAccess_patient {
         grid-template-columns: 285px 100px;
     }
 
     .data_hospital, .data_hospital button, .data_reqAccess, .data_reqAccess button,
-    .data, .data button {
+    .data, .data button, .data_reqAccess_patient, .data_reqAccess_patient button {
         font-size: 10px;
     }
 
@@ -301,7 +306,7 @@
 @media screen and (max-width: 639px) {
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess,
-    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess {
+    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess, .data_reqAccess_patient {
         width: 400px;
     }
 
@@ -320,7 +325,7 @@
         padding-left: 20px;
     }
 
-    .tableHeading_reqAccess {
+    .tableHeading_reqAccess, .data_reqAccess_patient {
         grid-template-columns: 235px 100px;
         padding-left: 20px;
     }
@@ -358,7 +363,7 @@
 @media screen and (max-width: 445px) {
     .container, .pageNavigator, .tableContainer, .tableHeading_hospital, 
     .tableHeading_reqAccess_hospital, .data_hospital, .data_reqAccess,
-    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess {
+    .tableHeading, .dataContainer, .data, .tableHeading_reqAccess, .data_reqAccess, .data_reqAccess_patient {
         width: 330px;
     }
 
@@ -374,7 +379,7 @@
         grid-template-columns: 82.5px 82.5px 82.5px 70px;
     }
 
-    .tableHeading_reqAccess {
+    .tableHeading_reqAccess, .data_reqAccess_patient {
         grid-template-columns: 175px 100px;
     }
 
@@ -383,7 +388,7 @@
     }
 
     .data_hospital, .data_hospital button, .data_reqAccess, .data_reqAccess button,
-    .data, .data button {
+    .data, .data button, .data_reqAccess_patient, .data_reqAccess_patient button {
         font-size: 8.5px;
     }
 
