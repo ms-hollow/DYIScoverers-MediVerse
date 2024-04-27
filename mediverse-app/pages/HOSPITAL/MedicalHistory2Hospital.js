@@ -114,18 +114,22 @@ const MedicalHistoryHospital = () => {
 
                 let physicianName;
                 //* Get yung data sa array na nag equal sa may creationDate
-                const parsedPatientMedicalHistory = patientRecords.filter(item => {
-                    const creationDateString = item.creationDate.toString();
-                    const idString = id.toString();
+                const getPatientMedicalHistory = patientRecords.filter(item => {
+                    const creationDateString = BigInt(item.creationDate);
+                    const idString = BigInt(id);
                     return creationDateString === idString;
-                }).map(item => {
-                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
+                });
+                //console.log(getPatientMedicalHistory);
+
+                //* Get yung data sa array na nag equal sa may creationDate
+                const parsedPatientMedicalHistory = getPatientMedicalHistory.map(item => {
+                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
                     physicianName = physician;
                     sethospitalAddrInHistory(hospitalAddr);
                     return {
-                        patientAddr,
+                        patientAddr: patientAddr,
                         hospitalAddr,
-                        physicianName,
+                        physician,
                         diagnosis,
                         signsAndSymptoms,
                         treatmentProcedure,
@@ -135,6 +139,7 @@ const MedicalHistoryHospital = () => {
                         creationDate
                     };
                 });
+
                 
                 // console.log("Patient Medical History:", parsedPatientMedicalHistory);
 
