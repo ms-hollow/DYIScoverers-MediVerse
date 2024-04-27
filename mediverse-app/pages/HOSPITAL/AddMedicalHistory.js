@@ -197,10 +197,10 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.lengthOfStay)) {
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate)) {
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            toast.error("Admission is required, except for the discharge date. The admission form fields are incomplete. Please fill them out.");
+            toast.error("Admission is required, except for the discharge date and length of stay. The admission form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
         
