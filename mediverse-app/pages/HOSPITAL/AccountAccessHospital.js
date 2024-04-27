@@ -237,11 +237,13 @@ const AccountAccessHospital = () => {
         }
     };
 
-    const handleViewMedicalHistory = async (patientAddr, creationDate) => {
-        const creationDateString = creationDate.toString();
+    const handleViewMedicalHistory = async (patientAddr, index) => {
+        const selectedMedicalHistory = medicalHistory[index];
+        const selectedCreationDate = selectedMedicalHistory.creationDate;
+        const id = parseInt(selectedCreationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, creationDateString }
+            query: { patientAddr, id }
         });
     }
 
@@ -276,7 +278,7 @@ const AccountAccessHospital = () => {
                             <div key={`${data.patientAddr}-${index}`} className={styles.data_hospital}>
                                 <p>{data.patientName}</p>
                                 <p>{data.dateConsultation}</p>
-                                <button onClick={() => handleViewMedicalHistory(data.patientAddr, data.creationDate)}>View Medical Records</button>
+                                <button onClick={() => handleViewMedicalHistory(data.patientAddr, index)}>View Medical Records</button>
                             </div>
                         ))}
                     </div>
