@@ -68,39 +68,41 @@ const Register2Hospital = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <RegistrationProcess 
-                firstShapeColor="shapeBlue"
-                secondShapeColor="shapeBlue"
-                thirdShapeColor="shapeCyan"
-            />
+            <div className= {styles.registrationContainer}>
+                <RegistrationProcess 
+                    firstShapeColor="shapeBlue"
+                    secondShapeColor="shapeBlue"
+                    thirdShapeColor="shapeCyan"
+                />
 
-            <div className={styles.formContainer}>
-                <div className={styles.formTitle}>
-                    <button className={styles.backButton} onClick={goBack}>←</button>
-                    Hospital Details
+                <div className={styles.formContainer}>
+                    <div className={styles.formTitle}>
+                        <button className={styles.backButton} onClick={goBack}>←</button>
+                        Hospital Details
+                    </div>
+                    <form className={styles.registrationForm} onSubmit={handleSubmit}>
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="hospital-name" name="hospitalName" placeholder="Hospital Name" required onChange={handleChange} value={formData.hospitalName} readOnly/>
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="contact-number" name="contactNumber" placeholder="Contact Number" required onChange={handleChange} value={formData.contactNumber} readOnly/>
+                            </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" required onChange={handleChange} value={formData.hospitalAddress} readOnly/>
+                            </div>
+                        </div>
+                        
+                        <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
+
+                    </form>
+
                 </div>
-                <form className={styles.registrationForm} onSubmit={handleSubmit}>
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="hospital-name" name="hospitalName" placeholder="Hospital Name" required onChange={handleChange} value={formData.hospitalName} readOnly/>
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="contact-number" name="contactNumber" placeholder="Contact Number" required onChange={handleChange} value={formData.contactNumber} readOnly/>
-                        </div>
-                    </div>
-
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" required onChange={handleChange} value={formData.hospitalAddress} readOnly/>
-                        </div>
-                    </div>
-                    
-                    <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
-
-                </form>
-
+                <ToastWrapper/>
             </div>
-            <ToastWrapper/>
         </>
         
     );

@@ -121,84 +121,87 @@ const Register2Patient = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <RegistrationProcess 
-                firstShapeColor="shapeBlue"
-                secondShapeColor="shapeCyan"
-                thirdShapeColor="shapeBlue"
-            />
+            <div className= {styles.registrationContainer}>
 
-            <div className={styles.formContainer}>
-                <div className={styles.formTitle}>
-                    <button className={styles.backButton} onClick={goBack}>←</button>
-                    Personal Details
+                <RegistrationProcess 
+                    firstShapeColor="shapeBlue"
+                    secondShapeColor="shapeCyan"
+                    thirdShapeColor="shapeBlue"
+                />
+
+                <div className={styles.formContainer}>
+                    <div className={styles.formTitle}>
+                        <button className={styles.backButton} onClick={goBack}>←</button>
+                        Personal Details
+                    </div>
+                    <form className={styles.registrationForm} onSubmit={handleSubmit}>
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="middle-name" name="middleName" placeholder="Middle Name" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="last-name" name="lastName" placeholder="Last Name" required onChange={handleChange} />
+                            </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="number" id="age" name="age" placeholder="Age" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <select id="gender" name="gender" required onChange={handleChange}>
+                                    <option value="" disabled selected>Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="birth-date" name="dob" placeholder="Date of Birth" required ref={dobInputRef} onChange={handleChange} onFocus={handleDobFocus} onBlur={handleDobBlur} value={dobValue}/>
+                            </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="tel" id="phone-number" name="phoneNumber" placeholder="Phone Number" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="height" name="height" placeholder="Height" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="weight" name="weight" placeholder="Weight" required onChange={handleChange} />
+                            </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="city-municipality" name="cityMunicipality" placeholder="City/Municipality" required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} />
+                            </div>
+                        </div>
+                        
+                        {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
+                        <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                            {isLoading ? 'PROCEEDING...' : 'PROCEED'}
+                        </button>
+                    </form>
                 </div>
-                <form className={styles.registrationForm} onSubmit={handleSubmit}>
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="first-name" name="firstName" placeholder="First Name" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="middle-name" name="middleName" placeholder="Middle Name" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="last-name" name="lastName" placeholder="Last Name" required onChange={handleChange} />
-                        </div>
-                    </div>
-
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="number" id="age" name="age" placeholder="Age" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <select id="gender" name="gender" required onChange={handleChange}>
-                                <option value="" disabled selected>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="birth-date" name="dob" placeholder="Date of Birth" required ref={dobInputRef} onChange={handleChange} onFocus={handleDobFocus} onBlur={handleDobBlur} value={dobValue}/>
-                        </div>
-                    </div>
-
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="tel" id="phone-number" name="phoneNumber" placeholder="Phone Number" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="height" name="height" placeholder="Height" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="weight" name="weight" placeholder="Weight" required onChange={handleChange} />
-                        </div>
-                    </div>
-
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="city-municipality" name="cityMunicipality" placeholder="City/Municipality" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="region" name="region" placeholder="Region" required onChange={handleChange} />
-                        </div>
-                    </div>
-                    
-                    {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                        {isLoading ? 'PROCEEDING...' : 'PROCEED'}
-                    </button>
-                </form>
+                <ToastWrapper/>
             </div>
-            <ToastWrapper/>
         </>
         
     );
