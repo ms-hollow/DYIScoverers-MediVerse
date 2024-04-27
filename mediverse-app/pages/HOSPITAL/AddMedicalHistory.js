@@ -200,7 +200,7 @@ const addMedicalHistory = () => {
         if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate)) {
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            toast.error("Admission is required, except for the discharge date and length of stay. The admission form fields are incomplete. Please fill them out.");
+            toast.error("Admission is required, except for the discharge date and length of stay. Please fill them out.");
             formComplete = false;
         }
         
@@ -211,35 +211,42 @@ const addMedicalHistory = () => {
         // console.log('Concatenated Medication:', concatenatedMedication);
         // console.log('Concatenated Admission:', concatenatedAdmission);
 
-        if (formComplete) {
-            // * need below 100 ung length ng diagnosis at description
-            if (formData.diagnosis.length < 100 && formData.description.length < 100) {
-                setIsLoading(true);
-                try {
-                    const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                    //("Account:", accounts[0]);
-                    const receipt = await mvContract.methods.addMedicalHistory(
-                        formData.patientAddress,
-                        formData.physician,
-                        patientDiagnosis,
-                        concatenatedSymptoms,
-                        concatenatedTreatmentProcedure,
-                        concatenatedTest,
-                        concatenatedMedication,
-                        concatenatedAdmission
-                    ).send({ from: accounts[0] });
-                    //console.log("Transaction Hash:", receipt.transactionHash);
-                    toast.success('Medical History Successfully Added!');
-                    setIsLoading(false);
-                    router.push('/HOSPITAL/PatientRecordsHospital/');
-                } catch (error) {
-                    toast.error('Patient is not registered.');
+        const patientList = await mvContract.methods.getPatientList().call();
+        const isPatientIncluded = patientList.includes(formData.patientAddress);
+
+        if (isPatientIncluded) {
+            if (formComplete) {
+                // * need below 100 ung length ng diagnosis at description
+                if (formData.diagnosis.length < 100 && formData.description.length < 100) {
+                    setIsLoading(true);
+                    try {
+                        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                        //("Account:", accounts[0]);
+                        const receipt = await mvContract.methods.addMedicalHistory(
+                            formData.patientAddress,
+                            formData.physician,
+                            patientDiagnosis,
+                            concatenatedSymptoms,
+                            concatenatedTreatmentProcedure,
+                            concatenatedTest,
+                            concatenatedMedication,
+                            concatenatedAdmission
+                        ).send({ from: accounts[0] });
+                        //console.log("Transaction Hash:", receipt.transactionHash);
+                        toast.success('Medical History Successfully Added!');
+                        setIsLoading(false);
+                        router.push('/HOSPITAL/PatientRecordsHospital/');
+                    } catch (error) {
+                        toast.error('Patient is not registered.');
+                        //console.error('Error sending transaction:', error.message);
+                    };
+                } else {
                     //console.error('Error sending transaction:', error.message);
-                };
-            } else {
-                //console.error('Error sending transaction:', error.message);
-                toast.error('Diagnosis and Description should be below 100 letters');
+                    toast.error('Diagnosis and Description should be below 100 letters');
+                }
             }
+        } else {
+            toast.error('Patient is not registered.');
         }
     };
 
