@@ -198,26 +198,22 @@ const addMedicalHistory = () => {
         if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
             // Iterate over each admission entry in the form data
             formData.admission.forEach(admission => {
-                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
-        
-                if (admission.dischargeDate) {
-                    // If discharge date is provided, calculate length of stay
-                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                    const lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                const admissionDate = new Date(admission.admissionDate);
+                const dischargeDate = new Date(admission.dischargeDate);
+                
+                if (dischargeDate >= admissionDate) {
+                    // Calculate length of stay
+                    const lengthOfStayInMs = dischargeDate - admissionDate; 
+                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
+                    admission.lengthOfStay = lengthOfStayInDays; 
                 } else {
-                    // If discharge date is not provided, display error message
-                    toast.error("Admission form fields are incomplete. Please fill them out.");
-                    formComplete = false;
+                    admission.lengthOfStay = 1;
                 }
             });
-        
-            // Concatenate admission data
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            // If hospital name and admission date are not provided, display error message
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
+            // If hospital name, admission date, or discharge date are not provided, display error message
+            toast.error("Admission is required. Please fill out the hospital name, admission date, and discharge date.");
             formComplete = false;
         }
 
