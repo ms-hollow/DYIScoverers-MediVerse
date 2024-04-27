@@ -1,130 +1,84 @@
 [
     {
-        "id": 1,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
+      "id": 1,
+      "name": "Maria Garcia Lopez",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 15, 2024",
+      "dischargeDate": "",
+      "stayLength": "1 day"
     },
     {
-        "id": 2,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
+      "id": 2,
+      "name": "Abbygail Miles Leonen",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 15, 2024",
+      "dischargeDate": "",
+      "stayLength": "1 day"
     },
     {
-        "id": 3,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
+      "id": 3,
+      "name": "Alexis Glenn Ygot Aspiras",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 15, 2024",
+      "dischargeDate": "",
+      "stayLength": "1 day"
     },
     {
-        "id": 4,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
+      "id": 4,
+      "name": "John Paulo Canuto Alcantara",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 15, 2024",
+      "dischargeDate": "",
+      "stayLength": "1 day"
     },
     {
-        "id": 5,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
+      "id": 5,
+      "name": "Laica Ygot",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 15, 2024",
+      "dischargeDate": "",
+      "stayLength": "1 day"
     },
     {
-        "id": 6,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
+      "id": 6,
+      "name": "Kelvin Ganda Yuraka",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 14, 2024",
+      "dischargeDate": "",
+      "stayLength": "2 days"
     },
     {
-        "id": 7,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
+      "id": 7,
+      "name": "Bryan Palavino",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 14, 2024",
+      "dischargeDate": "",
+      "stayLength": "2 days"
     },
     {
-        "id": 8,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
+      "id": 8,
+      "name": "Cristina Reyes Santos",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 14, 2024",
+      "dischargeDate": "",
+      "stayLength": "2 days"
     },
     {
-        "id": 9,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
+      "id": 9,
+      "name": "Daniel Mendoza Cruz",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 13, 2024",
+      "dischargeDate": "February 15, 2024",
+      "stayLength": "3 days"
     },
     {
-        "id": 10,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
-    },
-    {
-        "id": 11,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
-    },
-    {
-        "id": 12,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
-    },
-    {
-        "id": 13,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
-    },
-    {
-        "id": 14,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
-    },
-    {
-        "id": 15,
-        "name": "Laica Ygot",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 15, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "7 days"
-    },
-    {
-        "id": 16,
-        "name": "Abbygail Miles Leonen",
-        "hospital": "Philippine General Hospital",
-        "admissionDate": "February 17, 2024",
-        "dischargeDate": "February 22, 2024",
-        "stayLength": "5 days"
+      "id": 10,
+      "name": "Sofia Reyes Pacheco",
+      "hospital": "Philippine General Hospital",
+      "admissionDate": "February 13, 2024",
+      "dischargeDate": "February 15, 2024",
+      "stayLength": "3 days"
     }
-]
+  ]
+  
+  

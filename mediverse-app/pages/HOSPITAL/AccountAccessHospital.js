@@ -84,7 +84,7 @@ const AccountAccessHospital = () => {
                                 <div key={data.request_ID} className={styles.data_reqAccess}>
                                     <p>{data.patientName}</p>
                                     <p>{data.status}</p>
-                                    <button onClick={handleAcceptAccessClick}>Add Patient</button>
+                                    <button onClick={handleAcceptAccessClick}>Request</button>
                                 </div>
                             ))}
                         </div>

@@ -27,7 +27,7 @@ const HomePatient = ({ data1, data2 }) => {
         <>
             <div className={styles.container}>
                 <div className={styles.welcomeText}>
-                    <p>Welcome Back, Nick Holster</p>
+                    <p>Welcome Back, Maria Garcia Lopez!</p>
                 </div>
 
                 <div className={styles.tableHeading}>

@@ -46,8 +46,8 @@ const AccountAccessPatient = ({data}) => {
         <>
             <div className={styles.container}>
                 <div className={styles.pageNavigator}>
-                    <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Account Access</button>
-                    <button className={showAccountAccess ? '' : styles.activeButton_reqAccess} onClick={handleRequestAccessClick}>Request Access</button>
+                    <button className={showAccountAccess ? styles.activeButton_accAccess : ''} onClick={handleAccountAccessClick}>Authorized Hospital</button>
+                    <button className={showAccountAccess ? '' : styles.activeButton_reqAccess} onClick={handleRequestAccessClick}>Pending Requests</button>
                 </div>
 
                 {showAccountAccess ? (
@@ -81,7 +81,7 @@ const AccountAccessPatient = ({data}) => {
                             {data.map(data => (
                                 <div key={data.id} className={styles.data_reqAccess_patient}>
                                     <p>{data.hospitalName}</p>
-                                    <button onClick={handleAcceptAccessClick}>Accept</button>
+                                    <button onClick={handleAcceptAccessClick}>Grant Access</button>
                                 </div>
                             ))}
                         </div>
