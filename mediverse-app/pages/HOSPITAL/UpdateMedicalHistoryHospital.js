@@ -489,7 +489,7 @@ const UpdateMedicalHistoryHospital = () => {
         //console.log('Form submitted:', formData);
         console.log('current', currentMedicalHistory);
     
-        let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission;
+        let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission, currentCreationDate;
     
         newPhysician = formData.physician;
         console.log(newPhysician)
@@ -502,6 +502,7 @@ const UpdateMedicalHistoryHospital = () => {
             currentTests = tests;
             currentMeds = medications;
             currentAdmission = admission;
+            currentCreationDate = creationDate;
             return {
                 patientAddr,
                 hospitalAddr,
@@ -575,7 +576,8 @@ const UpdateMedicalHistoryHospital = () => {
                     updatedTP,
                     updatedTest,
                     updatedMedication,
-                    updatedAdmission
+                    updatedAdmission,
+                    currentCreationDate
                 ).send({ from: accounts[0] });
                 
                 //console.log("Transaction Hash:", receipt.transactionHash);
@@ -591,8 +593,9 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const pushRoute = async (patientAddr, id) => {
+    const pushRoute = async (patientAddr, creationDate) => {
         await handleSubmit();
+        const id = parseInt(creationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, id }
@@ -1026,7 +1029,7 @@ const UpdateMedicalHistoryHospital = () => {
                     {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute(patientAddr, id)}> 
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute(medicalHistory.patientAddr, medicalHistory.creationDate)}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
