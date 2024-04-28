@@ -13,18 +13,60 @@ import { toast } from 'react-toastify';
 const addMedicalHistory = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({ 
-        patientAddress: '',
-        physician: '',
-        diagnosis: '',
-        dateOfDiagnosis: '',
-        description: '',
-        symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '' , tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
-        test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
-        medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
-        admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+    // const [formData, setFormData] = useState({ 
+    //     patientAddress: '',
+    //     physician: '',
+    //     diagnosis: '',
+    //     dateOfDiagnosis: '',
+    //     description: '',
+    //     symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+    //     treatmentProcedure: [{noTP: 1, tp: '', medTeam: '' , tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+    //     test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
+    //     medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
+    //     admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+    // });
+    
+    const [formData, setFormData] = useState(() => {
+        // Check if localStorage is available
+        if (typeof window !== 'undefined' && window.localStorage) {
+            // Retrieve form data from localStorage when the component mounts
+            const savedFormData = localStorage.getItem('formData');
+            return savedFormData ? JSON.parse(savedFormData) : {
+                patientAddress: '',
+                physician: '',
+                diagnosis: '',
+                dateOfDiagnosis: '',
+                description: '',
+                symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+                treatmentProcedure: [{ noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' }],
+                test: [{ noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: '' }],
+                medication: [{ noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: '' }],
+                admission: [{ noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: '' }]
+            };
+        } else {
+            // If localStorage is not available, return default form data
+            return {
+                patientAddress: '',
+                physician: '',
+                diagnosis: '',
+                dateOfDiagnosis: '',
+                description: '',
+                symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+                treatmentProcedure: [{ noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' }],
+                test: [{ noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: '' }],
+                medication: [{ noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: '' }],
+                admission: [{ noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: '' }]
+            };
+        }
     });
+    
+    useEffect(() => {
+        // Convert formData to a string before storing in localStorage
+        const formDataString = JSON.stringify(formData);
+        // Save formData to localStorage
+        localStorage.setItem('formData', formDataString);
+        // console.log('Form data saved to localStorage:', formDataString);
+    }, [formData]);
 
     const [dateValues, setDateValues] = useState({});
 
@@ -256,11 +298,13 @@ const addMedicalHistory = () => {
                             concatenatedAdmission
                         ).send({ from: accounts[0] });
                         //console.log("Transaction Hash:", receipt.transactionHash);
+                        localStorage.removeItem('formData');
                         toast.success('Medical History Successfully Added!');
                         setIsLoading(false);
                         router.push('/HOSPITAL/PatientRecordsHospital/');
+
                     } catch (error) {
-                        toast.error('Patient is not registered.');
+                        toast.error('Invalid Patient Address');
                         //console.error('Error sending transaction:', error.message);
                     };
                 } else {
@@ -285,25 +329,25 @@ const addMedicalHistory = () => {
                     <div className={styles.formTitle}>Patient MetaMask Address</div>
                         <div className={styles.formRow}>
                             <div className={styles.formField}>
-                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" required onChange={handleChange} />
+                                <input type="text" id="patient-address" name="patientAddress" placeholder="Patient Address" value={formData.patientAddress} required onChange={handleChange} />
                             </div>
                         </div>
                     <div className={styles.formTitle}>Patient Consultation</div>
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="physician" name="physician" placeholder="Physician" required onChange={handleChange} />
+                            <input type="text" id="physician" name="physician" placeholder="Physician" value={formData.physician} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" required onChange={handleChange} />
+                            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" value={formData.diagnosis} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" required onChange={handleChange} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfDiagnosis')}/>
+                            <input type="text" id="date-of-diagnosis" name="dateOfDiagnosis" placeholder="Date of Diagnosis" value={formData.dateOfDiagnosis} required onChange={handleChange} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfDiagnosis')}/>
                         </div>
                     </div>
             
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="description" name="description" placeholder="Description" required onChange={handleChange} />
+                            <input type="text" id="description" name="description" placeholder="Description" value={formData.description} required onChange={handleChange} />
                         </div>
                     </div>
 
@@ -323,13 +367,13 @@ const addMedicalHistory = () => {
                                 <input type="text" id="no-symptom"  name="noSymptom" value={symptom.noSymptom} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="symptom-name"  name="symptomName" placeholder="Type of Symptoms" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="symptom-name"  name="symptomName" placeholder="Type of Symptoms" value={symptom.symptomName} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="symptom-duration" name="symptomDuration" placeholder="Days" required onChange={(e) => handleChange(e, index)} />
+                                <input type="number" id="symptom-duration" name="symptomDuration" placeholder="Days" value={symptom.symptomDuration} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                            <select id="symptom-severity" name="symptomSeverity"  required onChange={(e) => handleChange(e, index)}>
+                            <select id="symptom-severity" name="symptomSeverity" value={symptom.symptomSeverity} required onChange={(e) => handleChange(e, index)}>
                                 <option value="" disabled selected>Severity</option>
                                 <option value="Asymptomatic">Asymptomatic</option>
                                 <option value="Mild">Mild</option>
@@ -340,7 +384,7 @@ const addMedicalHistory = () => {
                             </select>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="text" id="symptom-location" name="symptomLocation" placeholder="Location" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="symptom-location" name="symptomLocation" placeholder="Location" value={symptom.symptomLocation} required onChange={(e) => handleChange(e, index)} />
                             </div>
                         </div>
                     ))}
@@ -364,19 +408,19 @@ const addMedicalHistory = () => {
                                 <input type="text" id="noTP"  name="noTP" value={treatmentProcedure.noTP} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="t-p"  name="tp" placeholder="Type Treatment/Procedure" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="t-p"  name="tp" placeholder="Type Treatment/Procedure" value={treatmentProcedure.tp} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="med-team"  name="medTeam" placeholder="Type Medical Team/Provider" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="med-team"  name="medTeam" placeholder="Type Medical Team/Provider" value={treatmentProcedure.medTeam} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="date-started" name="tpDateStarted" placeholder="Date Started" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateStarted')} />
+                                <input type="text" id="date-started" name="tpDateStarted" placeholder="Date Started" value={treatmentProcedure.tpDateStarted} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateStarted')} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateEnd')} />
+                                <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" value={treatmentProcedure.tpDateEnd} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateEnd')} />
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
+                                <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" value={treatmentProcedure.tpDuration} required onChange={(e) => handleChange(e, index)} />
                             </div>
                         </div>
                     ))}
@@ -401,7 +445,8 @@ const addMedicalHistory = () => {
                                 <input type="text" id="no-test"  name="noTest" value={test.noTest} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                            <select id="test-type" name="testType" placeholder="Test Type" required onChange={(e) => handleChange(e, index)}>
+                            <select id="test-type" name="testType" placeholder="Test Type" value={test.testType} required onChange={(e) => handleChange(e, index)}>
+                                <option value="" disabled selected>Test Type</option>
                                 <option value="" disabled selected> -----  Blood Tests -----</option>
                                 <option value="Complete Blood Count (CBC)">Complete Blood Count (CBC)</option>
                                 <option value="Basic Metabolic Panel (BMP)">Basic Metabolic Panel (BMP)</option>
@@ -482,16 +527,16 @@ const addMedicalHistory = () => {
                             </select>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="ordering-physician"  name="orderingPhysician" placeholder="Ordering Physician" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="ordering-physician"  name="orderingPhysician" placeholder="Ordering Physician" value={test.orderingPhysician} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="test-date"  name="testDate" placeholder="Test Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'testDate')} />
+                                <input type="text" id="test-date"  name="testDate" placeholder="Test Date" value={test.testDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'testDate')} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="reviewing-physician"  name="reviewingPhysician" placeholder="Reviewing Physician" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="reviewing-physician"  name="reviewingPhysician" placeholder="Reviewing Physician" value={test.reviewingPhysician} required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="text" id="test-result"  name="testResult" placeholder="Test Result" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="test-result"  name="testResult" placeholder="Test Result" value={test.testResult} required onChange={(e) => handleChange(e, index)} />
                             </div>
                         </div>
                     ))}
@@ -518,25 +563,25 @@ const addMedicalHistory = () => {
                                 <input type="text" id="noMedication"  name="noMedication" value={medication.noMedication} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="medication-type"  name="medicationType" placeholder="Medication Type" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-type"  name="medicationType" placeholder="Medication Type" value={medication.medicationType} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="date-of-prescription"  name="dateOfPrescription" placeholder="Date of Prescription" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfPrescription')}/>
+                                <input type="text" id="date-of-prescription"  name="dateOfPrescription" placeholder="Date of Prescription" value={medication.dateOfPrescription} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfPrescription')}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="medication-prescribing-physician"  name="medicationPrescribingPhysician" placeholder="Prescribing Physician" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-prescribing-physician"  name="medicationPrescribingPhysician" placeholder="Prescribing Physician" value={medication.medicationPrescribingPhysician} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="medication-reviewing-physician"  name="medicationReviewingPhysician" placeholder="Reviewing Physician" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-reviewing-physician"  name="medicationReviewingPhysician" placeholder="Reviewing Physician" value={medication.medicationReviewingPhysician} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="medication-frequency"  name="medicationFrequency" placeholder="Frequency" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-frequency"  name="medicationFrequency" placeholder="Frequency" value={medication.medicationFrequency} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" value={medication.medicationDuration} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'medicationDate')}/>
+                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" value={medication.medicationEndDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'medicationDate')}/>
                             </div>
                         </div>
                     ))}
@@ -560,13 +605,13 @@ const addMedicalHistory = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={admission.hospitalName} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')}/>
+                                <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" value={admission.admissionDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
+                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" value={admission.dischargeDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
@@ -575,9 +620,6 @@ const addMedicalHistory = () => {
                     ))}
 
                     {formData.admission.length < 3 && (<button className={styles.addButton} onClick={handleAddRowAdmission}>ADD MORE ADMISSION</button>)}        
-
-                    {/* <button className={styles.submitButton} onClick={handleSubmit}>Add Medical History
-                    </button> */}
 
                     <button className={`${styles.addMedicalHistoryButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
                         {isLoading ? 'Adding...' : 'Add Medical History'}

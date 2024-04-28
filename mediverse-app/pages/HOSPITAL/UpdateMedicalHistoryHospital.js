@@ -484,7 +484,7 @@ const UpdateMedicalHistoryHospital = () => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (patientAddr, id) => {
 
         //console.log('Form submitted:', formData);
         //console.log('current', currentMedicalHistory);
@@ -516,38 +516,87 @@ const UpdateMedicalHistoryHospital = () => {
                 creationDate
             };
         });
-        
-        const concatenatedSymptoms = (
-            (formData.symptoms.length > 0 && formData.symptoms.every(symptom => Object.values(symptom).every(value => value !== '' && value !== null))) ?
-            `${formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~')}` :
-            ''
-        );
-        
-        const concatenatedTreatmentProcedure = (
-            (formData.treatmentProcedure.length > 0 && formData.treatmentProcedure.every(tp => Object.values(tp).every(value => value !== '' && value !== null))) ?
-            `${formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~')}` :
-            ''
-        );
-        
-        const concatenatedTest = (
-            (formData.test.length > 0 && formData.test.every(test => Object.values(test).every(value => value !== '' && value !== null))) ?
-            `${formData.test.map(test => Object.values(test).join('+')).join('~')}` :
-            ''
-        );
-        
-        const concatenatedMedication = (
-            (formData.medication.length > 0 && formData.medication.every(medication => Object.values(medication).every(value => value !== '' && value !== null))) ?
-            `${formData.medication.map(medication => Object.values(medication).join('+')).join('~')}` :
-            ''
-        );
-        
-        const concatenatedAdmission = (
-            (formData.admission.length > 0 && formData.admission.every(admission => Object.values(admission).every(value => value !== '' && value !== null))) ?
-            `${formData.admission.map(admission => Object.values(admission).join('+')).join('~')}` :
-            ''
-        );
-        
-        const patientDiagnosis =  formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+
+        const isNegativeDuration = formData.treatmentProcedure.some(tp => parseInt(tp.tpDuration) < 0) ||
+        formData.medication.some(med => parseInt(med.medicationDuration) < 0) ||
+        formData.symptoms.some(symptom => parseInt(symptom.symptomDuration) < 0);
+        if (isNegativeDuration) {
+        // Handle the error, display a message, or prevent form submission
+        toast.error("Duration cannot be negative.");
+        return;
+        }
+
+        let formComplete = true; 
+        let patientDiagnosis = '';
+        let concatenatedSymptoms = '';
+        let concatenatedTreatmentProcedure = '';
+        let concatenatedTest = '';
+        let concatenatedMedication = '';
+        let concatenatedAdmission = '';
+
+        if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
+            toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
+            formComplete = false;
+        } else {
+            patientDiagnosis = formData.diagnosis + '+' + formData.dateOfDiagnosis + '+' + formData.description;
+        }
+
+        if (formData.symptoms.every(symptom => symptom.symptomName && symptom.symptomDuration && symptom.symptomSeverity && symptom.symptomLocation)) {
+            concatenatedSymptoms = formData.symptoms.map(symptom => Object.values(symptom).join('+')).join('~');
+        } else if (formData.symptoms.some(symptom => symptom.symptomName || symptom.symptomDuration || symptom.symptomSeverity || symptom.symptomLocation)) {
+            toast.error("Symptoms form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.treatmentProcedure.every(treatmentProcedure => treatmentProcedure.tp && treatmentProcedure.medTeam && treatmentProcedure.tpDateStarted && treatmentProcedure.tpDuration)) {
+            concatenatedTreatmentProcedure = formData.treatmentProcedure.map(tp => Object.values(tp).join('+')).join('~');
+        } else if (formData.treatmentProcedure.some(treatmentProcedure => treatmentProcedure.tp || treatmentProcedure.medTeam || treatmentProcedure.tpDateStarted || treatmentProcedure.tpDuration)) {
+            toast.error("Treatment/Procedure form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.test.every(test => test.testType && test.orderingPhysician && test.testDate && test.reviewingPhysician && test.testResult)) {
+            concatenatedTest = formData.test.map(test => Object.values(test).join('+')).join('~');
+        } else if (formData.test.some(test => test.testType || test.orderingPhysician || test.testDate || test.reviewingPhysician || test.testResult)) {
+            toast.error("Test form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
+            concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
+        } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
+            toast.error("Medication form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
+
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
+            formData.admission.forEach(admission => {
+                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+                
+                if (admission.dischargeDate) {
+                    // If discharge date is provided, calculate length of stay
+                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+                    
+                    // If admission and discharge dates are the same, set length of stay to 1 day
+                    if (lengthOfStayInMs === 0) {
+                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
+                    }
+                    
+                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
+                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                } else {
+                    // If discharge date is not provided, display error message
+                    toast.error("Admission form fields are incomplete. Please fill them out.");
+                    formComplete = false;
+                }
+            });
+            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+        } else {
+            toast.error("Admission is required. Please fill out the hospital name and admission date.");
+            formComplete = false;
+        }
+            
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
         const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
@@ -561,46 +610,56 @@ const UpdateMedicalHistoryHospital = () => {
         // console.log(updatedMedication);
         // console.log(updatedAdmission);
         
-        // * need below 100 ung length ng diagnosis at description
-        if (formData.diagnosis.length < 100 && formData.description.length < 100) {
-            setIsLoading(true);
-            try {
-                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                //console.log("Account:", accounts[0]);
-    
-                const receipt = await mvContract.methods.editMedicalHistory(
-                    currentPatientAddr,
-                    currentCreationDate,
-                    newPhysician,
-                    patientDiagnosis,
-                    updatedSymptoms,
-                    updatedTP,
-                    updatedTest,
-                    updatedMedication,
-                    updatedAdmission,
-                    currentCreationDate
-                ).send({ from: accounts[0] });
-                
-                //console.log("Transaction Hash:", receipt.transactionHash);
-                toast.success('Medical History is successfully updated!');
-                setIsLoading(false);
-                //router.push('/HOSPITAL/PatientRecordsHospital/');
-            } catch (error) {
-                toast.error('Failed to update medical history record.');
-                console.error('Error updating medical history:', error);
-            };
-        } else {
-            toast.error('Diagnosis and Description should be below 100 letters');
+        if(formComplete){
+            // * need below 100 ung length ng diagnosis at description
+            if (formData.diagnosis.length < 100 && formData.description.length < 100) {
+                setIsLoading(true);
+                try {
+                    const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                    //console.log("Account:", accounts[0]);
+        
+                    const receipt = await mvContract.methods.editMedicalHistory(
+                        currentPatientAddr,
+                        currentCreationDate,
+                        newPhysician,
+                        patientDiagnosis,
+                        updatedSymptoms,
+                        updatedTP,
+                        updatedTest,
+                        updatedMedication,
+                        updatedAdmission,
+                        currentCreationDate
+                    ).send({ from: accounts[0] });
+                    
+                    //console.log("Transaction Hash:", receipt.transactionHash);
+                    toast.success('Medical History is successfully updated!');
+                    setIsLoading(false);
+                    router.push({
+                        pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+                        query: { patientAddr, id }
+                    });
+                    //router.push('/HOSPITAL/PatientRecordsHospital/');
+                } catch (error) {
+                    toast.error('Failed to update medical history record.');
+                    console.error('Error updating medical history:', error);
+                };
+            } else {
+                toast.error('Diagnosis and Description should be below 100 letters');
+            }
         }
     };
 
-    const pushRoute = async (patientAddr, id) => {
-        await handleSubmit();
-        router.push({
-            pathname: '/HOSPITAL/MedicalHistory2Hospital/',
-            query: { patientAddr, id }
-        });
-    };
+    // const pushRoute = async (patientAddr, id) => {
+    //     try {
+    //         await handleSubmit(); // Wait for handleSubmit to complete
+    //         router.push({
+    //             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
+    //             query: { patientAddr, id }
+    //         });
+    //     } catch (error) {
+    //         console.error('Error handling form submission:', error);
+    //     }
+    // };
 
     const goBack = () => {
         window.history.back(); 
@@ -1019,7 +1078,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="date" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                         </div>
                     ))}
@@ -1029,7 +1088,7 @@ const UpdateMedicalHistoryHospital = () => {
                     {/* <button className={styles.submitButton} onClick={() => pushRoute (patientAddr, creationDate)}>Update
                     </button> */}
 
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => pushRoute(patientAddr, id)}> 
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={() => handleSubmit(patientAddr, id)}> 
                         {isLoading ? 'Updating...' : 'Update'}
                     </button>
     
