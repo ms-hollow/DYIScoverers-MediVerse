@@ -12,9 +12,26 @@ import { toast } from 'react-toastify';
 
 const Register2Hospital = () => {
     const router = useRouter();
-    const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        hospitalName: '', contactNumber: '', hospitalAddress: ''
+    // const [formData, setFormData] = useState({ 
+    //     /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
+    //     hospitalName: '', contactNumber: '', hospitalAddress: ''
+    // });
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [formData, setFormData] = useState(() => {
+        // Check if localStorage is available
+        if (typeof window !== 'undefined' && window.localStorage) {
+            // Retrieve form data from localStorage when the component mounts
+            const savedFormData = localStorage.getItem('formData');
+            return savedFormData ? JSON.parse(savedFormData) : {
+                hospitalName: '', contactNumber: '', hospitalAddress: ''
+         };
+        } else {
+            // If localStorage is not available, return default form data
+            return {
+                hospitalName: '', contactNumber: '', hospitalAddress: ''
+            };
+        }
     });
 
     const handleChange = (e) => {
@@ -24,38 +41,59 @@ const Register2Hospital = () => {
         });
     };
 
-    useEffect(() => {
-        async function fetchPatientInfo() {
-            try {
-                // Connect to the deployed smart contract
-                const accounts = await web3.eth.getAccounts();
+    // useEffect(() => {
+    //     async function fetchPatientInfo() {
+    //         try {
+    //             // Connect to the deployed smart contract
+    //             const accounts = await web3.eth.getAccounts();
     
-                //console.log("Account:", accounts[0]);
+    //             //console.log("Account:", accounts[0]);
     
-                // Call the getPatientInfo function on the smart contract
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
+    //             // Call the getPatientInfo function on the smart contract
+    //             const hospitalInfo = await mvContract.methods.getHospitalInfo(accounts[0]).call(); // Assuming you have a method in your contract to get patient data by account address
                 
-                //console.log(hospitalInfo)
+    //             //console.log(hospitalInfo)
                 
-                // Set form data with patient info
-                setFormData({
-                    ...formData,
-                    hospitalName: hospitalInfo[0], 
-                    contactNumber: hospitalInfo[1], 
-                    hospitalAddress: hospitalInfo[2]
-                });  
-            } catch (error) {
-                console.error('Error retrieving patient information:', error);
-            }
-        }
-        fetchPatientInfo();
-    }, []); // Empty dependency array to run only once when component mounts
+    //             // Set form data with patient info
+    //             setFormData({
+    //                 ...formData,
+    //                 hospitalName: hospitalInfo[0], 
+    //                 contactNumber: hospitalInfo[1], 
+    //                 hospitalAddress: hospitalInfo[2]
+    //             });  
+    //         } catch (error) {
+    //             console.error('Error retrieving patient information:', error);
+    //         }
+    //     }
+    //     fetchPatientInfo();
+    // }, []); // Empty dependency array to run only once when component mounts
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        
         e.preventDefault(); // Prevent default form submission
-        //('Form submitted:', formData);
-        toast.success('Successfully Registered!'); {/*can also be: .info, .warning, .error */}
-        router.push('/HOSPITAL/HomeHospital');
+        const requiredFields = ['hospitalName', 'contactNumber', 'hospitalAddress'];
+        
+        const isEmpty = requiredFields.some(field => !formData[field]);
+
+        if (isEmpty) {
+            toast.warning
+            return; // Exit early if any required field is empty
+        }
+        
+        //console.log('Form submitted:', formData);
+        setIsLoading(true);
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            //console.log("Account:", accounts[0]);
+            const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
+            //console.log("Transaction Hash:", receipt.transactionHash);
+            localStorage.removeItem('formData');
+            setIsLoading(false);
+            router.push('/HOSPITAL/HomeHospital');
+        } catch (error) {
+            console.error('Error sending transaction:', error.message);
+            toast.error('Error Registering.');
+        }
     };
 
     const goBack = () => {
@@ -95,7 +133,11 @@ const Register2Hospital = () => {
                         </div>
                     </div>
                     
-                    <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
+                    {/* <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button> */}
+
+                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                            {isLoading ? 'REGISTERING...' : 'REGISTER'}
+                        </button>
 
                 </form>
 

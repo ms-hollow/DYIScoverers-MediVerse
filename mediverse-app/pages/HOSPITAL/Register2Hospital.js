@@ -60,21 +60,7 @@ const Register2Hospital = () => {
             toast.warning
             return; // Exit early if any required field is empty
         }
-        
-        //console.log('Form submitted:', formData);
-        setIsLoading(true);
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            //console.log("Account:", accounts[0]);
-            const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
-            //console.log("Transaction Hash:", receipt.transactionHash);
-            localStorage.removeItem('formData');
-            setIsLoading(false);
-            router.push('/HOSPITAL/Register3Hospital/');
-        } catch (error) {
-            console.error('Error sending transaction:', error.message);
-            toast.error('Error Registering.');
-        }
+        router.push('/HOSPITAL/Register3Hospital/');
     };
 
     const goBack = () => {
@@ -114,10 +100,8 @@ const Register2Hospital = () => {
                             </div>
                         </div>
                         
-                        {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
-                        <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                            {isLoading ? 'PROCEEDING...' : 'PROCEED'}
-                        </button>
+                        <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                        
                     </form>
                 
                 </div>
