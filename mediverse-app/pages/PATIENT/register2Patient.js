@@ -121,7 +121,9 @@ const Register2Patient = () => {
 
 
     const handleSubmit = async (e) => {
+
         e.preventDefault(); // Prevent default form submission
+
         const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
         const isEmpty = requiredFields.some(field => !formData[field]);
 
@@ -129,43 +131,14 @@ const Register2Patient = () => {
             toast.error('Please fill in all required fields.');
             return; // Exit early if any required field is empty
         }
-        
-        const isNegativeDuration = formData.age;
-        if (isNegativeDuration) {
-            toast.error("Age cannot be negative.");
-            return;
+
+        // Check if age is negative
+        if (parseInt(formData.age) < 0) {
+            toast.error('Age cannot be negative.');
+            return; // Exit early if age is negative
         }
 
-        //console.log('Form submitted:', formData);
-        // Concatenate the address fields
-        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
-        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        // console.log("name: ", name)
-        // console.log("address:", address)
-        setIsLoading(true);
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            // console.log("Account:", accounts[0]);
-            const receipt = await mvContract.methods.registerPatient(
-                name,
-                formData.age,
-                formData.gender,
-                formData.dob,
-                formData.phoneNumber,
-                formData.height,
-                formData.weight,
-                address
-            ).send({ from: accounts[0] });
-            localStorage.removeItem('formData');
-            // console.log("Transaction Hash:", receipt.transactionHash);
-            setIsLoading(false);
-            router.push('/PATIENT/Register3Patient/');
-            // Transaction successful, you can do further processing here if needed
-        } catch (error) {
-            console.error('Error sending transaction:', error.message);
-            toast.error('Error Registering.');
-        }
-
+        router.push('/PATIENT/Register3Patient/');
     };
 
     const goBack = () => {
@@ -249,10 +222,8 @@ const Register2Patient = () => {
                         </div>
                     </div>
                     
-                    {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                        {isLoading ? 'PROCEEDING...' : 'PROCEED'}
-                    </button>
+                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+    
                 </form>
             </div>
             <ToastWrapper/>
