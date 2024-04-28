@@ -254,7 +254,7 @@ const Register3Patient = () => {
                     </button>
                 </form>
 
-                <ToastWrapper/> {/*Lagy to sa dulo ng container, */}
+                {/* <ToastWrapper/> Lagy to sa dulo ng container, */}
                 
             </div>
             <ToastWrapper/>

@@ -1,6 +1,6 @@
 import styles from '../../styles/updateMedicalHistory.module.css';
 import Layout from '../../components/HomeSidebarHeaderHospital.js'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
@@ -383,6 +383,43 @@ const UpdateMedicalHistoryHospital = () => {
         admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
     });
 
+    const [dateValues, setDateValues] = useState({});
+
+    {/*Set one ref to all date fields*/}
+    const dateInputRefs = {
+        dateOfDiagnosis: useRef(null),
+        tpDateStarted: useRef(null),
+        tpDateEnd: useRef(null),
+        testDate: useRef(null),
+        dateOfPrescription: useRef(null),
+        admissionDate: useRef(null),
+        dischargeDate: useRef(null),
+    };
+    
+    {/*If pinindot ang date field, lalabas ang mm/dd/yy na format*/}
+    const handleDateFocus = (e) => {
+        e.target.type = 'date';
+    };
+
+    {/*If naglagay ng value si user, set ang type sa date, else sa text to display placeholder.*/}
+    const handleDateBlur = (e, name) => {
+        const value = dateValues[name] || '';
+        if (value) {
+            e.target.type = 'date';
+        } else {
+            e.target.type = 'text';
+        }
+    };
+
+    useEffect(() => {
+        for (const [name, ref] of Object.entries(dateInputRefs)) {
+            if (ref.current) {
+                const value = dateValues[name] || '';
+                ref.current.placeholder = value || ''; // Set an empty string when value is empty
+            }
+        }
+    }, [dateValues]);
+
     const handleChange = (e, index) => {
         const { name, value } = e.target;
         if (name === 'symptomName' || name === 'symptomDuration' || name === 'symptomSeverity' || name === 'symptomLocation') {
@@ -693,7 +730,7 @@ const UpdateMedicalHistoryHospital = () => {
                             <input type="text" id="diagnosis" name="diagnosis" value={formData.diagnosis} placeholder="Diagnosis" required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="date" id="date-of-diagnosis" name="dateOfDiagnosis"  value={formData.dateOfDiagnosis} placeholder="Date of Diagnosis" required onChange={handleChange} />
+                            <input type="text" id="date-of-diagnosis" name="dateOfDiagnosis"  value={formData.dateOfDiagnosis} placeholder="Date of Diagnosis" required onChange={handleChange} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfDiagnosis')}  />
                         </div>
                     </div>
             
@@ -810,10 +847,10 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="med-team"  name="medTeam" placeholder="Type Medical Team/Provider" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="date-started" name="tpDateStarted" placeholder="Date Started" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="date-started" name="tpDateStarted" placeholder="Date Started" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateStarted')} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateEnd')} />
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
@@ -948,7 +985,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="ordering-physician"  name="orderingPhysician" placeholder="Ordering Physician" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="test-date"  name="testDate" placeholder="Test Date" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="test-date"  name="testDate" placeholder="Test Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'testDate')}  />
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="reviewing-physician"  name="reviewingPhysician" placeholder="Reviewing Physician" required onChange={(e) => handleChange(e, index)} />
@@ -1009,7 +1046,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="medication-type"  name="medicationType" placeholder="Medication Type" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="date-of-prescription"  name="dateOfPrescription" placeholder="Date of Prescription" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="date-of-prescription"  name="dateOfPrescription" placeholder="Date of Prescription" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dateOfPrescription')} />
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="medication-prescribing-physician"  name="medicationPrescribingPhysician" placeholder="Prescribing Physician" required onChange={(e) => handleChange(e, index)}/>
@@ -1024,7 +1061,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="date" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                         </div>
                     ))}
@@ -1072,10 +1109,10 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="date" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')} />
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>

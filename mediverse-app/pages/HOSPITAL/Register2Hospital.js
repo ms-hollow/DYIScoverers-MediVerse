@@ -69,10 +69,12 @@ const Register2Hospital = () => {
 
     return (
         <>
-                <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
-                    <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
-                </div>
+            <div> {/* Pass here yung Text na want ilagay sa button pati yung link */}
+                <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
+            </div>
 
+
+            <div className= {styles.registrationContainer}>
                 <RegistrationProcess 
                     firstShapeColor="shapeBlue"
                     secondShapeColor="shapeCyan"
@@ -105,8 +107,8 @@ const Register2Hospital = () => {
                     </form>
                 
                 </div>
-
-            <ToastWrapper/>
+                <ToastWrapper/>
+            </div>
         </>
         
     );
