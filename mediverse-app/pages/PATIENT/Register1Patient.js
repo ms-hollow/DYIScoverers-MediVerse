@@ -92,7 +92,7 @@ const Register1Patient = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/"/> 
             </div>
 
-            <div class={styles.container}>
+            <div class={styles.registrationContainer}>
                 <RegistrationProcess 
                     firstShapeColor="shapeCyan"
                     secondShapeColor="shapeBlue"

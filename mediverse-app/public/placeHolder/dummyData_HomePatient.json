@@ -1,26 +1,28 @@
 [
     {
-        "id": 1,
-        "diagnosis": "Dislocated Shoulder",
-        "hospital": "Philippine General Hospital",
-        "physician": "Dra. Marilyn Del Rosario",
-        "admissionDate": "March 17, 2024",
-        "dischargeDate": "March 18, 2024"
+      "id": 1,
+      "diagnosis": "Acute Bronchitis",
+      "hospital": "Philippine General Hospital",
+      "physician": "Dr. Marlo Cruz",
+      "admissionDate": "2024-02-15",
+      "dischargeDate": "2024-02-22"
     },
     {
-        "id": 2,
-        "diagnosis": "Pyrexia",
-        "hospital": "Ospital ng Maynila Medical Center",
-        "physician": "Dr. Roberto Ignacio",
-        "admissionDate": "February 12, 2024",
-        "dischargeDate": "February 15, 2024"
+      "id": 2,
+      "diagnosis": "Pyrexia",
+      "hospital": "Ospital ng Maynila Medical Center",
+      "physician": "Dr. Roberto Ignacio",
+      "admissionDate": "2023-07-12",
+      "dischargeDate": "2023-07-15"
     },
     {
-        "id": 3,
-        "diagnosis": "Strep Throat",
-        "hospital": "Ospital ng Maynila Medical Center",
-        "physician": "Dr. Edward Macapagal",
-        "admissionDate": "February 03, 2024",
-        "dischargeDate": "February 03, 2024"
+      "id": 3,
+      "diagnosis": "Strep Throat",
+      "hospital": "Ospital ng Maynila Medical Center",
+      "physician": "Dr. Edward Macapagal",
+      "admissionDate": "2020-04-03",
+      "dischargeDate": "2020-04-03"
     }
-]
+
+  ]
+  

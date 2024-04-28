@@ -1,4 +1,8 @@
 /*------------------------USER: REGISTER PAGE 1 ---------------------*/
+.registrationContainer {
+  margin-top: -4%;
+}
+
 .connectWalletContainer {
   max-width: 40%; 
   margin: 6% auto; /* Adjust margin for vertical positioning */

@@ -2,15 +2,15 @@
     {
         "id": 1,
         "basicInfo": {
-            "name": "Abbegail Miles NA Leonen",
+            "name": "Maria Garcia Lopez",
             "age": 32,
-            "birthday": "2024-04-18",
+            "birthday": "1995-05-20",
             "doctor": "Dr. Marlo Cruz",
-            "doctorType": "Pediatrician",
-            "dateDiagnosis": "February 15, 2024",
+            "doctorType": "General Practicioner",
+            "dateDiagnosis": "2024-02-15",
             "dateOfDiagnosis": "2024-02-15",
             "diagnosis": "Acute Bronchitis",
-            "description": "Patient presented with cough, fever, and wheezing.vnslkvksdv slknvlnsvnal ;smc;ams;cm ;amsc;l malmclascmasc msa mclmaslc mlasmcmas lcmalks klcmasl Patient presented with cough, fever, and wheezing.vnslkvksdv slknvlnsvnal ;smc;ams;cm ;amsc;l malmclascmasc msa mclmaslc mlasmcmas lcmalks klcmasl ;amsc;l malmclascmasc msa mclmaslc mlasmcmas lcmalks klcmasl"
+            "description": "Patient presented with cough, fever, and wheezing."
         },
         "signsAndSymptoms": [
             {
@@ -47,7 +47,7 @@
             {
                 "treatment_ID": 2,
                 "treatment": "Antibiotic Therapy",
-                "medicalTeam": "Dr. Maria Rodriguez",
+                "medicalTeam": "Dr. Marlo Cruz",
                 "dateStarted": "February 15, 2024",
                 "dateEnd": "February 20, 2024",
                 "duration": "5 days"
@@ -59,7 +59,7 @@
                 "testType": "Chest X-ray",
                 "orderingPhysician": "Dr. Marlo Cruz",
                 "date": "February 15, 2024",
-                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "reviewingPhysician": "Dr. Marlo Cruz",
                 "result": "Patchy infiltrates consistent with  bronchitis."
             },
             {
@@ -67,7 +67,7 @@
                 "testType": "Complete Blood Count (CBC)",
                 "orderingPhysician": "Dr. Marlo Cruz",
                 "date": "February 15, 2024",
-                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "reviewingPhysician": "Dr. Marlo Cruz",
                 "result": "Elevated white blood cell count indicating infection."
             },
             {
@@ -75,7 +75,7 @@
                 "testType": "Chest X-ray",
                 "orderingPhysician": "Dr. Marlo Cruz",
                 "date": "February 15, 2024",
-                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "reviewingPhysician": "Dr. Marlo Cruz",
                 "result": "Patchy infiltrates consistent with  bronchitis."
             },
             {
@@ -83,7 +83,7 @@
                 "testType": "Complete Blood Count (CBC)",
                 "orderingPhysician": "Dr. Marlo Cruz",
                 "date": "February 15, 2024",
-                "reviewingPhysician": "Dr. Maria Rodriguez",
+                "reviewingPhysician": "Dr. Marlo Cruz",
                 "result": "Elevated white blood cell count indicating infection."
             }
         ],
@@ -92,7 +92,7 @@
                 "medication_ID": 1,
                 "medicationType": "Amoxicillin",
                 "prescriptionDate": "February 15, 2024",
-                "prescribingPhysician": "Dr. Maria Rodriguez",
+                "prescribingPhysician": "Dr. Marlo Cruz",
                 "frequency": "3 times daily",
                 "duration": "7 days",
                 "endDate": "February 17, 2024"
