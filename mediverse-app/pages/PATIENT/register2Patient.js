@@ -224,10 +224,7 @@ const Register2Patient = () => {
                             </div>
                         </div>
                         
-                        {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
-                        <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                            {isLoading ? 'PROCEEDING...' : 'PROCEED'}
-                        </button>
+                        <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
                     </form>
                 </div>
                 <ToastWrapper/>

@@ -65,7 +65,7 @@ padding-left: 35px;
 
 .formRowTitle_admission {
   display: grid;
-  grid-template-columns: 125px 225px 235px 230px 224px;
+  grid-template-columns: 185px 280px 290px 230px;
   padding-left: 35px;
 }
 

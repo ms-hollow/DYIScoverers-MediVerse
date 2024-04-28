@@ -607,7 +607,7 @@ const addMedicalHistory = () => {
                         <div className={styles.formHeader}>Hospital</div>
                         <div className={styles.formHeader}>Admission Date</div>    
                         <div className={styles.formHeader}>Discharge Date</div>
-                        <div className={styles.formHeader}>Length of Stay</div>      
+                        {/* <div className={styles.formHeader}>Length of Stay</div>       */}
                     </div>
                     
                     {formData.admission.map((admission, index) => (
@@ -621,11 +621,8 @@ const addMedicalHistory = () => {
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" value={admission.admissionDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')}/>
                             </div>
-                            <div className={styles.formFieldRow}>
-                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" value={admission.dischargeDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
-                            </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
+                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" value={admission.dischargeDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
                             </div>
                         </div>
                     ))}
