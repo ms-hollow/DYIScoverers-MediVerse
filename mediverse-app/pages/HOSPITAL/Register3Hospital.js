@@ -134,8 +134,9 @@ const Register2Hospital = () => {
                             </div>
                         </div>
                         
-                        <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
-
+                        <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                            {isLoading ? 'REGISTERING...' : 'REGISTER'}
+                        </button>
                     </form>
 
                 </div>
