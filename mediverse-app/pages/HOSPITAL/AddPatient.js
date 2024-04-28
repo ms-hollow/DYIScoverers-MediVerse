@@ -85,6 +85,16 @@ const AddPatient = () => {
         // console.log('Form data saved to localStorage:', formDataString);
     }, [formData]);
 
+    const clearFormData = () => {
+        localStorage.removeItem('formData');
+        console.log('Form data cleared from localStorage.');
+    };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(clearFormData, 1000);
+        return () => clearTimeout(timeoutId);
+    }, []);
+
     const handleChange = (e) => {
         if (e.target.name === 'gender') {
             setFormData({
