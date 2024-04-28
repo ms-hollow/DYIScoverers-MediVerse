@@ -96,7 +96,7 @@ const AddPatient = () => {
     
     return (  
         <>
-        <Layout pageName = "Add Patient">
+        <Layout pageName = "Register New Patient">
             <div className={styles.formContainer}>
                 <div className={styles.formTitle}>Patient Information</div>
                 <form className={styles.registrationForm} onSubmit={handleSubmit}>
