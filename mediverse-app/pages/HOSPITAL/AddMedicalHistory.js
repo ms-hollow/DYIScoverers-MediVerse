@@ -68,6 +68,17 @@ const addMedicalHistory = () => {
         // console.log('Form data saved to localStorage:', formDataString);
     }, [formData]);
 
+
+    const clearFormData = () => {
+        localStorage.removeItem('formData');
+        console.log('Form data cleared from localStorage.');
+    };
+
+    useEffect(() => {
+        const timeoutId = setTimeout(clearFormData, 1000);
+        return () => clearTimeout(timeoutId);
+    }, []);
+
     const [dateValues, setDateValues] = useState({});
 
     {/*Set one ref to all date fields*/}
