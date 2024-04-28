@@ -152,6 +152,15 @@ const addMedicalHistory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
+        const isNegativeDuration = formData.treatmentProcedure.some(tp => parseInt(tp.tpDuration) < 0) ||
+                               formData.medication.some(med => parseInt(med.medicationDuration) < 0) ||
+                               formData.symptoms.some(symptom => parseInt(symptom.symptomDuration) < 0);
+        if (isNegativeDuration) {
+            // Handle the error, display a message, or prevent form submission
+            toast.error("Duration cannot be negative.");
+            return;
+        }
+
         //console.log('Form submitted:', formData);
         let  patientDiagnosis = '';
         let concatenatedSymptoms = '';
@@ -198,14 +207,19 @@ const addMedicalHistory = () => {
         }
 
         if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
-            // Iterate over each admission entry in the form data
             formData.admission.forEach(admission => {
                 const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
-        
+                
                 if (admission.dischargeDate) {
                     // If discharge date is provided, calculate length of stay
                     const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                    const lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+                    
+                    // If admission and discharge dates are the same, set length of stay to 1 day
+                    if (lengthOfStayInMs === 0) {
+                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
+                    }
+                    
                     const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
                     admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
                 } else {
@@ -214,22 +228,12 @@ const addMedicalHistory = () => {
                     formComplete = false;
                 }
             });
-        
-            // Concatenate admission data
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            // If hospital name and admission date are not provided, display error message
             toast.error("Admission is required. Please fill out the hospital name and admission date.");
             formComplete = false;
         }
         
-        // console.log('Patient Consultation:', patientDiagnosis);
-        // console.log('Concatenated Symptoms:', concatenatedSymptoms);
-        // console.log('Concatenated Treatment/Procedure:', concatenatedTreatmentProcedure);
-        // console.log('Concatenated Test:', concatenatedTest);
-        // console.log('Concatenated Medication:', concatenatedMedication);
-        // console.log('Concatenated Admission:', concatenatedAdmission);
-
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
 

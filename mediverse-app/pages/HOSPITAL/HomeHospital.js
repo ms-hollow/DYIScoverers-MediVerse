@@ -12,22 +12,6 @@ import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 
 
-// export async function getStaticProps() {
-//     const filePath1 = path.join(process.cwd(), 'public/placeHolder/dummyData_RecentPatients.json');
-//     const jsonData1 = fs.readFileSync(filePath1, 'utf8');
-//     const data1 = JSON.parse(jsonData1);
-
-//     const filePath2 = path.join(process.cwd(), 'public/placeHolder/dummyData_notifHospitalHome.json');
-//     const jsonData2 = fs.readFileSync(filePath2, 'utf8');
-//     const data2 = JSON.parse(jsonData2);
-
-//     return {
-//         props: {
-//             data1, data2
-//         }
-//     };
-// }
-
 const HospitalHome = () => {
     const router = useRouter();
     const [medicalHistory, setMedicalHistory] = useState([]);
@@ -118,12 +102,13 @@ const HospitalHome = () => {
                     await setAddress();
                     return;
                 }
-
+                
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
+                //console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
-                    const {patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate} = item;
+                    const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
                     patientAddress = patientAddr;
                     const creationDateInt = parseInt(creationDate);
                     return {
@@ -140,11 +125,11 @@ const HospitalHome = () => {
                     };
                 });
 
-                //console.log(parsedMedicalHistory);
+                // console.log('parsed medical history', parsedMedicalHistory);
 
                 const filteredMedicalHistory = parsedMedicalHistory.filter(item => item.hospitalAddr === hospitalAddress);
 
-                //console.log(filteredMedicalHistory);
+                // console.log(filteredMedicalHistory);
 
                 const patientAddrAndCreationDate = filteredMedicalHistory.map(entry => [ entry.patientAddr, entry.diagnosis, entry.admission]);
                 //console.log(patientAddrAndCreationDate);
@@ -162,7 +147,6 @@ const HospitalHome = () => {
                 for (let i = 0; i < listAddress.length; i++) {
                     p = await getRecentPatient(filteredMedicalHistory, listAddress[i], listDiagnosis[i], listAdmission[i]);
                     //console.log(p);
-                    
                     const obj = {
                         patientName: p[0],
                         admissionDate: p[1],
@@ -170,7 +154,6 @@ const HospitalHome = () => {
                         gender: p[3],
                         diagnosis: p[4]
                     };
-
                     temp.push(obj);
                 }
                 setMedicalHistory(temp);
@@ -218,6 +201,7 @@ const HospitalHome = () => {
                     await setAddress();
                     return;
                 }
+    
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
     
                 // Filter medical records to include only those made by the specific hospital
@@ -248,21 +232,32 @@ const HospitalHome = () => {
                 // Wait for all promises to resolve
                 const processedMedicalHistoryData = await Promise.all(processedMedicalHistory);
     
-                // Separate authorized and unauthorized records
-                const authorizedRecords = processedMedicalHistoryData.filter(record => record.authorized);
-                const unauthorizedRecords = processedMedicalHistoryData.filter(record => record.unauthorized);
+                const uniquePatients = {};
+                const uniqueMedicalHistory = [];
     
-                // Update state with authorized and unauthorized records
-                setAuthorizedList(authorizedRecords);
-                setUnauthorizedList(unauthorizedRecords);
-                //console.log(authorizedRecords);
-                //console.log(unauthorizedRecords);
-
+                processedMedicalHistoryData.forEach(item => {
+                    if (!uniquePatients[item.patientAddr]) {
+                        uniquePatients[item.patientAddr] = true;
+                        uniqueMedicalHistory.push(item);
+                    }
+                });
+    
+                const sortedMedicalHistory = uniqueMedicalHistory.sort((a, b) => {
+                    const dateA = parseInt(a.creationDate);
+                    const dateB = parseInt(b.creationDate);
+                    return dateB - dateA;
+                });
+    
+                const authorizedRecords = sortedMedicalHistory.filter(record => record.authorized);
+                const unauthorizedRecords = sortedMedicalHistory.filter(record => record.unauthorized);
+    
+                setAuthorizedList(authorizedRecords.slice(0, 4));
+                setUnauthorizedList(unauthorizedRecords.slice(0, 4));
+    
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
         }
-    
         getStatus();
     }, [hospitalAddress]);
 
@@ -290,7 +285,7 @@ const HospitalHome = () => {
                 <div className={styles.bottomHalf_container}>
                     <div className={styles.recentPatients_container}>
                         <div className={styles.title}>
-                            <p>Recent Patiens</p>
+                            <p>Recent Patients</p>
                             <Link href="/HOSPITAL/PatientRecordsHospital">
                                 <p>View All &gt;</p>
                             </Link>
