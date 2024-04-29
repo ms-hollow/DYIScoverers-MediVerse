@@ -179,7 +179,7 @@ const AccountProfilePatient = () => {
                             <input type="text" id="house-no" name="houseNo" required onChange={handleChange} value={formData.houseNo} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <label htmlFor="street-no" className={styles.formLabel}>Street No:</label>
+                            <label htmlFor="street-no" className={styles.formLabel}>Street:</label>
                             <input type="text" id="street-no" name="streetNo" required onChange={handleChange} value={formData.streetNo} readOnly={!editable} />
                         </div>
                     </div>
