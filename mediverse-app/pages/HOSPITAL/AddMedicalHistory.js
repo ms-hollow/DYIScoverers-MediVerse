@@ -258,6 +258,8 @@ const addMedicalHistory = () => {
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
+        let concatenatedMedication = '';
+        let concatenatedAdmission = '';
 
         let formComplete = true; 
 
@@ -288,8 +290,6 @@ const addMedicalHistory = () => {
             toast.error("Test form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
-
-        let concatenatedMedication = '';
 
         if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
             concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
@@ -322,7 +322,7 @@ const addMedicalHistory = () => {
             });
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
         } else {
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
+            toast.error("Admission is required. Please fill them out.");
             formComplete = false;
         }
         

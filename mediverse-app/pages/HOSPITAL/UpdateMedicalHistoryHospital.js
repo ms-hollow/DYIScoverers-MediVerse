@@ -551,6 +551,8 @@ const UpdateMedicalHistoryHospital = () => {
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
+        let concatenatedMedication = '';
+        let concatenatedAdmission = '';
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
             toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
@@ -579,8 +581,6 @@ const UpdateMedicalHistoryHospital = () => {
             toast.error("Test form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
-
-        let concatenatedMedication = '';
 
         if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
             concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
