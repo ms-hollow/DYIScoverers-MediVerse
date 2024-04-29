@@ -258,7 +258,7 @@ const AddPatient = () => {
                     </button> */}
 
                     <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                        {isLoading ? 'Adding...' : 'Add Patient'}
+                        {isLoading ? 'Registering...' : 'Register Patient'}
                     </button>
                 </form>
             </div>
