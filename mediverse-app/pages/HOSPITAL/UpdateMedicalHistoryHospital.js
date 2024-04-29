@@ -561,6 +561,7 @@ const UpdateMedicalHistoryHospital = () => {
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
         let concatenatedMedication = '';
+        let concatenatedAdmission = '';
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
             toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
@@ -597,24 +598,29 @@ const UpdateMedicalHistoryHospital = () => {
             formComplete = false;
         }
 
-        formData.admission.forEach(admission => {
-            const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
-            
-            if (admission.dischargeDate) {
-                // If discharge date is provided, calculate length of stay
-                const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
+            formData.admission.forEach(admission => {
+                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
                 
-                // If admission and discharge dates are the same, set length of stay to 1 day
-                if (lengthOfStayInMs === 0) {
-                    lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
+                if (admission.dischargeDate) {
+                    // If discharge date is provided, calculate length of stay
+                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
+                    
+                    // If admission and discharge dates are the same, set length of stay to 1 day
+                    if (lengthOfStayInMs === 0) {
+                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
+                    }
+                    
+                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
+                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
                 }
-                
-                const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
-                admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
-            }
-        });
-        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+            });
+            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+        } else if (formData.admission.some(admission => admission.hospitalName || admission.admissionDate || admission.dischargeDate)) {
+            toast.error("Admission form fields are incomplete. Please fill them out.");
+            formComplete = false;
+        }
 
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
