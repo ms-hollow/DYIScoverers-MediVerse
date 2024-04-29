@@ -86,7 +86,10 @@ const HomePatient = () => {
                         creationDate: formattedDate
                     };
                 });
-                setMedicalHistory(modifiedMedicalHistory);
+
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
+
+                setMedicalHistory(recentMedicalHistory);
                 // console.log("Modified", modifiedMedicalHistory);
 
                 const latestMedicalRecord = modifiedMedicalHistory[0];
