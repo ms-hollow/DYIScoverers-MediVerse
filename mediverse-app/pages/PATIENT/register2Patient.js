@@ -181,7 +181,7 @@ const Register2Patient = () => {
                                 <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} />
                             </div>
                             <div className={styles.formField}>
-                                <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} />
+                                <input type="text" id="street-no" name="streetNo" placeholder="Street" required onChange={handleChange} />
                             </div>
                             <div className={styles.formField}>
                                 <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} />

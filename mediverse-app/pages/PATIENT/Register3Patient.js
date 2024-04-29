@@ -164,7 +164,7 @@ const Register3Patient = () => {
                                 <input type="text" id="house-no" name="houseNo" placeholder="House No." required onChange={handleChange} value={formData.houseNo} readOnly />
                             </div>
                             <div className={styles.formField}>
-                                <input type="text" id="street-no" name="streetNo" placeholder="Street No." required onChange={handleChange} value={formData.streetNo} readOnly />
+                                <input type="text" id="street-no" name="streetNo" placeholder="Street" required onChange={handleChange} value={formData.streetNo} readOnly />
                             </div>
                             <div className={styles.formField}>
                                 <input type="text" id="barangay" name="barangay" placeholder="Barangay" required onChange={handleChange} value={formData.barangay} readOnly />

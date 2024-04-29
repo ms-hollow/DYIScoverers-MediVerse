@@ -717,7 +717,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="symptom-name"  name="symptomName" placeholder="Type of Symptoms" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="symptom-duration" name="symptomDuration" placeholder="Days" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="symptom-duration" name="symptomDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
                             <select id="symptom-severity" name="symptomSeverity"  required onChange={(e) => handleChange(e, index)}>
@@ -790,7 +790,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateEnd')} />
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="tp-duration"  name="tpDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)} />
                             </div>
                         </div>
                     ))}
@@ -995,7 +995,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="medication-frequency"  name="medicationFrequency" placeholder="Frequency" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-duration"  name="medicationDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)}/>
