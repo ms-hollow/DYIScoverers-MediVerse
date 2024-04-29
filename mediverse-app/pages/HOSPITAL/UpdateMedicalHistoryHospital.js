@@ -1097,7 +1097,6 @@ const UpdateMedicalHistoryHospital = () => {
                         <div className={styles.formHeader}>Hospital</div>
                         <div className={styles.formHeader}>Admission Date</div>    
                         <div className={styles.formHeader}>Discharge Date</div>
-                        <div className={styles.formHeader}>Length of Stay</div>      
                     </div>
                     
                     {formData.admission.map((admission, index) => (
