@@ -612,10 +612,8 @@ const UpdateMedicalHistoryHospital = () => {
                         lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
                     }
                     
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
-                    const lengthOfStayString = lengthOfStayInDays.toString(); 
-                    const concatenatedLengthOfStay = `${lengthOfStayString} day/s`;
-                    admission.lengthOfStay = concatenatedLengthOfStay; // Assign length of stay to the admission object
+                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
+                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
                 }
             });
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
