@@ -220,10 +220,10 @@ const AddPatient = () => {
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="house-no" name="houseNo" placeholder="House No." value={formData.weight} required onChange={handleChange} />
+                            <input type="text" id="house-no" name="houseNo" placeholder="House No." value={formData.houseNo} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="street-no" name="streetNo" placeholder="Street No." value={formData.streetNo} required onChange={handleChange} />
+                            <input type="text" id="street-no" name="streetNo" placeholder="Street" value={formData.streetNo} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
                             <input type="text" id="barangay" name="barangay" placeholder="Barangay" value={formData.barangay} required onChange={handleChange} />

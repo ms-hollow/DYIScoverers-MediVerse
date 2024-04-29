@@ -320,7 +320,7 @@ const HospitalHome = () => {
                         <div>
                             <Link href="/HOSPITAL/AddPatient" className={styles.newPatient}>
                                 <img src='/plus icon.svg' alt='Plus Icon'/>
-                                <p>Add New Patients</p>
+                                <p>Register New Patient</p>
                             </Link>
                         </div>
                         <div className={styles.notifications}>
