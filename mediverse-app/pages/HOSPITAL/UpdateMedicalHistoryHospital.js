@@ -12,7 +12,7 @@ const UpdateMedicalHistoryHospital = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
-    const [hospitalName, setHospitalName] = useState([]);
+    const [hospital, setHospitalName] = useState('');;
     const router = useRouter();
     const { patientAddr, id } = router.query;
 
@@ -75,6 +75,37 @@ const UpdateMedicalHistoryHospital = () => {
     }
 
     useEffect(() => {
+        async function fetchHospitalInfo() {
+            try {
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+
+                // Retrieve hospital info
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                const hospitalName = hospitalInfo[0];
+                // console.log(hospitalName);
+                setHospitalName(hospitalName);
+                // console.log(hospital);
+
+                // Update the hospital name in formData
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    admission: [{
+                        ...prevFormData.admission[0],
+                        hospitalName: hospital
+                    }]
+                }));
+            } catch (error) {
+                console.error('Error fetching hospital info:', error);
+            }
+        }
+
+        fetchHospitalInfo();
+    }, [hospitalAddress]);
+
+    useEffect(() => {
 
         async function fetchMedicalHistory() {
             try {
@@ -85,11 +116,6 @@ const UpdateMedicalHistoryHospital = () => {
                     await setAddress();
                     return;
                 }
-
-                //* Retrieve muna ang hospital na currently naka logged in
-                // const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                // (hospitalInfo[0]);
-                // hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 let patientAddress;
                 patientAddress = patientAddr;
@@ -347,8 +373,6 @@ const UpdateMedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
-                const hospitalNameHolder = medicalHistory.admissions.hospitalNames;
-                setHospitalName(hospitalNameHolder);
                 //console.log("Set Med His: ", medicalHistory)
 
                 setFormData({
@@ -461,7 +485,7 @@ const UpdateMedicalHistoryHospital = () => {
         } else if (name === 'hospitalName' || name === 'admissionDate' || name === 'dischargeDate' || name === 'lengthOfStay') {
             const updatedAdmission = formData.admission.map((admission, i) => {
                 if (i === index) {
-                    return { ...admission, [name]: value };
+                    return { ...admission, [name]: value, hospitalName: hospital };
                 }
                 return admission;
             });
@@ -597,27 +621,46 @@ const UpdateMedicalHistoryHospital = () => {
             formComplete = false;
         }
 
-        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
+        let concatenatedMedication = '';
+
+        if (formData.medication.length > 0) {
+            const filledMedicationForms = formData.medication.filter(medication => {
+                const filledFieldsCount = Object.values(medication).filter(value => value !== '' && value !== null).length;
+                return filledFieldsCount >= 2 && filledFieldsCount <= 7;
+            });
+
+            if (filledMedicationForms.length > 0) {
+                concatenatedMedication = filledMedicationForms.map(medication => Object.values(medication).join('+')).join('~');
+            }
+        }
 
         formData.admission.forEach(admission => {
             const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
-            
+        
             if (admission.dischargeDate) {
                 // If discharge date is provided, calculate length of stay
                 const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
                 let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
-                
+        
                 // If admission and discharge dates are the same, set length of stay to 1 day
                 if (lengthOfStayInMs === 0) {
                     lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
                 }
-                
+        
                 const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
                 admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                admission.hospitalName = hospital;
             }
         });
-        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-            
+        
+        const filledAdmissions = formData.admission.filter(admission => admission.dischargeDate); // Filter out admissions with discharge dates
+        
+        const concatenatedAdmission = (
+            (filledAdmissions.length >= 1 && filledAdmissions.length <= 7 && filledAdmissions.every(admission => Object.values(admission).every(value => value !== '' && value !== null))) ?
+            `${filledAdmissions.map(admission => Object.values(admission).join('+')).join('~')}` :
+            ''
+        );
+        
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
         const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
@@ -1090,7 +1133,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospitalName} required onChange={(e) => handleChange(e, index)} readOnly/>
+                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospital} required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')} />

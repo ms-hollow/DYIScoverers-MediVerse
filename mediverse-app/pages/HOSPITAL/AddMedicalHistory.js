@@ -26,6 +26,10 @@ const addMedicalHistory = () => {
     //     medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
     //     admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
     // });
+
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    const [hospital, setHospitalName] = useState('');;
+    let hospitalNameHolder;
     
     const [formData, setFormData] = useState(() => {
         // Check if localStorage is available
@@ -60,6 +64,46 @@ const addMedicalHistory = () => {
             };
         }
     });
+
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            //console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); // Set the hospital address
+        } catch (error) {
+            toast.error('Error fetching hospital address.');
+        }
+    }
+
+    useEffect(() => {
+        async function fetchMedicalHistory() {
+            try {
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+    
+                //* Retrieve muna ang hospital na currently naka logged in
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                const hospitalNameHolder = hospitalInfo[0];
+                // console.log(hospitalNameHolder);
+                setHospitalName(hospitalNameHolder);
+    
+                // Update formData with the new hospital name
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    admission: [{
+                        ...prevFormData.admission[0],
+                        hospitalName: hospitalNameHolder
+                    }]
+                }));
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        fetchMedicalHistory();
+    }, [hospitalAddress]);
     
     useEffect(() => {
         // Convert formData to a string before storing in localStorage
@@ -72,7 +116,7 @@ const addMedicalHistory = () => {
 
     const clearFormData = () => {
         localStorage.removeItem('formData');
-        console.log('Form data cleared from localStorage.');
+        // console.log('Form data cleared from localStorage.');
     };
 
     useEffect(() => {
@@ -158,7 +202,7 @@ const addMedicalHistory = () => {
         } else if (name === 'hospitalName' || name === 'admissionDate' || name === 'dischargeDate' || name === 'lengthOfStay') {
             const updatedAdmission = formData.admission.map((admission, i) => {
                 if (i === index) {
-                    return { ...admission, [name]: value, hospitalName: hospital };
+                    return { ...admission, [name]: value };
                 }
                 return admission;
             });
@@ -203,44 +247,6 @@ const addMedicalHistory = () => {
         }
     };
 
-    const [hospitalAddress, setHospitalAddress] = useState('');
-    const [hospital, setHospitalName] = useState('');;
-
-    const setAddress = async () => {
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            //console.log("Account:", accounts[0]);
-            setHospitalAddress(accounts[0]); // Set the hospital address
-        } catch (error) {
-            toast.error('Error fetching hospital address.');
-        }
-    }
-
-    useEffect(() => {
-        async function fetchMedicalHistory() {
-            try {
-                let hospitalName;
-                // Ensure hospital address is set before fetching medical history
-                if (!hospitalAddress) {
-                    await setAddress();
-                    return;
-                }
-
-                //* Retrieve muna ang hospital na currently naka logged in
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                // console.log(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
-                setHospitalName(hospitalName);
-                // console.log(hospital);
-
-            } catch (error) {
-                console.error('Error fetching medical history:', error);
-            }
-        }
-        
-        fetchMedicalHistory();
-    }, [hospitalAddress]);
-
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
@@ -252,6 +258,9 @@ const addMedicalHistory = () => {
             toast.error("Duration cannot be negative.");
             return;
         }
+
+        const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+        let hospitalNameHolder = hospitalInfo[0];
 
         //console.log('Form submitted:', formData);
         let patientDiagnosis = '';
@@ -289,7 +298,18 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
 
-        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
+        let concatenatedMedication = '';
+
+        if (formData.medication.length > 0) {
+            const filledMedicationForms = formData.medication.filter(medication => {
+                const filledFieldsCount = Object.values(medication).filter(value => value !== '' && value !== null).length;
+                return filledFieldsCount >= 2 && filledFieldsCount <= 7;
+            });
+
+            if (filledMedicationForms.length > 0) {
+                concatenatedMedication = filledMedicationForms.map(medication => Object.values(medication).join('+')).join('~');
+            }
+        }
 
         formData.admission.forEach(admission => {
             const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
@@ -309,7 +329,7 @@ const addMedicalHistory = () => {
             }
         });
         const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        console.log(concatenatedSymptoms)
+        console.log(formData.admission);
         
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
