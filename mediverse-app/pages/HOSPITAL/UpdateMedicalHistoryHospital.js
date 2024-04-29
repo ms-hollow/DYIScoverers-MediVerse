@@ -552,7 +552,6 @@ const UpdateMedicalHistoryHospital = () => {
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
         let concatenatedMedication = '';
-        let concatenatedAdmission = '';
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
             toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
@@ -589,34 +588,25 @@ const UpdateMedicalHistoryHospital = () => {
             formComplete = false;
         }
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
-            formData.admission.forEach(admission => {
-                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+        formData.admission.forEach(admission => {
+            const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+            
+            if (admission.dischargeDate) {
+                // If discharge date is provided, calculate length of stay
+                const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
                 
-                if (admission.dischargeDate) {
-                    // If discharge date is provided, calculate length of stay
-                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
-                    
-                    // If admission and discharge dates are the same, set length of stay to 1 day
-                    if (lengthOfStayInMs === 0) {
-                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
-                    }
-                    
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
-                } else {
-                    // If discharge date is not provided, display error message
-                    toast.error("Admission form fields are incomplete. Please fill them out.");
-                    formComplete = false;
+                // If admission and discharge dates are the same, set length of stay to 1 day
+                if (lengthOfStayInMs === 0) {
+                    lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
                 }
-            });
-            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        } else {
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
-            formComplete = false;
-        }
-        
+                
+                const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
+                admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+            }
+        });
+        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
         const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
@@ -627,8 +617,8 @@ const UpdateMedicalHistoryHospital = () => {
         // console.log(updatedSymptoms);
         // console.log(updatedTP);
         // console.log(updatedTest);
-        console.log(updatedMedication);
-        // console.log(updatedAdmission);
+        //console.log(updatedMedication);
+        //console.log(updatedAdmission);
         
         if(formComplete){
             // * need below 100 ung length ng diagnosis at description
@@ -1045,7 +1035,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="medication-duration"  name="medicationDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'medicationEndDate')}/>
                             </div>
                         </div>
                     ))}
