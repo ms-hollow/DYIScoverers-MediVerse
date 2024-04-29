@@ -157,7 +157,7 @@ const HospitalHome = () => {
                     temp.push(obj);
                 }
                 setMedicalHistory(temp);
-                console.log(temp);
+                // console.log(temp);
                 
             } catch (error) {
                 console.error('Error fetching medical history:', error);

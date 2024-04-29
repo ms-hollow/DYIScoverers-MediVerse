@@ -104,7 +104,7 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
     const gotoHome = async () => {
         const accounts = await web3.eth.getAccounts();
         if (accounts.length > 0) {
-            router.push('/HOSPITAL/HomeHospital/');
+            router.push('/PATIENT/MedicalHistory1Patient/');
         } else {
             router.push('/');
         }
