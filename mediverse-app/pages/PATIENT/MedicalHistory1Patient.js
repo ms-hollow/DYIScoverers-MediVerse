@@ -128,10 +128,7 @@ const MedicalHistoryPatient = () => {
     }, [patientAddress, searchQuery]);
 
     const clickRow = (patientAddr, index) => {
-<<<<<<< HEAD
-=======
         authenticator();
->>>>>>> master
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
         const id = parseInt(selectedCreationDate);

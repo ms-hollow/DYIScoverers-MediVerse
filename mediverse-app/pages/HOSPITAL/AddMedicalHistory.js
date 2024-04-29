@@ -26,13 +26,10 @@ const addMedicalHistory = () => {
     //     medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
     //     admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
     // });
-<<<<<<< HEAD
-=======
 
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [hospital, setHospitalName] = useState('');;
     let hospitalNameHolder;
->>>>>>> master
     
     const [formData, setFormData] = useState(() => {
         // Check if localStorage is available
@@ -661,11 +658,7 @@ const addMedicalHistory = () => {
                                 <input type="text" id="medication-frequency"  name="medicationFrequency" placeholder="Frequency" value={medication.medicationFrequency} required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-<<<<<<< HEAD
-                                <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" value={medication.medicationDuration} required onChange={(e) => handleChange(e, index)}/>
-=======
                                 <input type="text" id="medication-duration"  name="medicationDuration" placeholder="Duration (Ex: # days)" value={medication.medicationDuration} required onChange={(e) => handleChange(e, index)}/>
->>>>>>> master
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" value={medication.medicationEndDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'medicationDate')}/>
@@ -692,18 +685,6 @@ const addMedicalHistory = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-<<<<<<< HEAD
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={admission.hospitalName} required onChange={(e) => handleChange(e, index)}/>
-                            </div>
-                            <div className={styles.formFieldRow}>
-                                <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" value={admission.admissionDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')}/>
-                            </div>
-                            <div className={styles.formFieldRow}>
-                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" value={admission.dischargeDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
-                            </div>
-                            <div className={styles.formFieldLastCol}>
-                                <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
-=======
                                 <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospital} required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                             <div className={styles.formFieldRow}>
@@ -711,7 +692,6 @@ const addMedicalHistory = () => {
                             </div>
                             <div className={styles.formFieldLastCol}>
                                 <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" value={admission.dischargeDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')}/>
->>>>>>> master
                             </div>
                         </div>
                     ))}
