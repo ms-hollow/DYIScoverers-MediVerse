@@ -324,7 +324,7 @@ const addMedicalHistory = () => {
                     }
                     
                     const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                    admission.lengthOfStay = clengthOfStayInDay; // Assign length of stay to the admission object
                 } else {
                     // If discharge date is not provided, display error message
                     toast.error("Admission form fields are incomplete. Please fill them out.");
@@ -336,6 +336,8 @@ const addMedicalHistory = () => {
             toast.error("Admission is required. Please fill them out.");
             formComplete = false;
         }
+
+        // console.log(concatenatedAdmission);
         
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
