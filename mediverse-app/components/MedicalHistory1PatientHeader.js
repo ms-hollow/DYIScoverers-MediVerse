@@ -104,16 +104,16 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
     const gotoHome = async () => {
         const accounts = await web3.eth.getAccounts();
         if (accounts.length > 0) {
-            router.push('/PATIENT/MedicalHistory1Patient/');
+            router.push('/PATIENT/HomePatient/');
         } else {
             router.push('/');
         }
     }
 
-    const gotoPatientRecords = async () => {
+    const gotoMedicalHistory1 = async () => {
         const accounts = await web3.eth.getAccounts();
         if (accounts.length > 0) {
-            router.push('/HOSPITAL/PatientRecordsHospital/');
+            router.push('/PATIENT/MedicalHistory1Patient/');
         } else {
             router.push('/');
         }
@@ -155,7 +155,7 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
                         <div className={styles.menuItems}>
                             <ul>
                                 <li><a onClick={gotoHome}>Home</a></li>
-                                <li><a onClick={gotoPatientRecords}>Medical History</a></li>
+                                <li><a onClick={gotoMedicalHistory1}>Medical History</a></li>
                                 <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                             </ul>
                         </div>
