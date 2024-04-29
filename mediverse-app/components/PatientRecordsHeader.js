@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdownHospital.js';
 import { useRouter } from 'next/router';
-import web3 from "../../blockchain/web3";
+import web3 from "../blockchain/web3";
 
 const PatientRecordsHeader = ({children, pageName}) => {
     
