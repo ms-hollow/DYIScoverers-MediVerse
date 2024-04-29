@@ -324,7 +324,8 @@ const addMedicalHistory = () => {
                     }
                     
                     const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+                    const concatenatedLengthOfStay = `${lengthOfStayInDays} day/s`;
+                    admission.lengthOfStay = concatenatedLengthOfStay; // Assign length of stay to the admission object
                 } else {
                     // If discharge date is not provided, display error message
                     toast.error("Admission form fields are incomplete. Please fill them out.");
