@@ -5,6 +5,7 @@
   z-index: 1;
   justify-content: center; /* Maintain space between elements */
   gap: 15%;
+  margin-bottom: 2%;
 }
   
 .pageBanner {
@@ -83,6 +84,7 @@
   color: #0A0045;
   z-index: 1007;
   letter-spacing: 1px;
+  margin-bottom: 2%;
 }
 
 .dontHaveMetamaskText,
@@ -197,12 +199,12 @@
   }
 
   .connectMetamaskText{
-    font-size: 3vw;
+    font-size: 2.8vw;
   }
 
 }
 
-@media screen and (max-width: 475px) {
+@media screen and (max-width: 480px) {
 
   .container {
     flex-direction: column;
@@ -220,12 +222,12 @@
   }
 
   .signInWithWalletText{
-    font-size: 6vw;
+    font-size: 5.5vw;
   }
 
   .connectMetamaskContainer { 
     padding: 1%; /* Adjust padding for responsiveness */
-    border-radius: 3px;
+    border-radius: 2px;
     margin-right: 10%;
   }
   
@@ -234,7 +236,7 @@
   }
 }
 
-@media screen and (min-width: 481px) and (max-width: 769px){
+@media screen and (min-width: 481px) and (max-width: 779px){
 
   .container {
     flex-direction: column;

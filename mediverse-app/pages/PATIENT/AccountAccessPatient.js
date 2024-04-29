@@ -32,7 +32,17 @@ const AccountAccessPatient = () => {
         }
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function authorizedHospitalList() {
             try {
                 if (!patientAddress) {
@@ -88,6 +98,7 @@ const AccountAccessPatient = () => {
     }, [patientAddress, grantAccess, revokeAccess]);
     
     const handleGrantAccess = async (index) => {
+        authenticator();
         try {
             // Ensure the index is within bounds
             if (index < 0 || index >= listOfRequestingHospital.length) {
@@ -103,8 +114,10 @@ const AccountAccessPatient = () => {
                 return;
             }
             // Call the contract function
+            const loadingToastId = toast.info("Granting, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
             await mvContract.methods.givePermission(hospitalAddress).send({ from: patientAddress });
             //console.log('Permission granted to hospital:', hospitalAddress);
+            toast.dismiss(loadingToastId);
             toast.success('Permission granted');
             // After granting access, set the grantAccess state to trigger a refresh
             setGrantAccess(prevState => !prevState); // Toggle grantAccess state
@@ -114,11 +127,14 @@ const AccountAccessPatient = () => {
     };
     
     const handleRevokeAccess = async (index) => {
+        authenticator();
         try {
             const hospitalAddress = listOfAuthorizedHospitals[index].hospitalAddress; // Get the hospital address based on the index
+            const loadingToastId = toast.info("Revoking, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
             //console.log("Revoke Address: ", hospitalAddress);
             await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
             //console.log('Access was removed:', hospitalAddress);
+            toast.dismiss(loadingToastId);
             toast.success('Access was removed');
             // After revoking access, set the revokeAccess state to trigger a refresh
             setRevokeAccess(prevState => !prevState); // Toggle revokeAccess state
@@ -176,7 +192,7 @@ const AccountAccessPatient = () => {
 
                         <div className={styles.dataContainer}>
                             {listOfHospitalNames.map((hospital, index) => (
-                                <div key={index} className={styles.data_reqAccess}>
+                                <div key={index} className={styles.data_reqAccess_patient}>
                                     <p>{hospital.name}</p>
                                     <button onClick={() => handleGrantAccess(index)}>Grant Access</button>
                                 </div>

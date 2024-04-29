@@ -91,38 +91,40 @@ const Register1Hospital = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <RegistrationProcess 
-                firstShapeColor="shapeCyan"
-                secondShapeColor="shapeBlue"
-                thirdShapeColor="shapeBlue"
-            />
+            <div className= {styles.registrationContainer}>
+                <RegistrationProcess 
+                    firstShapeColor="shapeCyan"
+                    secondShapeColor="shapeBlue"
+                    thirdShapeColor="shapeBlue"
+                />
 
-            <div className={styles.connectWalletContainer}>
-                <div className={styles.formTitle}>
-                    <button className={styles.backButton} onClick={goBack}>←</button>
-                    Connect Wallet
-                </div>
-                <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
-                    <div className={styles.metaMaskLogo}>
-                        <Image src="/MetamaskLogo.svg" width={35} height={35} />
+                <div className={styles.connectWalletContainer}>
+                    <div className={styles.formTitle}>
+                        <button className={styles.backButton} onClick={goBack}>←</button>
+                        Connect Wallet
                     </div>
-                    <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
-                </button>
+                    <button className={styles.connectMetamaskButton} onClick={connectMetaMask}>
+                        <div className={styles.metaMaskLogo}>
+                            <Image src="/MetamaskLogo.svg" width={35} height={35} />
+                        </div>
+                        <div className={styles.connectMetamaskText}>C O N N E C T &nbsp;&nbsp; M E T A M A S K</div>
+                    </button>
 
-                <p className={styles.termsText}>
-                    <input type="checkbox" id="agreeCheckbox" required />
-                    <label htmlFor="agreeCheckbox">
-                        I understand that if I lose access to my wallet, I must use my <br/>
-                        <a href="#" className={styles.link}>Private Key Recovery Phrase to access my funds.</a>
-                        <br/> <br/>
-                    </label>
+                    <p className={styles.termsText}>
+                        <input type="checkbox" id="agreeCheckbox" required />
+                        <label htmlFor="agreeCheckbox">
+                            I understand that if I lose access to my wallet, I must use my <br/>
+                            <a href="#" className={styles.link}>Private Key Recovery Phrase to access my funds.</a>
+                            <br/> <br/>
+                        </label>
 
-                    By creating an account, you agree to Mediverse’s{' '}
-                    <a href="#" className={styles.link}>Terms of Services and Privacy Policy</a>
-                </p>
+                        By creating an account, you agree to Mediverse’s{' '}
+                        <a href="#" className={styles.link}>Terms of Services and Privacy Policy</a>
+                    </p>
 
-                <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                    <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
 
+                </div>
             </div>
             <ToastWrapper/>
         </>

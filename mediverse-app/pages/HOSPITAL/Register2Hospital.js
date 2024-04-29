@@ -1,8 +1,8 @@
 import LandingPageHeader from "@/components/landingPageHeader";
 import RegistrationProcess from "@/components/RegistrationProcess";
-import styles from '../../styles/registerHospital.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
+import styles from '../../styles/register.module.css'; /** "../" means, lalabas ka sa isang folder. Since nasa patient, then pages folder currently itong page, need niya lumabas 2 folder para ma-access ang styles folder. */
 import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse";
@@ -14,10 +14,34 @@ const Register2Hospital = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
-    const [formData, setFormData] = useState({ 
-        /**ADD HERE ALL THE NAMES OF VARIABLES IN THE FORM. Then you can use "formData.[variable]" to access the value of a field*/  
-        hospitalName: '', contactNumber: '', hospitalAddress: ''
+    // const [formData, setFormData] = useState({ 
+       
+    //     hospitalName: '', contactNumber: '', hospitalAddress: ''
+    // });
+
+    const [formData, setFormData] = useState(() => {
+        // Check if localStorage is available
+        if (typeof window !== 'undefined' && window.localStorage) {
+            // Retrieve form data from localStorage when the component mounts
+            const savedFormData = localStorage.getItem('formData');
+            return savedFormData ? JSON.parse(savedFormData) : {
+                hospitalName: '', contactNumber: '', hospitalAddress: ''
+         };
+        } else {
+            // If localStorage is not available, return default form data
+            return {
+                hospitalName: '', contactNumber: '', hospitalAddress: ''
+            };
+        }
     });
+    
+    useEffect(() => {
+        // Convert formData to a string before storing in localStorage
+        const formDataString = JSON.stringify(formData);
+        // Save formData to localStorage
+        localStorage.setItem('formData', formDataString);
+        // console.log('Form data saved to localStorage:', formDataString);
+    }, [formData]);
 
     const handleChange = (e) => {
         setFormData({
@@ -36,20 +60,7 @@ const Register2Hospital = () => {
             toast.warning
             return; // Exit early if any required field is empty
         }
-        
-        //console.log('Form submitted:', formData);
-        setIsLoading(true);
-        try {
-            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-            //console.log("Account:", accounts[0]);
-            const receipt = await mvContract.methods.registerHospital(formData.hospitalName, formData.contactNumber, formData.hospitalAddress).send({ from: accounts[0] });
-            //console.log("Transaction Hash:", receipt.transactionHash);
-            setIsLoading(false);
-            router.push('/HOSPITAL/Register3Hospital/');
-        } catch (error) {
-            console.error('Error sending transaction:', error.message);
-            toast.error('Error Registering.');
-        }
+        router.push('/HOSPITAL/Register3Hospital/');
     };
 
     const goBack = () => {
@@ -62,40 +73,42 @@ const Register2Hospital = () => {
                 <LandingPageHeader buttonText="LOG IN" buttonLink= "/PATIENT/logInPatient/" />
             </div>
 
-            <RegistrationProcess 
-                firstShapeColor="shapeBlue"
-                secondShapeColor="shapeCyan"
-                thirdShapeColor="shapeBlue"
-            />
 
-            <div className={styles.formContainer}>
-                <div className={styles.formTitle}>
-                    <button className={styles.backButton} onClick={goBack}>←</button>
-                    Hospital Details
+            <div className= {styles.registrationContainer}>
+                <RegistrationProcess 
+                    firstShapeColor="shapeBlue"
+                    secondShapeColor="shapeCyan"
+                    thirdShapeColor="shapeBlue"
+                />
+
+                <div className={styles.formContainer}>
+                    <div className={styles.formTitle}>
+                        <button className={styles.backButton} onClick={goBack}>←</button>
+                        Hospital Details
+                    </div>
+                    <form className={styles.registrationForm} onSubmit={handleSubmit}>
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="hospital-name" name="hospitalName" placeholder="Hospital Name" value={formData.hospitalName} required onChange={handleChange} />
+                            </div>
+                            <div className={styles.formField}>
+                                <input type="text" id="contact-number" name="contactNumber" placeholder="Contact Number" value={formData.contactNumber} required onChange={handleChange} />
+                            </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                            <div className={styles.formField}>
+                                <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" value={formData.hospitalAddress} required onChange={handleChange} />
+                            </div>
+                        </div>
+                        
+                        <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button>
+                        
+                    </form>
+                
                 </div>
-                <form className={styles.registrationForm} onSubmit={handleSubmit}>
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="hospital-name" name="hospitalName" placeholder="Hospital Name" required onChange={handleChange} />
-                        </div>
-                        <div className={styles.formField}>
-                            <input type="text" id="contact-number" name="contactNumber" placeholder="Contact Number" required onChange={handleChange} />
-                        </div>
-                    </div>
-
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" required onChange={handleChange} />
-                        </div>
-                    </div>
-                    
-                    {/* <button className={styles.submitButton} onClick={handleSubmit}>PROCEED</button> */}
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
-                        {isLoading ? 'PROCEEDING...' : 'PROCEED'}
-                    </button>
-                </form>
+                <ToastWrapper/>
             </div>
-            <ToastWrapper/>
         </>
         
     );

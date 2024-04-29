@@ -37,8 +37,17 @@ const MedicalHistoryPatient = () => {
        );
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
-        
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 // Ensure hospital address is set before fetching medical history
@@ -89,6 +98,7 @@ const MedicalHistoryPatient = () => {
                 });
                 // setMedicalHistory(modifiedMedicalHistory);
                 // console.log("Modified", modifiedMedicalHistory);
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
 
                 let searchQueryLower;
                 if (typeof searchQuery === 'string' && searchQuery.trim() !== '') {
@@ -96,9 +106,9 @@ const MedicalHistoryPatient = () => {
                 }
                 
                 if (!searchQueryLower) {
-                    setMedicalHistory(modifiedMedicalHistory);
+                    setMedicalHistory(recentMedicalHistory);
                 } else {
-                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    const results = recentMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                 
                     if (results.length > 0) {
                         // console.log("Found:", results);
@@ -117,11 +127,14 @@ const MedicalHistoryPatient = () => {
         fetchMedicalHistory();
     }, [patientAddress, searchQuery]);
 
-    const clickRow = (patientAddr, creationDate) => {
-        const creationDateString = creationDate.toString();
+    const clickRow = (patientAddr, index) => {
+        authenticator();
+        const selectedMedicalHistory = medicalHistory[index];
+        const selectedCreationDate = selectedMedicalHistory.creationDate;
+        const id = parseInt(selectedCreationDate);
         router.push({
             pathname: '/PATIENT/MedicalHistory2Patient/',
-            query: { patientAddr, creationDateString }
+            query: { patientAddr, id }
         });
     };
 
@@ -147,7 +160,7 @@ const MedicalHistoryPatient = () => {
                                 <p>Admission Date</p>
                                 <p>Discharge Date</p>
                             </div>
-                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, record.creationDate)}>
+                            <div className={styles.data} key={index} onClick={() => clickRow(record.patientAddr, index)}>
                                 <p className={styles.diaAttrb}>{record.diagnosis}</p>
                                 <p>{record.hospitalName}</p>
                                 <p>{record.physician}</p>

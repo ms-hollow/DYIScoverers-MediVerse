@@ -40,7 +40,17 @@ const MedicalHistoryPatient = () => {
        );
    };
 
+   const authenticator = async () => {
+    const accounts = await web3.eth.getAccounts();
+    if (accounts.length > 0) {
+        return;
+    } else {
+        router.push('/');
+    }
+}
+
     useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 let hospitalName;
@@ -96,6 +106,7 @@ const MedicalHistoryPatient = () => {
                     };
                 });
                 
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
                 //setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
                 let searchQueryLower;
@@ -104,9 +115,9 @@ const MedicalHistoryPatient = () => {
                 }
                 
                 if (!searchQueryLower) {
-                    setMedicalHistory(modifiedMedicalHistory);
+                    setMedicalHistory(recentMedicalHistory);
                 } else {
-                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    const results = recentMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                     if (results.length > 0) {
                         //("Found:", results);
                         setMedicalHistory(results);
@@ -125,11 +136,10 @@ const MedicalHistoryPatient = () => {
     }, [hospitalAddress]);
 
     const clickRow = (patientAddr, index) => {
+        authenticator();
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
         const id = parseInt(selectedCreationDate);
-        console.log(selectedMedicalHistory);
-        console.log(id);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory2Hospital/',
             query: { patientAddr, id }

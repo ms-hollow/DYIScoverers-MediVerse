@@ -61,6 +61,19 @@ html.index {
     transition: all .50s ease;
 }
 
+.closeTxt {
+    display: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0px 0px;
+    margin: 0px 60px;
+    transition: all .50s ease;
+}
+
+.logoNavBar {
+    display: none;
+}
+
 .navbar.open {
     display: flex; /* Show the navbar when open */
 }
@@ -157,11 +170,12 @@ html.index {
         display: block;
         margin-left: 10px;
     }
+
 }
 
 @media(max-width: 1000px) {
     .logoContainer img {
-        width: 80%;
+        width: 90%;
     }
 
     .navbar a {
@@ -171,17 +185,18 @@ html.index {
     .button {
         font-size: 13px;
     }
+
+    .registerDropdown {
+        margin-left: auto;
+    }
+
+
 }
 
-@media(max-width: 768px) {
+@media(max-width: 769px) {
 
     .header {
         padding: 1% 2%;
-    }
-
-    .navbar a {
-        font-size: 1rem; 
-        margin: 0px 10px;
     }
 
     .button {
@@ -197,8 +212,9 @@ html.index {
         left: 0;
         right: 0;
         margin-top: 0;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 0px;
         width: 100%;
         height: auto;
         background-color: white;
@@ -211,12 +227,22 @@ html.index {
 
     .navbar a{
         display: block;
-        margin: 12px 0;
+        margin: 0 auto;
+        margin-bottom: 20px;
         padding: 0px 25px;
         transition: all .50s ease;
-        color: #EBEBEB;
         color: var(--black-color);
-        font-size: 14px;
+        font-size: 15px;
+    }
+
+    .closeTxt {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 12px;
+        padding: 0px 25px;
+        transition: all .50s ease;
+        color: red;
+        font-size: 15px;
     }
 
     .navbar a:hover {
@@ -233,15 +259,22 @@ html.index {
     }
 
     .navbar {
-        display: none; /* Hide the navbar by default on small screens */
+        transform: translateY(-100%);
+        box-shadow: none;
+        transition: transform ease 0.3s;
     }
 
-    .menuIcon, .closeIcon {
+    .navbar.open {
+        transform: translateY(0%);
+        box-shadow: 0px 50px 1000px rgba(0, 0, 0, 0.5);
+    }
+
+    .menuIcon{
         display: flex;
         margin: 0;
     }
 
-    .menuIconHidden, .closeIconHidden {
+    .menuIconHidden {
         display: none;
     }
 
@@ -249,6 +282,7 @@ html.index {
         font-size: 10px;
         width: 85%;
         margin-right: 14%;
+        margin-left: auto;
       }
 
 }
@@ -263,8 +297,12 @@ html.index {
         width: 70%; /* Adjust the logo size for smaller screens */
     }
 
-    .menuIcon, .closeIcon {
+    .menuIcon{
         margin-right: 10px;
+    }
+
+    .registerDropdown {
+        margin-left: auto;
     }
 }
 
@@ -273,13 +311,19 @@ html.index {
         padding: 1% 1%;
     }
 
-    .navbar a{
+    .navbar a, .closeTxt{
         padding: 8px 12px;
         margin: 0px 5px;
     }
+
     .button {
         padding: 6px 10px;
     }
+
+    .registerDropdown {
+        margin-left: auto;
+    }
+
 }
 
 @media(max-width: 320px){
@@ -287,7 +331,7 @@ html.index {
         padding: 1% 0.5%;
     }
 
-    .navbar a{
+    .navbar a, .closeTxt{
         padding: 6px 10px;
         margin: 0px 3px;
         font-size: 0.8rem;
@@ -296,4 +340,9 @@ html.index {
         padding: 4px 8px;
         font-size: 0.7rem;
     }
+
+    .registerDropdown {
+        margin-left: auto;
+    }
+
 }

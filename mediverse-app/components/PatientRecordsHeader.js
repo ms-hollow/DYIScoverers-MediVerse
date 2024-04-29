@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import AccountDropdown from '/components/accountIconDropdownHospital.js';
 import { useRouter } from 'next/router';
+import web3 from "../blockchain/web3";
 
 const PatientRecordsHeader = ({children, pageName}) => {
     
@@ -68,6 +69,15 @@ const PatientRecordsHeader = ({children, pageName}) => {
     {/*SEARCH FUNCTION*/}
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
+
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
     
     const handleChange = (event) => {
         setSearchQuery(event.target.value);
@@ -75,6 +85,7 @@ const PatientRecordsHeader = ({children, pageName}) => {
 
     const handleSearch = () => {
         //console.log('Search query:', searchQuery);
+        authenticator();
         router.push({
             pathname: '/HOSPITAL/PatientRecordsHospital/',
             query: { searchQuery }
@@ -87,6 +98,24 @@ const PatientRecordsHeader = ({children, pageName}) => {
             handleSearch();
         }
     };
+
+    const gotoHome = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/HomeHospital/');
+        } else {
+            router.push('/');
+        }
+    }
+
+    const gotoPatientRecords = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/PatientRecordsHospital/');
+        } else {
+            router.push('/');
+        }
+    }
     
     return (
         <>
@@ -126,8 +155,8 @@ const PatientRecordsHeader = ({children, pageName}) => {
 
                     <div className={styles.menuItems}>
                         <ul>
-                            <li><a href="/HOSPITAL/HomeHospital/">Home</a></li>
-                            <li><a href="/HOSPITAL/PatientRecordsHospital/">Patient Records</a></li>
+                            <li><a onClick={gotoHome}>Home</a></li>
+                            <li><a onClick={gotoPatientRecords}>Patient Records</a></li>
                             <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                         </ul>
                     </div>

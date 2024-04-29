@@ -1,20 +1,9 @@
 [
     {
         "id": 1,
-        "hospitalName": "Philippine General Hospital",
+        "hospitalName": "Makati Medical Center",
         "doctorConsulted": "Dr. Marlo Cruz",
-        "dateConsultation": "February 15, 2024"
-    },
-    {
-        "id": 2,
-        "hospitalName": "Philippine General Hospital",
-        "doctorConsulted": "Dr. Marlo Cruz",
-        "dateConsultation": "February 15, 2024"
-    },
-    {
-        "id": 2,
-        "hospitalName": "Philippine General Hospital",
-        "doctorConsulted": "Dr. Marlo Cruz",
-        "dateConsultation": "February 15, 2024"
+        "dateConsultation": "2024-02-15"
     }
+
 ]

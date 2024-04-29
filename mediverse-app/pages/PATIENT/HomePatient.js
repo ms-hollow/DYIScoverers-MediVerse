@@ -31,8 +31,17 @@ const HomePatient = () => {
         }
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
-        
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 if (!patientAddress) {
@@ -86,7 +95,10 @@ const HomePatient = () => {
                         creationDate: formattedDate
                     };
                 });
-                setMedicalHistory(modifiedMedicalHistory);
+
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
+
+                setMedicalHistory(recentMedicalHistory);
                 // console.log("Modified", modifiedMedicalHistory);
 
                 const latestMedicalRecord = modifiedMedicalHistory[0];

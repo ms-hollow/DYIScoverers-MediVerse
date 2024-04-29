@@ -105,7 +105,7 @@ const HospitalHome = () => {
                 
                 // Call the smart contract function with hospital address
                 const medicalHistoryString = await mvContract.methods.getAllMedicalHistory().call();
-                console.log(medicalHistoryString);
+                //console.log(medicalHistoryString);
                 
                 const parsedMedicalHistory = medicalHistoryString.map(item => {
                     const { patientAddr, hospitalAddr, physician, diagnosis, signsAndSymptoms, treatmentProcedure, tests, medications, admission, creationDate } = item;
@@ -193,6 +193,32 @@ const HospitalHome = () => {
         const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
         return pendingRequests.includes(hospitalAddr);
     }
+
+    const registerNewPatient = async () => {
+        
+        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+        // console.log("Account:", accounts[0]);
+        // console.log('Form submitted:', formData);
+
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/AddPatient');
+        } else {
+            router.push('/');
+        }
+    };
+
+    const viewAllRecords = async () => {
+        
+        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+        // console.log("Account:", accounts[0]);
+        // console.log('Form submitted:', formData);
+
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/PatientRecordsHospital');
+        } else {
+            router.push('/');
+        }
+    };
 
     useEffect(() => {
         async function getStatus() {
@@ -286,9 +312,9 @@ const HospitalHome = () => {
                     <div className={styles.recentPatients_container}>
                         <div className={styles.title}>
                             <p>Recent Patients</p>
-                            <Link href="/HOSPITAL/PatientRecordsHospital">
+                            <a onClick={viewAllRecords}>
                                 <p>View All &gt;</p>
-                            </Link>
+                            </a>
                         </div>
                         <div className={styles.tableHeading}>
                             <p>Patient Name</p>
@@ -318,10 +344,10 @@ const HospitalHome = () => {
                     </div>
                     <div className={styles.newPatientAndNotif_container}>
                         <div>
-                            <Link href="/HOSPITAL/AddPatient" className={styles.newPatient}>
+                            <a onClick={registerNewPatient} className={styles.newPatient}>
                                 <img src='/plus icon.svg' alt='Plus Icon'/>
-                                <p>Add New Patients</p>
-                            </Link>
+                                <p>Register New Patient</p>
+                            </a>
                         </div>
                         <div className={styles.notifications}>
                             <div className={styles.notif_title}>
