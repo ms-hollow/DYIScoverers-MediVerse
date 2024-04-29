@@ -252,10 +252,7 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
-<<<<<<< HEAD
-=======
         authenticator();
->>>>>>> master
         const id = parseInt(creationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory1Hospital/',
