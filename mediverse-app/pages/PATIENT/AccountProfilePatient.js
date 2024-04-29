@@ -34,7 +34,17 @@ const AccountProfilePatient = () => {
 
     const [editable, setEditable] = useState(false); // State variable to track edit mode
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract

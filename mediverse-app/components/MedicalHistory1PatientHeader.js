@@ -75,8 +75,18 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
         setSearchQuery(event.target.value);
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     const handleSearch = () => {
-        console.log('Search query:', searchQuery);
+        authenticator();
+        // console.log('Search query:', searchQuery);
         router.push({
             pathname: '/PATIENT/MedicalHistory1Patient/',
             query: { searchQuery }
@@ -90,6 +100,24 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
         }
     };
 
+    const gotoHome = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/HomeHospital/');
+        } else {
+            router.push('/');
+        }
+    }
+
+    const gotoPatientRecords = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/HOSPITAL/PatientRecordsHospital/');
+        } else {
+            router.push('/');
+        }
+    }
+    
     return (
         <>
            <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
@@ -125,8 +153,8 @@ const MedicalHistory1PatientHeader = ({children, pageName}) => {
 
                         <div className={styles.menuItems}>
                             <ul>
-                                <li><a href="/PATIENT/HomePatient/">Home</a></li>
-                                <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
+                                <li><a onClick={gotoHome}>Home</a></li>
+                                <li><a onClick={gotoPatientRecords}>Medical History</a></li>
                                 <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                             </ul>
                         </div>

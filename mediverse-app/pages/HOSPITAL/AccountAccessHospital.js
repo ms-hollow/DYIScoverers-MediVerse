@@ -33,7 +33,17 @@ const AccountAccessHospital = () => {
         }
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function authorizedPatientList() {
             try {
                 if (!hospitalAddress) {
@@ -119,6 +129,7 @@ const AccountAccessHospital = () => {
     }, [hospitalAddress]);
 
     useEffect(() => {
+        authenticator();
         async function unauthorizedPatientList() {
             try {
                 if (!hospitalAddress) {
@@ -216,6 +227,7 @@ const AccountAccessHospital = () => {
     }, [hospitalAddress, requestPermission]);
 
     const handleRequest = async (patientAddr) => {
+        authenticator();
         try {
             const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
             const hasPending = pendingRequests.includes(hospitalAddress);
@@ -240,6 +252,7 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
+        authenticator();
         const id = parseInt(creationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory1Hospital/',

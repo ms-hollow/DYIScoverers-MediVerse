@@ -40,7 +40,17 @@ const MedicalHistoryPatient = () => {
         );
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 let hospitalName;
@@ -154,7 +164,7 @@ const MedicalHistoryPatient = () => {
     }, [hospitalAddress, searchQuery]);
     
     const clickRow = async (patientAddr, creationDate) => {
-
+        authenticator();
         async function isHospitalAuthorized(patientAddr, hospitalAddress) {
             const authorizedHospitals = await mvContract.methods.getAuthorizedHospitals(patientAddr).call();
             return authorizedHospitals.includes(hospitalAddress);

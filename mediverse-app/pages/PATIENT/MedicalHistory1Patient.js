@@ -37,8 +37,17 @@ const MedicalHistoryPatient = () => {
        );
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
-        
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 // Ensure hospital address is set before fetching medical history
@@ -119,6 +128,7 @@ const MedicalHistoryPatient = () => {
     }, [patientAddress, searchQuery]);
 
     const clickRow = (patientAddr, index) => {
+        authenticator();
         const selectedMedicalHistory = medicalHistory[index];
         const selectedCreationDate = selectedMedicalHistory.creationDate;
         const id = parseInt(selectedCreationDate);

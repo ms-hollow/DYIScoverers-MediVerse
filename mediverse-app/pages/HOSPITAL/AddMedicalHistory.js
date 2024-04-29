@@ -75,7 +75,17 @@ const addMedicalHistory = () => {
         }
     }
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 // Ensure hospital address is set before fetching medical history
@@ -248,6 +258,7 @@ const addMedicalHistory = () => {
     };
 
     const handleSubmit = async (e) => {
+        authenticator();
         e.preventDefault(); // Prevent default form submission 
 
         const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();

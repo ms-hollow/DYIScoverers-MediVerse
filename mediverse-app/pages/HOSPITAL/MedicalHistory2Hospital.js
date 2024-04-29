@@ -81,8 +81,18 @@ const MedicalHistoryHospital = () => {
         }
     }
 
-    useEffect(() => {
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
+    useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob, patientGender;
@@ -371,6 +381,7 @@ const MedicalHistoryHospital = () => {
     }, [hospitalAddress]);
 
     const toggleButton = (patientAddr, id) => {
+        authenticator();
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {

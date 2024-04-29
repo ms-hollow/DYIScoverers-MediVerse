@@ -8,6 +8,7 @@ import web3 from "../../blockchain/web3";
 import mvContract from "../../blockchain/mediverse"; // ABI
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 /**
  * TODO: Gamit ang address kunin ang pinaka-latest date sa may creation date
@@ -17,7 +18,7 @@ import { toast } from 'react-toastify';
  */
 
 const AccountProfileHospital = () => {
-    
+    const router = useRouter();
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +36,17 @@ const AccountProfileHospital = () => {
         });
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract
@@ -69,6 +80,7 @@ const AccountProfileHospital = () => {
     };
     
     const saveEditedProfile = async () => {
+        authenticator();
         setIsLoading(true);
         try {
             await mvContract.methods.editHospitalDetails(

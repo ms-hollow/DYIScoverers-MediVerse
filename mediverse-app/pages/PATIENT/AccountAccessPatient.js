@@ -32,7 +32,17 @@ const AccountAccessPatient = () => {
         }
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function authorizedHospitalList() {
             try {
                 if (!patientAddress) {
@@ -88,6 +98,7 @@ const AccountAccessPatient = () => {
     }, [patientAddress, grantAccess, revokeAccess]);
     
     const handleGrantAccess = async (index) => {
+        authenticator();
         try {
             // Ensure the index is within bounds
             if (index < 0 || index >= listOfRequestingHospital.length) {
@@ -116,11 +127,11 @@ const AccountAccessPatient = () => {
     };
     
     const handleRevokeAccess = async (index) => {
-        
+        authenticator();
         try {
             const hospitalAddress = listOfAuthorizedHospitals[index].hospitalAddress; // Get the hospital address based on the index
+            const loadingToastId = toast.info("Revoking, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
             //console.log("Revoke Address: ", hospitalAddress);
-            const loadingToastId = toast.info("Revoking, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });git
             await mvContract.methods.revokeAccess(hospitalAddress).send({ from: patientAddress });
             //console.log('Access was removed:', hospitalAddress);
             toast.dismiss(loadingToastId);

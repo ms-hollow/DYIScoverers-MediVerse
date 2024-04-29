@@ -87,7 +87,7 @@ const AddPatient = () => {
 
     const clearFormData = () => {
         localStorage.removeItem('formData');
-        console.log('Form data cleared from localStorage.');
+        // console.log('Form data cleared from localStorage.');
     };
 
     useEffect(() => {
@@ -115,49 +115,60 @@ const AddPatient = () => {
     };
     
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
-        const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
-        const isEmpty = requiredFields.some(field => !formData[field]);
 
-        if (isEmpty) {
-            toast.error('Please fill in all required fields.');
-            return; // Exit early if any required field is empty
-        }
         const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
         // console.log("Account:", accounts[0]);
         // console.log('Form submitted:', formData);
 
-        const patientList = await mvContract.methods.getPatientList().call();
-        const isPatientIncluded = patientList.includes(formData.patientAddress);
-       
-        const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
-        const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
-        //console.log("name: ", name)
-        //console.log("address:", address)
-        if (isPatientIncluded) {
-            toast.error('Patient is already registered.');
-        } else {
-            try {
-                setIsLoading(true);
-                const receipt = await mvContract.methods.addPatient(
-                    formData.patientAddress,
-                    name,
-                    formData.age,
-                    formData.gender,
-                    formData.dob,
-                    formData.phoneNumber,
-                    formData.height,
-                    formData.weight,
-                    address
-                ).send({ from: accounts[0] });
-                toast.success('Successfully Registered!');
-                localStorage.removeItem('formData');
-                setIsLoading(false);
-                router.push('/HOSPITAL/HomeHospital');
-            } catch (error) {
-                console.error('Error sending transaction:', error.message);
+        if (accounts.length > 0) {
+            e.preventDefault(); // Prevent default form submission
+            const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
+            const isEmpty = requiredFields.some(field => !formData[field]);
+
+            if (isEmpty) {
+                toast.error('Please fill in all required fields.');
+                return; // Exit early if any required field is empty
             }
+            // const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            // console.log("Account:", accounts[0]);
+            // console.log('Form submitted:', formData);
+
+            const patientList = await mvContract.methods.getPatientList().call();
+            const isPatientIncluded = patientList.includes(formData.patientAddress);
+        
+            const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
+            const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
+            //console.log("name: ", name)
+            //console.log("address:", address)
+            if (isPatientIncluded) {
+                toast.error('Patient is already registered.');
+            } else {
+                try {
+                    setIsLoading(true);
+                    const receipt = await mvContract.methods.addPatient(
+                        formData.patientAddress,
+                        name,
+                        formData.age,
+                        formData.gender,
+                        formData.dob,
+                        formData.phoneNumber,
+                        formData.height,
+                        formData.weight,
+                        address
+                    ).send({ from: accounts[0] });
+                    toast.success('Successfully Registered!');
+                    localStorage.removeItem('formData');
+                    setIsLoading(false);
+                    router.push('/HOSPITAL/HomeHospital');
+                } catch (error) {
+                    console.error('Error sending transaction:', error.message);
+                }
+            }
+        } else {
+            router.push('/');
         }
+
+        
     };
 
     const goBack = () => {
