@@ -12,7 +12,6 @@ const UpdateMedicalHistoryHospital = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
-    const [hospital, setHospitalName] = useState('');;
     const router = useRouter();
     const { patientAddr, id } = router.query;
 
@@ -73,37 +72,6 @@ const UpdateMedicalHistoryHospital = () => {
             toast.error('Error fetching hospital address.');
         }
     }
-
-    useEffect(() => {
-        async function fetchHospitalInfo() {
-            try {
-                if (!hospitalAddress) {
-                    await setAddress();
-                    return;
-                }
-
-                // Retrieve hospital info
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                const hospitalName = hospitalInfo[0];
-                // console.log(hospitalName);
-                setHospitalName(hospitalName);
-                // console.log(hospital);
-
-                // Update the hospital name in formData
-                setFormData(prevFormData => ({
-                    ...prevFormData,
-                    admission: [{
-                        ...prevFormData.admission[0],
-                        hospitalName: hospital
-                    }]
-                }));
-            } catch (error) {
-                console.error('Error fetching hospital info:', error);
-            }
-        }
-
-        fetchHospitalInfo();
-    }, [hospitalAddress]);
 
     useEffect(() => {
 
@@ -485,7 +453,7 @@ const UpdateMedicalHistoryHospital = () => {
         } else if (name === 'hospitalName' || name === 'admissionDate' || name === 'dischargeDate' || name === 'lengthOfStay') {
             const updatedAdmission = formData.admission.map((admission, i) => {
                 if (i === index) {
-                    return { ...admission, [name]: value, hospitalName: hospital };
+                    return { ...admission, [name]: value };
                 }
                 return admission;
             });
@@ -1121,7 +1089,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospital} required onChange={(e) => handleChange(e, index)} readOnly/>
+                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')} />
