@@ -138,10 +138,6 @@ const AddPatient = () => {
         // console.log("Account:", accounts[0]);
         // console.log('Form submitted:', formData);
 
-        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-        // console.log("Account:", accounts[0]);
-        // console.log('Form submitted:', formData);
-
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
     
@@ -154,6 +150,9 @@ const AddPatient = () => {
         } else {
             setIsLoading(true);
             try {
+                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                // console.log("Account:", accounts[0]);
+                // console.log('Form submitted:', formData);
                 const loadingToastId = toast.info("Registering, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 const receipt = await mvContract.methods.addPatient(
                     formData.patientAddress,
