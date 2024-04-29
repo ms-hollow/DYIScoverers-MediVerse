@@ -87,7 +87,7 @@ const AddPatient = () => {
 
     const clearFormData = () => {
         localStorage.removeItem('formData');
-        console.log('Form data cleared from localStorage.');
+        // console.log('Form data cleared from localStorage.');
     };
 
     useEffect(() => {
@@ -113,8 +113,19 @@ const AddPatient = () => {
             });
         }
     };
+
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
     
     const handleSubmit = async (e) => {
+        
+        authenticator();
         e.preventDefault(); // Prevent default form submission
         const requiredFields = ['firstName', 'middleName', 'lastName', 'age', 'gender', 'dob', 'phoneNumber', 'height', 'weight', 'houseNo', 'streetNo', 'barangay', 'cityMunicipality', 'region'];
         const isEmpty = requiredFields.some(field => !formData[field]);
@@ -123,13 +134,13 @@ const AddPatient = () => {
             toast.error('Please fill in all required fields.');
             return; // Exit early if any required field is empty
         }
-        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+        // const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
         // console.log("Account:", accounts[0]);
         // console.log('Form submitted:', formData);
 
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
-       
+    
         const address = `${formData.houseNo}+${formData.streetNo}+${formData.barangay}+${formData.cityMunicipality}+${formData.region}`;
         const name = `${formData.firstName}+${formData.middleName}+${formData.lastName}`;
         //console.log("name: ", name)
@@ -137,8 +148,12 @@ const AddPatient = () => {
         if (isPatientIncluded) {
             toast.error('Patient is already registered.');
         } else {
+            setIsLoading(true);
             try {
-                setIsLoading(true);
+                const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+                // console.log("Account:", accounts[0]);
+                // console.log('Form submitted:', formData);
+                const loadingToastId = toast.info("Registering, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 const receipt = await mvContract.methods.addPatient(
                     formData.patientAddress,
                     name,
@@ -150,6 +165,7 @@ const AddPatient = () => {
                     formData.weight,
                     address
                 ).send({ from: accounts[0] });
+                toast.dismiss(loadingToastId);
                 toast.success('Successfully Registered!');
                 localStorage.removeItem('formData');
                 setIsLoading(false);
@@ -220,10 +236,10 @@ const AddPatient = () => {
 
                     <div className={styles.formRow}>
                         <div className={styles.formField}>
-                            <input type="text" id="house-no" name="houseNo" placeholder="House No." value={formData.weight} required onChange={handleChange} />
+                            <input type="text" id="house-no" name="houseNo" placeholder="House No." value={formData.houseNo} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
-                            <input type="text" id="street-no" name="streetNo" placeholder="Street No." value={formData.streetNo} required onChange={handleChange} />
+                            <input type="text" id="street-no" name="streetNo" placeholder="Street" value={formData.streetNo} required onChange={handleChange} />
                         </div>
                         <div className={styles.formField}>
                             <input type="text" id="barangay" name="barangay" placeholder="Barangay" value={formData.barangay} required onChange={handleChange} />

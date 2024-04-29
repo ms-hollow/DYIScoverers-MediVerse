@@ -33,7 +33,17 @@ const AccountAccessHospital = () => {
         }
     };
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function authorizedPatientList() {
             try {
                 if (!hospitalAddress) {
@@ -119,6 +129,7 @@ const AccountAccessHospital = () => {
     }, [hospitalAddress]);
 
     useEffect(() => {
+        authenticator();
         async function unauthorizedPatientList() {
             try {
                 if (!hospitalAddress) {
@@ -216,6 +227,7 @@ const AccountAccessHospital = () => {
     }, [hospitalAddress, requestPermission]);
 
     const handleRequest = async (patientAddr) => {
+        authenticator();
         try {
             const pendingRequests = await mvContract.methods.getPendingRequests(patientAddr).call();
             const hasPending = pendingRequests.includes(hospitalAddress);
@@ -224,9 +236,11 @@ const AccountAccessHospital = () => {
                 //console.log('Hospital already has a pending request for this patient.');
                 toast.error('Hospital has a pending patient request.');
             } else {
+                const loadingToastId = toast.info("Requesting, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
                 //console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
+                toast.dismiss(loadingToastId);
                 toast.success("Request Sent!");
                 setRequestPermission(true);
                 setSentRequestPatients([...sentRequestPatients, patientAddr]);
@@ -238,6 +252,10 @@ const AccountAccessHospital = () => {
     };
 
     const handleViewMedicalHistory = async (patientAddr, creationDate) => {
+<<<<<<< HEAD
+=======
+        authenticator();
+>>>>>>> master
         const id = parseInt(creationDate);
         router.push({
             pathname: '/HOSPITAL/MedicalHistory1Hospital/',

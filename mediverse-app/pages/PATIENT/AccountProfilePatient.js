@@ -34,7 +34,17 @@ const AccountProfilePatient = () => {
 
     const [editable, setEditable] = useState(false); // State variable to track edit mode
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
     useEffect(() => {
+        authenticator();
         async function fetchPatientInfo() {
             try {
                 // Connect to the deployed smart contract
@@ -112,7 +122,7 @@ const AccountProfilePatient = () => {
                 formData.weight,
                 address
             ).send({ from: patientAddress });
-            //console.log('Patient details updated successfully');
+            toast.success('Patient details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {
@@ -179,7 +189,7 @@ const AccountProfilePatient = () => {
                             <input type="text" id="house-no" name="houseNo" required onChange={handleChange} value={formData.houseNo} readOnly={!editable} />
                         </div>
                         <div className={styles.formField}>
-                            <label htmlFor="street-no" className={styles.formLabel}>Street No:</label>
+                            <label htmlFor="street-no" className={styles.formLabel}>Street:</label>
                             <input type="text" id="street-no" name="streetNo" required onChange={handleChange} value={formData.streetNo} readOnly={!editable} />
                         </div>
                     </div>

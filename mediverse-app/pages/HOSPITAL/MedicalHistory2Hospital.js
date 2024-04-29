@@ -81,8 +81,18 @@ const MedicalHistoryHospital = () => {
         }
     }
 
-    useEffect(() => {
 
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
+
+    useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob, patientGender;
@@ -110,10 +120,11 @@ const MedicalHistoryHospital = () => {
                 patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 patientAge = patientInfo[1];
                 patientDob = patientInfo[3];
-                patientGender = patientInfo[2];   
-
-                let physicianName;
-                //* Get yung data sa array na nag equal sa may creationDate
+                patientGender = patientInfo[2];
+                
+                
+                //* So bali ang ginagawa dito is sa list ng medical history ni patient kinukuha yung specific record
+                //* using creation date as key para masearch
                 const getPatientMedicalHistory = patientRecords.filter(item => {
                     const creationDateString = parseInt(item.creationDate);
                     const idString = parseInt(id);
@@ -367,6 +378,7 @@ const MedicalHistoryHospital = () => {
     }, [hospitalAddress]);
 
     const toggleButton = (patientAddr, id) => {
+        authenticator();
         if (hospitalAddrInHistory !== hospitalAddress) {
             toast.error('You do not have permission to edit this record');
         } else {

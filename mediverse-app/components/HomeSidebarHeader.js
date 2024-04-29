@@ -4,6 +4,8 @@ import Image from 'next/image';
 import styles from '/styles/homeSidebarHeader.module.css';
 import styles2 from '/styles/accountIconDropdown.module.css';
 import AccountDropdown from '/components/accountIconDropdown.js';
+import { useRouter } from 'next/router';
+import web3 from "../blockchain/web3";
 
 const HomeSidebarHeader = ({children, pageName}) => {
 
@@ -65,6 +67,26 @@ const HomeSidebarHeader = ({children, pageName}) => {
         }
     }, [isSearchOpen]);
 
+    const router = useRouter();
+
+    const gotoHome = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/PATIENT/HomePatient/');
+        } else {
+            router.push('/');
+        }
+    }
+
+    const gotoMedicalHistory1 = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            router.push('/PATIENT/MedicalHistory1Patient/');
+        } else {
+            router.push('/');
+        }
+    }
+
     return (
         <>
             <div className={`${styles.sidebarContainer} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
@@ -98,8 +120,8 @@ const HomeSidebarHeader = ({children, pageName}) => {
 
                         <div className={styles.menuItems}>
                             <ul>
-                                <li><a href="/PATIENT/HomePatient/">Home</a></li>
-                                <li><a href="/PATIENT/MedicalHistory1Patient/">Medical History</a></li>
+                                <li><a onClick={gotoHome}>Home</a></li>
+                                <li><a onClick={gotoMedicalHistory1}>Medical History</a></li>
                                 <li><p className={styles.close} onClick={toggleSidebar}>Close</p></li>
                             </ul>
                         </div>

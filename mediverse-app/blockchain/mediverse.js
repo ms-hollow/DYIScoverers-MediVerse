@@ -12,12 +12,12 @@ const mvContract = new web3.eth.Contract(ContractABI, "0xBaA0567B01484aacD820e37
 //const mvContract = new web3.eth.Contract(ContractABI, "0x9Da81dF7A09028519c266173000A3339a896A62a"); //for development
 
 /**
- * * Note: if gagamiting ang development, follow the steps below:
- * * 1. run ang ganache-cli
- * * 2. Open ng bagong terminal/bash and type 'truffle migrate'
- * * 3. copy yung contract address na lumabas doon then paste mo sa may loob ng " "  
- * ! const mvContract = new web3.eth.Contract(ContractABI, "sa loob neto"); 
- * * 4. import lang yung account sa metamask
+ * Note: If you are using the development environment, follow the steps below:
+ * 1. Run 'ganache-cli'.
+ * 2. Open a new terminal/bash and type 'truffle migrate'.
+ * 3. Copy the contract address displayed and paste it inside the double quotes.
+ * const mvContract = new web3.eth.Contract(ContractABI, "paste_address_here");
+ * 4. Import the account into MetaMask.
  */
 
 export default mvContract

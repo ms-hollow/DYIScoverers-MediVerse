@@ -20,7 +20,6 @@ const UpdateMedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
-        hospitalName: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -74,22 +73,26 @@ const UpdateMedicalHistoryHospital = () => {
         }
     }
 
-    useEffect(() => {
+    const authenticator = async () => {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            return;
+        } else {
+            router.push('/');
+        }
+    }
 
+    useEffect(() => {
+        authenticator();
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob;
-                let hospitalName;
+    
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
                     await setAddress();
                     return;
                 }
-
-                //* Retrieve muna ang hospital na currently naka logged in
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                //(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 let patientAddress;
                 patientAddress = patientAddr;
@@ -194,7 +197,6 @@ const UpdateMedicalHistoryHospital = () => {
                         patientAddr: item.patientAddr,
                         creationDate: item.creationDate
                     };
-                    
                 });
                 //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
@@ -306,7 +308,6 @@ const UpdateMedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    hospitalName,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
@@ -522,12 +523,12 @@ const UpdateMedicalHistoryHospital = () => {
     };
 
     const handleSubmit = async (patientAddr, id) => {
-
+        authenticator();
         //console.log('Form submitted:', formData);
         //console.log('current', currentMedicalHistory);
-    
+
         let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission, currentCreationDate;
-    
+        
         newPhysician = formData.physician;
        // console.log(newPhysician)
 
@@ -553,15 +554,6 @@ const UpdateMedicalHistoryHospital = () => {
                 creationDate
             };
         });
-
-        const isNegativeDuration = formData.treatmentProcedure.some(tp => parseInt(tp.tpDuration) < 0) ||
-        formData.medication.some(med => parseInt(med.medicationDuration) < 0) ||
-        formData.symptoms.some(symptom => parseInt(symptom.symptomDuration) < 0);
-        if (isNegativeDuration) {
-        // Handle the error, display a message, or prevent form submission
-        toast.error("Duration cannot be negative.");
-        return;
-        }
 
         let formComplete = true; 
         let patientDiagnosis = '';
@@ -622,18 +614,14 @@ const UpdateMedicalHistoryHospital = () => {
                     
                     const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
                     admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
-                } else {
-                    // If discharge date is not provided, display error message
-                    toast.error("Admission form fields are incomplete. Please fill them out.");
-                    formComplete = false;
                 }
             });
             concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        } else {
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
+        } else if (formData.admission.some(admission => admission.hospitalName || admission.admissionDate || admission.dischargeDate)) {
+            toast.error("Admission form fields are incomplete. Please fill them out.");
             formComplete = false;
         }
-            
+
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
         const updatedTest = concatenatedTest ? `${currentTests}~${concatenatedTest}` : currentTests;
@@ -644,13 +632,14 @@ const UpdateMedicalHistoryHospital = () => {
         // console.log(updatedSymptoms);
         // console.log(updatedTP);
         // console.log(updatedTest);
-        // console.log(updatedMedication);
-        // console.log(updatedAdmission);
+        //console.log(updatedMedication);
+        //console.log(updatedAdmission);
         
         if(formComplete){
             // * need below 100 ung length ng diagnosis at description
             if (formData.diagnosis.length < 100 && formData.description.length < 100) {
                 setIsLoading(true);
+                const loadingToastId = toast.info("Updating Medical History, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 try {
                     const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
                     //console.log("Account:", accounts[0]);
@@ -667,8 +656,8 @@ const UpdateMedicalHistoryHospital = () => {
                         updatedAdmission,
                         currentCreationDate
                     ).send({ from: accounts[0] });
-                    
                     //console.log("Transaction Hash:", receipt.transactionHash);
+                    toast.dismiss(loadingToastId);
                     toast.success('Medical History is successfully updated!');
                     setIsLoading(false);
                     router.push({
@@ -780,7 +769,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="symptom-name"  name="symptomName" placeholder="Type of Symptoms" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="symptom-duration" name="symptomDuration" placeholder="Days" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="symptom-duration" name="symptomDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)} />
                             </div>
                             <div className={styles.formFieldRow}>
                             <select id="symptom-severity" name="symptomSeverity"  required onChange={(e) => handleChange(e, index)}>
@@ -853,7 +842,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="date-end"  name="tpDateEnd" placeholder="Date End" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'tpDateEnd')} />
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="number" id="tp-duration"  name="tpDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)} />
+                                <input type="text" id="tp-duration"  name="tpDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)} />
                             </div>
                         </div>
                     ))}
@@ -1058,10 +1047,10 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="medication-frequency"  name="medicationFrequency" placeholder="Frequency" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="number" id="medication-duration"  name="medicationDuration" placeholder="Duration" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-duration"  name="medicationDuration" placeholder="Duration (Ex: # days)" required onChange={(e) => handleChange(e, index)}/>
                             </div>
                             <div className={styles.formFieldLastCol}>
-                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="medication-end-date"  name="medicationEndDate" placeholder="End Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'medicationEndDate')}/>
                             </div>
                         </div>
                     ))}
@@ -1097,7 +1086,6 @@ const UpdateMedicalHistoryHospital = () => {
                         <div className={styles.formHeader}>Hospital</div>
                         <div className={styles.formHeader}>Admission Date</div>    
                         <div className={styles.formHeader}>Discharge Date</div>
-                        <div className={styles.formHeader}>Length of Stay</div>      
                     </div>
                     
                     {formData.admission.map((admission, index) => (
@@ -1111,11 +1099,12 @@ const UpdateMedicalHistoryHospital = () => {
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')} />
                             </div>
-                            <div className={styles.formFieldRow}>
-                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')} />
-                            </div>
                             <div className={styles.formFieldLastCol}>
+<<<<<<< HEAD
                                 <input type="number" id="length-of-stay"  name="lengthOfStay" placeholder="Length of Stay" required onChange={(e) => handleChange(e, index)} readOnly/>
+=======
+                                <input type="text" id="discharge-date"  name="dischargeDate" placeholder="Discharge Date" required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'dischargeDate')} />
+>>>>>>> master
                             </div>
                         </div>
                     ))}

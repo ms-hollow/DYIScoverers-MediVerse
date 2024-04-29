@@ -134,19 +134,9 @@ const Register2Hospital = () => {
                             </div>
                         </div>
                         
-                        <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button>
-                    <div className={styles.formRow}>
-                        <div className={styles.formField}>
-                            <input type="text" id="hospital-address" name="hospitalAddress" placeholder="Hospital Address" required onChange={handleChange} value={formData.hospitalAddress} readOnly/>
-                        </div>
-                    </div>
-                    
-                    {/* <button className={styles.submitButton} onClick={handleSubmit}>REGISTER</button> */}
-
-                    <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
+                        <button className={`${styles.submitButton} ${isLoading ? 'loading' : ''}`} onClick={handleSubmit} disabled={isLoading}> 
                             {isLoading ? 'REGISTERING...' : 'REGISTER'}
                         </button>
-
                     </form>
 
                 </div>
