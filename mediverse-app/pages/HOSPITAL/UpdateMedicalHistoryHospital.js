@@ -12,6 +12,7 @@ const UpdateMedicalHistoryHospital = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [currentMedicalHistory, setcurrentMedicalHistory] = useState([]);
+    const [hospitalName, setHospitalName] = useState([]);
     const router = useRouter();
     const { patientAddr, id } = router.query;
 
@@ -20,7 +21,6 @@ const UpdateMedicalHistoryHospital = () => {
         patientName: '',
         patientAge: '',
         patientDob: '',
-        hospitalName: '',
         physicianName: '',
         diagnosis: {
             names: [],
@@ -79,7 +79,7 @@ const UpdateMedicalHistoryHospital = () => {
         async function fetchMedicalHistory() {
             try {
                 let patientName, patientAge, patientDob;
-                let hospitalName;
+    
                 // Ensure hospital address is set before fetching medical history
                 if (!hospitalAddress) {
                     await setAddress();
@@ -87,9 +87,9 @@ const UpdateMedicalHistoryHospital = () => {
                 }
 
                 //* Retrieve muna ang hospital na currently naka logged in
-                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
-                //(hospitalInfo[0]);
-                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
+                // const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                // (hospitalInfo[0]);
+                // hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
 
                 let patientAddress;
                 patientAddress = patientAddr;
@@ -194,7 +194,6 @@ const UpdateMedicalHistoryHospital = () => {
                         patientAddr: item.patientAddr,
                         creationDate: item.creationDate
                     };
-                    
                 });
                 //console.log("Modified Patient Medical History:", modifiedPatientMedicalHistory);
 
@@ -306,7 +305,6 @@ const UpdateMedicalHistoryHospital = () => {
                     patientName,
                     patientAge,
                     patientDob,
-                    hospitalName,
                     physicianName,
                     diagnosis: {
                         names: diagnosisNames,
@@ -349,6 +347,8 @@ const UpdateMedicalHistoryHospital = () => {
                     }
                 };
                 setMedicalHistory(medicalHistory);
+                const hospitalNameHolder = medicalHistory.admissions.hospitalNames;
+                setHospitalName(hospitalNameHolder);
                 //console.log("Set Med His: ", medicalHistory)
 
                 setFormData({
@@ -525,9 +525,9 @@ const UpdateMedicalHistoryHospital = () => {
 
         //console.log('Form submitted:', formData);
         //console.log('current', currentMedicalHistory);
-    
+
         let currentPatientAddr, newPhysician, currentSymptoms, currentTreatment, currentTests, currentMeds, currentAdmission, currentCreationDate;
-    
+        
         newPhysician = formData.physician;
        // console.log(newPhysician)
 
@@ -568,8 +568,6 @@ const UpdateMedicalHistoryHospital = () => {
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
-        let concatenatedMedication = '';
-        let concatenatedAdmission = '';
 
         if (!formData.diagnosis || !formData.dateOfDiagnosis || !formData.description) {
             toast.error("Diagnosis form fields are incomplete. Please fill them out."); 
@@ -599,40 +597,26 @@ const UpdateMedicalHistoryHospital = () => {
             formComplete = false;
         }
 
-        if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
-            concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
-        } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
-            toast.error("Medication form fields are incomplete. Please fill them out.");
-            formComplete = false;
-        }
+        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
-            formData.admission.forEach(admission => {
-                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+        formData.admission.forEach(admission => {
+            const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+            
+            if (admission.dischargeDate) {
+                // If discharge date is provided, calculate length of stay
+                const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
                 
-                if (admission.dischargeDate) {
-                    // If discharge date is provided, calculate length of stay
-                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
-                    
-                    // If admission and discharge dates are the same, set length of stay to 1 day
-                    if (lengthOfStayInMs === 0) {
-                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
-                    }
-                    
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); 
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
-                } else {
-                    // If discharge date is not provided, display error message
-                    toast.error("Admission form fields are incomplete. Please fill them out.");
-                    formComplete = false;
+                // If admission and discharge dates are the same, set length of stay to 1 day
+                if (lengthOfStayInMs === 0) {
+                    lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
                 }
-            });
-            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        } else {
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
-            formComplete = false;
-        }
+                
+                const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
+                admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+            }
+        });
+        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
             
         const updatedSymptoms = concatenatedSymptoms ? `${currentSymptoms}~${concatenatedSymptoms}` : currentSymptoms;
         const updatedTP = concatenatedTreatmentProcedure ? `${currentTreatment}~${concatenatedTreatmentProcedure}` : currentTreatment;
@@ -651,6 +635,7 @@ const UpdateMedicalHistoryHospital = () => {
             // * need below 100 ung length ng diagnosis at description
             if (formData.diagnosis.length < 100 && formData.description.length < 100) {
                 setIsLoading(true);
+                const loadingToastId = toast.info("Updating Medical History, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 try {
                     const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
                     //console.log("Account:", accounts[0]);
@@ -667,8 +652,8 @@ const UpdateMedicalHistoryHospital = () => {
                         updatedAdmission,
                         currentCreationDate
                     ).send({ from: accounts[0] });
-                    
                     //console.log("Transaction Hash:", receipt.transactionHash);
+                    toast.dismiss(loadingToastId);
                     toast.success('Medical History is successfully updated!');
                     setIsLoading(false);
                     router.push({
@@ -1105,7 +1090,7 @@ const UpdateMedicalHistoryHospital = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospitalName} required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" required onChange={(e) => handleChange(e, index)}  onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')} />

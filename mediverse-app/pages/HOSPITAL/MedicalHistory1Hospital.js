@@ -96,6 +96,7 @@ const MedicalHistoryPatient = () => {
                     };
                 });
                 
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
                 //setMedicalHistory(modifiedMedicalHistory);
                 //console.log("Modified", modifiedMedicalHistory);
                 let searchQueryLower;
@@ -104,9 +105,9 @@ const MedicalHistoryPatient = () => {
                 }
                 
                 if (!searchQueryLower) {
-                    setMedicalHistory(modifiedMedicalHistory);
+                    setMedicalHistory(recentMedicalHistory);
                 } else {
-                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    const results = recentMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                     if (results.length > 0) {
                         //("Found:", results);
                         setMedicalHistory(results);

@@ -112,7 +112,7 @@ const AccountProfilePatient = () => {
                 formData.weight,
                 address
             ).send({ from: patientAddress });
-            //console.log('Patient details updated successfully');
+            toast.success('Patient details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {

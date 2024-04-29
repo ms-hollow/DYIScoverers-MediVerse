@@ -224,9 +224,11 @@ const AccountAccessHospital = () => {
                 //console.log('Hospital already has a pending request for this patient.');
                 toast.error('Hospital has a pending patient request.');
             } else {
+                const loadingToastId = toast.info("Requesting, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                 await mvContract.methods.requestPermission(patientAddr).send({ from: hospitalAddress });
                 //console.log('Access requested to:', patientAddr);
                 setPendingRequests('Pending');
+                toast.dismiss(loadingToastId);
                 toast.success("Request Sent!");
                 setRequestPermission(true);
                 setSentRequestPatients([...sentRequestPatients, patientAddr]);

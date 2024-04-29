@@ -8,6 +8,7 @@ import web3 from "../../blockchain/web3";
 import mvContract from '../../blockchain/mediverse';
 import ToastWrapper from "@/components/ToastWrapper";
 import { toast } from 'react-toastify';
+// import { accounts } from 'web3/lib/commonjs/eth.exports';
 
 
 const addMedicalHistory = () => {
@@ -157,7 +158,7 @@ const addMedicalHistory = () => {
         } else if (name === 'hospitalName' || name === 'admissionDate' || name === 'dischargeDate' || name === 'lengthOfStay') {
             const updatedAdmission = formData.admission.map((admission, i) => {
                 if (i === index) {
-                    return { ...admission, [name]: value };
+                    return { ...admission, [name]: value, hospitalName: hospital };
                 }
                 return admission;
             });
@@ -202,6 +203,44 @@ const addMedicalHistory = () => {
         }
     };
 
+    const [hospitalAddress, setHospitalAddress] = useState('');
+    const [hospital, setHospitalName] = useState('');;
+
+    const setAddress = async () => {
+        try {
+            const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
+            //console.log("Account:", accounts[0]);
+            setHospitalAddress(accounts[0]); // Set the hospital address
+        } catch (error) {
+            toast.error('Error fetching hospital address.');
+        }
+    }
+
+    useEffect(() => {
+        async function fetchMedicalHistory() {
+            try {
+                let hospitalName;
+                // Ensure hospital address is set before fetching medical history
+                if (!hospitalAddress) {
+                    await setAddress();
+                    return;
+                }
+
+                //* Retrieve muna ang hospital na currently naka logged in
+                const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
+                // console.log(hospitalInfo[0]);
+                hospitalName = hospitalInfo[0]; //* Get ang name ni hospital then salin kay var hospitalName
+                setHospitalName(hospitalName);
+                // console.log(hospital);
+
+            } catch (error) {
+                console.error('Error fetching medical history:', error);
+            }
+        }
+        
+        fetchMedicalHistory();
+    }, [hospitalAddress]);
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission 
 
@@ -215,12 +254,10 @@ const addMedicalHistory = () => {
         }
 
         //console.log('Form submitted:', formData);
-        let  patientDiagnosis = '';
+        let patientDiagnosis = '';
         let concatenatedSymptoms = '';
         let concatenatedTreatmentProcedure = '';
         let concatenatedTest = '';
-        let concatenatedMedication = '';
-        let concatenatedAdmission = '';
 
         let formComplete = true; 
 
@@ -252,40 +289,27 @@ const addMedicalHistory = () => {
             formComplete = false;
         }
 
-        if (formData.medication.every(medication => medication.medicationType && medication.dateOfPrescription && medication.medicationPrescribingPhysician && medication.medicationReviewingPhysician && medication.medicationFrequency && medication.medicationDuration && medication.medicationEndDate)) {
-            concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
-        } else if (formData.medication.some(medication => medication.medicationType || medication.dateOfPrescription || medication.medicationPrescribingPhysician || medication.medicationReviewingPhysician || medication.medicationFrequency || medication.medicationDuration || medication.medicationEndDate)) {
-            toast.error("Medication form fields are incomplete. Please fill them out.");
-            formComplete = false;
-        }
+        const concatenatedMedication = formData.medication.map(medication => Object.values(medication).join('+')).join('~');
 
-        if (formData.admission.every(admission => admission.hospitalName && admission.admissionDate && admission.dischargeDate)) {
-            formData.admission.forEach(admission => {
-                const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+        formData.admission.forEach(admission => {
+            const admissionDate = new Date(admission.admissionDate); // Convert admission date string to Date object
+            
+            if (admission.dischargeDate) {
+                // If discharge date is provided, calculate length of stay
+                const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
+                let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
                 
-                if (admission.dischargeDate) {
-                    // If discharge date is provided, calculate length of stay
-                    const dischargeDate = new Date(admission.dischargeDate); // Convert discharge date string to Date object
-                    let lengthOfStayInMs = dischargeDate - admissionDate; // Calculate difference in milliseconds
-                    
-                    // If admission and discharge dates are the same, set length of stay to 1 day
-                    if (lengthOfStayInMs === 0) {
-                        lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
-                    }
-                    
-                    const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
-                    admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
-                } else {
-                    // If discharge date is not provided, display error message
-                    toast.error("Admission form fields are incomplete. Please fill them out.");
-                    formComplete = false;
+                // If admission and discharge dates are the same, set length of stay to 1 day
+                if (lengthOfStayInMs === 0) {
+                    lengthOfStayInMs = 1000 * 60 * 60 * 24; // 1 day in milliseconds
                 }
-            });
-            concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
-        } else {
-            toast.error("Admission is required. Please fill out the hospital name and admission date.");
-            formComplete = false;
-        }
+                
+                const lengthOfStayInDays = Math.ceil(lengthOfStayInMs / (1000 * 60 * 60 * 24));
+                admission.lengthOfStay = lengthOfStayInDays; // Assign length of stay to the admission object
+            }
+        });
+        const concatenatedAdmission = formData.admission.map(admission => Object.values(admission).join('+')).join('~');
+        console.log(concatenatedSymptoms)
         
         const patientList = await mvContract.methods.getPatientList().call();
         const isPatientIncluded = patientList.includes(formData.patientAddress);
@@ -295,9 +319,8 @@ const addMedicalHistory = () => {
                 // * need below 100 ung length ng diagnosis at description
                 if (formData.diagnosis.length < 100 && formData.description.length < 100) {
                     setIsLoading(true);
+                    const loadingToastId = toast.info("Adding Medical History, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                     try {
-                        const accounts = await web3.eth.getAccounts(); // Get the accounts from MetaMask
-                        //("Account:", accounts[0]);
                         const receipt = await mvContract.methods.addMedicalHistory(
                             formData.patientAddress,
                             formData.physician,
@@ -307,9 +330,10 @@ const addMedicalHistory = () => {
                             concatenatedTest,
                             concatenatedMedication,
                             concatenatedAdmission
-                        ).send({ from: accounts[0] });
+                        ).send({ from: hospitalAddress });
                         //console.log("Transaction Hash:", receipt.transactionHash);
                         localStorage.removeItem('formData');
+                        toast.dismiss(loadingToastId);
                         toast.success('Medical History Successfully Added!');
                         setIsLoading(false);
                         router.push('/HOSPITAL/PatientRecordsHospital/');
@@ -616,7 +640,7 @@ const addMedicalHistory = () => {
                                 <input type="text" id="noAdmission"  name="noAdmission" value={admission.noAdmission} readOnly />
                             </div>
                             <div className={styles.formFieldRow}>
-                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={admission.hospitalName} required onChange={(e) => handleChange(e, index)}/>
+                                <input type="text" id="hospital-name"  name="hospitalName" placeholder="Hospital Name" value={hospital} required onChange={(e) => handleChange(e, index)} readOnly/>
                             </div>
                             <div className={styles.formFieldRow}>
                                 <input type="text" id="admission-date"  name="admissionDate" placeholder="Admission Date" value={admission.admissionDate} required onChange={(e) => handleChange(e, index)} onFocus={handleDateFocus} onBlur={(e) => handleDateBlur(e, 'admissionDate')}/>

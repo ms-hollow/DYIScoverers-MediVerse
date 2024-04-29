@@ -102,13 +102,15 @@ const MedicalHistoryPatient = () => {
                     };
                 });
 
+                const recentMedicalHistory = modifiedMedicalHistory.reverse();
+
                 // Fetch patient names for each medical record
-                const patientAddresses = modifiedMedicalHistory.map(record => record.patientAddr);
+                const patientAddresses = recentMedicalHistory.map(record => record.patientAddr);
                 const patientInfoPromises = patientAddresses.map(address => mvContract.methods.getPatientInfo(address).call());
                 const allPatientInfo = await Promise.all(patientInfoPromises);
                 allPatientInfo.forEach((info, index) => {
                     const patientNameHolder = info[0].split('+');
-                    modifiedMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
+                    recentMedicalHistory[index].patientName = `${patientNameHolder[0]} ${patientNameHolder[1]} ${patientNameHolder[2]}`;
                 });
     
 
@@ -132,9 +134,9 @@ const MedicalHistoryPatient = () => {
                 }
                 
                 if (!searchQueryLower) {
-                    setMedicalHistory(modifiedMedicalHistory);
+                    setMedicalHistory(recentMedicalHistory);
                 } else {
-                    const results = modifiedMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
+                    const results = recentMedicalHistory.filter(entry => searchInObject(entry, searchQueryLower));
                     if (results.length > 0) {
                         // console.log("Found:", results);
                         setMedicalHistory(results);
@@ -167,7 +169,7 @@ const MedicalHistoryPatient = () => {
                 query: { patientAddr, creationDate }
             });
        } else {
-            toast.error("You don't have permission do view this record.");
+            toast.error("You don't have permission to view this record. Please request Access to the patient's account.");
             //console.log("You don't have permission do view this record.");
        }
     };

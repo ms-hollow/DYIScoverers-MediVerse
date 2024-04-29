@@ -47,7 +47,6 @@ const AccountProfileHospital = () => {
                 setHospitalAddress(accounts[0]);
                 //console.log(hospitalInfo)
                 
-
                 // Set form data with patient info
                 setFormData({
                     ...formData,
@@ -55,7 +54,6 @@ const AccountProfileHospital = () => {
                     contactNumber: hospitalInfo[1], 
                     hospitalAddress: hospitalInfo[2]
                 });
-
 
             } catch (error) {
                 console.error('Error retrieving patient information:', error);
@@ -79,6 +77,7 @@ const AccountProfileHospital = () => {
                 formData.hospitalAddress
             ).send({ from: hospitalAddress });
             //console.log('Hospital details updated successfully');
+            toast.success('Hospital details updated successfully');
             setEditable(false);
             setIsLoading(false);
         } catch (error) {
