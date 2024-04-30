@@ -183,6 +183,10 @@ html.index {
     .button {
         font-size: 13px;
     }
+
+    .registerDropdown {
+        margin-left: auto;
+    }
 }
 
 @media(max-width: 768px) {
@@ -284,6 +288,10 @@ html.index {
     .menuIcon{
         margin-right: 10px;
     }
+
+    .registerDropdown {
+        margin-left: auto;
+    }
 }
 
 @media(max-width: 400px){
@@ -298,6 +306,10 @@ html.index {
 
     .button {
         padding: 6px 10px;
+    }
+
+    .registerDropdown {
+        margin-left: auto;
     }
 }
 
@@ -314,5 +326,9 @@ html.index {
     .button {
         padding: 4px 8px;
         font-size: 0.7rem;
+    }
+
+    .registerDropdown {
+        margin-left: auto;
     }
 }
