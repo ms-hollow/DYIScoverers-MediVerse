@@ -37,7 +37,6 @@ html.index {
     align-items: center;
     width: 217px;
     height: 58.06px;
-    margin: -50;
 }
 
 .logo {
@@ -109,11 +108,10 @@ html.index {
 .menuIcon, .closeIcon{
     font-size: 35px;
     color: var(--text-color);
-    position: relative;
     cursor: pointer;
     z-index: 10001;
     display: none;
-    margin-left: 10%;
+    margin-left: 70%;
 }
 
 .menuIconHidden, .closeIconHidden {
@@ -127,7 +125,7 @@ html.index {
 
   /**---------------------REGISTER BUTTON SA LOG IN PAGE--------------------------*/
 
-.registerDropdown {
+  .registerDropdown {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -161,21 +159,21 @@ html.index {
     border-radius: 5px;
   }
 
+
 @media(max-width: 1200px){
     .header{
         padding: 1% 2%;
     }
 
-    .menuIcon {
-        display: block;
-        margin-left: 10px;
+    .navbar a{
+        padding: 10px 15px;
+        margin: 0px 10px;
     }
-
 }
 
 @media(max-width: 1000px) {
     .logoContainer img {
-        width: 90%;
+        width: 80%;
     }
 
     .navbar a {
@@ -185,15 +183,9 @@ html.index {
     .button {
         font-size: 13px;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
-
 }
 
-@media(max-width: 769px) {
+@media(max-width: 768px) {
 
     .header {
         padding: 1% 2%;
@@ -206,7 +198,7 @@ html.index {
         margin-right: 15px;
     }
 
-    .navbar {
+    .navbar{
         position: absolute;
         top: 0;
         left: 0;
@@ -245,17 +237,16 @@ html.index {
         font-size: 15px;
     }
 
-    .navbar a:hover {
+    .navbar a:hover{
         color: var(--cyan);
         font-weight: bold;
-        background-color: rgb(196, 196, 196); /* Highlighted gray background */
+        background-color: rgb(196, 196, 196);
         transform: translateY(5px);
     }
 
     .navbar a.active{
         color: var(--black-color);
         font-weight: bold;
-        background-color: rgb(196, 196, 196); /* Highlighted gray background */
     }
 
     .navbar {
@@ -277,14 +268,6 @@ html.index {
     .menuIconHidden {
         display: none;
     }
-
-    .registerDropdownContent{
-        font-size: 10px;
-        width: 85%;
-        margin-right: 14%;
-        margin-left: auto;
-      }
-
 }
 
 
@@ -293,16 +276,13 @@ html.index {
         padding: 1% 2%; 
     }
 
-    .logo {
-        width: 70%; /* Adjust the logo size for smaller screens */
+    .button {
+        padding: 6px 12px; 
+        font-size: 0.7rem; 
     }
 
     .menuIcon{
         margin-right: 10px;
-    }
-
-    .registerDropdown {
-        margin-left: auto;
     }
 }
 
@@ -319,11 +299,6 @@ html.index {
     .button {
         padding: 6px 10px;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
 }
 
 @media(max-width: 320px){
@@ -340,9 +315,4 @@ html.index {
         padding: 4px 8px;
         font-size: 0.7rem;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
 }
