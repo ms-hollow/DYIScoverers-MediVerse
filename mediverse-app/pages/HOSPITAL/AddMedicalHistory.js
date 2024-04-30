@@ -14,56 +14,22 @@ import { toast } from 'react-toastify';
 const addMedicalHistory = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    // const [formData, setFormData] = useState({ 
-    //     patientAddress: '',
-    //     physician: '',
-    //     diagnosis: '',
-    //     dateOfDiagnosis: '',
-    //     description: '',
-    //     symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-    //     treatmentProcedure: [{noTP: 1, tp: '', medTeam: '' , tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
-    //     test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
-    //     medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
-    //     admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
-    // });
+    const [formData, setFormData] = useState({ 
+        patientAddress: '',
+        physician: '',
+        diagnosis: '',
+        dateOfDiagnosis: '',
+        description: '',
+        symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
+        treatmentProcedure: [{noTP: 1, tp: '', medTeam: '' , tpDateStarted: '', tpDateEnd: '', tpDuration: ''}],
+        test: [{noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: ''}],
+        medication: [{noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: ''}],
+        admission: [{noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: ''}] 
+    });
 
     const [hospitalAddress, setHospitalAddress] = useState('');
     const [hospital, setHospitalName] = useState('');;
     let hospitalNameHolder;
-    
-    const [formData, setFormData] = useState(() => {
-        // Check if localStorage is available
-        if (typeof window !== 'undefined' && window.localStorage) {
-            // Retrieve form data from localStorage when the component mounts
-            const savedFormData = localStorage.getItem('formData');
-            return savedFormData ? JSON.parse(savedFormData) : {
-                patientAddress: '',
-                physician: '',
-                diagnosis: '',
-                dateOfDiagnosis: '',
-                description: '',
-                symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-                treatmentProcedure: [{ noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' }],
-                test: [{ noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: '' }],
-                medication: [{ noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: '' }],
-                admission: [{ noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: '' }]
-            };
-        } else {
-            // If localStorage is not available, return default form data
-            return {
-                patientAddress: '',
-                physician: '',
-                diagnosis: '',
-                dateOfDiagnosis: '',
-                description: '',
-                symptoms: [{ noSymptom: 1, symptomName: '', symptomDuration: '', symptomSeverity: '', symptomLocation: '' }],
-                treatmentProcedure: [{ noTP: 1, tp: '', medTeam: '', tpDateStarted: '', tpDateEnd: '', tpDuration: '' }],
-                test: [{ noTest: 1, testType: '', orderingPhysician: '', testDate: '', reviewingPhysician: '', testResult: '' }],
-                medication: [{ noMedication: 1, medicationType: '', dateOfPrescription: '', medicationPrescribingPhysician: '', medicationReviewingPhysician: '', medicationFrequency: '', medicationDuration: '', medicationEndDate: '' }],
-                admission: [{ noAdmission: 1, hospitalName: '', admissionDate: '', dischargeDate: '', lengthOfStay: '' }]
-            };
-        }
-    });
 
     const setAddress = async () => {
         try {
@@ -114,27 +80,6 @@ const addMedicalHistory = () => {
         }
         fetchMedicalHistory();
     }, [hospitalAddress]);
-    
-    useEffect(() => {
-        // Convert formData to a string before storing in localStorage
-        const formDataString = JSON.stringify(formData);
-        // Save formData to localStorage
-        localStorage.setItem('formData', formDataString);
-        // console.log('Form data saved to localStorage:', formDataString);
-    }, [formData]);
-
-
-    const clearFormData = () => {
-        localStorage.removeItem('formData');
-        // console.log('Form data cleared from localStorage.');
-    };
-
-    useEffect(() => {
-        const timeoutId = setTimeout(clearFormData, 1000);
-        return () => clearTimeout(timeoutId);
-    }, []);
-
-    const [dateValues, setDateValues] = useState({});
 
     {/*Set one ref to all date fields*/}
     const dateInputRefs = {
@@ -360,7 +305,6 @@ const addMedicalHistory = () => {
                             concatenatedAdmission
                         ).send({ from: hospitalAddress });
                         //console.log("Transaction Hash:", receipt.transactionHash);
-                        localStorage.removeItem('formData');
                         toast.dismiss(loadingToastId);
                         toast.success('Medical History Successfully Added!');
                         setIsLoading(false);
