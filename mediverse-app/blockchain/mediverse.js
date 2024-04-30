@@ -6,8 +6,8 @@ const ContractABI = [{"inputs":[{"internalType":"address","name":"_patientAddr",
  * You have the option to select between 'Network' and 'Development'. When you choose 'Network', the contract is deployed on the Alchemy API using the Sepolia network. 
  * On the otherhand, selecting 'Development' means utilizing a local blockchain.
  */
-const mvContract = new web3.eth.Contract(ContractABI, "0xBaA0567B01484aacD820e371bC09ac52BdcF0EC3"); // for network
-//const mvContract = new web3.eth.Contract(ContractABI, "0x9Da81dF7A09028519c266173000A3339a896A62a"); //for development
+//const mvContract = new web3.eth.Contract(ContractABI, "0xBaA0567B01484aacD820e371bC09ac52BdcF0EC3"); // for network
+const mvContract = new web3.eth.Contract(ContractABI, "0x9Da81dF7A09028519c266173000A3339a896A62a"); //for development
 
 /**
  * Note: If you are using the development environment, follow the steps below:
