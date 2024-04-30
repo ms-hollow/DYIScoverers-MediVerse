@@ -293,8 +293,9 @@ const addMedicalHistory = () => {
                 // * need below 100 ung length ng diagnosis at description
                 if (formData.diagnosis.length < 100 && formData.description.length < 100) {
                     setIsLoading(true);
-                    const loadingToastId = toast.info("Adding Medical History, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
                     try {
+                        const loadingToastId = toast.info("Adding Medical History, Please wait...", { autoClose: false, draggable: false, closeOnClick: false });
+                        const accounts = await web3.eth.getAccounts();
                         const receipt = await mvContract.methods.addMedicalHistory(
                             formData.patientAddress,
                             formData.physician,
@@ -304,7 +305,7 @@ const addMedicalHistory = () => {
                             concatenatedTest,
                             concatenatedMedication,
                             concatenatedAdmission
-                        ).send({ from: hospitalAddress });
+                        ).send({ from: accounts[0] });
                         //console.log("Transaction Hash:", receipt.transactionHash);
                         toast.dismiss(loadingToastId);
                         toast.success('Medical History Successfully Added!');
