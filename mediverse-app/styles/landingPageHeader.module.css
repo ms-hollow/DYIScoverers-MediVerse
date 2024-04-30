@@ -37,7 +37,6 @@ html.index {
     align-items: center;
     width: 217px;
     height: 58.06px;
-    margin: -50;
 }
 
 .logo {
@@ -109,11 +108,10 @@ html.index {
 .menuIcon, .closeIcon{
     font-size: 35px;
     color: var(--text-color);
-    position: relative;
     cursor: pointer;
     z-index: 10001;
     display: none;
-    margin-left: 10%;
+    margin-left: 70%;
 }
 
 .menuIconHidden, .closeIconHidden {
@@ -125,57 +123,21 @@ html.index {
     margin-top: 2000px; /* Adjust the value as needed */
 }
 
-  /**---------------------REGISTER BUTTON SA LOG IN PAGE--------------------------*/
-
-.registerDropdown {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 40px;
-  }
-  
-  .registerDropdownContent {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Raleway';
-    font-weight: 600;
-    font-size: 16px;
-    width: 126px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    border-radius: 5px;
-    padding: 9.5px 0px;;
-    transition: all 0.3s ease;
-    color: black; 
-    align-items: center;
-  }
-  
-  .registerDropdown a {
-    display: flex;
-    align-items: center;
-  }
-  
-  .registerDropdownContent a:hover {
-    background-color: #f1f1f1;
-    border-radius: 5px;
-  }
 
 @media(max-width: 1200px){
     .header{
         padding: 1% 2%;
     }
 
-    .menuIcon {
-        display: block;
-        margin-left: 10px;
+    .navbar a{
+        padding: 10px 15px;
+        margin: 0px 10px;
     }
-
 }
 
 @media(max-width: 1000px) {
     .logoContainer img {
-        width: 90%;
+        width: 80%;
     }
 
     .navbar a {
@@ -185,15 +147,9 @@ html.index {
     .button {
         font-size: 13px;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
-
 }
 
-@media(max-width: 769px) {
+@media(max-width: 768px) {
 
     .header {
         padding: 1% 2%;
@@ -206,7 +162,7 @@ html.index {
         margin-right: 15px;
     }
 
-    .navbar {
+    .navbar{
         position: absolute;
         top: 0;
         left: 0;
@@ -245,17 +201,16 @@ html.index {
         font-size: 15px;
     }
 
-    .navbar a:hover {
+    .navbar a:hover{
         color: var(--cyan);
         font-weight: bold;
-        background-color: rgb(196, 196, 196); /* Highlighted gray background */
+        background-color: rgb(196, 196, 196);
         transform: translateY(5px);
     }
 
     .navbar a.active{
         color: var(--black-color);
         font-weight: bold;
-        background-color: rgb(196, 196, 196); /* Highlighted gray background */
     }
 
     .navbar {
@@ -277,14 +232,6 @@ html.index {
     .menuIconHidden {
         display: none;
     }
-
-    .registerDropdownContent{
-        font-size: 10px;
-        width: 85%;
-        margin-right: 14%;
-        margin-left: auto;
-      }
-
 }
 
 
@@ -293,16 +240,13 @@ html.index {
         padding: 1% 2%; 
     }
 
-    .logo {
-        width: 70%; /* Adjust the logo size for smaller screens */
+    .button {
+        padding: 6px 12px; 
+        font-size: 0.7rem; 
     }
 
     .menuIcon{
         margin-right: 10px;
-    }
-
-    .registerDropdown {
-        margin-left: auto;
     }
 }
 
@@ -319,11 +263,6 @@ html.index {
     .button {
         padding: 6px 10px;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
 }
 
 @media(max-width: 320px){
@@ -340,9 +279,4 @@ html.index {
         padding: 4px 8px;
         font-size: 0.7rem;
     }
-
-    .registerDropdown {
-        margin-left: auto;
-    }
-
 }
