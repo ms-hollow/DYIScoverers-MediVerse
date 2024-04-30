@@ -205,7 +205,6 @@ const addMedicalHistory = () => {
     };
 
     const handleSubmit = async (e) => {
-        authenticator();
         e.preventDefault(); // Prevent default form submission 
 
         const hospitalInfo = await mvContract.methods.getHospitalInfo(hospitalAddress).call();
