@@ -81,6 +81,8 @@ const addMedicalHistory = () => {
         fetchMedicalHistory();
     }, [hospitalAddress]);
 
+    const [dateValues, setDateValues] = useState({});
+
     {/*Set one ref to all date fields*/}
     const dateInputRefs = {
         dateOfDiagnosis: useRef(null),
